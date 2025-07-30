@@ -1,8 +1,8 @@
 # 🎨 EzQt Widgets
 
-[![Repository](https://img.shields.io/badge/Repository-GitHub-blue?style=for-the-badge&logo=github)](https://github.com/neuraaak/ezqt_widgets)
+[![Repository](https://img.shields.io/badge/Repository-GitHub-blue?style=for-the-badge&logo=github)](https://github.com/neuraaak/EzQt-Widgets)
 [![PyPI](https://img.shields.io/badge/PyPI-ezqt_widgets-green?style=for-the-badge&logo=pypi)](https://pypi.org/project/EzQt-Widgets/)
-[![Tests](https://img.shields.io/badge/Tests-254%2F262%20passing-green?style=for-the-badge&logo=pytest)](https://github.com/neuraaak/ezqt_widgets/actions)
+[![Tests](https://img.shields.io/badge/Tests-254%2F262%20passing-green?style=for-the-badge&logo=pytest)](https://github.com/neuraaak/EzQt-Widgets/actions)
 
 A collection of custom and reusable Qt widgets for PySide6, designed to simplify the development of modern and intuitive graphical interfaces.
 
@@ -134,7 +134,7 @@ ezqt_widgets/
 
 ### **Development Installation**
 ```bash
-git clone https://github.com/your-username/ezqt_widgets.git
+git clone https://github.com/neuraaak/EzQt-Widgets.git
 cd ezqt_widgets
 pip install -e ".[dev]"
 
