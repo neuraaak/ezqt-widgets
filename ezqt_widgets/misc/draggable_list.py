@@ -1,16 +1,25 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# DRAGGABLE_LIST - Draggable List Widget
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
-# IMPORT BASE
-# ///////////////////////////////////////////////////////////////
+"""
+Draggable list widget module.
 
-from PySide6.QtCore import (
-    QPoint,
-    QSize,
-    Signal,
-    Qt,
-    QMimeData,
-)
+Provides a list widget with draggable and reorderable items for PySide6
+applications.
+"""
+
+from __future__ import annotations
+
+# ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
+# Third-party imports
+from PySide6.QtCore import QMimeData, QPoint, QSize, Qt, Signal
 from PySide6.QtGui import (
     QDrag,
     QDragEnterEvent,
@@ -27,54 +36,67 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-# IMPORT / GUI AND MODULES AND WIDGETS
-# ///////////////////////////////////////////////////////////////
+# Local imports
 from ..label.hover_label import HoverLabel
 
-# ////// TYPE HINTS IMPROVEMENTS FOR PYSIDE6 6.9.1
-from typing import Any, Dict, List, Optional, Union
-
-# UTILITY FUNCTIONS
+# ///////////////////////////////////////////////////////////////
+# CLASSES
 # ///////////////////////////////////////////////////////////////
 
 
 class DraggableItem(QFrame):
-    """
-    Widget d'élément draggable pour DraggableList.
+    """Draggable item widget for DraggableList.
 
-    Cet élément peut être déplacé par drag & drop et contient
-    toujours un HoverLabel pour une interface cohérente.
+    This item can be moved by drag & drop and always contains a HoverLabel
+    for a consistent interface.
+
+    Args:
+        item_id: Unique identifier for the item.
+        text: Text to display in the item.
+        parent: Parent widget (default: None).
+        icon: Icon for the item (default: None, uses default icon).
+        compact: Whether to display in compact mode (default: False).
+        **kwargs: Additional keyword arguments passed to HoverLabel.
+
+    Signals:
+        itemClicked(str): Emitted when the item is clicked.
+        itemRemoved(str): Emitted when the item is removed.
     """
 
-    itemClicked = Signal(str)  # Signal émis quand l'élément est cliqué
-    itemRemoved = Signal(str)  # Signal émis quand l'élément est supprimé
+    itemClicked = Signal(str)
+    itemRemoved = Signal(str)
+
+    # ///////////////////////////////////////////////////////////////
+    # INIT
+    # ///////////////////////////////////////////////////////////////
 
     def __init__(
         self,
         item_id: str,
         text: str,
-        parent: Optional[QWidget] = None,
-        icon: Optional[Union[str, Any]] = None,
+        parent: QWidget | None = None,
+        icon: str | Any | None = None,
         compact: bool = False,
         **kwargs: Any,
     ) -> None:
+        """Initialize the draggable item."""
         super().__init__(parent)
         self.setProperty("type", "DraggableItem")
 
-        # Initialisation des attributs
+        # Initialize attributes
         self.item_id = item_id
         self.text = text
         self.is_dragging = False
         self.drag_start_pos = QPoint()
         self._compact = compact
 
-        # Configuration du widget
-        self.setFrameStyle(QFrame.Box)
+        # Configure widget
+        self.setFrameShape(QFrame.Shape.Box)
         self.setLineWidth(1)
         self.setMidLineWidth(0)
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
 
-        # Hauteur selon le mode compact
+        # Height based on compact mode
         if self._compact:
             self.setMinimumHeight(24)
             self.setMaximumHeight(32)
@@ -82,63 +104,87 @@ class DraggableItem(QFrame):
             self.setMinimumHeight(40)
             self.setMaximumHeight(60)
 
-        # Layout principal
+        # Main layout
         layout = QHBoxLayout(self)
         if self._compact:
-            layout.setContentsMargins(6, 2, 6, 2)  # Marges réduites en mode compact
+            layout.setContentsMargins(6, 2, 6, 2)  # Reduced margins in compact mode
         else:
-            layout.setContentsMargins(8, 4, 8, 4)  # Marges normales
+            layout.setContentsMargins(8, 4, 8, 4)  # Normal margins
         layout.setSpacing(8)
 
-        # Icône par défaut pour le drag & drop si aucune icône n'est fournie
+        # Default icon for drag & drop if no icon is provided
         if icon is None:
             icon = "https://img.icons8.com/?size=100&id=8329&format=png&color=000000"
 
-        # Widget de contenu (HoverLabel avec icône de suppression)
+        # Content widget (HoverLabel with removal icon)
         icon_size = QSize(16, 16) if self._compact else QSize(20, 20)
         icon_padding = 2 if self._compact else 4
 
         self.content_widget = HoverLabel(
             text=text,
-            icon=icon,  # Icône poubelle pour la suppression
+            icon=icon,  # Trash icon for removal
             icon_size=icon_size,
             icon_padding=icon_padding,
             **kwargs,
         )
         self.content_widget.hoverIconClicked.connect(self._on_remove_clicked)
 
-        # Propriété pour la couleur de l'icône
+        # Icon color property
         self._icon_color = "grey"
-        # Appliquer la couleur initiale
+        # Apply initial color
         self.content_widget.icon_color = self._icon_color
 
-        # Ajout du widget au layout (prend toute la largeur)
+        # Add widget to layout (takes full width)
         layout.addWidget(self.content_widget)
 
+    # ------------------------------------------------
+    # PRIVATE METHODS
+    # ------------------------------------------------
+
     def _on_remove_clicked(self) -> None:
-        """Gestionnaire de clic sur l'icône de suppression."""
+        """Handle click on removal icon."""
         self.itemRemoved.emit(self.item_id)
+
+    # ///////////////////////////////////////////////////////////////
+    # PROPERTIES
+    # ///////////////////////////////////////////////////////////////
 
     @property
     def icon_color(self) -> str:
-        """Obtenir la couleur de l'icône du HoverLabel."""
+        """Get the icon color of the HoverLabel.
+
+        Returns:
+            The current icon color.
+        """
         return self._icon_color
 
     @icon_color.setter
     def icon_color(self, value: str) -> None:
-        """Définir la couleur de l'icône du HoverLabel."""
+        """Set the icon color of the HoverLabel.
+
+        Args:
+            value: The new icon color.
+        """
         self._icon_color = value
         if self.content_widget:
             self.content_widget.icon_color = value
 
     @property
     def compact(self) -> bool:
-        """Obtenir le mode compact."""
+        """Get the compact mode.
+
+        Returns:
+            True if compact mode is enabled, False otherwise.
+        """
         return self._compact
 
     @compact.setter
     def compact(self, value: bool) -> None:
-        """Définir le mode compact et ajuster la hauteur."""
+        """Set the compact mode and adjust height.
+
+        Args:
+            value: Whether to enable compact mode.
+        """
         self._compact = value
         if self._compact:
             self.setMinimumHeight(24)
@@ -146,17 +192,29 @@ class DraggableItem(QFrame):
         else:
             self.setMinimumHeight(40)
             self.setMaximumHeight(60)
-        self.updateGeometry()  # Forcer la mise à jour du layout
+        self.updateGeometry()  # Force layout update
+
+    # ///////////////////////////////////////////////////////////////
+    # EVENT HANDLERS
+    # ///////////////////////////////////////////////////////////////
 
     def mousePressEvent(self, event: QMouseEvent) -> None:
-        """Début du drag & drop."""
-        if event.button() == Qt.LeftButton:
+        """Handle mouse press events for drag start.
+
+        Args:
+            event: The mouse event.
+        """
+        if event.button() == Qt.MouseButton.LeftButton:
             self.drag_start_pos = event.position().toPoint()
         super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event: QMouseEvent) -> None:
-        """Gestion du mouvement de souris pour le drag & drop."""
-        if not (event.buttons() & Qt.LeftButton):
+        """Handle mouse movement for drag & drop.
+
+        Args:
+            event: The mouse event.
+        """
+        if not (event.buttons() & Qt.MouseButton.LeftButton):
             return
 
         if not self.is_dragging:
@@ -170,47 +228,58 @@ class DraggableItem(QFrame):
             self.style().unpolish(self)
             self.style().polish(self)
 
-            # Créer le drag
+            # Create drag
             drag = QDrag(self)
             mime_data = QMimeData()
             mime_data.setText(self.item_id)
             drag.setMimeData(mime_data)
 
-            # Exécuter le drag
-            drag.exec(Qt.MoveAction)
+            # Execute drag
+            drag.exec(Qt.DropAction.MoveAction)
 
-            # Nettoyer après le drag
+            # Cleanup after drag
             self.is_dragging = False
             self.setProperty("dragging", False)
             self.style().unpolish(self)
             self.style().polish(self)
 
     def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-        """Fin du drag & drop."""
+        """Handle mouse release events for drag end.
+
+        Args:
+            event: The mouse event.
+        """
         self.is_dragging = False
         self.setProperty("dragging", False)
         self.style().unpolish(self)
         self.style().polish(self)
         super().mouseReleaseEvent(event)
 
-    # OVERRIDE FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # OVERRIDE METHODS
     # ///////////////////////////////////////////////////////////////
 
     def sizeHint(self) -> QSize:
-        """Taille suggérée du widget basée sur le contenu."""
-        # Obtenir la taille suggérée du HoverLabel
+        """Get the recommended size for the widget based on content.
+
+        Returns:
+            The recommended size.
+        """
+        # Get suggested size from HoverLabel
         content_size = self.content_widget.sizeHint()
 
-        # Ajouter les marges et le padding du layout
-        layout_margins = self.layout().contentsMargins()
-        layout_spacing = self.layout().spacing()
+        # Add layout margins and padding
+        layout = self.layout()
+        if layout is None:
+            return QSize(content_size.width(), content_size.height())
+        layout_margins = layout.contentsMargins()
 
-        # Calculer la largeur totale
+        # Calculate total width
         total_width = (
             content_size.width() + layout_margins.left() + layout_margins.right()
         )
 
-        # Calculer la hauteur totale selon le mode compact
+        # Calculate total height based on compact mode
         if self._compact:
             min_height = max(
                 24,
@@ -227,358 +296,391 @@ class DraggableItem(QFrame):
         return QSize(total_width, min(min_height, max_height))
 
     def minimumSizeHint(self) -> QSize:
-        """Taille minimale du widget."""
-        # Obtenir la taille minimale du HoverLabel
+        """Get the minimum size for the widget.
+
+        Returns:
+            The minimum size hint.
+        """
+        # Get minimum size from HoverLabel
         content_min_size = self.content_widget.minimumSizeHint()
 
-        # Ajouter les marges du layout
-        layout_margins = self.layout().contentsMargins()
+        # Add layout margins
+        layout = self.layout()
+        if layout is None:
+            return QSize(content_min_size.width(), content_min_size.height())
+        layout_margins = layout.contentsMargins()
 
-        # Largeur minimale basée sur le contenu + marges
+        # Minimum width based on content + margins
         min_width = (
             content_min_size.width() + layout_margins.left() + layout_margins.right()
         )
 
-        # Hauteur minimale selon le mode compact
+        # Minimum height based on compact mode
         min_height = 24 if self._compact else 40
 
         return QSize(min_width, min_height)
 
-    # STYLE FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
     def refresh_style(self) -> None:
-        """Refresh the widget's style (useful after dynamic stylesheet changes)."""
+        """Refresh the widget's style.
+
+        Useful after dynamic stylesheet changes.
+        """
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()
 
 
 class DraggableList(QWidget):
-    """
-    Widget de liste d'éléments réorganisables avec drag & drop et suppression.
+    """List widget with reorderable items via drag & drop and removal.
 
-    Ce widget permet de gérer une liste d'éléments que l'utilisateur peut
-    réorganiser par drag & drop et supprimer individuellement.
+    This widget allows managing a list of items that users can reorder by
+    drag & drop and remove individually.
 
     Features:
-        - Liste d'éléments réorganisables par drag & drop
-        - Suppression d'éléments via HoverLabel (icône rouge au survol)
-        - Interface cohérente avec HoverLabel pour tous les éléments
-        - Signaux pour les événements de réorganisation et suppression
-        - Interface fluide et intuitive
-        - Personnalisation des apparences
-        - Gestion automatique de l'ordre des éléments
-        - Icône de suppression intégrée dans HoverLabel
+        - List of items reorderable by drag & drop
+        - Item removal via HoverLabel (red icon on hover)
+        - Consistent interface with HoverLabel for all items
+        - Signals for reordering and removal events
+        - Smooth and intuitive interface
+        - Appearance customization
+        - Automatic item order management
+        - Integrated removal icon in HoverLabel
 
-    Example
-    -------
-    >>> draggable_list = DraggableList(
-    ...     items=["Item 1", "Item 2", "Item 3"],
-    ...     icon="https://img.icons8.com/?size=100&id=8329&format=png&color=000000"
-    ... )
-    >>> draggable_list.itemMoved.connect(lambda old_pos, new_pos: print(f"Moved from {old_pos} to {new_pos}"))
-    >>> draggable_list.itemRemoved.connect(lambda item_id: print(f"Removed {item_id}"))
+    Use cases:
+        - Reorderable task list
+        - Option selector with customizable order
+        - File management interface
+        - Priority-ordered element configuration
 
-    Use cases
-    ---------
-    - Liste de tâches réorganisables
-    - Sélecteur d'options avec ordre personnalisable
-    - Interface de gestion de fichiers
-    - Configuration d'éléments en ordre de priorité
+    Args:
+        parent: The parent widget (default: None).
+        items: Initial list of items (default: []).
+        allow_drag_drop: Allow drag & drop for reordering (default: True).
+        allow_remove: Allow item removal via HoverLabel (default: True).
+        max_height: Maximum height of the widget (default: 300).
+        min_width: Minimum width of the widget (default: 150).
+        compact: Display items in compact mode (reduced height) (default: False).
+        *args: Additional arguments passed to item widgets.
+        **kwargs: Additional keyword arguments passed to item widgets.
 
-    Parameters
-    ----------
-    parent : QWidget, optional
-        Le widget parent (default: None).
-    items : List[str], optional
-        Liste initiale des éléments (default: []).
-    allow_drag_drop : bool, optional
-        Autoriser le drag & drop pour réorganiser (default: True).
-    allow_remove : bool, optional
-        Autoriser la suppression d'éléments via HoverLabel (default: True).
-    max_height : int, optional
-        Hauteur maximale du widget (default: 300).
-    min_width : int, optional
-        Largeur minimale du widget (default: 200).
-    compact : bool, optional
-        Afficher les éléments en mode compact (hauteur réduite) (default: False).
-    *args, **kwargs :
-        Arguments supplémentaires passés aux widgets d'éléments.
+    Signals:
+        itemMoved(str, int, int): Emitted when an item is moved
+            (item_id, old_position, new_position).
+        itemRemoved(str, int): Emitted when an item is removed
+            (item_id, position).
+        itemAdded(str, int): Emitted when an item is added
+            (item_id, position).
+        itemClicked(str): Emitted when an item is clicked (item_id).
+        orderChanged(list): Emitted when the item order changes
+            (new ordered list).
 
-    Properties
-    ----------
-    items : List[str]
-        Obtenir ou définir la liste des éléments.
-    item_count : int
-        Nombre d'éléments dans la liste (lecture seule).
-    allow_drag_drop : bool
-        Obtenir ou définir l'autorisation de drag & drop.
-    allow_remove : bool
-        Obtenir ou définir l'autorisation de suppression.
-    icon_color : str
-        Obtenir ou définir la couleur de l'icône des éléments.
-    compact : bool
-        Obtenir ou définir le mode compact.
-    min_width : int
-        Obtenir ou définir la largeur minimale du widget.
-
-    Signals
-    -------
-    itemMoved(str, int, int)
-        Émis quand un élément est déplacé (item_id, old_position, new_position).
-    itemRemoved(str, int)
-        Émis quand un élément est supprimé (item_id, position).
-    itemAdded(str, int)
-        Émis quand un élément est ajouté (item_id, position).
-    itemClicked(str)
-        Émis quand un élément est cliqué (item_id).
-    orderChanged(List[str])
-        Émis quand l'ordre des éléments change (nouvelle liste ordonnée).
+    Example:
+        >>> draggable_list = DraggableList(
+        ...     items=["Item 1", "Item 2", "Item 3"],
+        ...     icon="https://img.icons8.com/?size=100&id=8329&format=png&color=000000"
+        ... )
+        >>> draggable_list.itemMoved.connect(
+        ...     lambda item_id, old_pos, new_pos: print(f"Moved {item_id} from {old_pos} to {new_pos}")
+        ... )
+        >>> draggable_list.itemRemoved.connect(
+        ...     lambda item_id, pos: print(f"Removed {item_id} at {pos}")
+        ... )
     """
 
     itemMoved = Signal(str, int, int)  # item_id, old_position, new_position
     itemRemoved = Signal(str, int)  # item_id, position
     itemAdded = Signal(str, int)  # item_id, position
     itemClicked = Signal(str)  # item_id
-    orderChanged = Signal(list)  # nouvelle liste ordonnée
+    orderChanged = Signal(list)  # new ordered list
+
+    # ///////////////////////////////////////////////////////////////
+    # INIT
+    # ///////////////////////////////////////////////////////////////
 
     def __init__(
         self,
-        parent: Optional[QWidget] = None,
-        items: Optional[List[str]] = None,
+        parent: QWidget | None = None,
+        items: list[str] | None = None,
         allow_drag_drop: bool = True,
         allow_remove: bool = True,
         max_height: int = 300,
         min_width: int = 150,
         compact: bool = False,
-        *args: Any,
+        *args: Any,  # noqa: ARG002
         **kwargs: Any,
     ) -> None:
+        """Initialize the draggable list."""
         super().__init__(parent)
         self.setProperty("type", "DraggableList")
 
-        # Initialisation des attributs
-        self._items: List[str] = items or []
+        # Initialize attributes
+        self._items: list[str] = items or []
         self._allow_drag_drop: bool = allow_drag_drop
         self._allow_remove: bool = allow_remove
         self._max_height: int = max_height
         self._min_width: int = min_width
         self._compact: bool = compact
-        self._item_widgets: Dict[str, DraggableItem] = {}  # item_id -> DraggableItem
+        self._item_widgets: dict[str, DraggableItem] = {}
         self._kwargs = kwargs
-        self._icon_color = "grey"  # Couleur par défaut de l'icône
+        self._icon_color = "grey"  # Default icon color
 
-        # Configuration du widget
+        # Configure widget
         self.setAcceptDrops(True)
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.setMinimumWidth(min_width)
         self.setMaximumHeight(max_height)
 
-        # Layout principal
+        # Main layout
         layout = QVBoxLayout(self)
         layout.setContentsMargins(8, 8, 8, 8)
         layout.setSpacing(4)
 
-        # Zone de scroll
+        # Scroll area
         self.scroll_area = QScrollArea()
         self.scroll_area.setWidgetResizable(True)
-        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.scroll_area.setFrameStyle(QFrame.NoFrame)
+        self.scroll_area.setHorizontalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOff
+        )
+        self.scroll_area.setVerticalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAsNeeded
+        )
+        self.scroll_area.setFrameShape(QFrame.Shape.NoFrame)
 
-        # Widget conteneur pour les éléments
+        # Container widget for items
         self.container_widget = QWidget()
         self.container_layout = QVBoxLayout(self.container_widget)
         self.container_layout.setContentsMargins(0, 0, 0, 0)
         self.container_layout.setSpacing(4)
-        self.container_layout.addStretch()  # Espace flexible à la fin
+        self.container_layout.addStretch()  # Flexible space at the end
 
         self.scroll_area.setWidget(self.container_widget)
         layout.addWidget(self.scroll_area)
 
-        # Initialiser les éléments
+        # Initialize items
         self._create_items()
 
+    # ///////////////////////////////////////////////////////////////
     # PROPERTIES
     # ///////////////////////////////////////////////////////////////
 
     @property
-    def items(self) -> List[str]:
-        """Obtenir la liste des éléments."""
+    def items(self) -> list[str]:
+        """Get the list of items.
+
+        Returns:
+            A copy of the current items list.
+        """
         return self._items.copy()
 
     @items.setter
-    def items(self, value: List[str]) -> None:
-        """Définir la liste des éléments."""
+    def items(self, value: list[str]) -> None:
+        """Set the list of items.
+
+        Args:
+            value: The new items list.
+        """
         self._items = value.copy()
         self._create_items()
 
     @property
     def item_count(self) -> int:
-        """Nombre d'éléments dans la liste."""
+        """Get the number of items in the list.
+
+        Returns:
+            The number of items (read-only).
+        """
         return len(self._items)
 
     @property
     def allow_drag_drop(self) -> bool:
-        """Obtenir l'autorisation de drag & drop."""
+        """Get whether drag & drop is allowed.
+
+        Returns:
+            True if drag & drop is allowed, False otherwise.
+        """
         return self._allow_drag_drop
 
     @allow_drag_drop.setter
     def allow_drag_drop(self, value: bool) -> None:
-        """Définir l'autorisation de drag & drop."""
+        """Set whether drag & drop is allowed.
+
+        Args:
+            value: Whether to allow drag & drop.
+        """
         self._allow_drag_drop = value
 
     @property
     def allow_remove(self) -> bool:
-        """Obtenir l'autorisation de suppression."""
+        """Get whether item removal is allowed.
+
+        Returns:
+            True if removal is allowed, False otherwise.
+        """
         return self._allow_remove
 
     @allow_remove.setter
     def allow_remove(self, value: bool) -> None:
-        """Définir l'autorisation de suppression."""
+        """Set whether item removal is allowed.
+
+        Args:
+            value: Whether to allow item removal.
+        """
         self._allow_remove = value
         for widget in self._item_widgets.values():
             widget.content_widget.icon_enabled = value
 
     @property
     def icon_color(self) -> str:
-        """Obtenir la couleur de l'icône des éléments."""
+        """Get the icon color of the items.
+
+        Returns:
+            The current icon color.
+        """
         return self._icon_color
 
     @icon_color.setter
     def icon_color(self, value: str) -> None:
-        """Définir la couleur de l'icône de tous les éléments."""
+        """Set the icon color for all items.
+
+        Args:
+            value: The new icon color.
+        """
         self._icon_color = value
         for widget in self._item_widgets.values():
             widget.icon_color = value
 
     @property
     def compact(self) -> bool:
-        """Obtenir le mode compact."""
+        """Get the compact mode.
+
+        Returns:
+            True if compact mode is enabled, False otherwise.
+        """
         return self._compact
 
     @compact.setter
     def compact(self, value: bool) -> None:
-        """Définir le mode compact et mettre à jour tous les éléments."""
+        """Set the compact mode and update all items.
+
+        Args:
+            value: Whether to enable compact mode.
+        """
         self._compact = value
         for widget in self._item_widgets.values():
             widget.compact = value
 
     @property
     def min_width(self) -> int:
-        """Obtenir la largeur minimale du widget."""
+        """Get the minimum width of the widget.
+
+        Returns:
+            The minimum width.
+        """
         return self._min_width
 
     @min_width.setter
     def min_width(self, value: int) -> None:
-        """Définir la largeur minimale du widget."""
-        self._min_width = value
-        self.updateGeometry()  # Forcer la mise à jour du layout
+        """Set the minimum width of the widget.
 
-    # ITEM MANAGEMENT FUNCTIONS
+        Args:
+            value: The new minimum width.
+        """
+        self._min_width = value
+        self.updateGeometry()  # Force layout update
+
+    # ///////////////////////////////////////////////////////////////
+    # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def add_item(self, item_id: str, text: Optional[str] = None) -> None:
-        """
-        Ajouter un élément à la liste.
+    def add_item(self, item_id: str, text: str | None = None) -> None:
+        """Add an item to the list.
 
-        Parameters
-        ----------
-        item_id : str
-            Identifiant unique de l'élément.
-        text : str, optional
-            Texte à afficher (utilise item_id si None).
+        Args:
+            item_id: Unique identifier for the item.
+            text: Text to display (uses item_id if None).
         """
         if item_id in self._items:
-            return  # Élément déjà présent
+            return  # Item already present
 
         text = text or item_id
         self._items.append(item_id)
 
-        # Créer le widget
+        # Create widget
         item_widget = DraggableItem(
             item_id=item_id, text=text, compact=self._compact, **self._kwargs
         )
 
-        # Connecter les signaux
+        # Connect signals
         item_widget.itemRemoved.connect(self._on_item_removed)
 
-        # Masquer l'icône de suppression si nécessaire
+        # Hide removal icon if necessary
         if not self._allow_remove:
             item_widget.content_widget.icon_enabled = False
 
-        # Ajouter au layout (avant le stretch)
+        # Add to layout (before stretch)
         self.container_layout.insertWidget(len(self._items) - 1, item_widget)
         self._item_widgets[item_id] = item_widget
 
-        # Émettre le signal
+        # Emit signal
         self.itemAdded.emit(item_id, len(self._items) - 1)
         self.orderChanged.emit(self._items.copy())
 
     def remove_item(self, item_id: str) -> bool:
-        """
-        Supprimer un élément de la liste.
+        """Remove an item from the list.
 
-        Parameters
-        ----------
-        item_id : str
-            Identifiant de l'élément à supprimer.
+        Args:
+            item_id: Identifier of the item to remove.
 
-        Returns
-        -------
-        bool
-            True si l'élément a été supprimé, False sinon.
+        Returns:
+            True if the item was removed, False otherwise.
         """
         if item_id not in self._items:
             return False
 
-        # Supprimer de la liste
+        # Remove from list
         position = self._items.index(item_id)
         self._items.remove(item_id)
 
-        # Supprimer le widget
+        # Remove widget
         if item_id in self._item_widgets:
             widget = self._item_widgets[item_id]
             self.container_layout.removeWidget(widget)
             widget.deleteLater()
             del self._item_widgets[item_id]
 
-        # Émettre les signaux
+        # Emit signals
         self.itemRemoved.emit(item_id, position)
         self.orderChanged.emit(self._items.copy())
 
         return True
 
     def clear_items(self) -> None:
-        """Supprimer tous les éléments de la liste."""
-        # Nettoyer les widgets
+        """Remove all items from the list."""
+        # Clean up widgets
         for widget in self._item_widgets.values():
             self.container_layout.removeWidget(widget)
             widget.deleteLater()
         self._item_widgets.clear()
 
-        # Vider la liste
+        # Clear list
         self._items.clear()
 
-        # Émettre le signal
+        # Emit signal
         self.orderChanged.emit([])
 
     def move_item(self, item_id: str, new_position: int) -> bool:
-        """
-        Déplacer un élément à une nouvelle position.
+        """Move an item to a new position.
 
-        Parameters
-        ----------
-        item_id : str
-            Identifiant de l'élément à déplacer.
-        new_position : int
-            Nouvelle position (0-based).
+        Args:
+            item_id: Identifier of the item to move.
+            new_position: New position (0-based).
 
-        Returns
-        -------
-        bool
-            True si l'élément a été déplacé, False sinon.
+        Returns:
+            True if the item was moved, False otherwise.
         """
         if item_id not in self._items:
             return False
@@ -587,85 +689,120 @@ class DraggableList(QWidget):
         if old_position == new_position:
             return True
 
-        # Déplacer dans la liste
+        # Move in list
         self._items.pop(old_position)
         self._items.insert(new_position, item_id)
 
-        # Déplacer le widget
+        # Move widget
         if item_id in self._item_widgets:
             widget = self._item_widgets[item_id]
             self.container_layout.removeWidget(widget)
             self.container_layout.insertWidget(new_position, widget)
 
-        # Émettre les signaux
+        # Emit signals
         self.itemMoved.emit(item_id, old_position, new_position)
         self.orderChanged.emit(self._items.copy())
 
         return True
 
     def get_item_position(self, item_id: str) -> int:
-        """
-        Obtenir la position d'un élément.
+        """Get the position of an item.
 
-        Parameters
-        ----------
-        item_id : str
-            Identifiant de l'élément.
+        Args:
+            item_id: Identifier of the item.
 
-        Returns
-        -------
-        int
-            Position de l'élément (-1 si non trouvé).
+        Returns:
+            Position of the item (-1 if not found).
         """
         try:
             return self._items.index(item_id)
         except ValueError:
             return -1
 
+    # ------------------------------------------------
+    # PRIVATE METHODS
+    # ------------------------------------------------
+
     def _create_items(self) -> None:
-        """Créer les widgets pour tous les éléments."""
-        # Nettoyer les widgets existants
+        """Create widgets for all items."""
+        # Clean up existing widgets
         for widget in self._item_widgets.values():
             self.container_layout.removeWidget(widget)
             widget.deleteLater()
         self._item_widgets.clear()
 
-        # Créer les nouveaux widgets
+        # Create new widgets
         for i, item_id in enumerate(self._items):
             item_widget = DraggableItem(
                 item_id=item_id, text=item_id, compact=self._compact, **self._kwargs
             )
 
-            # Connecter les signaux
+            # Connect signals
             item_widget.itemRemoved.connect(self._on_item_removed)
 
-            # Masquer l'icône de suppression si nécessaire
+            # Hide removal icon if necessary
             if not self._allow_remove:
                 item_widget.content_widget.icon_enabled = False
 
-            # Ajouter au layout
+            # Add to layout
             self.container_layout.insertWidget(i, item_widget)
             self._item_widgets[item_id] = item_widget
 
     def _on_item_removed(self, item_id: str) -> None:
-        """Gestionnaire de suppression d'un élément."""
+        """Handle item removal."""
         self.remove_item(item_id)
 
-    # EVENT FUNCTIONS
+    def _calculate_drop_position(self, drop_pos: QPoint) -> int:
+        """Calculate drop position based on coordinates.
+
+        Args:
+            drop_pos: Drop position coordinates.
+
+        Returns:
+            The calculated drop position index.
+        """
+        # Convert global coordinates to container local coordinates
+        local_pos = self.container_widget.mapFrom(self, drop_pos)
+
+        # Find position in layout
+        for i in range(self.container_layout.count() - 1):  # -1 to exclude stretch
+            item = self.container_layout.itemAt(i)
+            widget = item.widget() if item else None
+            if widget is not None:
+                widget_rect = widget.geometry()
+                if local_pos.y() < widget_rect.center().y():
+                    return i
+
+        return len(self._items) - 1
+
+    # ///////////////////////////////////////////////////////////////
+    # EVENT HANDLERS
     # ///////////////////////////////////////////////////////////////
 
     def dragEnterEvent(self, event: QDragEnterEvent) -> None:
-        """Gestionnaire d'entrée de drag."""
+        """Handle drag enter events.
+
+        Args:
+            event: The drag enter event.
+        """
         if self._allow_drag_drop and event.mimeData().hasText():
             event.acceptProposedAction()
 
     def dragMoveEvent(self, event: QDragMoveEvent) -> None:
-        """Gestionnaire de mouvement de drag."""
+        """Handle drag move events.
+
+        Args:
+            event: The drag move event.
+        """
         if self._allow_drag_drop and event.mimeData().hasText():
             event.acceptProposedAction()
 
     def dropEvent(self, event: QDropEvent) -> None:
-        """Gestionnaire de drop."""
+        """Handle drop events.
+
+        Args:
+            event: The drop event.
+        """
         if not self._allow_drag_drop:
             return
 
@@ -673,62 +810,49 @@ class DraggableList(QWidget):
         if item_id not in self._items:
             return
 
-        # Calculer la nouvelle position
+        # Calculate new position
         drop_pos = event.position().toPoint()
         new_position = self._calculate_drop_position(drop_pos)
 
-        # Déplacer l'élément
+        # Move item
         self.move_item(item_id, new_position)
 
         event.acceptProposedAction()
 
-    # UI FUNCTIONS
     # ///////////////////////////////////////////////////////////////
-
-    def _calculate_drop_position(self, drop_pos: QPoint) -> int:
-        """Calculer la position de drop basée sur les coordonnées."""
-        # Convertir les coordonnées globales en coordonnées locales du container
-        local_pos = self.container_widget.mapFrom(self, drop_pos)
-
-        # Trouver la position dans le layout
-        for i in range(self.container_layout.count() - 1):  # -1 pour exclure le stretch
-            item = self.container_layout.itemAt(i)
-            if item.widget():
-                widget_rect = item.widget().geometry()
-                if local_pos.y() < widget_rect.center().y():
-                    return i
-
-        return len(self._items) - 1
-
-    # OVERRIDE FUNCTIONS
+    # OVERRIDE METHODS
     # ///////////////////////////////////////////////////////////////
 
     def sizeHint(self) -> QSize:
-        """Taille suggérée du widget basée sur le contenu."""
-        # Calculer la largeur maximale des éléments
+        """Get the recommended size for the widget based on content.
+
+        Returns:
+            The recommended size.
+        """
+        # Calculate maximum width of items
         max_item_width = 0
 
         if self._item_widgets:
-            # Obtenir la largeur maximale des éléments existants
+            # Get maximum width of existing items
             item_widths = [
                 widget.sizeHint().width() for widget in self._item_widgets.values()
             ]
             max_item_width = max(item_widths) if item_widths else 0
 
-        # Utiliser la largeur minimale seulement si nécessaire
+        # Use minimum width only if necessary
         if max_item_width < self._min_width:
             max_item_width = self._min_width
 
-        # Ajouter les marges du widget principal
+        # Add main widget margins
         margins = self.contentsMargins()
         total_width = max_item_width + margins.left() + margins.right()
 
-        # Calculer la hauteur basée sur le nombre d'éléments
-        item_height = 50  # Hauteur approximative d'un élément
-        spacing = 4  # Espacement entre éléments
+        # Calculate height based on number of items
+        item_height = 50  # Approximate item height
+        spacing = 4  # Spacing between items
         total_items_height = len(self._item_widgets) * (item_height + spacing)
 
-        # Ajouter les marges et limiter à la hauteur maximale
+        # Add margins and limit to maximum height
         total_height = min(
             total_items_height + margins.top() + margins.bottom(), self._max_height
         )
@@ -736,38 +860,46 @@ class DraggableList(QWidget):
         return QSize(total_width, max(200, total_height))
 
     def minimumSizeHint(self) -> QSize:
-        """Taille minimale du widget."""
-        # Largeur minimale basée sur les éléments ou la largeur minimale configurée
+        """Get the minimum size for the widget.
+
+        Returns:
+            The minimum size hint.
+        """
+        # Minimum width based on items or configured minimum width
         min_width = 0
 
         if self._item_widgets:
-            # Obtenir la largeur minimale des éléments existants
+            # Get minimum width of existing items
             item_min_widths = [
                 widget.minimumSizeHint().width()
                 for widget in self._item_widgets.values()
             ]
             min_width = max(item_min_widths) if item_min_widths else 0
 
-        # Utiliser la largeur minimale seulement si nécessaire
+        # Use minimum width only if necessary
         if min_width < self._min_width:
             min_width = self._min_width
 
-        # Ajouter les marges
+        # Add margins
         margins = self.contentsMargins()
         total_width = min_width + margins.left() + margins.right()
 
-        # Hauteur minimale basée sur au moins un élément
-        item_min_height = 40  # Hauteur minimale d'un élément
-        spacing = 4  # Espacement
+        # Minimum height based on at least one item
+        item_min_height = 40  # Minimum item height
+        spacing = 4  # Spacing
         min_height = item_min_height + spacing + margins.top() + margins.bottom()
 
         return QSize(total_width, min_height)
 
-    # STYLE FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
     def refresh_style(self) -> None:
-        """Refresh the widget's style (useful after dynamic stylesheet changes)."""
+        """Refresh the widget's style.
+
+        Useful after dynamic stylesheet changes.
+        """
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()

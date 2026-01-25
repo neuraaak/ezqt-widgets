@@ -4,7 +4,6 @@
 
 ### **Inputs**
 - [AutoCompleteInput](#autocompleteinput)
-- [PasswordInput](#passwordinput)
 - [SearchInput](#searchinput)
 - [TabReplaceTextEdit](#tabreplacetextedit)
 
@@ -65,48 +64,6 @@ AutoCompleteInput:focus {
 </details>
 
 - Adapt colors according to your application's graphic charter.
-- Type properties are automatically defined in the code.
-
----
-
-### PasswordInput
-[⬆️ Back to top](#summary) | [📖 Complete documentation](WIDGETS_DOCUMENTATION.md#passwordinput)
-
-<details>
-<summary>View QSS</summary>
-
-```css
-/* Main widget */
-PasswordInput QWidget {
-    background-color: #2d2d2d;
-    border: 1px solid #444444;
-    border-radius: 4px 4px 4px 4px;
-}
-
-/* Input field */
-PasswordInput QLineEdit {
-    background-color: transparent;
-    border: none;
-    border-radius: 4px 4px 4px 4px;
-    padding: 0px 4px 4px 4px;
-    selection-color: #ffffff;
-    selection-background-color: #0078d4;
-}
-PasswordInput QLineEdit:hover {
-    background-color: transparent;
-    border: none;
-    border-radius: 4px 4px 4px 4px;
-}
-PasswordInput QLineEdit:focus {
-    background-color: transparent;
-    border: none;
-    border-radius: 4px 4px 4px 4px;
-}
-```
-</details>
-
-- Adapt colors according to your application's graphic charter.
-- The right padding is automatically managed for the icon.
 - Type properties are automatically defined in the code.
 
 ---

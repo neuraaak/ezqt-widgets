@@ -1,6 +1,13 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# TEST_LABEL - Label Widgets Tests Module
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
 """
-Tests unitaires pour les widgets label d'EzQt_Widgets.
-""" 
+Unit tests for label widgets.
+
+This module contains unit tests for all label widgets including
+ClickableTagLabel, FramedLabel, HoverLabel, and IndicatorLabel.
+"""
+
+from __future__ import annotations

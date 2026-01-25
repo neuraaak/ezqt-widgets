@@ -1,14 +1,32 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# INPUT - Input Widgets Module
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
-# TAB REPLACE TEXTEDIT
-from .tab_replace_textedit import *
+"""
+Input widgets module.
 
-# AUTO COMPLETE INPUT
-from .auto_complete_input import *
+This module provides various input widgets for PySide6 applications,
+including auto-complete inputs, search inputs, and text editors with
+tab replacement functionality.
+"""
 
-# SEARCH INPUT
-from .search_input import *
+from __future__ import annotations
 
-# PASSWORD INPUT
-from .password_input import *
+# ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Local imports
+from .auto_complete_input import AutoCompleteInput
+from .search_input import SearchInput
+from .tab_replace_textedit import TabReplaceTextEdit
+
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = [
+    "AutoCompleteInput",
+    "SearchInput",
+    "TabReplaceTextEdit",
+]

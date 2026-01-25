@@ -1,27 +1,39 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# TEST_HOVER_LABEL - HoverLabel Widget Tests
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
 """
-Tests unitaires pour le widget HoverLabel.
+Unit tests for HoverLabel widget.
+
+Tests for the interactive QLabel with floating icon on hover.
 """
 
+from __future__ import annotations
+
+# ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Third-party imports
 import pytest
-from unittest.mock import patch, MagicMock
-from PySide6.QtCore import QSize, Qt, QRect, QEvent
-from PySide6.QtGui import QIcon, QPixmap, QColor, QMouseEvent, QEnterEvent
-from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QEvent, QPoint, QRect, QSize, Qt
+from PySide6.QtGui import QEnterEvent, QIcon, QMouseEvent, QPixmap
 
+# Local imports
 from ezqt_widgets.label.hover_label import HoverLabel
-
 
 pytestmark = pytest.mark.unit
 
+# ///////////////////////////////////////////////////////////////
+# TEST CLASSES
+# ///////////////////////////////////////////////////////////////
+
 
 class TestHoverLabel:
-    """Tests pour la classe HoverLabel."""
+    """Tests for HoverLabel class."""
 
-    def test_hover_label_creation_default(self, qt_widget_cleanup):
-        """Test de création avec paramètres par défaut."""
+    def test_hover_label_creation_default(self, qt_widget_cleanup) -> None:
+        """Test creation with default parameters."""
         label = HoverLabel()
 
         assert label is not None
@@ -33,10 +45,10 @@ class TestHoverLabel:
         assert label.icon_padding == 8
         assert label.icon_enabled is True
 
-    def test_hover_label_creation_with_parameters(self, qt_widget_cleanup):
-        """Test de création avec paramètres personnalisés."""
+    def test_hover_label_creation_with_parameters(self, qt_widget_cleanup) -> None:
+        """Test creation with custom parameters."""
         pixmap = QPixmap(16, 16)
-        pixmap.fill(Qt.red)
+        pixmap.fill(Qt.GlobalColor.red)
         icon = QIcon(pixmap)
 
         label = HoverLabel(
@@ -57,357 +69,333 @@ class TestHoverLabel:
         assert label.icon_padding == 12
         assert label.icon_enabled is False
 
-    def test_hover_label_properties(self, qt_widget_cleanup):
-        """Test des propriétés du label."""
+    def test_hover_label_properties(self, qt_widget_cleanup) -> None:
+        """Test label properties."""
         label = HoverLabel()
 
-        # ////// TEST OPACITY PROPERTY
+        # Test opacity property
         label.opacity = 0.7
         assert label.opacity == 0.7
 
-        # ////// TEST HOVER_ICON PROPERTY
+        # Test hover_icon property
         pixmap = QPixmap(16, 16)
-        pixmap.fill(Qt.blue)
+        pixmap.fill(Qt.GlobalColor.blue)
         icon = QIcon(pixmap)
         label.hover_icon = icon
         assert label.hover_icon is not None
 
-        # ////// TEST ICON_SIZE PROPERTY
+        # Test icon_size property
         label.icon_size = QSize(32, 32)
         assert label.icon_size == QSize(32, 32)
 
-        # ////// TEST ICON_COLOR PROPERTY
+        # Test icon_color property
         label.icon_color = "#00FF00"
         assert label.icon_color == "#00FF00"
 
-        # ////// TEST ICON_PADDING PROPERTY
+        # Test icon_padding property
         label.icon_padding = 16
         assert label.icon_padding == 16
 
-        # ////// TEST ICON_ENABLED PROPERTY
+        # Test icon_enabled property
         label.icon_enabled = False
         assert label.icon_enabled is False
 
-    def test_hover_label_signals(self, qt_widget_cleanup):
-        """Test des signaux du label."""
-        # Créer un label avec une icône pour que le signal puisse être émis
-        from PySide6.QtGui import QIcon, QPixmap
-
-        # Créer une icône simple
+    def test_hover_label_signals(self, qt_widget_cleanup) -> None:
+        """Test label signals."""
+        # Create a label with an icon so the signal can be emitted
         pixmap = QPixmap(16, 16)
-        pixmap.fill(Qt.blue)
+        pixmap.fill(Qt.GlobalColor.blue)
         icon = QIcon(pixmap)
 
         label = HoverLabel(icon=icon)
 
-        # ////// TEST HOVERICONCLICKED SIGNAL
+        # Test hoverIconClicked signal
         signal_received = False
 
-        def on_hover_icon_clicked():
+        def on_hover_icon_clicked() -> None:
             nonlocal signal_received
             signal_received = True
 
         label.hoverIconClicked.connect(on_hover_icon_clicked)
 
-        # ////// SIMULER L'ENTRÉE DE LA SOURIS
-        from PySide6.QtCore import QPoint
-        from PySide6.QtGui import QEnterEvent
-
+        # Simulate mouse entry
         enter_event = QEnterEvent(QPoint(10, 10), QPoint(10, 10), QPoint(10, 10))
         label.enterEvent(enter_event)
 
-        # ////// SIMULER UN CLIC SUR L'ICÔNE (position dans la zone de l'icône)
-        from PySide6.QtGui import QMouseEvent
-
-        # Calculer la position de l'icône (à droite du widget)
+        # Simulate a click on the icon (position in the icon area)
+        # Calculate icon position (at the right of the widget)
         icon_x = label.width() - label.icon_size.width() - 4
         icon_y = (label.height() - label.icon_size.height()) // 2
 
         mouse_event = QMouseEvent(
             QMouseEvent.Type.MouseButtonPress,
-            QPoint(icon_x + 5, icon_y + 5),  # Position dans l'icône
+            QPoint(icon_x + 5, icon_y + 5),  # Position in the icon
             QPoint(icon_x + 5, icon_y + 5),
-            Qt.LeftButton,
-            Qt.LeftButton,
-            Qt.NoModifier,
+            Qt.MouseButton.LeftButton,
+            Qt.MouseButton.LeftButton,
+            Qt.KeyboardModifier.NoModifier,
         )
         label.mousePressEvent(mouse_event)
 
-        # ////// VÉRIFIER QUE LE SIGNAL A ÉTÉ ÉMIS
+        # Verify that the signal was emitted
         assert signal_received
 
-    def test_hover_label_mouse_events(self, qt_widget_cleanup):
-        """Test des événements souris."""
+    def test_hover_label_mouse_events(self, qt_widget_cleanup) -> None:
+        """Test mouse events."""
         label = HoverLabel()
 
-        # ////// TEST MOUSEMOVEEVENT
-        from PySide6.QtCore import QPoint
-        from PySide6.QtGui import QMouseEvent
-
+        # Test mouseMoveEvent
         mouse_move_event = QMouseEvent(
             QMouseEvent.Type.MouseMove,
             QPoint(10, 10),
             QPoint(10, 10),
-            Qt.NoButton,
-            Qt.NoButton,
-            Qt.NoModifier,
+            Qt.MouseButton.NoButton,
+            Qt.MouseButton.NoButton,
+            Qt.KeyboardModifier.NoModifier,
         )
 
         try:
             label.mouseMoveEvent(mouse_move_event)
         except Exception as e:
-            pytest.fail(f"mouseMoveEvent() a levé une exception: {e}")
+            pytest.fail(f"mouseMoveEvent() raised an exception: {e}")
 
-        # ////// TEST MOUSEPRESSEVENT
+        # Test mousePressEvent
         mouse_press_event = QMouseEvent(
             QMouseEvent.Type.MouseButtonPress,
             QPoint(10, 10),
             QPoint(10, 10),
-            Qt.LeftButton,
-            Qt.LeftButton,
-            Qt.NoModifier,
+            Qt.MouseButton.LeftButton,
+            Qt.MouseButton.LeftButton,
+            Qt.KeyboardModifier.NoModifier,
         )
 
         try:
             label.mousePressEvent(mouse_press_event)
         except Exception as e:
-            pytest.fail(f"mousePressEvent() a levé une exception: {e}")
+            pytest.fail(f"mousePressEvent() raised an exception: {e}")
 
-    def test_hover_label_enter_leave_events(self, qt_widget_cleanup):
-        """Test des événements enter/leave."""
+    def test_hover_label_enter_leave_events(self, qt_widget_cleanup) -> None:
+        """Test enter/leave events."""
         label = HoverLabel()
 
-        # ////// TEST ENTEREVENT
-        from PySide6.QtCore import QPoint
-        from PySide6.QtGui import QEnterEvent
-
+        # Test enterEvent
         enter_event = QEnterEvent(QPoint(10, 10), QPoint(10, 10), QPoint(10, 10))
         try:
             label.enterEvent(enter_event)
         except Exception as e:
-            pytest.fail(f"enterEvent() a levé une exception: {e}")
+            pytest.fail(f"enterEvent() raised an exception: {e}")
 
-        # ////// TEST LEAVEEVENT
-        from PySide6.QtCore import QEvent
-
+        # Test leaveEvent
         leave_event = QEvent(QEvent.Type.Leave)
         try:
             label.leaveEvent(leave_event)
         except Exception as e:
-            pytest.fail(f"leaveEvent() a levé une exception: {e}")
+            pytest.fail(f"leaveEvent() raised an exception: {e}")
 
-    def test_hover_label_paint_event(self, qt_widget_cleanup):
-        """Test de l'événement paint."""
+    def test_hover_label_paint_event(self, qt_widget_cleanup) -> None:
+        """Test paint event."""
         label = HoverLabel()
 
-        # ////// TEST PAINTEVENT
+        # Test paintEvent
         from PySide6.QtGui import QPaintEvent
-        from PySide6.QtCore import QRect
 
         paint_event = QPaintEvent(QRect(0, 0, 100, 50))
         try:
             label.paintEvent(paint_event)
         except Exception as e:
-            pytest.fail(f"paintEvent() a levé une exception: {e}")
+            pytest.fail(f"paintEvent() raised an exception: {e}")
 
-    def test_hover_label_resize_event(self, qt_widget_cleanup):
-        """Test de l'événement resize."""
+    def test_hover_label_resize_event(self, qt_widget_cleanup) -> None:
+        """Test resize event."""
         label = HoverLabel()
 
-        # ////// TEST RESIZEEVENT
+        # Test resizeEvent
         from PySide6.QtGui import QResizeEvent
-        from PySide6.QtCore import QSize
 
         resize_event = QResizeEvent(QSize(100, 50), QSize(80, 40))
         try:
             label.resizeEvent(resize_event)
         except Exception as e:
-            pytest.fail(f"resizeEvent() a levé une exception: {e}")
+            pytest.fail(f"resizeEvent() raised an exception: {e}")
 
-    def test_hover_label_size_hints(self, qt_widget_cleanup):
-        """Test des méthodes de taille."""
+    def test_hover_label_size_hints(self, qt_widget_cleanup) -> None:
+        """Test size hint methods."""
         label = HoverLabel(text="Test Label")
 
-        # ////// TEST MINIMUMSIZEHINT
+        # Test minimumSizeHint
         min_size_hint = label.minimumSizeHint()
         assert min_size_hint is not None
         assert isinstance(min_size_hint, QSize)
         assert min_size_hint.width() > 0
         assert min_size_hint.height() > 0
 
-    def test_hover_label_refresh_style(self, qt_widget_cleanup):
-        """Test de la méthode refresh_style."""
+    def test_hover_label_refresh_style(self, qt_widget_cleanup) -> None:
+        """Test refresh_style method."""
         label = HoverLabel()
 
-        # ////// LA MÉTHODE NE DOIT PAS LEVER D'EXCEPTION
+        # Method should not raise an exception
         try:
             label.refresh_style()
         except Exception as e:
-            pytest.fail(f"refresh_style() a levé une exception: {e}")
+            pytest.fail(f"refresh_style() raised an exception: {e}")
 
-    def test_hover_label_clear_icon(self, qt_widget_cleanup):
-        """Test de la méthode clear_icon."""
+    def test_hover_label_clear_icon(self, qt_widget_cleanup) -> None:
+        """Test clear_icon method."""
         label = HoverLabel()
 
-        # ////// DÉFINIR UNE ICÔNE
+        # Set an icon
         pixmap = QPixmap(16, 16)
-        pixmap.fill(Qt.red)
+        pixmap.fill(Qt.GlobalColor.red)
         icon = QIcon(pixmap)
         label.hover_icon = icon
 
-        # ////// EFFACER L'ICÔNE
+        # Clear icon
         label.clear_icon()
 
-        # ////// VÉRIFIER QUE L'ICÔNE EST EFFACÉE
+        # Verify that the icon is cleared
         assert label.hover_icon is None
 
-    def test_hover_label_icon_enabled_disabled(self, qt_widget_cleanup):
-        """Test de l'activation/désactivation de l'icône."""
+    def test_hover_label_icon_enabled_disabled(self, qt_widget_cleanup) -> None:
+        """Test icon enable/disable."""
         label = HoverLabel()
 
-        # ////// ÉTAT INITIAL
+        # Initial state
         assert label.icon_enabled is True
 
-        # ////// DÉSACTIVER L'ICÔNE
+        # Disable icon
         label.icon_enabled = False
         assert label.icon_enabled is False
 
-        # ////// RÉACTIVER L'ICÔNE
+        # Re-enable icon
         label.icon_enabled = True
         assert label.icon_enabled is True
 
-    def test_hover_label_icon_color_changes(self, qt_widget_cleanup):
-        """Test des changements de couleur d'icône."""
+    def test_hover_label_icon_color_changes(self, qt_widget_cleanup) -> None:
+        """Test icon color changes."""
         label = HoverLabel()
 
-        # ////// DÉFINIR UNE COULEUR
+        # Set a color
         label.icon_color = "#FF0000"
         assert label.icon_color == "#FF0000"
 
-        # ////// CHANGER LA COULEUR
+        # Change color
         label.icon_color = "#00FF00"
         assert label.icon_color == "#00FF00"
 
-        # ////// EFFACER LA COULEUR
+        # Clear color
         label.icon_color = None
         assert label.icon_color is None
 
-    def test_hover_label_icon_size_changes(self, qt_widget_cleanup):
-        """Test des changements de taille d'icône."""
+    def test_hover_label_icon_size_changes(self, qt_widget_cleanup) -> None:
+        """Test icon size changes."""
         label = HoverLabel()
 
-        # ////// TAILLE INITIALE
+        # Initial size
         assert label.icon_size == QSize(16, 16)
 
-        # ////// CHANGER LA TAILLE
+        # Change size
         label.icon_size = QSize(32, 32)
         assert label.icon_size == QSize(32, 32)
 
-        # ////// CHANGER AVEC UN TUPLE
+        # Change with a tuple
         label.icon_size = (24, 24)
         assert label.icon_size == QSize(24, 24)
 
-    def test_hover_label_opacity_changes(self, qt_widget_cleanup):
-        """Test des changements d'opacité."""
+    def test_hover_label_opacity_changes(self, qt_widget_cleanup) -> None:
+        """Test opacity changes."""
         label = HoverLabel()
 
-        # ////// OPACITÉ INITIALE
+        # Initial opacity
         assert label.opacity == 0.5
 
-        # ////// CHANGER L'OPACITÉ
+        # Change opacity
         label.opacity = 0.8
         assert label.opacity == 0.8
 
-        # ////// OPACITÉ MINIMALE
+        # Minimum opacity
         label.opacity = 0.0
         assert label.opacity == 0.0
 
-        # ////// OPACITÉ MAXIMALE
+        # Maximum opacity
         label.opacity = 1.0
         assert label.opacity == 1.0
 
-    def test_hover_label_padding_changes(self, qt_widget_cleanup):
-        """Test des changements de padding."""
+    def test_hover_label_padding_changes(self, qt_widget_cleanup) -> None:
+        """Test padding changes."""
         label = HoverLabel()
 
-        # ////// PADDING INITIAL
+        # Initial padding
         assert label.icon_padding == 8
 
-        # ////// CHANGER LE PADDING
+        # Change padding
         label.icon_padding = 16
         assert label.icon_padding == 16
 
-        # ////// PADDING ZÉRO
+        # Zero padding
         label.icon_padding = 0
         assert label.icon_padding == 0
 
-        # ////// PADDING NÉGATIF
+        # Negative padding
         label.icon_padding = -5
         assert label.icon_padding == -5
 
-    def test_hover_label_text_changes(self, qt_widget_cleanup):
-        """Test des changements de texte."""
+    def test_hover_label_text_changes(self, qt_widget_cleanup) -> None:
+        """Test text changes."""
         label = HoverLabel()
 
-        # ////// TEXTE INITIAL
+        # Initial text
         assert label.text() == ""
 
-        # ////// DÉFINIR UN TEXTE
+        # Set text
         label.setText("Test Text")
         assert label.text() == "Test Text"
 
-        # ////// CHANGER LE TEXTE
+        # Change text
         label.setText("New Text")
         assert label.text() == "New Text"
 
-        # ////// TEXTE VIDE
+        # Empty text
         label.setText("")
         assert label.text() == ""
 
-    def test_hover_label_icon_from_path(self, qt_widget_cleanup, mock_icon_path):
-        """Test de chargement d'icône depuis un chemin."""
+    def test_hover_label_icon_from_path(
+        self, qt_widget_cleanup, mock_icon_path
+    ) -> None:
+        """Test icon loading from path."""
         label = HoverLabel()
 
-        # ////// CHARGER UNE ICÔNE DEPUIS UN CHEMIN
+        # Load an icon from a path
         label.hover_icon = mock_icon_path
 
-        # ////// VÉRIFIER QUE L'ICÔNE EST CHARGÉE
+        # Verify that the icon is loaded
         assert label.hover_icon is not None
         assert isinstance(label.hover_icon, QIcon)
 
-    def test_hover_label_icon_from_svg(self, qt_widget_cleanup, mock_svg_path):
-        """Test de chargement d'icône SVG."""
+    def test_hover_label_icon_from_svg(self, qt_widget_cleanup, mock_svg_path) -> None:
+        """Test SVG icon loading."""
         label = HoverLabel()
 
-        # ////// CHARGER UNE ICÔNE SVG
+        # Load an SVG icon
         label.hover_icon = mock_svg_path
 
-        # ////// VÉRIFIER QUE L'ICÔNE EST CHARGÉE
+        # Verify that the icon is loaded
         assert label.hover_icon is not None
         assert isinstance(label.hover_icon, QIcon)
 
-    def test_hover_label_cursor_changes(self, qt_widget_cleanup):
-        """Test des changements de curseur."""
+    def test_hover_label_cursor_changes(self, qt_widget_cleanup) -> None:
+        """Test cursor changes."""
         label = HoverLabel()
 
-        # ////// CURSEUR INITIAL
-        initial_cursor = label.cursor()
-
-        # ////// SIMULER L'ENTRÉE DE LA SOURIS
-        from PySide6.QtCore import QPoint
-        from PySide6.QtGui import QEnterEvent
-
+        # Simulate mouse entry
         enter_event = QEnterEvent(QPoint(10, 10), QPoint(10, 10), QPoint(10, 10))
         label.enterEvent(enter_event)
 
-        # ////// VÉRIFIER QUE LE CURSEUR A CHANGÉ
-        # Note: Le curseur peut changer selon l'implémentation
+        # Verify that the cursor changed
+        # Note: The cursor may change according to implementation
 
-        # ////// SIMULER LA SORTIE DE LA SOURIS
-        from PySide6.QtCore import QEvent
-
+        # Simulate mouse exit
         leave_event = QEvent(QEvent.Type.Leave)
         label.leaveEvent(leave_event)
 
-        # ////// VÉRIFIER QUE LE CURSEUR EST RESTAURÉ
-        # Note: Le curseur peut être restauré selon l'implémentation
+        # Verify that the cursor is restored
+        # Note: The cursor may be restored according to implementation

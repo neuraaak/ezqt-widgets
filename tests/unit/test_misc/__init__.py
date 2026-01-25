@@ -1,7 +1,13 @@
-# -*- coding: utf-8 -*-
 # ///////////////////////////////////////////////////////////////
+# TEST_MISC - Miscellaneous Widgets Tests Module
+# Project: ezqt_widgets
+# ///////////////////////////////////////////////////////////////
+
 """
-Tests unitaires pour les widgets Misc d'EzQt_Widgets.
+Unit tests for miscellaneous widgets.
+
+This module contains unit tests for all miscellaneous widgets including
+CircularTimer, DraggableList, OptionSelector, ToggleIcon, and ToggleSwitch.
 """
 
-__version__ = "1.0.0" 
+from __future__ import annotations

@@ -1,242 +1,268 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# TEST_AUTO_COMPLETE_INPUT - AutoCompleteInput Widget Tests
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
 """
-Tests unitaires pour le widget AutoCompleteInput.
+Unit tests for AutoCompleteInput widget.
+
+Tests for the autocomplete input widget with suggestion support.
 """
 
+from __future__ import annotations
+
+# ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Third-party imports
 import pytest
-from unittest.mock import MagicMock
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QCompleter
+from PySide6.QtWidgets import QCompleter
 
+# Local imports
 from ezqt_widgets.input.auto_complete_input import AutoCompleteInput
-
 
 pytestmark = pytest.mark.unit
 
+# ///////////////////////////////////////////////////////////////
+# TEST CLASSES
+# ///////////////////////////////////////////////////////////////
+
 
 class TestAutoCompleteInput:
-    """Tests pour la classe AutoCompleteInput."""
+    """Tests for AutoCompleteInput class."""
 
-    def test_auto_complete_input_creation_default(self, qt_widget_cleanup):
-        """Test de création avec paramètres par défaut."""
+    def test_auto_complete_input_creation_default(self, qt_widget_cleanup) -> None:
+        """Test creation with default parameters."""
         input_widget = AutoCompleteInput()
 
         assert input_widget is not None
         assert isinstance(input_widget, AutoCompleteInput)
         assert input_widget.suggestions == []
         assert input_widget.case_sensitive is False
-        assert input_widget.filter_mode == Qt.MatchContains
-        assert input_widget.completion_mode == QCompleter.PopupCompletion
+        assert input_widget.filter_mode == Qt.MatchFlag.MatchContains
+        assert input_widget.completion_mode == QCompleter.CompletionMode.PopupCompletion
 
-    def test_auto_complete_input_creation_with_parameters(self, qt_widget_cleanup):
-        """Test de création avec paramètres personnalisés."""
+    def test_auto_complete_input_creation_with_parameters(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test creation with custom parameters."""
         suggestions = ["test1", "test2", "test3"]
         input_widget = AutoCompleteInput(
             suggestions=suggestions,
             case_sensitive=True,
-            filter_mode=Qt.MatchStartsWith,
-            completion_mode=QCompleter.InlineCompletion,
+            filter_mode=Qt.MatchFlag.MatchStartsWith,
+            completion_mode=QCompleter.CompletionMode.InlineCompletion,
         )
 
         assert input_widget.suggestions == suggestions
         assert input_widget.case_sensitive is True
-        assert input_widget.filter_mode == Qt.MatchStartsWith
-        assert input_widget.completion_mode == QCompleter.InlineCompletion
+        assert input_widget.filter_mode == Qt.MatchFlag.MatchStartsWith
+        assert (
+            input_widget.completion_mode == QCompleter.CompletionMode.InlineCompletion
+        )
 
-    def test_auto_complete_input_properties(self, qt_widget_cleanup):
-        """Test des propriétés du widget."""
+    def test_auto_complete_input_properties(self, qt_widget_cleanup) -> None:
+        """Test widget properties."""
         input_widget = AutoCompleteInput()
 
-        # ////// TEST SUGGESTIONS PROPERTY
+        # Test suggestions property
         suggestions = ["item1", "item2", "item3"]
         input_widget.suggestions = suggestions
         assert input_widget.suggestions == suggestions
 
-        # ////// TEST CASE_SENSITIVE PROPERTY
+        # Test case_sensitive property
         input_widget.case_sensitive = True
         assert input_widget.case_sensitive is True
 
-        # ////// TEST FILTER_MODE PROPERTY
-        input_widget.filter_mode = Qt.MatchStartsWith
-        assert input_widget.filter_mode == Qt.MatchStartsWith
+        # Test filter_mode property
+        input_widget.filter_mode = Qt.MatchFlag.MatchStartsWith
+        assert input_widget.filter_mode == Qt.MatchFlag.MatchStartsWith
 
-        # ////// TEST COMPLETION_MODE PROPERTY
-        input_widget.completion_mode = QCompleter.InlineCompletion
-        assert input_widget.completion_mode == QCompleter.InlineCompletion
+        # Test completion_mode property
+        input_widget.completion_mode = QCompleter.CompletionMode.InlineCompletion
+        assert (
+            input_widget.completion_mode == QCompleter.CompletionMode.InlineCompletion
+        )
 
-    def test_auto_complete_input_add_suggestion(self, qt_widget_cleanup):
-        """Test de la méthode add_suggestion."""
+    def test_auto_complete_input_add_suggestion(self, qt_widget_cleanup) -> None:
+        """Test add_suggestion method."""
         input_widget = AutoCompleteInput()
 
-        # ////// ÉTAT INITIAL
+        # Initial state
         assert input_widget.suggestions == []
 
-        # ////// AJOUTER UNE SUGGESTION
+        # Add a suggestion
         input_widget.add_suggestion("new_item")
         assert "new_item" in input_widget.suggestions
 
-        # ////// AJOUTER UNE AUTRE SUGGESTION
+        # Add another suggestion
         input_widget.add_suggestion("another_item")
         assert "new_item" in input_widget.suggestions
         assert "another_item" in input_widget.suggestions
         assert len(input_widget.suggestions) == 2
 
-    def test_auto_complete_input_remove_suggestion(self, qt_widget_cleanup):
-        """Test de la méthode remove_suggestion."""
+    def test_auto_complete_input_remove_suggestion(self, qt_widget_cleanup) -> None:
+        """Test remove_suggestion method."""
         input_widget = AutoCompleteInput(suggestions=["item1", "item2", "item3"])
 
-        # ////// ÉTAT INITIAL
+        # Initial state
         assert len(input_widget.suggestions) == 3
 
-        # ////// SUPPRIMER UNE SUGGESTION
+        # Remove a suggestion
         input_widget.remove_suggestion("item2")
         assert "item1" in input_widget.suggestions
         assert "item2" not in input_widget.suggestions
         assert "item3" in input_widget.suggestions
         assert len(input_widget.suggestions) == 2
 
-    def test_auto_complete_input_clear_suggestions(self, qt_widget_cleanup):
-        """Test de la méthode clear_suggestions."""
+    def test_auto_complete_input_clear_suggestions(self, qt_widget_cleanup) -> None:
+        """Test clear_suggestions method."""
         input_widget = AutoCompleteInput(suggestions=["item1", "item2", "item3"])
 
-        # ////// ÉTAT INITIAL
+        # Initial state
         assert len(input_widget.suggestions) == 3
 
-        # ////// EFFACER TOUTES LES SUGGESTIONS
+        # Clear all suggestions
         input_widget.clear_suggestions()
         assert input_widget.suggestions == []
 
-    def test_auto_complete_input_refresh_style(self, qt_widget_cleanup):
-        """Test de la méthode refresh_style."""
+    def test_auto_complete_input_refresh_style(self, qt_widget_cleanup) -> None:
+        """Test refresh_style method."""
         input_widget = AutoCompleteInput()
 
-        # ////// LA MÉTHODE NE DOIT PAS LEVER D'EXCEPTION
+        # Method should not raise an exception
         try:
             input_widget.refresh_style()
         except Exception as e:
-            pytest.fail(f"refresh_style() a levé une exception: {e}")
+            pytest.fail(f"refresh_style() raised an exception: {e}")
 
-    def test_auto_complete_input_completer_integration(self, qt_widget_cleanup):
-        """Test de l'intégration avec QCompleter."""
+    def test_auto_complete_input_completer_integration(self, qt_widget_cleanup) -> None:
+        """Test QCompleter integration."""
         input_widget = AutoCompleteInput(suggestions=["test1", "test2"])
 
-        # ////// VÉRIFIER QUE LE COMPLETER EST CONFIGURÉ
+        # Verify that the completer is configured
         assert input_widget.completer() is not None
         assert isinstance(input_widget.completer(), QCompleter)
 
-        # ////// VÉRIFIER QUE LE MODÈLE CONTIENT LES SUGGESTIONS
+        # Verify that the model contains the suggestions
         model = input_widget.completer().model()
         assert model is not None
         assert model.rowCount() == 2
 
-    def test_auto_complete_input_case_sensitivity(self, qt_widget_cleanup):
-        """Test de la sensibilité à la casse."""
+    def test_auto_complete_input_case_sensitivity(self, qt_widget_cleanup) -> None:
+        """Test case sensitivity."""
         input_widget = AutoCompleteInput(suggestions=["Test", "test", "TEST"])
 
-        # ////// TEST CASE INSENSITIVE (DÉFAUT)
+        # Test case insensitive (default)
         input_widget.case_sensitive = False
         assert input_widget.case_sensitive is False
 
-        # ////// TEST CASE SENSITIVE
+        # Test case sensitive
         input_widget.case_sensitive = True
         assert input_widget.case_sensitive is True
 
-    def test_auto_complete_input_filter_modes(self, qt_widget_cleanup):
-        """Test des différents modes de filtrage."""
+    def test_auto_complete_input_filter_modes(self, qt_widget_cleanup) -> None:
+        """Test different filter modes."""
         input_widget = AutoCompleteInput()
 
-        # ////// TEST MATCHCONTAINS (DÉFAUT)
-        input_widget.filter_mode = Qt.MatchContains
-        assert input_widget.filter_mode == Qt.MatchContains
+        # Test MatchContains (default)
+        input_widget.filter_mode = Qt.MatchFlag.MatchContains
+        assert input_widget.filter_mode == Qt.MatchFlag.MatchContains
 
-        # ////// TEST MATCHSTARTSWITH
-        input_widget.filter_mode = Qt.MatchStartsWith
-        assert input_widget.filter_mode == Qt.MatchStartsWith
+        # Test MatchStartsWith
+        input_widget.filter_mode = Qt.MatchFlag.MatchStartsWith
+        assert input_widget.filter_mode == Qt.MatchFlag.MatchStartsWith
 
-        # ////// TEST MATCHENDSWITH
-        input_widget.filter_mode = Qt.MatchEndsWith
-        assert input_widget.filter_mode == Qt.MatchEndsWith
+        # Test MatchEndsWith
+        input_widget.filter_mode = Qt.MatchFlag.MatchEndsWith
+        assert input_widget.filter_mode == Qt.MatchFlag.MatchEndsWith
 
-    def test_auto_complete_input_completion_modes(self, qt_widget_cleanup):
-        """Test des différents modes de complétion."""
+    def test_auto_complete_input_completion_modes(self, qt_widget_cleanup) -> None:
+        """Test different completion modes."""
         input_widget = AutoCompleteInput()
 
-        # ////// TEST POPUPCOMPLETION (DÉFAUT)
-        input_widget.completion_mode = QCompleter.PopupCompletion
-        assert input_widget.completion_mode == QCompleter.PopupCompletion
+        # Test PopupCompletion (default)
+        input_widget.completion_mode = QCompleter.CompletionMode.PopupCompletion
+        assert input_widget.completion_mode == QCompleter.CompletionMode.PopupCompletion
 
-        # ////// TEST INLINECOMPLETION
-        input_widget.completion_mode = QCompleter.InlineCompletion
-        assert input_widget.completion_mode == QCompleter.InlineCompletion
+        # Test InlineCompletion
+        input_widget.completion_mode = QCompleter.CompletionMode.InlineCompletion
+        assert (
+            input_widget.completion_mode == QCompleter.CompletionMode.InlineCompletion
+        )
 
-        # ////// TEST UNFILTEREDPOPUPCOMPLETION
-        input_widget.completion_mode = QCompleter.UnfilteredPopupCompletion
-        assert input_widget.completion_mode == QCompleter.UnfilteredPopupCompletion
+        # Test UnfilteredPopupCompletion
+        input_widget.completion_mode = (
+            QCompleter.CompletionMode.UnfilteredPopupCompletion
+        )
+        assert (
+            input_widget.completion_mode
+            == QCompleter.CompletionMode.UnfilteredPopupCompletion
+        )
 
-    def test_auto_complete_input_text_handling(self, qt_widget_cleanup):
-        """Test de la gestion du texte."""
+    def test_auto_complete_input_text_handling(self, qt_widget_cleanup) -> None:
+        """Test text handling."""
         input_widget = AutoCompleteInput()
 
-        # ////// TEST SETTEXT
+        # Test setText
         input_widget.setText("test text")
         assert input_widget.text() == "test text"
 
-        # ////// TEST CLEAR
+        # Test clear
         input_widget.clear()
         assert input_widget.text() == ""
 
-        # ////// TEST PLACEHOLDER
+        # Test placeholder
         input_widget.setPlaceholderText("Enter text...")
         assert input_widget.placeholderText() == "Enter text..."
 
-    def test_auto_complete_input_multiple_suggestions(self, qt_widget_cleanup):
-        """Test avec de nombreuses suggestions."""
+    def test_auto_complete_input_multiple_suggestions(self, qt_widget_cleanup) -> None:
+        """Test with many suggestions."""
         suggestions = [f"item_{i}" for i in range(100)]
         input_widget = AutoCompleteInput(suggestions=suggestions)
 
-        # ////// VÉRIFIER QUE TOUTES LES SUGGESTIONS SONT PRÉSENTES
+        # Verify that all suggestions are present
         assert len(input_widget.suggestions) == 100
         assert "item_0" in input_widget.suggestions
         assert "item_99" in input_widget.suggestions
 
-        # ////// VÉRIFIER QUE LE COMPLETER PEUT GÉRER BEAUCOUP D'ÉLÉMENTS
+        # Verify that the completer can handle many elements
         assert input_widget.completer().model().rowCount() == 100
 
-    def test_auto_complete_input_empty_suggestions(self, qt_widget_cleanup):
-        """Test avec des suggestions vides."""
+    def test_auto_complete_input_empty_suggestions(self, qt_widget_cleanup) -> None:
+        """Test with empty suggestions."""
         input_widget = AutoCompleteInput(suggestions=[])
 
-        # ////// VÉRIFIER L'ÉTAT INITIAL
+        # Verify initial state
         assert input_widget.suggestions == []
 
-        # ////// AJOUTER DES SUGGESTIONS
+        # Add suggestions
         input_widget.add_suggestion("new_item")
         assert input_widget.suggestions == ["new_item"]
 
-        # ////// EFFACER ET VÉRIFIER
+        # Clear and verify
         input_widget.clear_suggestions()
         assert input_widget.suggestions == []
 
-    def test_auto_complete_input_duplicate_suggestions(self, qt_widget_cleanup):
-        """Test avec des suggestions en double."""
+    def test_auto_complete_input_duplicate_suggestions(self, qt_widget_cleanup) -> None:
+        """Test with duplicate suggestions."""
         input_widget = AutoCompleteInput()
 
-        # ////// AJOUTER DES SUGGESTIONS EN DOUBLE
+        # Add duplicate suggestions
         input_widget.add_suggestion("item")
         input_widget.add_suggestion("item")
         input_widget.add_suggestion("item")
 
-        # ////// VÉRIFIER QUE LES DOUBLONS SONT IGNORÉS (comportement du widget)
+        # Verify that duplicates are ignored (widget behavior)
         assert input_widget.suggestions.count("item") == 1
 
-        # ////// SUPPRIMER L'OCCURRENCE
+        # Remove the occurrence
         input_widget.remove_suggestion("item")
         assert input_widget.suggestions.count("item") == 0
 
-    def test_auto_complete_input_special_characters(self, qt_widget_cleanup):
-        """Test avec des caractères spéciaux."""
+    def test_auto_complete_input_special_characters(self, qt_widget_cleanup) -> None:
+        """Test with special characters."""
         special_suggestions = [
             "test@example.com",
             "user-name_123",
@@ -248,17 +274,17 @@ class TestAutoCompleteInput:
 
         input_widget = AutoCompleteInput(suggestions=special_suggestions)
 
-        # ////// VÉRIFIER QUE TOUTES LES SUGGESTIONS SONT PRÉSERVÉES
+        # Verify that all suggestions are preserved
         assert len(input_widget.suggestions) == 6
         for suggestion in special_suggestions:
             assert suggestion in input_widget.suggestions
 
-    def test_auto_complete_input_property_type(self, qt_widget_cleanup):
-        """Test de la propriété type pour QSS."""
+    def test_auto_complete_input_property_type(self, qt_widget_cleanup) -> None:
+        """Test type property for QSS."""
         input_widget = AutoCompleteInput()
 
-        # ////// VÉRIFIER QUE LA PROPRIÉTÉ TYPE EST DÉFINIE
-        # Note: AutoCompleteInput hérite de QLineEdit, donc pas de propriété type personnalisée
-        # Mais on peut vérifier que le widget fonctionne correctement
+        # Verify that the widget works correctly
+        # Note: AutoCompleteInput inherits from QLineEdit,
+        # so no custom type property
         assert input_widget is not None
         assert isinstance(input_widget, AutoCompleteInput)

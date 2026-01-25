@@ -1,26 +1,37 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# TEST_TAB_REPLACE_TEXTEDIT - TabReplaceTextEdit Widget Tests
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
 """
-Tests unitaires pour le widget TabReplaceTextEdit (version corrigée).
+Unit tests for TabReplaceTextEdit widget.
+
+Tests for the text edit widget with tab replacement and sanitization.
 """
 
+from __future__ import annotations
+
+# ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Third-party imports
 import pytest
-from unittest.mock import MagicMock
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication
 
+# Local imports
 from ezqt_widgets.input.tab_replace_textedit import TabReplaceTextEdit
-
 
 pytestmark = pytest.mark.unit
 
+# ///////////////////////////////////////////////////////////////
+# TEST CLASSES
+# ///////////////////////////////////////////////////////////////
+
 
 class TestTabReplaceTextEdit:
-    """Tests pour la classe TabReplaceTextEdit."""
+    """Tests for TabReplaceTextEdit class."""
 
-    def test_tab_replace_textedit_creation_default(self, qt_widget_cleanup):
-        """Test de création avec paramètres par défaut."""
+    def test_tab_replace_textedit_creation_default(self, qt_widget_cleanup) -> None:
+        """Test creation with default parameters."""
         text_edit = TabReplaceTextEdit()
 
         assert text_edit is not None
@@ -30,8 +41,10 @@ class TestTabReplaceTextEdit:
         assert text_edit.remove_empty_lines is True
         assert text_edit.preserve_whitespace is False
 
-    def test_tab_replace_textedit_creation_with_parameters(self, qt_widget_cleanup):
-        """Test de création avec paramètres personnalisés."""
+    def test_tab_replace_textedit_creation_with_parameters(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test creation with custom parameters."""
         text_edit = TabReplaceTextEdit(
             tab_replacement=" ",
             sanitize_on_paste=False,
@@ -44,52 +57,52 @@ class TestTabReplaceTextEdit:
         assert text_edit.remove_empty_lines is False
         assert text_edit.preserve_whitespace is True
 
-    def test_tab_replace_textedit_properties(self, qt_widget_cleanup):
-        """Test des propriétés du widget."""
+    def test_tab_replace_textedit_properties(self, qt_widget_cleanup) -> None:
+        """Test widget properties."""
         text_edit = TabReplaceTextEdit()
 
-        # ////// TEST TAB_REPLACEMENT PROPERTY
+        # Test tab_replacement property
         text_edit.tab_replacement = "  "
         assert text_edit.tab_replacement == "  "
 
-        # ////// TEST SANITIZE_ON_PASTE PROPERTY
+        # Test sanitize_on_paste property
         text_edit.sanitize_on_paste = False
         assert text_edit.sanitize_on_paste is False
 
-        # ////// TEST REMOVE_EMPTY_LINES PROPERTY
+        # Test remove_empty_lines property
         text_edit.remove_empty_lines = False
         assert text_edit.remove_empty_lines is False
 
-        # ////// TEST PRESERVE_WHITESPACE PROPERTY
+        # Test preserve_whitespace property
         text_edit.preserve_whitespace = True
         assert text_edit.preserve_whitespace is True
 
-    def test_tab_replace_textedit_sanitize_text_basic(self, qt_widget_cleanup):
-        """Test de la méthode sanitize_text avec des cas de base."""
+    def test_tab_replace_textedit_sanitize_text_basic(self, qt_widget_cleanup) -> None:
+        """Test sanitize_text method with basic cases."""
         text_edit = TabReplaceTextEdit()
 
-        # ////// TEST REMPLACEMENT DE TAB PAR DÉFAUT
+        # Test default tab replacement
         text = "col1\tcol2\tcol3"
         sanitized = text_edit.sanitize_text(text)
         assert sanitized == "col1\ncol2\ncol3"
 
-        # ////// TEST SANS TAB
+        # Test without tabs
         text = "no tabs here"
         sanitized = text_edit.sanitize_text(text)
         assert sanitized == "no tabs here"
 
     def test_tab_replace_textedit_sanitize_text_custom_replacement(
         self, qt_widget_cleanup
-    ):
-        """Test de sanitize_text avec un remplacement personnalisé."""
+    ) -> None:
+        """Test sanitize_text with custom replacement."""
         text_edit = TabReplaceTextEdit(tab_replacement="  ")
 
-        # ////// TEST REMPLACEMENT PAR ESPACES
+        # Test replacement with spaces
         text = "col1\tcol2\tcol3"
         sanitized = text_edit.sanitize_text(text)
         assert sanitized == "col1  col2  col3"
 
-        # ////// TEST REMPLACEMENT PAR VIRGULE
+        # Test replacement with comma
         text_edit.tab_replacement = ","
         text = "col1\tcol2\tcol3"
         sanitized = text_edit.sanitize_text(text)
@@ -97,193 +110,209 @@ class TestTabReplaceTextEdit:
 
     def test_tab_replace_textedit_sanitize_text_remove_empty_lines(
         self, qt_widget_cleanup
-    ):
-        """Test de sanitize_text avec suppression des lignes vides."""
+    ) -> None:
+        """Test sanitize_text with empty line removal."""
         text_edit = TabReplaceTextEdit(remove_empty_lines=True)
 
-        # ////// TEST AVEC LIGNES VIDES
+        # Test with empty lines
         text = "line1\n\nline2\n\t\nline3"
         sanitized = text_edit.sanitize_text(text)
         assert sanitized == "line1\nline2\nline3"
 
-        # ////// TEST SANS LIGNES VIDES
+        # Test without empty lines
         text = "line1\nline2\nline3"
         sanitized = text_edit.sanitize_text(text)
         assert sanitized == "line1\nline2\nline3"
 
     def test_tab_replace_textedit_sanitize_text_preserve_empty_lines(
         self, qt_widget_cleanup
-    ):
-        """Test de sanitize_text sans suppression des lignes vides."""
+    ) -> None:
+        """Test sanitize_text without empty line removal."""
         text_edit = TabReplaceTextEdit(remove_empty_lines=False)
 
-        # ////// TEST AVEC LIGNES VIDES PRÉSERVÉES
+        # Test with empty lines preserved
         text = "line1\n\nline2\n\t\nline3"
         sanitized = text_edit.sanitize_text(text)
-        # Les tabs deviennent des newlines par défaut, les lignes vides sont préservées
+        # Tabs become newlines by default, empty lines are preserved
         assert sanitized == "line1\n\nline2\n\n\nline3"
 
     def test_tab_replace_textedit_sanitize_text_preserve_whitespace(
         self, qt_widget_cleanup
-    ):
-        """Test de sanitize_text avec préservation des espaces."""
+    ) -> None:
+        """Test sanitize_text with whitespace preservation."""
         text_edit = TabReplaceTextEdit(
             preserve_whitespace=True, remove_empty_lines=True
         )
 
-        # ////// TEST AVEC ESPACES PRÉSERVÉS
+        # Test with preserved spaces
         text = "  line1  \n  line2  \n  line3  "
         sanitized = text_edit.sanitize_text(text)
-        # Vérifier que les espaces sont préservés
+        # Verify that spaces are preserved
         assert "  line1  " in sanitized
         assert "  line2  " in sanitized
         assert "  line3  " in sanitized
 
-        # ////// TEST SANS ESPACES PRÉSERVÉS
+        # Test without preserved spaces
         text_edit.preserve_whitespace = False
         sanitized = text_edit.sanitize_text(text)
-        # Les espaces sont préservés mais les lignes vides supprimées
+        # Spaces are preserved but empty lines removed
         assert sanitized == "  line1  \n  line2  \n  line3  "
 
-    def test_tab_replace_textedit_sanitize_text_complex(self, qt_widget_cleanup):
-        """Test de sanitize_text avec des cas complexes."""
+    def test_tab_replace_textedit_sanitize_text_complex(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test sanitize_text with complex cases."""
         text_edit = TabReplaceTextEdit(
-            tab_replacement="|", remove_empty_lines=True, preserve_whitespace=False
+            tab_replacement="|",
+            remove_empty_lines=True,
+            preserve_whitespace=False,
         )
 
-        # ////// TEST CAS COMPLEXE
+        # Test complex case
         text = (
             "  col1\t  col2  \tcol3  \n\n  col4\tcol5\t  col6  \n\t\ncol7\tcol8\tcol9"
         )
         sanitized = text_edit.sanitize_text(text)
-        # Les tabs deviennent "|", les lignes vides sont supprimées
+        # Tabs become "|", empty lines are removed
         expected = "  col1|  col2  |col3  \n  col4|col5|  col6  \n|\ncol7|col8|col9"
         assert sanitized == expected
 
-    def test_tab_replace_textedit_sanitize_text_mixed_content(self, qt_widget_cleanup):
-        """Test de sanitize_text avec du contenu mixte."""
+    def test_tab_replace_textedit_sanitize_text_mixed_content(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test sanitize_text with mixed content."""
         text_edit = TabReplaceTextEdit(tab_replacement=" -> ", remove_empty_lines=True)
 
-        # ////// TEST CONTENU MIXTE
+        # Test mixed content
         text = "header1\theader2\theader3\nvalue1\tvalue2\tvalue3\n\t\t\nfooter1\tfooter2\tfooter3"
         sanitized = text_edit.sanitize_text(text)
-        # Les tabs deviennent " -> ", les lignes vides sont supprimées
+        # Tabs become " -> ", empty lines are removed
         expected = "header1 -> header2 -> header3\nvalue1 -> value2 -> value3\n ->  -> \nfooter1 -> footer2 -> footer3"
         assert sanitized == expected
 
     def test_tab_replace_textedit_sanitize_text_special_characters(
         self, qt_widget_cleanup
-    ):
-        """Test de sanitize_text avec des caractères spéciaux."""
+    ) -> None:
+        """Test sanitize_text with special characters."""
         text_edit = TabReplaceTextEdit(tab_replacement="\t->\t")
 
-        # ////// TEST CARACTÈRES SPÉCIAUX
+        # Test special characters
         text = "email@domain.com\tuser-name_123\tfile/path\nspecial\tchars\there"
         sanitized = text_edit.sanitize_text(text)
         expected = "email@domain.com\t->\tuser-name_123\t->\tfile/path\nspecial\t->\tchars\t->\there"
         assert sanitized == expected
 
-    def test_tab_replace_textedit_sanitize_text_unicode(self, qt_widget_cleanup):
-        """Test de sanitize_text avec des caractères Unicode."""
+    def test_tab_replace_textedit_sanitize_text_unicode(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test sanitize_text with Unicode characters."""
         text_edit = TabReplaceTextEdit(tab_replacement=" → ")
 
-        # ////// TEST CARACTÈRES UNICODE
+        # Test Unicode characters
         text = "你好\t世界\t测试\némojis\t🚀\t🎉\nunicode\ttext\there"
         sanitized = text_edit.sanitize_text(text)
         expected = "你好 → 世界 → 测试\némojis → 🚀 → 🎉\nunicode → text → here"
         assert sanitized == expected
 
-    def test_tab_replace_textedit_sanitize_text_empty_string(self, qt_widget_cleanup):
-        """Test de sanitize_text avec une chaîne vide."""
+    def test_tab_replace_textedit_sanitize_text_empty_string(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test sanitize_text with empty string."""
         text_edit = TabReplaceTextEdit()
 
-        # ////// TEST CHAÎNE VIDE
+        # Test empty string
         sanitized = text_edit.sanitize_text("")
         assert sanitized == ""
 
-        # ////// TEST CHAÎNE AVEC SEULEMENT DES TABS
+        # Test string with only tabs
         sanitized = text_edit.sanitize_text("\t\t\t")
-        # Les tabs deviennent des newlines par défaut, puis les lignes vides sont supprimées
+        # Tabs become newlines by default, then empty lines are removed
         assert sanitized == ""
 
-    def test_tab_replace_textedit_sanitize_text_only_tabs(self, qt_widget_cleanup):
-        """Test de sanitize_text avec seulement des tabs."""
+    def test_tab_replace_textedit_sanitize_text_only_tabs(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test sanitize_text with only tabs."""
         text_edit = TabReplaceTextEdit(tab_replacement="SPACE")
 
-        # ////// TEST SEULEMENT DES TABS
+        # Test only tabs
         text = "\t\t\t"
         sanitized = text_edit.sanitize_text(text)
-        # Les tabs deviennent "SPACE", puis les lignes vides sont supprimées
+        # Tabs become "SPACE", then empty lines are removed
         assert sanitized == "SPACESPACESPACE"
 
-    def test_tab_replace_textedit_sanitize_text_multiple_tabs(self, qt_widget_cleanup):
-        """Test de sanitize_text avec des tabs multiples consécutifs."""
+    def test_tab_replace_textedit_sanitize_text_multiple_tabs(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test sanitize_text with multiple consecutive tabs."""
         text_edit = TabReplaceTextEdit(tab_replacement="|")
 
-        # ////// TEST TABS MULTIPLES
+        # Test multiple tabs
         text = "col1\t\t\tcol2"
         sanitized = text_edit.sanitize_text(text)
         assert sanitized == "col1|||col2"
 
-    def test_tab_replace_textedit_sanitize_text_edge_cases(self, qt_widget_cleanup):
-        """Test de sanitize_text avec des cas limites."""
+    def test_tab_replace_textedit_sanitize_text_edge_cases(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test sanitize_text with edge cases."""
         text_edit = TabReplaceTextEdit(tab_replacement="TAB")
 
-        # ////// TEST TAB AU DÉBUT
+        # Test tab at the beginning
         text = "\tcol1\tcol2"
         sanitized = text_edit.sanitize_text(text)
-        # Les tabs deviennent "TAB"
+        # Tabs become "TAB"
         assert sanitized == "TABcol1TABcol2"
 
-        # ////// TEST TAB À LA FIN
+        # Test tab at the end
         text = "col1\tcol2\t"
         sanitized = text_edit.sanitize_text(text)
         assert sanitized == "col1TABcol2TAB"
 
-        # ////// TEST TABS AU DÉBUT ET À LA FIN
+        # Test tabs at the beginning and end
         text = "\tcol1\tcol2\t"
         sanitized = text_edit.sanitize_text(text)
         assert sanitized == "TABcol1TABcol2TAB"
 
-    def test_tab_replace_textedit_text_handling(self, qt_widget_cleanup):
-        """Test de la gestion du texte."""
+    def test_tab_replace_textedit_text_handling(self, qt_widget_cleanup) -> None:
+        """Test text handling."""
         text_edit = TabReplaceTextEdit()
 
-        # ////// TEST SETPLAINTEXT
+        # Test setPlainText
         text_edit.setPlainText("test text")
         assert text_edit.toPlainText() == "test text"
 
-        # ////// TEST CLEAR
+        # Test clear
         text_edit.clear()
         assert text_edit.toPlainText() == ""
 
-        # ////// TEST INSERTPLAINTEXT
+        # Test insertPlainText
         text_edit.insertPlainText("inserted text")
         assert text_edit.toPlainText() == "inserted text"
 
-    def test_tab_replace_textedit_property_type(self, qt_widget_cleanup):
-        """Test de la propriété type pour QSS."""
+    def test_tab_replace_textedit_property_type(self, qt_widget_cleanup) -> None:
+        """Test type property for QSS."""
         text_edit = TabReplaceTextEdit()
 
-        # ////// VÉRIFIER QUE LA PROPRIÉTÉ TYPE EST DÉFINIE
+        # Verify that the type property is defined
         assert text_edit.property("type") == "TabReplaceTextEdit"
 
-    def test_tab_replace_textedit_refresh_style(self, qt_widget_cleanup):
-        """Test de la méthode refresh_style."""
+    def test_tab_replace_textedit_refresh_style(self, qt_widget_cleanup) -> None:
+        """Test refresh_style method."""
         text_edit = TabReplaceTextEdit()
 
-        # ////// LA MÉTHODE NE DOIT PAS LEVER D'EXCEPTION
+        # Method should not raise an exception
         try:
             text_edit.refresh_style()
         except Exception as e:
-            pytest.fail(f"refresh_style() a levé une exception: {e}")
+            pytest.fail(f"refresh_style() raised an exception: {e}")
 
-    def test_tab_replace_textedit_multiple_instances(self, qt_widget_cleanup):
-        """Test avec plusieurs instances."""
+    def test_tab_replace_textedit_multiple_instances(self, qt_widget_cleanup) -> None:
+        """Test with multiple instances."""
         text_edit1 = TabReplaceTextEdit(tab_replacement="|")
         text_edit2 = TabReplaceTextEdit(tab_replacement="->")
 
-        # ////// TEST INDÉPENDANCE DES INSTANCES
+        # Test instance independence
         text = "col1\tcol2\tcol3"
         sanitized1 = text_edit1.sanitize_text(text)
         sanitized2 = text_edit2.sanitize_text(text)
@@ -291,12 +320,14 @@ class TestTabReplaceTextEdit:
         assert sanitized1 == "col1|col2|col3"
         assert sanitized2 == "col1->col2->col3"
 
-    def test_tab_replace_textedit_dynamic_property_changes(self, qt_widget_cleanup):
-        """Test des changements dynamiques de propriétés."""
+    def test_tab_replace_textedit_dynamic_property_changes(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test dynamic property changes."""
         text_edit = TabReplaceTextEdit()
         text = "col1\tcol2\tcol3"
 
-        # ////// TEST CHANGEMENT DYNAMIQUE DE TAB_REPLACEMENT
+        # Test dynamic tab_replacement change
         text_edit.tab_replacement = "|"
         sanitized1 = text_edit.sanitize_text(text)
         assert sanitized1 == "col1|col2|col3"
@@ -305,7 +336,7 @@ class TestTabReplaceTextEdit:
         sanitized2 = text_edit.sanitize_text(text)
         assert sanitized2 == "col1->col2->col3"
 
-        # ////// TEST CHANGEMENT DYNAMIQUE DE REMOVE_EMPTY_LINES
+        # Test dynamic remove_empty_lines change
         text_with_empty = "line1\n\nline2\n\t\nline3"
 
         text_edit.remove_empty_lines = True
@@ -316,44 +347,46 @@ class TestTabReplaceTextEdit:
         sanitized4 = text_edit.sanitize_text(text_with_empty)
         assert sanitized4 == "line1\n\nline2\n->\nline3"
 
-    def test_tab_replace_textedit_large_text(self, qt_widget_cleanup):
-        """Test avec un grand texte."""
+    def test_tab_replace_textedit_large_text(self, qt_widget_cleanup) -> None:
+        """Test with large text."""
         text_edit = TabReplaceTextEdit(tab_replacement="|")
 
-        # ////// CRÉER UN GRAND TEXTE
+        # Create large text
         lines = []
         for i in range(1000):
             lines.append(f"col1_{i}\tcol2_{i}\tcol3_{i}")
         large_text = "\n".join(lines)
 
-        # ////// SANITISER LE GRAND TEXTE
+        # Sanitize large text
         sanitized = text_edit.sanitize_text(large_text)
 
-        # ////// VÉRIFIER LE RÉSULTAT
+        # Verify result
         lines_sanitized = sanitized.split("\n")
         assert len(lines_sanitized) == 1000
 
-        # ////// VÉRIFIER UNE LIGNE SPÉCIFIQUE
+        # Verify a specific line
         assert "col1_0|col2_0|col3_0" in lines_sanitized[0]
         assert "col1_999|col2_999|col3_999" in lines_sanitized[999]
 
-    def test_tab_replace_textedit_special_replacement_strings(self, qt_widget_cleanup):
-        """Test avec des chaînes de remplacement spéciales."""
+    def test_tab_replace_textedit_special_replacement_strings(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test with special replacement strings."""
         text_edit = TabReplaceTextEdit()
         text = "col1\tcol2\tcol3"
 
-        # ////// TEST CHAÎNE VIDE
+        # Test empty string
         text_edit.tab_replacement = ""
         sanitized = text_edit.sanitize_text(text)
-        # Chaîne vide = pas de séparation
+        # Empty string = no separation
         assert sanitized == "col1col2col3"
 
-        # ////// TEST CHAÎNE AVEC ESPACES
+        # Test string with spaces
         text_edit.tab_replacement = "   "
         sanitized = text_edit.sanitize_text(text)
         assert sanitized == "col1   col2   col3"
 
-        # ////// TEST CHAÎNE AVEC CARACTÈRES SPÉCIAUX
+        # Test string with special characters
         text_edit.tab_replacement = "\n\t"
         sanitized = text_edit.sanitize_text(text)
         assert sanitized == "col1\n\tcol2\n\tcol3"

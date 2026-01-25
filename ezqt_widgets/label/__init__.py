@@ -1,14 +1,33 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# LABEL - Label Widgets Module
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
-# FRAMED LABEL
-from .framed_label import *
+"""
+Label widgets module.
 
-# INDICATOR LABEL
-from .indicator_label import *
+This module provides enhanced label widgets for PySide6 applications,
+including clickable tags, framed labels, hover labels, and indicator labels.
+"""
 
-# HOVER LABEL
-from .hover_label import *
+from __future__ import annotations
 
-# CLICKABLE TAG LABEL
-from .clickable_tag_label import *
+# ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Local imports
+from .clickable_tag_label import ClickableTagLabel
+from .framed_label import FramedLabel
+from .hover_label import HoverLabel
+from .indicator_label import IndicatorLabel
+
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = [
+    "ClickableTagLabel",
+    "FramedLabel",
+    "HoverLabel",
+    "IndicatorLabel",
+]

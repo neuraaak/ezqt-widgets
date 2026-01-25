@@ -1,17 +1,37 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# MISC - Miscellaneous Widgets Module
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
-# OPTION SELECTOR
-from .option_selector import *
+"""
+Miscellaneous widgets module.
 
-# CIRCULAR LOADER
-from .circular_timer import *
+This module provides various utility widgets for PySide6 applications,
+including circular timers, draggable lists, option selectors, toggle icons,
+and toggle switches.
+"""
 
-# TOGGLE LABEL
-from .toggle_icon import *
+from __future__ import annotations
 
-# TOGGLE SWITCH
-from .toggle_switch import *
+# ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Local imports
+from .circular_timer import CircularTimer
+from .draggable_list import DraggableItem, DraggableList
+from .option_selector import OptionSelector
+from .toggle_icon import ToggleIcon
+from .toggle_switch import ToggleSwitch
 
-# DRAGGABLE LIST
-from .draggable_list import *
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = [
+    "CircularTimer",
+    "DraggableItem",
+    "DraggableList",
+    "OptionSelector",
+    "ToggleIcon",
+    "ToggleSwitch",
+]

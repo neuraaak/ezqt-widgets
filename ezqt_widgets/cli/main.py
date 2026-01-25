@@ -1,24 +1,46 @@
+# ///////////////////////////////////////////////////////////////
+# CLI_MAIN - CLI Main Entry Point
+# Project: ezqt_widgets
+# ///////////////////////////////////////////////////////////////
+
 """
 EzQt Widgets CLI - Main entry point.
 
 Command-line interface for running examples and utilities.
 """
 
+from __future__ import annotations
+
+# ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Standard library imports
+import subprocess
 import sys
+
+# Third-party imports
 import click
-from .runner import run_example_by_category, run_all_examples, list_available_examples
+
+# Local imports
+from .runner import (
+    list_available_examples,
+    run_all_examples,
+    run_example_by_category,
+)
+
+# ///////////////////////////////////////////////////////////////
+# CLI COMMANDS
+# ///////////////////////////////////////////////////////////////
 
 
 @click.group()
 @click.version_option(version="1.0.0", prog_name="EzQt Widgets CLI")
-def cli():
-    """
-    🎨 EzQt Widgets CLI - Launch examples and utilities
+def cli() -> None:
+    """EzQt Widgets CLI - Launch examples and utilities.
 
     A command-line interface for running EzQt Widgets examples
     and managing the development workflow.
     """
-    pass
 
 
 @cli.command()
@@ -55,14 +77,20 @@ def cli():
 @click.option(
     "--verbose", "-v", is_flag=True, help="Verbose output with detailed information"
 )
-def run(run_all, buttons, inputs, labels, misc, no_gui, verbose):
-    """
-    🚀 Run EzQt Widgets examples
+def run(
+    run_all: bool,
+    buttons: bool,
+    inputs: bool,
+    labels: bool,
+    misc: bool,
+    no_gui: bool,
+    verbose: bool,
+) -> None:
+    """Run EzQt Widgets examples.
 
     Launch interactive examples to explore widget functionality.
     Use --help for available options.
     """
-
     # Check if any option is selected
     options_selected = any([run_all, buttons, inputs, labels, misc])
 
@@ -111,9 +139,8 @@ def run(run_all, buttons, inputs, labels, misc, no_gui, verbose):
 
 
 @cli.command()
-def list():
-    """
-    📋 List available examples
+def list() -> None:
+    """List available examples.
 
     Show all available example files and their status.
     """
@@ -124,15 +151,11 @@ def list():
 @click.option("--unit", "-u", is_flag=True, help="Run unit tests")
 @click.option("--coverage", "-c", is_flag=True, help="Run tests with coverage")
 @click.option("--verbose", "-v", is_flag=True, help="Verbose output")
-def test(unit, coverage, verbose):
-    """
-    🧪 Run tests
+def test(unit: bool, coverage: bool, verbose: bool) -> None:
+    """Run tests.
 
     Execute the test suite for EzQt Widgets.
     """
-    import subprocess
-    import sys
-
     if not any([unit, coverage]):
         # Default to unit tests
         unit = True
@@ -143,14 +166,20 @@ def test(unit, coverage, verbose):
             cmd = ["python", "-m", "pytest", "tests/unit/"]
             if verbose:
                 cmd.append("-v")
-            subprocess.run(cmd, check=True)
+            subprocess.run(cmd, check=True)  # noqa: S603
 
         if coverage:
             click.echo("📊 Running tests with coverage...")
-            cmd = ["python", "-m", "pytest", "--cov=ezqt_widgets", "--cov-report=html"]
+            cmd = [
+                "python",
+                "-m",
+                "pytest",
+                "--cov=ezqt_widgets",
+                "--cov-report=html",
+            ]
             if verbose:
                 cmd.append("-v")
-            subprocess.run(cmd, check=True)
+            subprocess.run(cmd, check=True)  # noqa: S603
             click.echo("📈 Coverage report generated in htmlcov/")
 
         click.echo("✅ Tests completed successfully!")
@@ -166,17 +195,16 @@ def test(unit, coverage, verbose):
 @cli.command()
 @click.option("--serve", "-s", is_flag=True, help="Serve documentation locally")
 @click.option("--port", "-p", default=8000, help="Port for documentation server")
-def docs(serve, port):
-    """
-    📖 Documentation utilities
+def docs(serve: bool, port: int) -> None:
+    """Documentation utilities.
 
     Access and manage EzQt Widgets documentation.
     """
     if serve:
         try:
             import http.server
-            import socketserver
             import os
+            import socketserver
 
             # Change to docs directory
             docs_dir = os.path.join(os.path.dirname(__file__), "..", "..", "docs")
@@ -204,9 +232,8 @@ def docs(serve, port):
 
 
 @cli.command()
-def info():
-    """
-    ℹ️  Show package information
+def info() -> None:
+    """Show package information.
 
     Display information about EzQt Widgets installation.
     """
@@ -241,6 +268,10 @@ def info():
     except ImportError:
         click.echo("❌ EzQt Widgets not found in current environment")
 
+
+# ///////////////////////////////////////////////////////////////
+# MAIN ENTRY POINT
+# ///////////////////////////////////////////////////////////////
 
 if __name__ == "__main__":
     cli()

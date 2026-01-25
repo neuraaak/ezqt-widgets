@@ -1,6 +1,13 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# TESTS - Tests Package
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
 """
-Package de tests pour EzQt_Widgets.
-""" 
+Test package for ezqt_widgets.
+
+This package contains all tests (unit, integration, etc.) for the
+ezqt_widgets package.
+"""
+
+from __future__ import annotations

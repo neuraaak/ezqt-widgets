@@ -1,36 +1,28 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# ICON_BUTTON - Icon Button Widget
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
-# IMPORT BASE
+"""
+Icon button widget module.
+
+Provides an enhanced button widget with icon and optional text support
+for PySide6 applications.
+"""
+
+from __future__ import annotations
+
 # ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Third-party imports
 import requests
+from PySide6.QtCore import QSize, Qt, Signal
+from PySide6.QtGui import QColor, QIcon, QPainter, QPixmap
+from PySide6.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QToolButton
+from typing_extensions import override
 
-# IMPORT SPECS
 # ///////////////////////////////////////////////////////////////
-from PySide6.QtCore import (
-    Qt,
-    QSize,
-    Signal,
-)
-from PySide6.QtGui import (
-    QIcon,
-    QPixmap,
-    QPainter,
-    QColor,
-)
-from PySide6.QtWidgets import (
-    QHBoxLayout,
-    QLabel,
-    QToolButton,
-    QSizePolicy,
-)
-
-# IMPORT / GUI AND MODULES AND WIDGETS
-# ///////////////////////////////////////////////////////////////
-
-# ////// TYPE HINTS IMPROVEMENTS FOR PYSIDE6 6.9.1
-from typing import Optional, Union, Tuple
-
 # UTILITY FUNCTIONS
 # ///////////////////////////////////////////////////////////////
 
@@ -38,43 +30,50 @@ from typing import Optional, Union, Tuple
 def colorize_pixmap(
     pixmap: QPixmap, color: str = "#FFFFFF", opacity: float = 0.5
 ) -> QPixmap:
-    """Recolore un QPixmap avec la couleur et l'opacité données."""
+    """Recolor a QPixmap with the given color and opacity.
+
+    Args:
+        pixmap: The pixmap to recolor.
+        color: The color to apply (default: "#FFFFFF").
+        opacity: The opacity level (default: 0.5).
+
+    Returns:
+        The recolored pixmap.
+    """
     result = QPixmap(pixmap.size())
-    result.fill(Qt.transparent)
+    result.fill(Qt.GlobalColor.transparent)
     painter = QPainter(result)
     painter.setOpacity(opacity)
     painter.drawPixmap(0, 0, pixmap)
-    painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
+    painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceIn)
     painter.fillRect(result.rect(), QColor(color))
     painter.end()
     return result
 
 
-def load_icon_from_source(source: Optional[Union[QIcon, str]]) -> Optional[QIcon]:
-    """
-    Load icon from various sources (QIcon, path, URL, etc.).
+def load_icon_from_source(source: QIcon | str | None) -> QIcon | None:
+    """Load icon from various sources (QIcon, path, URL, etc.).
 
-    Parameters
-    ----------
-    source : QIcon or str or None
-        Icon source (QIcon, path, resource, URL, or SVG).
+    Supports loading icons from:
+        - QIcon objects (returned as-is)
+        - Local file paths (PNG, JPG, etc.)
+        - Local SVG files
+        - Remote URLs (HTTP/HTTPS)
+        - Remote SVG URLs
 
-    Returns
-    -------
-    QIcon or None
-        Loaded icon or None if failed.
+    Args:
+        source: Icon source (QIcon, path, resource, URL, or SVG).
+
+    Returns:
+        Loaded icon or None if loading failed.
     """
-    # ////// HANDLE NONE
     if source is None:
         return None
-    # ////// HANDLE QICON
     elif isinstance(source, QIcon):
         return source
-    # ////// HANDLE STRING (PATH, URL, SVG)
     elif isinstance(source, str):
-
-        # ////// HANDLE URL
-        if source.startswith("http://") or source.startswith("https://"):
+        # Handle URL
+        if source.startswith(("http://", "https://")):
             print(f"Loading icon from URL: {source}")
             try:
                 response = requests.get(source, timeout=5)
@@ -83,20 +82,20 @@ def load_icon_from_source(source: Optional[Union[QIcon, str]]) -> Optional[QIcon
                     raise ValueError("URL does not point to an image file.")
                 image_data = response.content
 
-                # ////// HANDLE SVG FROM URL
+                # Handle SVG from URL
                 if source.lower().endswith(".svg"):
-                    from PySide6.QtSvg import QSvgRenderer
                     from PySide6.QtCore import QByteArray
+                    from PySide6.QtSvg import QSvgRenderer
 
                     renderer = QSvgRenderer(QByteArray(image_data))
                     pixmap = QPixmap(QSize(16, 16))
-                    pixmap.fill(Qt.transparent)
+                    pixmap.fill(Qt.GlobalColor.transparent)
                     painter = QPainter(pixmap)
                     renderer.render(painter)
                     painter.end()
                     return QIcon(pixmap)
 
-                # ////// HANDLE RASTER IMAGE FROM URL
+                # Handle raster image from URL
                 else:
                     pixmap = QPixmap()
                     if not pixmap.loadFromData(image_data):
@@ -107,20 +106,20 @@ def load_icon_from_source(source: Optional[Union[QIcon, str]]) -> Optional[QIcon
                 print(f"Failed to load icon from URL: {e}")
                 return None
 
-        # ////// HANDLE LOCAL SVG
+        # Handle local SVG
         elif source.lower().endswith(".svg"):
             try:
-                from PySide6.QtSvg import QSvgRenderer
                 from PySide6.QtCore import QFile
+                from PySide6.QtSvg import QSvgRenderer
 
                 file = QFile(source)
-                if not file.open(QFile.ReadOnly):
+                if not file.open(QFile.OpenModeFlag.ReadOnly):
                     raise ValueError(f"Cannot open SVG file: {source}")
                 svg_data = file.readAll()
                 file.close()
                 renderer = QSvgRenderer(svg_data)
                 pixmap = QPixmap(QSize(16, 16))
-                pixmap.fill(Qt.transparent)
+                pixmap.fill(Qt.GlobalColor.transparent)
                 painter = QPainter(pixmap)
                 renderer.render(painter)
                 painter.end()
@@ -129,7 +128,7 @@ def load_icon_from_source(source: Optional[Union[QIcon, str]]) -> Optional[QIcon
                 print(f"Failed to load SVG icon: {e}")
                 return None
 
-        # ////// HANDLE LOCAL/RESOURCE RASTER IMAGE
+        # Handle local/resource raster image
         else:
             icon = QIcon(source)
             if icon.isNull():
@@ -137,19 +136,14 @@ def load_icon_from_source(source: Optional[Union[QIcon, str]]) -> Optional[QIcon
                 return None
             return icon
 
-    # ////// HANDLE INVALID TYPE
-    else:
-        print(f"Invalid icon source type: {type(source)}")
-        return None
 
-
-# CLASS
+# ///////////////////////////////////////////////////////////////
+# CLASSES
 # ///////////////////////////////////////////////////////////////
 
 
 class IconButton(QToolButton):
-    """
-    Enhanced button widget with icon and optional text support.
+    """Enhanced button widget with icon and optional text support.
 
     Features:
         - Icon support from various sources (QIcon, path, URL, SVG)
@@ -159,75 +153,48 @@ class IconButton(QToolButton):
         - Signals for icon and text changes
         - Hover and click effects
 
-    Parameters
-    ----------
-    parent : QWidget, optional
-        The parent widget (default: None).
-    icon : QIcon or str, optional
-        The icon to display (QIcon, path, resource, URL, or SVG).
-    text : str, optional
-        The button text (default: "").
-    icon_size : QSize or tuple, optional
-        Size of the icon (default: QSize(20, 20)).
-    text_visible : bool, optional
-        Whether the text is initially visible (default: True).
-    spacing : int, optional
-        Spacing between icon and text in pixels (default: 10).
-    min_width : int, optional
-        Minimum width of the button (default: None, auto-calculated).
-    min_height : int, optional
-        Minimum height of the button (default: None, auto-calculated).
-    *args, **kwargs :
-        Additional arguments passed to QToolButton.
+    Args:
+        parent: The parent widget (default: None).
+        icon: The icon to display (QIcon, path, resource, URL, or SVG).
+        text: The button text (default: "").
+        icon_size: Size of the icon (default: QSize(20, 20)).
+        text_visible: Whether the text is initially visible (default: True).
+        spacing: Spacing between icon and text in pixels (default: 10).
+        min_width: Minimum width of the button (default: None, auto-calculated).
+        min_height: Minimum height of the button (default: None, auto-calculated).
+        *args: Additional arguments passed to QToolButton.
+        **kwargs: Additional keyword arguments passed to QToolButton.
 
-    Properties
-    ----------
-    icon : QIcon
-        Get or set the button icon.
-    text : str
-        Get or set the button text.
-    icon_size : QSize
-        Get or set the icon size.
-    text_visible : bool
-        Get or set text visibility.
-    spacing : int
-        Get or set spacing between icon and text.
-    min_width : int
-        Get or set the minimum width of the button.
-    min_height : int
-        Get or set the minimum height of the button.
-
-    Signals
-    -------
-    iconChanged(QIcon)
-        Emitted when the icon changes.
-    textChanged(str)
-        Emitted when the text changes.
+    Signals:
+        iconChanged(QIcon): Emitted when the icon changes.
+        textChanged(str): Emitted when the text changes.
     """
 
     iconChanged = Signal(QIcon)
     textChanged = Signal(str)
 
-    # INITIALIZATION
+    # ///////////////////////////////////////////////////////////////
+    # INIT
     # ///////////////////////////////////////////////////////////////
 
     def __init__(
         self,
         parent=None,
-        icon: Optional[Union[QIcon, str]] = None,
+        icon: QIcon | str | None = None,
         text: str = "",
-        icon_size: Union[QSize, Tuple[int, int]] = QSize(20, 20),
+        icon_size: QSize | tuple[int, int] = QSize(20, 20),
         text_visible: bool = True,
         spacing: int = 10,
-        min_width: Optional[int] = None,
-        min_height: Optional[int] = None,
+        min_width: int | None = None,
+        min_height: int | None = None,
         *args,
         **kwargs,
     ) -> None:
+        """Initialize the icon button."""
         super().__init__(parent, *args, **kwargs)
         self.setProperty("type", "IconButton")
 
-        # ////// INITIALIZE VARIABLES
+        # Initialize properties
         self._icon_size: QSize = (
             QSize(*icon_size)
             if isinstance(icon_size, (tuple, list))
@@ -235,22 +202,22 @@ class IconButton(QToolButton):
         )
         self._text_visible: bool = text_visible
         self._spacing: int = spacing
-        self._current_icon: Optional[QIcon] = None
-        self._min_width: Optional[int] = min_width
-        self._min_height: Optional[int] = min_height
+        self._current_icon: QIcon | None = None
+        self._min_width: int | None = min_width
+        self._min_height: int | None = min_height
 
-        # ////// SETUP UI COMPONENTS
+        # Setup UI components
         self.icon_label = QLabel()
         self.text_label = QLabel()
 
-        # ////// CONFIGURE TEXT LABEL
+        # Configure text label
         self.text_label.setAlignment(
             Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
         )
         self.text_label.setWordWrap(True)
         self.text_label.setStyleSheet("background-color: transparent;")
 
-        # ////// SETUP LAYOUT
+        # Setup layout
         layout = QHBoxLayout(self)
         layout.setContentsMargins(8, 2, 8, 2)
         layout.setSpacing(spacing)
@@ -258,27 +225,39 @@ class IconButton(QToolButton):
         layout.addWidget(self.icon_label)
         layout.addWidget(self.text_label)
 
-        # ////// CONFIGURE SIZE POLICY
+        # Configure size policy
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
-        # ////// SET INITIAL VALUES
+        # Set initial values
         if icon:
-            self.icon = icon
+            self.icon = icon  # type: ignore[assignment]
         if text:
             self.text = text
         self.text_visible = text_visible
 
-    # PROPERTY FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # PROPERTIES
     # ///////////////////////////////////////////////////////////////
 
     @property
-    def icon(self) -> Optional[QIcon]:
-        """Get or set the button icon."""
+    @override
+    def icon(
+        self,
+    ) -> QIcon | None:
+        """Get or set the button icon.
+
+        Returns:
+            The current icon, or None if no icon is set.
+        """
         return self._current_icon
 
     @icon.setter
-    def icon(self, value: Optional[Union[QIcon, str]]) -> None:
-        """Set the button icon from various sources."""
+    def icon(self, value: QIcon | str | None) -> None:
+        """Set the button icon from various sources.
+
+        Args:
+            value: The icon source (QIcon, path, URL, or SVG).
+        """
         icon = load_icon_from_source(value)
         if icon:
             self._current_icon = icon
@@ -288,25 +267,44 @@ class IconButton(QToolButton):
             self.iconChanged.emit(icon)
 
     @property
-    def text(self) -> str:
-        """Get or set the button text."""
+    @override
+    def text(
+        self,
+    ) -> str:
+        """Get or set the button text.
+
+        Returns:
+            The current button text.
+        """
         return self.text_label.text()
 
     @text.setter
     def text(self, value: str) -> None:
-        """Set the button text."""
+        """Set the button text.
+
+        Args:
+            value: The new button text.
+        """
         if value != self.text_label.text():
             self.text_label.setText(str(value))
             self.textChanged.emit(str(value))
 
     @property
     def icon_size(self) -> QSize:
-        """Get or set the icon size."""
+        """Get or set the icon size.
+
+        Returns:
+            The current icon size.
+        """
         return self._icon_size
 
     @icon_size.setter
-    def icon_size(self, value: Union[QSize, Tuple[int, int]]) -> None:
-        """Set the icon size."""
+    def icon_size(self, value: QSize | tuple[int, int]) -> None:
+        """Set the icon size.
+
+        Args:
+            value: The new icon size (QSize or tuple).
+        """
         self._icon_size = (
             QSize(*value) if isinstance(value, (tuple, list)) else QSize(value)
         )
@@ -316,12 +314,20 @@ class IconButton(QToolButton):
 
     @property
     def text_visible(self) -> bool:
-        """Get or set text visibility."""
+        """Get or set text visibility.
+
+        Returns:
+            True if text is visible, False otherwise.
+        """
         return self._text_visible
 
     @text_visible.setter
     def text_visible(self, value: bool) -> None:
-        """Set text visibility."""
+        """Set text visibility.
+
+        Args:
+            value: Whether to show the text.
+        """
         self._text_visible = bool(value)
         if self._text_visible:
             self.text_label.show()
@@ -330,40 +336,65 @@ class IconButton(QToolButton):
 
     @property
     def spacing(self) -> int:
-        """Get or set spacing between icon and text."""
+        """Get or set spacing between icon and text.
+
+        Returns:
+            The current spacing in pixels.
+        """
         return self._spacing
 
     @spacing.setter
     def spacing(self, value: int) -> None:
-        """Set spacing between icon and text."""
+        """Set spacing between icon and text.
+
+        Args:
+            value: The new spacing in pixels.
+        """
         self._spacing = int(value)
         layout = self.layout()
         if layout:
             layout.setSpacing(self._spacing)
 
     @property
-    def min_width(self) -> Optional[int]:
-        """Get or set the minimum width of the button."""
+    def min_width(self) -> int | None:
+        """Get or set the minimum width of the button.
+
+        Returns:
+            The minimum width, or None if not set.
+        """
         return self._min_width
 
     @min_width.setter
-    def min_width(self, value: Optional[int]) -> None:
-        """Set the minimum width of the button."""
+    def min_width(self, value: int | None) -> None:
+        """Set the minimum width of the button.
+
+        Args:
+            value: The minimum width, or None to auto-calculate.
+        """
         self._min_width = value
         self.updateGeometry()
 
     @property
-    def min_height(self) -> Optional[int]:
-        """Get or set the minimum height of the button."""
+    def min_height(self) -> int | None:
+        """Get or set the minimum height of the button.
+
+        Returns:
+            The minimum height, or None if not set.
+        """
         return self._min_height
 
     @min_height.setter
-    def min_height(self, value: Optional[int]) -> None:
-        """Set the minimum height of the button."""
+    def min_height(self, value: int | None) -> None:
+        """Set the minimum height of the button.
+
+        Args:
+            value: The minimum height, or None to auto-calculate.
+        """
         self._min_height = value
         self.updateGeometry()
 
-    # UTILITY FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
     def clear_icon(self) -> None:
@@ -381,41 +412,45 @@ class IconButton(QToolButton):
         self.text_visible = not self.text_visible
 
     def set_icon_color(self, color: str = "#FFFFFF", opacity: float = 0.5) -> None:
-        """Apply color and opacity to the current icon."""
+        """Apply color and opacity to the current icon.
+
+        Args:
+            color: The color to apply (default: "#FFFFFF").
+            opacity: The opacity level (default: 0.5).
+        """
         if self._current_icon:
             pixmap = self._current_icon.pixmap(self._icon_size)
             colored_pixmap = colorize_pixmap(pixmap, color, opacity)
             self.icon_label.setPixmap(colored_pixmap)
 
-    # OVERRIDE FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # OVERRIDE METHODS
     # ///////////////////////////////////////////////////////////////
 
     def sizeHint(self) -> QSize:
-        """Get the recommended size for the button."""
+        """Get the recommended size for the button.
+
+        Returns:
+            The recommended size.
+        """
         return QSize(100, 40)
 
     def minimumSizeHint(self) -> QSize:
-        """Get the minimum size hint for the button."""
-        # ////// CALCULATE BASE SIZE
+        """Get the minimum size hint for the button.
+
+        Returns:
+            The minimum size hint.
+        """
         base_size = super().minimumSizeHint()
 
-        # ////// CALCULATE ICON SPACE
         icon_width = self._icon_size.width() if self._current_icon else 0
 
-        # ////// CALCULATE TEXT SPACE
         text_width = 0
         if self._text_visible and self.text:
             text_width = self.text_label.fontMetrics().horizontalAdvance(self.text)
 
-        # ////// CALCULATE TOTAL WIDTH
-        total_width = (
-            icon_width
-            + text_width
-            + self._spacing
-            + 20  # margins (10px left + 10px right)
-        )
+        total_width = icon_width + text_width + self._spacing + 20  # margins
 
-        # ////// APPLY MINIMUM CONSTRAINTS
         min_width = self._min_width if self._min_width is not None else total_width
         min_height = (
             self._min_height
@@ -425,11 +460,15 @@ class IconButton(QToolButton):
 
         return QSize(max(min_width, total_width), min_height)
 
-    # STYLE FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
     def refresh_style(self) -> None:
-        """Refresh the widget's style (useful after dynamic stylesheet changes)."""
+        """Refresh the widget's style.
+
+        Useful after dynamic stylesheet changes.
+        """
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()

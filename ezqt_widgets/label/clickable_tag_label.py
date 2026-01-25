@@ -1,44 +1,32 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# CLICKABLE_TAG_LABEL - Clickable Tag Label Widget
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
-# IMPORT BASE
+"""
+Clickable tag label widget module.
+
+Provides a tag-like clickable label with toggleable state for PySide6
+applications.
+"""
+
+from __future__ import annotations
+
 # ///////////////////////////////////////////////////////////////
-
-# IMPORT SPECS
+# IMPORTS
 # ///////////////////////////////////////////////////////////////
-from PySide6.QtCore import (
-    Signal,
-    Qt,
-    QSize,
-)
-from PySide6.QtGui import (
-    QMouseEvent,
-    QKeyEvent,
-    QFont,
-)
-from PySide6.QtWidgets import (
-    QHBoxLayout,
-    QSizePolicy,
-    QFrame,
-    QLabel,
-)
+# Third-party imports
+from PySide6.QtCore import QSize, Qt, Signal
+from PySide6.QtGui import QFont, QKeyEvent, QMouseEvent
+from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QSizePolicy
 
-# IMPORT / GUI AND MODULES AND WIDGETS
 # ///////////////////////////////////////////////////////////////
-
-# ////// TYPE HINTS IMPROVEMENTS FOR PYSIDE6 6.9.1
-from typing import Optional
-
-# UTILITY FUNCTIONS
-# ///////////////////////////////////////////////////////////////
-
-# CLASS
+# CLASSES
 # ///////////////////////////////////////////////////////////////
 
 
 class ClickableTagLabel(QFrame):
-    """
-    Tag-like clickable label with toggleable state.
+    """Tag-like clickable label with toggleable state.
 
     Features:
         - Clickable tag with enabled/disabled state
@@ -49,51 +37,28 @@ class ClickableTagLabel(QFrame):
         - Automatic minimum size calculation
         - Keyboard focus and accessibility
 
-    Parameters
-    ----------
-    name : str, optional
-        Text to display in the tag (default: "").
-    enabled : bool, optional
-        Initial state (default: False).
-    status_color : str, optional
-        Color when selected (default: "#0078d4").
-    min_width : int, optional
-        Minimum width (default: None, auto-calculated).
-    min_height : int, optional
-        Minimum height (default: None, auto-calculated).
-    parent : QWidget, optional
-        Parent widget (default: None).
-    *args, **kwargs :
-        Additional arguments passed to QFrame.
+    Args:
+        name: Text to display in the tag (default: "").
+        enabled: Initial state (default: False).
+        status_color: Color when selected (default: "#0078d4").
+        min_width: Minimum width (default: None, auto-calculated).
+        min_height: Minimum height (default: None, auto-calculated).
+        parent: Parent widget (default: None).
+        *args: Additional arguments passed to QFrame.
+        **kwargs: Additional keyword arguments passed to QFrame.
 
-    Properties
-    ----------
-    name : str
-        Get or set the tag text.
-    enabled : bool
-        Get or set the enabled state.
-    status_color : str
-        Get or set the status color.
-    min_width : int
-        Get or set the minimum width.
-    min_height : int
-        Get or set the minimum height.
-
-    Signals
-    -------
-    clicked()
-        Emitted when the tag is clicked.
-    toggle_keyword(str)
-        Emitted with the tag name when toggled.
-    stateChanged(bool)
-        Emitted when the enabled state changes.
+    Signals:
+        clicked(): Emitted when the tag is clicked.
+        toggle_keyword(str): Emitted with the tag name when toggled.
+        stateChanged(bool): Emitted when the enabled state changes.
     """
 
     clicked = Signal()
     toggle_keyword = Signal(str)
     stateChanged = Signal(bool)
 
-    # INITIALIZATION
+    # ///////////////////////////////////////////////////////////////
+    # INIT
     # ///////////////////////////////////////////////////////////////
 
     def __init__(
@@ -101,58 +66,59 @@ class ClickableTagLabel(QFrame):
         name: str = "",
         enabled: bool = False,
         status_color: str = "#0078d4",
-        min_width: Optional[int] = None,
-        min_height: Optional[int] = None,
+        min_width: int | None = None,
+        min_height: int | None = None,
         parent=None,
         *args,
         **kwargs,
     ) -> None:
+        """Initialize the clickable tag label."""
         super().__init__(parent, *args, **kwargs)
 
-        # ////// SET PROPERTY TYPE FOR QSS
         self.setProperty("type", "ClickableTagLabel")
 
-        # ////// INITIALIZE PROPERTIES
+        # Initialize properties
         self._name: str = name
         self._enabled: bool = enabled
         self._status_color: str = status_color
-        self._min_width: Optional[int] = min_width
-        self._min_height: Optional[int] = min_height
+        self._min_width: int | None = min_width
+        self._min_height: int | None = min_height
 
-        # ////// SETUP UI
+        # Setup UI
         self._setup_ui()
         self._update_display()
 
+    # ------------------------------------------------
+    # PRIVATE METHODS
+    # ------------------------------------------------
+
     def _setup_ui(self) -> None:
         """Setup the user interface components."""
-        # ////// SETUP FRAME
-        self.setFrameShape(QFrame.NoFrame)
-        self.setFrameShadow(QFrame.Raised)
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        self.setFocusPolicy(Qt.StrongFocus)
-        self.setCursor(Qt.PointingHandCursor)
+        self.setFrameShape(QFrame.Shape.NoFrame)
+        self.setFrameShadow(QFrame.Shadow.Raised)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
         self.setContentsMargins(4, 0, 4, 0)
         self.setFixedHeight(20)
 
-        # ////// CREATE LAYOUT
         self._layout = QHBoxLayout(self)
         self._layout.setObjectName("status_HLayout")
         self._layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self._layout.setContentsMargins(0, 0, 0, 0)
         self._layout.setSpacing(12)
 
-        # ////// CREATE LABEL
         self._label = QLabel()
         self._label.setObjectName("tag")
         self._label.setFont(QFont("Segoe UI", 8))
         self._label.setLineWidth(0)
-        self._label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        self._label.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred
+        )
         self._label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
 
-        # ////// ADD LABEL TO LAYOUT
         self._layout.addWidget(self._label, 0, Qt.AlignmentFlag.AlignTop)
 
-        # ////// SET MINIMUM SIZES
         if self._min_width:
             self.setMinimumWidth(self._min_width)
         if self._min_height:
@@ -160,11 +126,9 @@ class ClickableTagLabel(QFrame):
 
     def _update_display(self) -> None:
         """Update the display based on current state."""
-        # ////// UPDATE LABEL TEXT
         self._label.setText(self._name)
         self.setObjectName(self._name)
 
-        # ////// UPDATE QSS PROPERTIES
         if self._enabled:
             self.setProperty("status", "selected")
             self._label.setStyleSheet(
@@ -176,33 +140,49 @@ class ClickableTagLabel(QFrame):
                 "color: rgb(86, 86, 86); background-color: transparent; border: none;"
             )
 
-        # ////// REFRESH STYLE
         self.refresh_style()
         self.adjustSize()
 
+    # ///////////////////////////////////////////////////////////////
     # PROPERTIES
     # ///////////////////////////////////////////////////////////////
 
     @property
     def name(self) -> str:
-        """Get the tag text."""
+        """Get the tag text.
+
+        Returns:
+            The current tag text.
+        """
         return self._name
 
     @name.setter
     def name(self, value: str) -> None:
-        """Set the tag text."""
+        """Set the tag text.
+
+        Args:
+            value: The new tag text.
+        """
         self._name = str(value)
         self._update_display()
         self.updateGeometry()
 
     @property
     def enabled(self) -> bool:
-        """Get the enabled state."""
+        """Get the enabled state.
+
+        Returns:
+            True if enabled, False otherwise.
+        """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value: bool) -> None:
-        """Set the enabled state."""
+        """Set the enabled state.
+
+        Args:
+            value: The new enabled state.
+        """
         if value != self._enabled:
             self._enabled = bool(value)
             self._update_display()
@@ -210,12 +190,20 @@ class ClickableTagLabel(QFrame):
 
     @property
     def status_color(self) -> str:
-        """Get the status color."""
+        """Get the status color.
+
+        Returns:
+            The current status color.
+        """
         return self._status_color
 
     @status_color.setter
     def status_color(self, value: str) -> None:
-        """Set the status color."""
+        """Set the status color.
+
+        Args:
+            value: The new status color.
+        """
         self._status_color = str(value)
         if self._enabled:
             self._label.setStyleSheet(
@@ -224,36 +212,57 @@ class ClickableTagLabel(QFrame):
             self.refresh_style()
 
     @property
-    def min_width(self) -> Optional[int]:
-        """Get the minimum width."""
+    def min_width(self) -> int | None:
+        """Get the minimum width.
+
+        Returns:
+            The minimum width, or None if not set.
+        """
         return self._min_width
 
     @min_width.setter
-    def min_width(self, value: Optional[int]) -> None:
-        """Set the minimum width."""
+    def min_width(self, value: int | None) -> None:
+        """Set the minimum width.
+
+        Args:
+            value: The minimum width, or None to auto-calculate.
+        """
         self._min_width = value
         if value:
             self.setMinimumWidth(value)
         self.updateGeometry()
 
     @property
-    def min_height(self) -> Optional[int]:
-        """Get the minimum height."""
+    def min_height(self) -> int | None:
+        """Get the minimum height.
+
+        Returns:
+            The minimum height, or None if not set.
+        """
         return self._min_height
 
     @min_height.setter
-    def min_height(self, value: Optional[int]) -> None:
-        """Set the minimum height."""
+    def min_height(self, value: int | None) -> None:
+        """Set the minimum height.
+
+        Args:
+            value: The minimum height, or None to auto-calculate.
+        """
         self._min_height = value
         if value:
             self.setMinimumHeight(value)
         self.updateGeometry()
 
-    # EVENT FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # EVENT HANDLERS
     # ///////////////////////////////////////////////////////////////
 
     def mousePressEvent(self, event: QMouseEvent) -> None:
-        """Handle mouse press events."""
+        """Handle mouse press events.
+
+        Args:
+            event: The mouse event.
+        """
         if event.button() == Qt.MouseButton.LeftButton:
             self.enabled = not self.enabled
             self.clicked.emit()
@@ -261,24 +270,36 @@ class ClickableTagLabel(QFrame):
         super().mousePressEvent(event)
 
     def keyPressEvent(self, event: QKeyEvent) -> None:
-        """Handle key press events."""
-        if event.key() in [Qt.Key_Space, Qt.Key_Return, Qt.Key_Enter]:
+        """Handle key press events.
+
+        Args:
+            event: The key event.
+        """
+        if event.key() in [Qt.Key.Key_Space, Qt.Key.Key_Return, Qt.Key.Key_Enter]:
             self.enabled = not self.enabled
             self.clicked.emit()
             self.toggle_keyword.emit(self._name)
         else:
             super().keyPressEvent(event)
 
-    # OVERRIDE FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # OVERRIDE METHODS
     # ///////////////////////////////////////////////////////////////
 
     def sizeHint(self) -> QSize:
-        """Return the recommended size for the widget."""
+        """Return the recommended size for the widget.
+
+        Returns:
+            The recommended size.
+        """
         return QSize(80, 24)
 
     def minimumSizeHint(self) -> QSize:
-        """Return the minimum size for the widget."""
-        # ////// CALCULATE MINIMUM SIZE
+        """Return the minimum size for the widget.
+
+        Returns:
+            The minimum size hint.
+        """
         font_metrics = self._label.fontMetrics()
         text_width = font_metrics.horizontalAdvance(self._name)
         min_width = self._min_width if self._min_width is not None else text_width + 16
@@ -290,11 +311,15 @@ class ClickableTagLabel(QFrame):
 
         return QSize(min_width, min_height)
 
-    # STYLE FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
     def refresh_style(self) -> None:
-        """Refresh the widget style."""
+        """Refresh the widget style.
+
+        Useful after dynamic stylesheet changes.
+        """
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()
