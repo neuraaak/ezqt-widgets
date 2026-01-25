@@ -1,46 +1,46 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# PASSWORD_INPUT - Password Input Widget
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
-# IMPORT BASE
+"""
+Password input widget module.
+
+Provides an enhanced password input widget with integrated strength bar
+and right-side icon for PySide6 applications.
+"""
+
+from __future__ import annotations
+
 # ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Standard library imports
 import re
+
+# Third-party imports
 import requests
+from PySide6.QtCore import QRect, QSize, Qt, Signal
+from PySide6.QtGui import QColor, QIcon, QMouseEvent, QPainter, QPaintEvent, QPixmap
+from PySide6.QtWidgets import QLineEdit, QProgressBar, QVBoxLayout, QWidget
 
-# IMPORT SPECS
 # ///////////////////////////////////////////////////////////////
-from PySide6.QtCore import (
-    Signal,
-    Qt,
-    QSize,
-    QRect,
-)
-from PySide6.QtGui import (
-    QIcon,
-    QPainter,
-    QPixmap,
-    QColor,
-    QMouseEvent,
-    QPaintEvent,
-)
-from PySide6.QtWidgets import (
-    QLineEdit,
-    QVBoxLayout,
-    QWidget,
-    QProgressBar,
-)
-
-# IMPORT / GUI AND MODULES AND WIDGETS
-# ///////////////////////////////////////////////////////////////
-
-# ////// TYPE HINTS IMPROVEMENTS FOR PYSIDE6 6.9.1
-from typing import Optional, Union, Tuple
-
 # UTILITY FUNCTIONS
 # ///////////////////////////////////////////////////////////////
 
 
 def password_strength(password: str) -> int:
-    """Return a strength score from 0 (weak) to 100 (strong)."""
+    """Calculate password strength score.
+
+    Returns a strength score from 0 (weak) to 100 (strong) based on
+    various criteria like length, character variety, etc.
+
+    Args:
+        password: The password to evaluate.
+
+    Returns:
+        Strength score from 0 to 100.
+    """
     score = 0
     if len(password) >= 8:
         score += 25
@@ -56,7 +56,14 @@ def password_strength(password: str) -> int:
 
 
 def get_strength_color(score: int) -> str:
-    """Return color based on password strength score."""
+    """Get color based on password strength score.
+
+    Args:
+        score: The password strength score (0-100).
+
+    Returns:
+        Hex color code for the strength level.
+    """
     if score < 30:
         return "#ff4444"  # Red
     elif score < 60:
@@ -70,43 +77,50 @@ def get_strength_color(score: int) -> str:
 def colorize_pixmap(
     pixmap: QPixmap, color: str = "#FFFFFF", opacity: float = 0.5
 ) -> QPixmap:
-    """Recolore un QPixmap avec la couleur et l'opacité données."""
+    """Recolor a QPixmap with the given color and opacity.
+
+    Args:
+        pixmap: The pixmap to recolor.
+        color: Hex color code (default: "#FFFFFF").
+        opacity: Opacity value from 0.0 to 1.0 (default: 0.5).
+
+    Returns:
+        The recolored pixmap.
+    """
     result = QPixmap(pixmap.size())
-    result.fill(Qt.transparent)
+    result.fill(Qt.GlobalColor.transparent)
     painter = QPainter(result)
     painter.setOpacity(opacity)
     painter.drawPixmap(0, 0, pixmap)
-    painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
+    painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceIn)
     painter.fillRect(result.rect(), QColor(color))
     painter.end()
     return result
 
 
-def load_icon_from_source(source: Optional[Union[QIcon, str]]) -> Optional[QIcon]:
-    """
-    Load icon from various sources (QIcon, path, URL, etc.).
+def load_icon_from_source(source: QIcon | str | None) -> QIcon | None:
+    """Load icon from various sources (QIcon, path, URL, etc.).
 
-    Parameters
-    ----------
-    source : QIcon or str or None
-        Icon source (QIcon, path, resource, URL, or SVG).
+    Supports loading icons from:
+        - QIcon objects (returned as-is)
+        - Local file paths (PNG, JPG, etc.)
+        - Local SVG files
+        - Remote URLs (HTTP/HTTPS)
+        - Remote SVG URLs
 
-    Returns
-    -------
-    QIcon or None
-        Loaded icon or None if failed.
+    Args:
+        source: Icon source (QIcon, path, resource, URL, or SVG).
+
+    Returns:
+        Loaded icon or None if loading failed.
     """
-    # ////// HANDLE NONE
     if source is None:
         return None
-    # ////// HANDLE QICON
     elif isinstance(source, QIcon):
         return source
-    # ////// HANDLE STRING (PATH, URL, SVG)
     elif isinstance(source, str):
-
-        # ////// HANDLE URL
-        if source.startswith("http://") or source.startswith("https://"):
+        # Handle URL
+        if source.startswith(("http://", "https://")):
             print(f"Loading icon from URL: {source}")
             try:
                 response = requests.get(source, timeout=5)
@@ -115,20 +129,20 @@ def load_icon_from_source(source: Optional[Union[QIcon, str]]) -> Optional[QIcon
                     raise ValueError("URL does not point to an image file.")
                 image_data = response.content
 
-                # ////// HANDLE SVG FROM URL
+                # Handle SVG from URL
                 if source.lower().endswith(".svg"):
-                    from PySide6.QtSvg import QSvgRenderer
                     from PySide6.QtCore import QByteArray
+                    from PySide6.QtSvg import QSvgRenderer
 
                     renderer = QSvgRenderer(QByteArray(image_data))
                     pixmap = QPixmap(QSize(16, 16))
-                    pixmap.fill(Qt.transparent)
+                    pixmap.fill(Qt.GlobalColor.transparent)
                     painter = QPainter(pixmap)
                     renderer.render(painter)
                     painter.end()
                     return QIcon(pixmap)
 
-                # ////// HANDLE RASTER IMAGE FROM URL
+                # Handle raster image from URL
                 else:
                     pixmap = QPixmap()
                     pixmap.loadFromData(image_data)
@@ -138,14 +152,14 @@ def load_icon_from_source(source: Optional[Union[QIcon, str]]) -> Optional[QIcon
                 print(f"Failed to load icon from URL {source}: {e}")
                 return None
 
-        # ////// HANDLE LOCAL SVG
+        # Handle local SVG
         elif source.lower().endswith(".svg"):
             from PySide6.QtSvg import QSvgRenderer
 
             renderer = QSvgRenderer(source)
             if renderer.isValid():
                 pixmap = QPixmap(QSize(16, 16))
-                pixmap.fill(Qt.transparent)
+                pixmap.fill(Qt.GlobalColor.transparent)
                 painter = QPainter(pixmap)
                 renderer.render(painter)
                 painter.end()
@@ -154,7 +168,7 @@ def load_icon_from_source(source: Optional[Union[QIcon, str]]) -> Optional[QIcon
                 print(f"Invalid SVG file: {source}")
                 return None
 
-        # ////// HANDLE LOCAL IMAGE
+        # Handle local image
         else:
             pixmap = QPixmap(source)
             if not pixmap.isNull():
@@ -163,17 +177,14 @@ def load_icon_from_source(source: Optional[Union[QIcon, str]]) -> Optional[QIcon
                 print(f"Failed to load image: {source}")
                 return None
 
-    # ////// FALLBACK
-    return None
 
-
-# CLASS
+# ///////////////////////////////////////////////////////////////
+# CLASSES
 # ///////////////////////////////////////////////////////////////
 
 
 class PasswordInput(QWidget):
-    """
-    Enhanced password input widget with integrated strength bar and right-side icon.
+    """Enhanced password input widget with integrated strength bar.
 
     Features:
         - QLineEdit in password mode with integrated strength bar
@@ -184,48 +195,38 @@ class PasswordInput(QWidget):
         - Color-coded strength indicator
         - External QSS styling support with CSS variables
 
-    Parameters
-    ----------
-    parent : QWidget, optional
-        The parent widget (default: None).
-    show_strength : bool, optional
-        Whether to show the password strength bar (default: True).
-    strength_bar_height : int, optional
-        Height of the strength bar in pixels (default: 3).
-    show_icon : str or QIcon, optional
-        Icon for show password (default: "https://img.icons8.com/?size=100&id=85130&format=png&color=000000").
-    hide_icon : str or QIcon, optional
-        Icon for hide password (default: "https://img.icons8.com/?size=100&id=85137&format=png&color=000000").
-    icon_size : QSize or tuple, optional
-        Size of the icon (default: QSize(16, 16)).
+    Args:
+        parent: The parent widget (default: None).
+        show_strength: Whether to show the password strength bar
+            (default: True).
+        strength_bar_height: Height of the strength bar in pixels
+            (default: 3).
+        show_icon: Icon for show password (QIcon, str, or None,
+            default: URL to icons8.com).
+        hide_icon: Icon for hide password (QIcon, str, or None,
+            default: URL to icons8.com).
+        icon_size: Size of the icon (QSize or tuple, default: QSize(16, 16)).
+        *args: Additional arguments passed to QWidget.
+        **kwargs: Additional keyword arguments passed to QWidget.
 
-    Properties
-    ----------
-    password : str
-        Get or set the password text.
-    show_strength : bool
-        Get or set whether to show the strength bar.
-    strength_bar_height : int
-        Get or set the strength bar height.
-    show_icon : QIcon
-        Get or set the show password icon.
-    hide_icon : QIcon
-        Get or set the hide password icon.
-    icon_size : QSize
-        Get or set the icon size.
+    Properties:
+        password: Get or set the password text.
+        show_strength: Get or set whether to show the strength bar.
+        strength_bar_height: Get or set the strength bar height.
+        show_icon: Get or set the show password icon.
+        hide_icon: Get or set the hide password icon.
+        icon_size: Get or set the icon size.
 
-    Signals
-    -------
-    strengthChanged(int)
-        Emitted when password strength changes.
-    iconClicked()
-        Emitted when the icon is clicked.
+    Signals:
+        strengthChanged(int): Emitted when password strength changes.
+        iconClicked(): Emitted when the icon is clicked.
     """
 
     strengthChanged = Signal(int)
     iconClicked = Signal()
 
-    # INITIALIZATION
+    # ///////////////////////////////////////////////////////////////
+    # INIT
     # ///////////////////////////////////////////////////////////////
 
     def __init__(
@@ -233,64 +234,69 @@ class PasswordInput(QWidget):
         parent=None,
         show_strength: bool = True,
         strength_bar_height: int = 3,
-        show_icon: Optional[
-            Union[QIcon, str]
-        ] = "https://img.icons8.com/?size=100&id=85130&format=png&color=000000",
-        hide_icon: Optional[
-            Union[QIcon, str]
-        ] = "https://img.icons8.com/?size=100&id=85137&format=png&color=000000",
-        icon_size: Union[QSize, Tuple[int, int]] = QSize(16, 16),
+        show_icon: (
+            QIcon | str | None
+        ) = "https://img.icons8.com/?size=100&id=85130&format=png&color=000000",
+        hide_icon: (
+            QIcon | str | None
+        ) = "https://img.icons8.com/?size=100&id=85137&format=png&color=000000",
+        icon_size: QSize | tuple[int, int] = QSize(16, 16),
         *args,
         **kwargs,
-    ):
+    ) -> None:
+        """Initialize the password input widget."""
         super().__init__(parent, *args, **kwargs)
-        # ////// SET WIDGET TYPE FOR QSS SELECTION
+
+        # Set widget type for QSS selection
         self.setProperty("type", "PasswordInput")
-        # ////// SET OBJECT NAME FOR QSS SELECTION
         self.setObjectName("PasswordInput")
 
-        # ////// INITIALIZE PROPERTIES
+        # Initialize properties
         self._show_strength: bool = show_strength
         self._strength_bar_height: int = strength_bar_height
-        self._show_icon: Optional[QIcon] = None
-        self._hide_icon: Optional[QIcon] = None
-        self._show_icon_source: Optional[Union[QIcon, str]] = show_icon
-        self._hide_icon_source: Optional[Union[QIcon, str]] = hide_icon
+        self._show_icon: QIcon | None = None
+        self._hide_icon: QIcon | None = None
+        self._show_icon_source: QIcon | str | None = show_icon
+        self._hide_icon_source: QIcon | str | None = hide_icon
         self._icon_size: QSize = (
-            QSize(icon_size) if isinstance(icon_size, (tuple, list)) else icon_size
+            QSize(*icon_size) if isinstance(icon_size, (tuple, list)) else icon_size
         )
         self._current_strength: int = 0
         self._password_visible: bool = False
 
-        # ////// SETUP UI
+        # Setup UI
         self._setup_ui()
 
-        # ////// SET ICONS
+        # Set icons
         if show_icon:
-            self.show_icon = show_icon
+            self.show_icon = show_icon  # type: ignore[assignment]
         if hide_icon:
-            self.hide_icon = hide_icon
+            self.hide_icon = hide_icon  # type: ignore[assignment]
 
-        # ////// INITIALIZE ICON DISPLAY
+        # Initialize icon display
         self._update_icon()
+
+    # ------------------------------------------------
+    # PRIVATE METHODS
+    # ------------------------------------------------
 
     def _setup_ui(self) -> None:
         """Setup the user interface components."""
-        # ////// CREATE LAYOUT
+        # Create layout
         self._layout = QVBoxLayout(self)
 
-        # ////// SET CONTENT MARGINS TO SHOW BORDERS
+        # Set content margins to show borders
         self._layout.setContentsMargins(2, 2, 2, 2)
         self._layout.setSpacing(0)
 
-        # ////// CREATE PASSWORD INPUT
+        # Create password input
         self._password_input = PasswordLineEdit()
         self._password_input.textChanged.connect(self.update_strength)
 
-        # ////// CONNECT ICON CLICK SIGNAL
+        # Connect icon click signal
         self._password_input.iconClicked.connect(self.toggle_password)
 
-        # ////// CREATE STRENGTH BAR
+        # Create strength bar
         self._strength_bar = QProgressBar()
         self._strength_bar.setProperty("type", "PasswordStrengthBar")
         self._strength_bar.setFixedHeight(self._strength_bar_height)
@@ -299,29 +305,9 @@ class PasswordInput(QWidget):
         self._strength_bar.setTextVisible(False)
         self._strength_bar.setVisible(self._show_strength)
 
-        # ////// ADD WIDGETS TO LAYOUT
+        # Add widgets to layout
         self._layout.addWidget(self._password_input)
         self._layout.addWidget(self._strength_bar)
-
-    # UTILITY FUNCTIONS
-    # ///////////////////////////////////////////////////////////////
-
-    def toggle_password(self) -> None:
-        """Toggle password visibility."""
-        self._password_visible = not self._password_visible
-        if self._password_visible:
-            self._password_input.setEchoMode(QLineEdit.Normal)
-        else:
-            self._password_input.setEchoMode(QLineEdit.Password)
-        self._update_icon()
-
-    def update_strength(self, text: str) -> None:
-        """Update password strength."""
-        score = password_strength(text)
-        self._current_strength = score
-        self._strength_bar.setValue(score)
-        self._update_strength_color(score)
-        self.strengthChanged.emit(score)
 
     def _update_icon(self) -> None:
         """Update the icon based on password visibility."""
@@ -329,7 +315,7 @@ class PasswordInput(QWidget):
             self._password_input.set_right_icon(self._hide_icon, self._icon_size)
         elif not self._password_visible and self._show_icon:
             self._password_input.set_right_icon(self._show_icon, self._icon_size)
-        # ////// HANDLE CASE WHERE ICONS ARE NOT YET LOADED
+        # Handle case where icons are not yet loaded
         elif not self._password_visible and self._show_icon_source:
             # Try to load icon from source if not already loaded
             icon = load_icon_from_source(self._show_icon_source)
@@ -338,7 +324,11 @@ class PasswordInput(QWidget):
                 self._password_input.set_right_icon(icon, self._icon_size)
 
     def _update_strength_color(self, score: int) -> None:
-        """Update strength bar color based on score."""
+        """Update strength bar color based on score.
+
+        Args:
+            score: The password strength score (0-100).
+        """
         color = get_strength_color(score)
         self._strength_bar.setStyleSheet(
             f"""
@@ -352,62 +342,128 @@ class PasswordInput(QWidget):
             """
         )
 
+    # ///////////////////////////////////////////////////////////////
+    # PUBLIC METHODS
+    # ///////////////////////////////////////////////////////////////
+
+    def toggle_password(self) -> None:
+        """Toggle password visibility."""
+        self._password_visible = not self._password_visible
+        if self._password_visible:
+            self._password_input.setEchoMode(QLineEdit.EchoMode.Normal)
+        else:
+            self._password_input.setEchoMode(QLineEdit.EchoMode.Password)
+        self._update_icon()
+
+    def update_strength(self, text: str) -> None:
+        """Update password strength.
+
+        Args:
+            text: The password text to evaluate.
+        """
+        score = password_strength(text)
+        self._current_strength = score
+        self._strength_bar.setValue(score)
+        self._update_strength_color(score)
+        self.strengthChanged.emit(score)
+
+    # ///////////////////////////////////////////////////////////////
     # PROPERTIES
     # ///////////////////////////////////////////////////////////////
 
     @property
     def password(self) -> str:
-        """Get the password text."""
+        """Get the password text.
+
+        Returns:
+            The current password text.
+        """
         return self._password_input.text()
 
     @password.setter
     def password(self, value: str) -> None:
-        """Set the password text."""
+        """Set the password text.
+
+        Args:
+            value: The new password text.
+        """
         self._password_input.setText(str(value))
 
     @property
     def show_strength(self) -> bool:
-        """Get whether the strength bar is shown."""
+        """Get whether the strength bar is shown.
+
+        Returns:
+            True if strength bar is shown, False otherwise.
+        """
         return self._show_strength
 
     @show_strength.setter
     def show_strength(self, value: bool) -> None:
-        """Set whether the strength bar is shown."""
+        """Set whether the strength bar is shown.
+
+        Args:
+            value: Whether to show the strength bar.
+        """
         self._show_strength = bool(value)
         self._strength_bar.setVisible(self._show_strength)
 
     @property
     def strength_bar_height(self) -> int:
-        """Get the strength bar height."""
+        """Get the strength bar height.
+
+        Returns:
+            The current strength bar height in pixels.
+        """
         return self._strength_bar_height
 
     @strength_bar_height.setter
     def strength_bar_height(self, value: int) -> None:
-        """Set the strength bar height."""
+        """Set the strength bar height.
+
+        Args:
+            value: The new strength bar height in pixels.
+        """
         self._strength_bar_height = max(1, int(value))
         self._strength_bar.setFixedHeight(self._strength_bar_height)
 
     @property
-    def show_icon(self) -> Optional[QIcon]:
-        """Get the show password icon."""
+    def show_icon(self) -> QIcon | None:
+        """Get the show password icon.
+
+        Returns:
+            The current show password icon, or None if not set.
+        """
         return self._show_icon
 
     @show_icon.setter
-    def show_icon(self, value: Optional[Union[QIcon, str]]) -> None:
-        """Set the show password icon."""
+    def show_icon(self, value: QIcon | str | None) -> None:
+        """Set the show password icon.
+
+        Args:
+            value: The icon source (QIcon, path string, URL, or None).
+        """
         self._show_icon_source = value
         self._show_icon = load_icon_from_source(value)
         if not self._password_visible:
             self._update_icon()
 
     @property
-    def hide_icon(self) -> Optional[QIcon]:
-        """Get the hide password icon."""
+    def hide_icon(self) -> QIcon | None:
+        """Get the hide password icon.
+
+        Returns:
+            The current hide password icon, or None if not set.
+        """
         return self._hide_icon
 
     @hide_icon.setter
-    def hide_icon(self, value: Optional[Union[QIcon, str]]) -> None:
-        """Set the hide password icon."""
+    def hide_icon(self, value: QIcon | str | None) -> None:
+        """Set the hide password icon.
+
+        Args:
+            value: The icon source (QIcon, path string, URL, or None).
+        """
         self._hide_icon_source = value
         self._hide_icon = load_icon_from_source(value)
         if self._password_visible:
@@ -415,50 +471,74 @@ class PasswordInput(QWidget):
 
     @property
     def icon_size(self) -> QSize:
-        """Get the icon size."""
+        """Get the icon size.
+
+        Returns:
+            The current icon size.
+        """
         return self._icon_size
 
     @icon_size.setter
-    def icon_size(self, value: Union[QSize, Tuple[int, int]]) -> None:
-        """Set the icon size."""
-        self._icon_size = QSize(value) if isinstance(value, (tuple, list)) else value
+    def icon_size(self, value: QSize | tuple[int, int]) -> None:
+        """Set the icon size.
+
+        Args:
+            value: The new icon size (QSize or tuple).
+        """
+        self._icon_size = QSize(*value) if isinstance(value, (tuple, list)) else value
         self._update_icon()
 
-    # STYLE FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
     def refresh_style(self) -> None:
-        """Refresh the widget style (deprecated - use external QSS)."""
+        """Refresh the widget style.
+
+        Deprecated - use external QSS for styling.
+        """
         self.update()
 
 
 class PasswordLineEdit(QLineEdit):
-    """
-    QLineEdit subclass with right-side icon support.
+    """QLineEdit subclass with right-side icon support.
 
     Features:
         - Right-side icon with click functionality
         - Icon management system
         - Signal iconClicked emitted when icon is clicked
+
+    Args:
+        parent: The parent widget (default: None).
     """
 
     iconClicked = Signal()
 
-    # INITIALIZATION
+    # ///////////////////////////////////////////////////////////////
+    # INIT
     # ///////////////////////////////////////////////////////////////
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None) -> None:
+        """Initialize the password line edit."""
         super().__init__(parent)
-        # ////// SET WIDGET TYPE FOR QSS SELECTION
-        self.setProperty("type", "PasswordInputField")
-        self.setEchoMode(QLineEdit.Password)
-        self._right_icon: Optional[QIcon] = None
-        self._icon_rect: Optional[QRect] = None
 
-    def set_right_icon(
-        self, icon: Optional[QIcon], size: Optional[QSize] = None
-    ) -> None:
-        """Set the right-side icon."""
+        # Set widget type for QSS selection
+        self.setProperty("type", "PasswordInputField")
+        self.setEchoMode(QLineEdit.EchoMode.Password)
+        self._right_icon: QIcon | None = None
+        self._icon_rect: QRect | None = None
+
+    # ///////////////////////////////////////////////////////////////
+    # PUBLIC METHODS
+    # ///////////////////////////////////////////////////////////////
+
+    def set_right_icon(self, icon: QIcon | None, size: QSize | None = None) -> None:
+        """Set the right-side icon.
+
+        Args:
+            icon: The icon to display (QIcon or None).
+            size: The icon size (QSize or None for default).
+        """
         self._right_icon = icon
         if size:
             self._icon_size = size
@@ -466,11 +546,16 @@ class PasswordLineEdit(QLineEdit):
             self._icon_size = QSize(16, 16)
         self.update()
 
-    # EVENT FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # EVENT HANDLERS
     # ///////////////////////////////////////////////////////////////
 
     def mousePressEvent(self, event: QMouseEvent) -> None:
-        """Handle mouse press events for icon clicking."""
+        """Handle mouse press events for icon clicking.
+
+        Args:
+            event: The mouse event.
+        """
         if (
             self._right_icon
             and self._icon_rect
@@ -481,25 +566,33 @@ class PasswordLineEdit(QLineEdit):
             super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event: QMouseEvent) -> None:
-        """Handle mouse move events for cursor changes."""
+        """Handle mouse move events for cursor changes.
+
+        Args:
+            event: The mouse event.
+        """
         if (
             self._right_icon
             and self._icon_rect
             and self._icon_rect.contains(event.pos())
         ):
-            self.setCursor(Qt.PointingHandCursor)
+            self.setCursor(Qt.CursorShape.PointingHandCursor)
         else:
-            self.setCursor(Qt.IBeamCursor)
+            self.setCursor(Qt.CursorShape.IBeamCursor)
             super().mouseMoveEvent(event)
 
     def paintEvent(self, event: QPaintEvent) -> None:
-        """Custom paint event to draw the right-side icon."""
+        """Custom paint event to draw the right-side icon.
+
+        Args:
+            event: The paint event.
+        """
         super().paintEvent(event)
 
         if not self._right_icon:
             return
 
-        # ////// CALCULATE ICON POSITION
+        # Calculate icon position
         icon_x = self.width() - self._icon_size.width() - 8
         icon_y = (self.height() - self._icon_size.height()) // 2
 
@@ -507,16 +600,20 @@ class PasswordLineEdit(QLineEdit):
             icon_x, icon_y, self._icon_size.width(), self._icon_size.height()
         )
 
-        # ////// DRAW ICON
+        # Draw icon
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.drawPixmap(self._icon_rect, self._right_icon.pixmap(self._icon_size))
 
-    # STYLE FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
     def refresh_style(self) -> None:
-        """Refresh the widget's style (useful after dynamic stylesheet changes)."""
+        """Refresh the widget's style.
+
+        Useful after dynamic stylesheet changes.
+        """
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()

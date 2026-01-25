@@ -1,8 +1,13 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# TEST_INPUT - Input Widgets Tests Module
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
 """
-Tests unitaires pour les widgets Input d'EzQt_Widgets.
+Unit tests for input widgets.
+
+This module contains unit tests for all input widgets including
+AutoCompleteInput, SearchInput, TabReplaceTextEdit, and PasswordInput.
 """
 
-__version__ = "1.0.0" 
+from __future__ import annotations

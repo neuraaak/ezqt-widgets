@@ -1,41 +1,45 @@
-# -*- coding: utf-8 -*-
+# ///////////////////////////////////////////////////////////////
+# CIRCULAR_TIMER - Circular Timer Widget
+# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
-# IMPORT BASE
+"""
+Circular timer widget module.
+
+Provides an animated circular timer widget for indicating progress or
+elapsed time in PySide6 applications.
+"""
+
+from __future__ import annotations
+
 # ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Standard library imports
 import re
+from typing import Literal
 
-# IMPORT SPECS
+# Third-party imports
+from PySide6.QtCore import QSize, Qt, QTimer, Signal
+from PySide6.QtGui import QColor, QMouseEvent, QPainter, QPaintEvent, QPen
+from PySide6.QtWidgets import QWidget
+
 # ///////////////////////////////////////////////////////////////
-from PySide6.QtCore import (
-    Signal,
-    QTimer,
-    Qt,
-    QSize,
-)
-from PySide6.QtGui import (
-    QPainter,
-    QPen,
-    QColor,
-    QMouseEvent,
-    QPaintEvent,
-)
-from PySide6.QtWidgets import (
-    QWidget,
-)
-
-# IMPORT / GUI AND MODULES AND WIDGETS
-# ///////////////////////////////////////////////////////////////
-
-# ////// TYPE HINTS IMPROVEMENTS FOR PYSIDE6 6.9.1
-from typing import Optional, Union, Literal
-
 # UTILITY FUNCTIONS
 # ///////////////////////////////////////////////////////////////
 
 
-def parse_css_color(color_str: Union[QColor, str]) -> QColor:
-    """Parse CSS color strings (rgb, rgba, hex, named colors) to QColor."""
+def parse_css_color(color_str: QColor | str) -> QColor:
+    """Parse CSS color strings to QColor.
+
+    Supports rgb, rgba, hex, and named colors.
+
+    Args:
+        color_str: CSS color string or QColor object.
+
+    Returns:
+        QColor object.
+    """
     if isinstance(color_str, QColor):
         return color_str
 
@@ -50,238 +54,279 @@ def parse_css_color(color_str: Union[QColor, str]) -> QColor:
     # Parse rgba(r, g, b, a)
     rgba_match = re.match(r"rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)", color_str)
     if rgba_match:
-        r, g, b, a = rgba_match.groups()
-        r, g, b = map(int, [r, g, b])
-        a = float(a) * 255  # Convert 0-1 to 0-255
+        r_str, g_str, b_str, a_str = rgba_match.groups()
+        r, g, b = int(r_str), int(g_str), int(b_str)
+        a = float(a_str) * 255  # Convert 0-1 to 0-255
         return QColor(r, g, b, int(a))
 
     # Fallback to QColor constructor (hex, named colors, etc.)
     return QColor(color_str)
 
 
-# CLASS
+# ///////////////////////////////////////////////////////////////
+# CLASSES
 # ///////////////////////////////////////////////////////////////
 
 
 class CircularTimer(QWidget):
-    """
-    CircularTimer est un timer circulaire animé pour indiquer une progression ou un temps écoulé.
+    """Animated circular timer for indicating progress or elapsed time.
 
-    Parameters
-    ----------
-    parent : QWidget, optional
-        Parent Qt (default: None).
-    duration : int, optional
-        Durée totale de l'animation en millisecondes (par défaut 5000).
-    ring_color : QColor | str, optional
-        Couleur de l'arc de progression (par défaut #0078d4).
-        Supporte: hex (#ff0000), rgb(255,0,0), rgba(255,0,0,0.5), noms (red).
-    node_color : QColor | str, optional
-        Couleur du centre (par défaut #2d2d2d).
-        Supporte: hex (#ffffff), rgb(255,255,255), rgba(255,255,255,0.8), noms (white).
-    ring_width_mode : str, optional
-        "small", "medium" (défaut), ou "large". Contrôle dynamiquement l'épaisseur de l'arc.
-    pen_width : int | float, optional
-        Épaisseur de l'arc (prioritaire sur ring_width_mode si défini).
-    loop : bool, optional
-        Si True, le timer boucle automatiquement à chaque cycle (par défaut False).
-    *args, **kwargs :
-        Additional arguments passed to QWidget.
+    Features:
+        - Animated circular progress indicator
+        - Customizable colors for ring and center
+        - Configurable duration and loop mode
+        - Click events for interaction
+        - Smooth animation with configurable frame rate
 
-    Properties
-    ----------
-    duration : int
-        Durée totale de l'animation.
-    elapsed : int
-        Temps écoulé depuis le début de l'animation.
-    running : bool
-        Indique si le timer est en cours d'animation.
-    ring_color : QColor
-        Couleur de l'arc de progression.
-    node_color : QColor
-        Couleur du centre.
-    ring_width_mode : str
-        "small", "medium", "large". Contrôle dynamiquement l'épaisseur de l'arc.
-    pen_width : float
-        Épaisseur de l'arc (prioritaire sur ring_width_mode).
-    loop : bool
-        Si True, le timer boucle automatiquement à chaque cycle.
+    Args:
+        parent: Parent widget (default: None).
+        duration: Total animation duration in milliseconds (default: 5000).
+        ring_color: Color of the progress arc (default: "#0078d4").
+            Supports: hex (#ff0000), rgb(255,0,0), rgba(255,0,0,0.5), names (red).
+        node_color: Color of the center (default: "#2d2d2d").
+            Supports: hex (#ffffff), rgb(255,255,255), rgba(255,255,255,0.8), names (white).
+        ring_width_mode: "small", "medium" (default), or "large".
+            Controls the dynamic thickness of the arc.
+        pen_width: Thickness of the arc (takes priority over ring_width_mode if set).
+        loop: If True, the timer loops automatically at each cycle (default: False).
+        *args: Additional arguments passed to QWidget.
+        **kwargs: Additional keyword arguments passed to QWidget.
 
-    Signals
-    -------
-    timerReset()
-        Émis lorsque le timer est réinitialisé.
-    clicked()
-        Émis lors d'un clic sur le widget.
-    cycleCompleted()
-        Émis à chaque fin de cycle (même si loop=False).
+    Signals:
+        timerReset(): Emitted when the timer is reset.
+        clicked(): Emitted when the widget is clicked.
+        cycleCompleted(): Emitted at each end of cycle (even if loop=False).
     """
 
     timerReset = Signal()
     clicked = Signal()
     cycleCompleted = Signal()
 
-    # INITIALIZATION
+    # ///////////////////////////////////////////////////////////////
+    # INIT
     # ///////////////////////////////////////////////////////////////
 
     def __init__(
         self,
         parent=None,
         duration: int = 5000,
-        ring_color: Union[QColor, str] = "#0078d4",
-        node_color: Union[QColor, str] = "#2d2d2d",
+        ring_color: QColor | str = "#0078d4",
+        node_color: QColor | str = "#2d2d2d",
         ring_width_mode: Literal["small", "medium", "large"] = "medium",
-        pen_width: Optional[Union[int, float]] = None,
+        pen_width: int | float | None = None,
         loop: bool = False,
         *args,
         **kwargs,
     ) -> None:
+        """Initialize the circular timer."""
         super().__init__(parent, *args, **kwargs)
         self.setProperty("type", "CircularTimer")
 
-        # ////// INITIALIZE PROPERTIES
+        # Initialize properties
         self._duration: int = duration
         self._elapsed: int = 0
         self._running: bool = False
         self._ring_color: QColor = parse_css_color(ring_color)
         self._node_color: QColor = parse_css_color(node_color)
         self._ring_width_mode: str = ring_width_mode
-        self._pen_width: Optional[float] = pen_width
+        self._pen_width: float | None = pen_width
         self._loop: bool = bool(loop)
-        self._last_update = None
+        self._last_update: float | None = None
         self._interval: int = 16  # ~60 FPS
 
-        # ////// SETUP TIMER
+        # Setup timer
         self.timer = QTimer(self)
         self.timer.timeout.connect(self._on_timer)
 
+    # ///////////////////////////////////////////////////////////////
     # PROPERTIES
     # ///////////////////////////////////////////////////////////////
 
     @property
     def duration(self) -> int:
-        """Get the total duration."""
+        """Get the total duration.
+
+        Returns:
+            The total duration in milliseconds.
+        """
         return self._duration
 
     @duration.setter
     def duration(self, value: int) -> None:
-        """Set the total duration."""
+        """Set the total duration.
+
+        Args:
+            value: The new duration in milliseconds.
+        """
         self._duration = int(value)
         self.update()
 
     @property
     def elapsed(self) -> int:
-        """Get the elapsed time."""
+        """Get the elapsed time.
+
+        Returns:
+            The elapsed time in milliseconds.
+        """
         return self._elapsed
 
     @elapsed.setter
     def elapsed(self, value: int) -> None:
-        """Set the elapsed time."""
+        """Set the elapsed time.
+
+        Args:
+            value: The new elapsed time in milliseconds.
+        """
         self._elapsed = int(value)
         self.update()
 
     @property
     def running(self) -> bool:
-        """Get whether the timer is running."""
+        """Get whether the timer is running.
+
+        Returns:
+            True if running, False otherwise.
+        """
         return self._running
 
     @property
     def ring_color(self) -> QColor:
-        """Get the ring color."""
+        """Get the ring color.
+
+        Returns:
+            The current ring color.
+        """
         return self._ring_color
 
     @ring_color.setter
-    def ring_color(self, value: Union[QColor, str]) -> None:
-        """Set the ring color."""
+    def ring_color(self, value: QColor | str) -> None:
+        """Set the ring color.
+
+        Args:
+            value: The new ring color (QColor or CSS string).
+        """
         self._ring_color = parse_css_color(value)
         self.update()
 
     @property
     def node_color(self) -> QColor:
-        """Get the node color."""
+        """Get the node color.
+
+        Returns:
+            The current node color.
+        """
         return self._node_color
 
     @node_color.setter
-    def node_color(self, value: Union[QColor, str]) -> None:
-        """Set the node color."""
+    def node_color(self, value: QColor | str) -> None:
+        """Set the node color.
+
+        Args:
+            value: The new node color (QColor or CSS string).
+        """
         self._node_color = parse_css_color(value)
         self.update()
 
     @property
     def ring_width_mode(self) -> str:
-        """Get the ring width mode."""
+        """Get the ring width mode.
+
+        Returns:
+            The current ring width mode ("small", "medium", or "large").
+        """
         return self._ring_width_mode
 
     @ring_width_mode.setter
     def ring_width_mode(self, value: str) -> None:
-        """Set the ring width mode."""
+        """Set the ring width mode.
+
+        Args:
+            value: The new ring width mode ("small", "medium", or "large").
+        """
         if value not in ("small", "medium", "large"):
             value = "medium"
         self._ring_width_mode = value
         self.update()
 
     @property
-    def pen_width(self) -> Optional[float]:
-        """Get the pen width."""
+    def pen_width(self) -> float | None:
+        """Get the pen width.
+
+        Returns:
+            The pen width, or None if using ring_width_mode.
+        """
         return self._pen_width
 
     @pen_width.setter
-    def pen_width(self, value: Optional[Union[int, float]]) -> None:
-        """Set the pen width."""
+    def pen_width(self, value: int | float | None) -> None:
+        """Set the pen width.
+
+        Args:
+            value: The new pen width, or None to use ring_width_mode.
+        """
         self._pen_width = float(value) if value is not None else None
         self.update()
 
     @property
     def loop(self) -> bool:
-        """Get whether the timer loops."""
+        """Get whether the timer loops.
+
+        Returns:
+            True if looping, False otherwise.
+        """
         return self._loop
 
     @loop.setter
     def loop(self, value: bool) -> None:
-        """Set whether the timer loops."""
+        """Set whether the timer loops.
+
+        Args:
+            value: Whether to loop the timer.
+        """
         self._loop = bool(value)
 
-    # EVENT FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # EVENT HANDLERS
     # ///////////////////////////////////////////////////////////////
 
-    def mousePressEvent(self, event: QMouseEvent) -> None:
-        """Handle mouse press events."""
-        # ////// HANDLE CLICK
+    def mousePressEvent(self, _event: QMouseEvent) -> None:
+        """Handle mouse press events.
+
+        Args:
+            _event: The mouse event (unused but required by signature).
+        """
         self.clicked.emit()
-        # //////
 
-    # UTILITY FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def startTimer(self) -> None:
-        """Démarre le timer circulaire."""
-        # ////// START TIMER
-        self.stopTimer()  # Toujours arrêter avant de démarrer
+    def startTimer(self) -> None:  # type: ignore[override]
+        """Start the circular timer."""
+        self.stopTimer()  # Always stop before starting
         self._running = True
         self._last_update = None
         self.timer.start(self._interval)
-        # //////
 
     def stopTimer(self) -> None:
-        """Arrête le timer circulaire."""
-        # ////// STOP TIMER
-        self.resetTimer()  # Toujours repartir de zéro
+        """Stop the circular timer."""
+        self.resetTimer()  # Always reset to zero
         self._running = False
         self.timer.stop()
-        # //////
 
     def resetTimer(self) -> None:
-        """Réinitialise le timer circulaire."""
-        # ////// RESET TIMER
+        """Reset the circular timer."""
         self._elapsed = 0
         self._last_update = None
         self.timerReset.emit()
         self.update()
-        # //////
+
+    # ------------------------------------------------
+    # PRIVATE METHODS
+    # ------------------------------------------------
 
     def _on_timer(self) -> None:
-        """Callback interne pour l'animation fluide."""
-        # ////// TIMER CALLBACK
+        """Internal callback for smooth animation."""
         import time
 
         now = time.monotonic() * 1000  # ms
@@ -290,76 +335,93 @@ class CircularTimer(QWidget):
             return
         delta = now - self._last_update
         self._last_update = now
-        self._elapsed += delta
+        self._elapsed += int(delta)
         if self._elapsed > self._duration:
             self.cycleCompleted.emit()
             if self._loop:
                 self.resetTimer()
                 self._running = True
                 self._last_update = now
-                # Le timer continue (pas d'arrêt)
+                # Timer continues (no stop)
             else:
                 self.resetTimer()
                 self.stopTimer()
         self.update()
-        # //////
 
-    # OVERRIDE FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # OVERRIDE METHODS
     # ///////////////////////////////////////////////////////////////
 
     def minimumSizeHint(self) -> QSize:
-        """Taille minimale recommandée pour le widget."""
+        """Get the recommended minimum size for the widget.
+
+        Returns:
+            The minimum size hint.
+        """
         return QSize(24, 24)
 
-    def paintEvent(self, event: QPaintEvent) -> None:
-        """Dessine le timer circulaire animé."""
-        # ////// PAINT EVENT
+    def paintEvent(self, _event: QPaintEvent) -> None:
+        """Draw the animated circular timer.
+
+        Args:
+            _event: The paint event (unused but required by signature).
+        """
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         size = min(self.width(), self.height())
 
-        # ////// PEN WIDTH (mode dynamique ou valeur fixe)
+        # Pen width (dynamic mode or fixed value)
         if self._pen_width is not None:
-            penWidth = self._pen_width
+            penWidth = int(self._pen_width)
         else:
             if self._ring_width_mode == "small":
-                penWidth = max(size * 0.12, 3)
+                penWidth = int(max(size * 0.12, 3))
             elif self._ring_width_mode == "large":
-                penWidth = max(size * 0.28, 3)
+                penWidth = int(max(size * 0.28, 3))
             else:  # medium
-                penWidth = max(size * 0.18, 3)
+                penWidth = int(max(size * 0.18, 3))
 
-        # ////// NODE CIRCLE (centrage précis)
+        # Node circle (precise centering)
         center = size / 2
         node_radius = (size - 2 * penWidth) / 2 - penWidth / 2
         if node_radius > 0:
-            painter.setPen(Qt.NoPen)
+            painter.setPen(Qt.PenStyle.NoPen)
             painter.setBrush(self._node_color)
             painter.drawEllipse(
-                center - node_radius,
-                center - node_radius,
-                2 * node_radius,
-                2 * node_radius,
+                int(center - node_radius),
+                int(center - node_radius),
+                int(2 * node_radius),
+                int(2 * node_radius),
             )
 
-        # ////// RING ARC (sens horaire, départ 12h)
-        painter.setPen(QPen(self._ring_color, penWidth, Qt.SolidLine, Qt.RoundCap))
+        # Ring arc (clockwise, starting at 12 o'clock)
+        painter.setPen(
+            QPen(
+                self._ring_color,
+                penWidth,
+                Qt.PenStyle.SolidLine,
+                Qt.PenCapStyle.RoundCap,
+            )
+        )
         angle = int((self._elapsed / self._duration) * 360 * 16)
         painter.drawArc(
             penWidth,
             penWidth,
-            size - 2 * penWidth,
-            size - 2 * penWidth,
+            int(size - 2 * penWidth),
+            int(size - 2 * penWidth),
             90 * 16,
-            -angle,  # sens horaire
+            -angle,  # clockwise
         )
-        # //////
 
-    # STYLE FUNCTIONS
+    # ///////////////////////////////////////////////////////////////
+    # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
     def refresh_style(self) -> None:
-        """Refresh the widget's style (useful after dynamic stylesheet changes)."""
+        """Refresh the widget's style.
+
+        Useful after dynamic stylesheet changes.
+        """
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()

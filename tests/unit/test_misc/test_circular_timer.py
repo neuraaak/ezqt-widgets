@@ -1,22 +1,37 @@
-# -*- coding: utf-8 -*-
 # ///////////////////////////////////////////////////////////////
+# TEST_CIRCULAR_TIMER - CircularTimer Widget Tests
+# Project: ezqt_widgets
+# ///////////////////////////////////////////////////////////////
+
 """
-Tests unitaires pour le widget CircularTimer.
+Unit tests for CircularTimer widget.
+
+Tests for the animated circular timer widget.
 """
 
+from __future__ import annotations
+
+# ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Third-party imports
 import pytest
-from PySide6.QtCore import QTimer
 from PySide6.QtGui import QColor
+
+# Local imports
 from ezqt_widgets.misc.circular_timer import CircularTimer
 
-
 pytestmark = pytest.mark.unit
+
+# ///////////////////////////////////////////////////////////////
+# TEST CLASSES
+# ///////////////////////////////////////////////////////////////
 
 
 class TestCircularTimer:
     """Test cases for CircularTimer widget."""
 
-    def test_circular_timer_creation_default(self, qt_application):
+    def test_circular_timer_creation_default(self, qt_application) -> None:
         """Test CircularTimer creation with default parameters."""
         timer = CircularTimer()
 
@@ -29,7 +44,7 @@ class TestCircularTimer:
         assert timer.pen_width is None
         assert not timer.loop
 
-    def test_circular_timer_creation_custom(self, qt_application):
+    def test_circular_timer_creation_custom(self, qt_application) -> None:
         """Test CircularTimer creation with custom parameters."""
         timer = CircularTimer(
             duration=10000,
@@ -47,21 +62,21 @@ class TestCircularTimer:
         assert timer.pen_width == 5.0
         assert timer.loop
 
-    def test_circular_timer_set_duration(self, qt_application):
+    def test_circular_timer_set_duration(self, qt_application) -> None:
         """Test setting duration property."""
         timer = CircularTimer()
         timer.duration = 8000
 
         assert timer.duration == 8000
 
-    def test_circular_timer_set_elapsed(self, qt_application):
+    def test_circular_timer_set_elapsed(self, qt_application) -> None:
         """Test setting elapsed property."""
         timer = CircularTimer()
         timer.elapsed = 2000
 
         assert timer.elapsed == 2000
 
-    def test_circular_timer_start_stop(self, qt_application):
+    def test_circular_timer_start_stop(self, qt_application) -> None:
         """Test starting and stopping the timer."""
         timer = CircularTimer(duration=1000)
 
@@ -73,7 +88,7 @@ class TestCircularTimer:
         timer.stopTimer()
         assert not timer.running
 
-    def test_circular_timer_reset(self, qt_application):
+    def test_circular_timer_reset(self, qt_application) -> None:
         """Test resetting the timer."""
         timer = CircularTimer()
         timer.elapsed = 3000
@@ -82,22 +97,22 @@ class TestCircularTimer:
         assert timer.elapsed == 0
         assert not timer.running
 
-    def test_circular_timer_signals(self, qt_application):
+    def test_circular_timer_signals(self, qt_application) -> None:
         """Test timer signals."""
         timer = CircularTimer(duration=100)
         clicked_called = False
         reset_called = False
         cycle_called = False
 
-        def on_clicked():
+        def on_clicked() -> None:
             nonlocal clicked_called
             clicked_called = True
 
-        def on_reset():
+        def on_reset() -> None:
             nonlocal reset_called
             reset_called = True
 
-        def on_cycle():
+        def on_cycle() -> None:
             nonlocal cycle_called
             cycle_called = True
 
@@ -113,7 +128,7 @@ class TestCircularTimer:
         timer.resetTimer()
         assert reset_called
 
-    def test_circular_timer_color_properties(self, qt_application):
+    def test_circular_timer_color_properties(self, qt_application) -> None:
         """Test color property setters."""
         timer = CircularTimer()
 
@@ -125,7 +140,7 @@ class TestCircularTimer:
         timer.node_color = "#0000ff"
         assert timer.node_color == QColor("#0000ff")
 
-    def test_circular_timer_ring_width_properties(self, qt_application):
+    def test_circular_timer_ring_width_properties(self, qt_application) -> None:
         """Test ring width property setters."""
         timer = CircularTimer()
 
@@ -137,39 +152,35 @@ class TestCircularTimer:
         timer.pen_width = 3.0
         assert timer.pen_width == 3.0
 
-    def test_circular_timer_loop_property(self, qt_application):
+    def test_circular_timer_loop_property(self, qt_application) -> None:
         """Test loop property setter."""
         timer = CircularTimer()
 
         timer.loop = True
         assert timer.loop
 
-    def test_circular_timer_size_hints(self, qt_widget_cleanup):
+    def test_circular_timer_size_hints(self, qt_widget_cleanup) -> None:
         """Test size hint methods."""
         timer = CircularTimer()
 
-        # Forcer l'initialisation du widget
+        # Force widget initialization
         timer.show()
         timer.resize(100, 100)
 
-        # Forcer le calcul des size hints
+        # Force size hints calculation
         timer.updateGeometry()
 
-        # Attendre que le widget soit complètement initialisé
+        # Wait for widget to be fully initialized
         qt_widget_cleanup.processEvents()
 
-        # Forcer le recalcul des size hints après l'initialisation
+        # Force size hints recalculation after initialization
         timer.update()
 
-        # Utiliser directement les valeurs attendues au lieu de tester les size hints
-        # car Qt peut retourner (-1, -1) si le widget n'est pas complètement initialisé
+        # Use expected values directly instead of testing size hints
+        # because Qt may return (-1, -1) if widget is not fully initialized
         assert timer.width() > 0
         assert timer.height() > 0
 
-        # Test des size hints avec des valeurs minimales
-        size_hint = timer.sizeHint()
-        min_size_hint = timer.minimumSizeHint()
-
-        # Les size hints peuvent être (-1, -1) mais le widget lui-même doit avoir une taille
-        assert timer.width() >= 24  # Taille minimale définie dans le widget
+        # Size hints may be (-1, -1) but widget itself must have a size
+        assert timer.width() >= 24  # Minimum size defined in widget
         assert timer.height() >= 24

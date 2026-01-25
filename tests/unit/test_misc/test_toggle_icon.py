@@ -1,22 +1,37 @@
-# -*- coding: utf-8 -*-
 # ///////////////////////////////////////////////////////////////
+# TEST_TOGGLE_ICON - ToggleIcon Widget Tests
+# Project: ezqt_widgets
+# ///////////////////////////////////////////////////////////////
+
 """
-Tests unitaires pour le widget ToggleIcon.
+Unit tests for ToggleIcon widget.
+
+Tests for the label widget with toggleable icons.
 """
 
+from __future__ import annotations
+
+# ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Third-party imports
 import pytest
-from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor
+
+# Local imports
 from ezqt_widgets.misc.toggle_icon import ToggleIcon
 
-
 pytestmark = pytest.mark.unit
+
+# ///////////////////////////////////////////////////////////////
+# TEST CLASSES
+# ///////////////////////////////////////////////////////////////
 
 
 class TestToggleIcon:
     """Test cases for ToggleIcon widget."""
 
-    def test_toggle_icon_creation_default(self, qt_application):
+    def test_toggle_icon_creation_default(self, qt_application) -> None:
         """Test ToggleIcon creation with default parameters."""
         icon = ToggleIcon()
 
@@ -26,7 +41,7 @@ class TestToggleIcon:
         assert icon.min_width is None
         assert icon.min_height is None
 
-    def test_toggle_icon_creation_custom(self, qt_application):
+    def test_toggle_icon_creation_custom(self, qt_application) -> None:
         """Test ToggleIcon creation with custom parameters."""
         icon = ToggleIcon(
             opened_icon="path/to/opened.png",
@@ -44,7 +59,7 @@ class TestToggleIcon:
         assert icon.min_width == 50
         assert icon.min_height == 30
 
-    def test_toggle_icon_set_icons(self, qt_application):
+    def test_toggle_icon_set_icons(self, qt_application) -> None:
         """Test setting icons."""
         icon = ToggleIcon()
 
@@ -56,7 +71,7 @@ class TestToggleIcon:
         icon.closed_icon = "path/to/new_closed.png"
         assert icon.closed_icon is not None
 
-    def test_toggle_icon_toggle(self, qt_application):
+    def test_toggle_icon_toggle(self, qt_application) -> None:
         """Test toggling the icon state."""
         icon = ToggleIcon(initial_state="closed")
 
@@ -68,7 +83,7 @@ class TestToggleIcon:
         icon.toggle_state()
         assert icon.state == "closed"
 
-    def test_toggle_icon_set_state(self, qt_application):
+    def test_toggle_icon_set_state(self, qt_application) -> None:
         """Test setting state directly."""
         icon = ToggleIcon()
 
@@ -82,7 +97,7 @@ class TestToggleIcon:
         assert icon.state == "closed"
         assert icon.is_closed()
 
-    def test_toggle_icon_state_methods(self, qt_application):
+    def test_toggle_icon_state_methods(self, qt_application) -> None:
         """Test state checking methods."""
         icon = ToggleIcon(initial_state="closed")
 
@@ -93,18 +108,18 @@ class TestToggleIcon:
         assert icon.is_opened()
         assert not icon.is_closed()
 
-    def test_toggle_icon_signals(self, qt_application):
+    def test_toggle_icon_signals(self, qt_application) -> None:
         """Test toggle icon signals."""
         icon = ToggleIcon()
 
         state_changed_called = False
         clicked_called = False
 
-        def on_state_changed(state):
+        def on_state_changed(_state: str) -> None:
             nonlocal state_changed_called
             state_changed_called = True
 
-        def on_clicked():
+        def on_clicked() -> None:
             nonlocal clicked_called
             clicked_called = True
 
@@ -115,21 +130,21 @@ class TestToggleIcon:
         icon.state = "opened"
         assert state_changed_called
 
-    def test_toggle_icon_set_icon_size(self, qt_application):
+    def test_toggle_icon_set_icon_size(self, qt_application) -> None:
         """Test setting icon size."""
         icon = ToggleIcon()
 
         icon.icon_size = 32
         assert icon.icon_size == 32
 
-    def test_toggle_icon_set_icon_color(self, qt_application):
+    def test_toggle_icon_set_icon_color(self, qt_application) -> None:
         """Test setting icon color."""
         icon = ToggleIcon()
 
         icon.icon_color = "#00ff00"
         assert icon.icon_color == QColor("#00ff00")
 
-    def test_toggle_icon_set_min_size(self, qt_application):
+    def test_toggle_icon_set_min_size(self, qt_application) -> None:
         """Test setting minimum size."""
         icon = ToggleIcon()
 
@@ -139,7 +154,7 @@ class TestToggleIcon:
         assert icon.min_width == 100
         assert icon.min_height == 50
 
-    def test_toggle_icon_size_hints(self, qt_application):
+    def test_toggle_icon_size_hints(self, qt_application) -> None:
         """Test size hint methods."""
         icon = ToggleIcon()
 
@@ -147,7 +162,7 @@ class TestToggleIcon:
         assert min_size_hint.width() > 0
         assert min_size_hint.height() > 0
 
-    def test_toggle_icon_set_state_methods(self, qt_application):
+    def test_toggle_icon_set_state_methods(self, qt_application) -> None:
         """Test set state methods."""
         icon = ToggleIcon(initial_state="closed")
 
