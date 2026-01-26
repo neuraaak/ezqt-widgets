@@ -1,10 +1,20 @@
+# ///////////////////////////////////////////////////////////////
+# 🔨 BUILD SYSTEM
+# Defines the build backend and requirements
+# ///////////////////////////////////////////////////////////////
+
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
+# ///////////////////////////////////////////////////////////////
+# 📦 PROJECT METADATA
+# Package information, version, authors, and classifiers
+# ///////////////////////////////////////////////////////////////
+
 [project]
 name = "EzQt-Widgets"
-version = "2.3.0"
+version = "2.3.2"
 description = "Une collection de widgets Qt personnalisés et réutilisables pour PySide6. Fournit des composants graphiques avancés, réutilisables et stylés pour faciliter le développement d'interfaces modernes et ergonomiques."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -37,6 +47,11 @@ classifiers = [
     "Topic :: Software Development :: Widget Sets",
 ]
 
+# ///////////////////////////////////////////////////////////////
+# 📚 DEPENDENCIES
+# Core production dependencies for runtime
+# ///////////////////////////////////////////////////////////////
+
 dependencies = [
     "PySide6>=6.7.3,<7.0.0",
     "requests>=2.32.4",
@@ -45,13 +60,19 @@ dependencies = [
     "typing_extensions>=4.0.0",
 ]
 
+# ///////////////////////////////////////////////////////////////
+# 🛠️ OPTIONAL DEPENDENCIES
+# Development tools, testing, and build dependencies
+# ///////////////////////////////////////////////////////////////
+
 [project.optional-dependencies]
 dev = [
     # Development tools
     "black>=23.0.0",
     "isort>=5.12.0",
     "ruff>=0.1.0",
-    "mypy>=1.0.0",
+    "ty>=0.0.13",
+    "pyright>=1.1.0",
     "pre-commit>=3.0.0",
 
     # Security
@@ -74,10 +95,20 @@ test = [
     "pytest-xdist>=3.0.0",
 ]
 
+# ///////////////////////////////////////////////////////////////
+# 🔗 PROJECT URLS
+# Links to repository, documentation, and package index
+# ///////////////////////////////////////////////////////////////
+
 [project.urls]
 Homepage = "https://github.com/neuraaak/ezqt_widgets"
 Repository = "https://github.com/neuraaak/ezqt_widgets"
 PyPI = "https://pypi.org/project/ezqt_widgets/"
+
+# ///////////////////////////////////////////////////////////////
+# 📦 SETUPTOOLS CONFIGURATION
+# Package discovery and inclusion/exclusion patterns
+# ///////////////////////////////////////////////////////////////
 
 [tool.setuptools.packages.find]
 where = ["."]
@@ -116,7 +147,12 @@ exclude = [
 # Examples are now at project root, not included in package
 ezqt_widgets = []
 
-# Configuration Black
+# ///////////////////////////////////////////////////////////////
+# 🎨 CODE FORMATTING & LINTING TOOLS
+# Auto-formatting, import sorting, and style checking
+# ///////////////////////////////////////////////////////////////
+
+# Black: Code formatter (88 char line length, Python 3.10+)
 [tool.black]
 line-length = 88
 target-version = ['py310', 'py311', 'py312']
@@ -146,7 +182,7 @@ extend-exclude = '''
 )/
 '''
 
-# Configuration isort
+# isort: Import sorting (black-compatible profile)
 [tool.isort]
 profile = "black"
 line_length = 88
@@ -173,60 +209,126 @@ skip = [
     "examples",
 ]
 
-# Configuration MyPy
-[tool.mypy]
-python_version = "3.10"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = false
-disallow_incomplete_defs = false
-check_untyped_defs = true
-disallow_untyped_decorators = false
-no_implicit_optional = true
-warn_redundant_casts = true
-warn_unused_ignores = true
-warn_no_return = true
-warn_unreachable = true
-strict_equality = true
+# Ruff: All-in-one linter with comprehensive rule sets
+[tool.ruff]
+target-version = "py310"
+line-length = 88
 
-# Ignorer le dossier tests
-[[tool.mypy.overrides]]
-module = "tests.*"
-ignore_errors = true
-
-# Ignorer certains modules pour lesquels on n'a pas de stubs
-[[tool.mypy.overrides]]
-module = "winreg"
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = [
-    "win32api",
-    "win32con",
-    "win32file",
-    "win32gui",
-    "win32pipe",
-    "win32process",
-    "win32security",
-    "win32service",
-    "win32serviceutil",
-    "win32ts",
-    "win32ui",
-    "win32wnet",
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "S",   # bandit security
+    "T20", # flake8-print
+    "ARG", # flake8-unused-arguments
+    "PIE", # flake8-pie
+    "SIM", # flake8-simplify
 ]
-ignore_missing_imports = true
-
-# Ignore intentional override type mismatches in button widgets
-[[tool.mypy.overrides]]
-module = [
-    "ezqt_widgets.button.icon_button",
-    "ezqt_widgets.button.loader_button",
-    "ezqt_widgets.misc.toggle_switch",
-    "ezqt_widgets.misc.toggle_icon",
+ignore = [
+    "E501", # line too long, handled by black
+    "B008", # do not perform function calls in argument defaults
+    "S101", # assert_used (for tests)
+    "S106", # hardcoded_password_funcarg
+    "T201", # print statements (for init.py and scripts)
+    "S603", # subprocess.run without check=True
 ]
-disable_error_code = ["override", "unreachable"]
 
-# Configuration Pytest
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*" = ["S101", "S311", "E501", "ARG002", "S105", "S602", "S603"]
+"examples/**/*" = ["T201", "E501"]
+"ezqt_widgets/cli/**/*" = ["T201", "E501", "S603"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+# ///////////////////////////////////////////////////////////////
+# ✅ TYPE CHECKING TOOLS
+# Static type checking with minimal configuration
+# ///////////////////////////////////////////////////////////////
+
+# Ty: Type checking tool with minimal configuration
+[tool.ty.environment]
+python-version = "3.10"
+root = [".", "./ezqt_widgets"]
+
+[tool.ty.src]
+include = ["ezqt_widgets/**/*.py"]
+exclude = [
+    "**/__pycache__",
+    ".venv",
+    "venv",
+    "build",
+    "dist",
+    "tests",
+    "docs",
+    "examples",
+]
+respect-ignore-files = true
+
+[tool.ty.terminal]
+output-format = "full"
+error-on-warning = false
+
+[tool.ty.rules]
+# Ignore PySide6 stub issues (isValid, setIcon, setText overloads)
+no-matching-overload = "ignore"
+
+# Pyright: Type checking tool with comprehensive reporting
+[tool.pyright]
+pythonVersion = "3.10"
+typeCheckingMode = "basic"
+include = ["ezqt_widgets"]
+exclude = [
+    "**/__pycache__",
+    ".venv",
+    "venv",
+    "build",
+    "dist",
+    "tests",
+    "docs",
+    "examples",
+]
+reportMissingImports = true
+reportMissingTypeStubs = false
+reportUnusedImport = true
+reportUnusedClass = true
+reportUnusedFunction = true
+reportUnusedVariable = true
+reportDuplicateImport = true
+reportOptionalSubscript = true
+reportOptionalMemberAccess = true
+reportOptionalCall = true
+reportOptionalIterable = true
+reportOptionalContextManager = true
+reportOptionalOperand = true
+reportUntypedFunctionDecorator = false
+reportUntypedClassDecorator = false
+reportUntypedBaseClass = false
+reportUntypedNamedTuple = false
+reportPrivateUsage = false
+reportConstantRedefinition = true
+# Disabled: Qt widgets intentionally override methods with properties
+reportIncompatibleMethodOverride = false
+reportIncompatibleVariableOverride = true
+reportInconsistentConstructor = true
+
+# ///////////////////////////////////////////////////////////////
+# 🧪 TESTING & COVERAGE TOOLS
+# Test execution, coverage analysis, and test configuration
+# ///////////////////////////////////////////////////////////////
+
+# Pytest: Test runner with coverage and detailed reporting
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = [
@@ -261,7 +363,7 @@ filterwarnings = [
     "ignore::PendingDeprecationWarning",
 ]
 
-# Configuration Coverage
+# Coverage: Code coverage measurement and reporting (60% minimum)
 [tool.coverage.run]
 source = ["ezqt_widgets"]
 branch = true
@@ -308,7 +410,12 @@ precision = 2
 [tool.coverage.html]
 directory = "htmlcov"
 
-# Bandit configuration (security)
+# ///////////////////////////////////////////////////////////////
+# 🔒 SECURITY TOOLS
+# Code security scanning and vulnerability detection
+# ///////////////////////////////////////////////////////////////
+
+# Bandit: Security linter (detects common security issues)
 [tool.bandit]
 exclude_dirs = [
     "tests",
@@ -322,46 +429,3 @@ exclude_dirs = [
     "_temp",
 ]
 skips = ["B101", "B601"]
-
-# Configuration Ruff (remplace flake8)
-[tool.ruff]
-target-version = "py310"
-line-length = 88
-
-[tool.ruff.lint]
-select = [
-    "E",   # pycodestyle errors
-    "W",   # pycodestyle warnings
-    "F",   # pyflakes
-    "I",   # isort
-    "B",   # flake8-bugbear
-    "C4",  # flake8-comprehensions
-    "UP",  # pyupgrade
-    "S",   # bandit security
-    "T20", # flake8-print
-    "ARG", # flake8-unused-arguments
-    "PIE", # flake8-pie
-    "SIM", # flake8-simplify
-]
-ignore = [
-    "E501", # line too long, handled by black
-    "B008", # do not perform function calls in argument defaults
-    "S101", # assert_used (pour les tests)
-    "S106", # hardcoded_password_funcarg
-    "T201", # print statements (pour init.py et scripts)
-    "S603", # subprocess.run without check=True
-]
-
-[tool.ruff.lint.per-file-ignores]
-"tests/**/*" = ["S101", "S311", "E501", "ARG002", "S105", "S602", "S603"]
-"examples/**/*" = ["T201", "E501"]
-"ezqt_widgets/cli/**/*" = ["T201", "E501", "S603"]
-
-[tool.ruff.lint.mccabe]
-max-complexity = 10
-
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-skip-magic-trailing-comma = false
-line-ending = "auto"

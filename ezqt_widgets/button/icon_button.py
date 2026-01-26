@@ -230,7 +230,7 @@ class IconButton(QToolButton):
 
         # Set initial values
         if icon:
-            self.icon = icon  # type: ignore[assignment]
+            self.icon = icon
         if text:
             self.text = text
         self.text_visible = text_visible

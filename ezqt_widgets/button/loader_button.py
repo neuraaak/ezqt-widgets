@@ -260,23 +260,23 @@ class LoaderButton(QToolButton):
 
         # Set initial values
         if icon:
-            self.icon = icon  # type: ignore[assignment]
+            self.icon = icon
         if text:
             self.text = text
 
         # Setup icons
         if loading_icon:
-            self.loading_icon = loading_icon  # type: ignore[assignment]
+            self.loading_icon = loading_icon
         else:
             self.loading_icon = create_loading_icon(16, "#0078d4")
 
         if success_icon:
-            self.success_icon = success_icon  # type: ignore[assignment]
+            self.success_icon = success_icon
         else:
             self.success_icon = create_success_icon(16, "#28a745")
 
         if error_icon:
-            self.error_icon = error_icon  # type: ignore[assignment]
+            self.error_icon = error_icon
         else:
             self.error_icon = create_error_icon(16, "#dc3545")
 
