@@ -48,11 +48,38 @@ from __future__ import annotations
 # Standard library imports
 import sys
 
+# Local imports
+from .button import (
+    DateButton,
+    DatePickerDialog,
+    IconButton,
+    LoaderButton,
+)
+from .input import (
+    AutoCompleteInput,
+    SearchInput,
+    TabReplaceTextEdit,
+)
+from .label import (
+    ClickableTagLabel,
+    FramedLabel,
+    HoverLabel,
+    IndicatorLabel,
+)
+from .misc import (
+    CircularTimer,
+    DraggableItem,
+    DraggableList,
+    OptionSelector,
+    ToggleIcon,
+    ToggleSwitch,
+)
+
 # ///////////////////////////////////////////////////////////////
 # META INFORMATIONS
 # ///////////////////////////////////////////////////////////////
 
-__version__ = "2.3.0"
+__version__ = "2.3.2"
 __author__ = "Neuraaak"
 __maintainer__ = "Neuraaak"
 __description__ = (
@@ -84,36 +111,6 @@ if sys.version_info < (3, 10):  # noqa: UP036
         f"ezqt_widgets {__version__} requires Python 3.10 or higher. "
         f"Current version: {sys.version}"
     )
-
-# ///////////////////////////////////////////////////////////////
-# IMPORTS
-# ///////////////////////////////////////////////////////////////
-# Local imports
-from .button import (
-    DateButton,
-    DatePickerDialog,
-    IconButton,
-    LoaderButton,
-)
-from .input import (
-    AutoCompleteInput,
-    SearchInput,
-    TabReplaceTextEdit,
-)
-from .label import (
-    ClickableTagLabel,
-    FramedLabel,
-    HoverLabel,
-    IndicatorLabel,
-)
-from .misc import (
-    CircularTimer,
-    DraggableItem,
-    DraggableList,
-    OptionSelector,
-    ToggleIcon,
-    ToggleSwitch,
-)
 
 # ///////////////////////////////////////////////////////////////
 # PUBLIC API

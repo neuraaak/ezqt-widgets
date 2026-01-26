@@ -260,7 +260,7 @@ class DateButton(QToolButton):
 
         # Set initial values
         if date:
-            self.date = date  # type: ignore[assignment]
+            self.date = date
         else:
             self.date = QDate.currentDate()
 
@@ -317,7 +317,7 @@ class DateButton(QToolButton):
         Args:
             value: The formatted date string.
         """
-        self.date = value  # type: ignore[assignment]
+        self.date = value
 
     @property
     def date_format(self) -> str:
@@ -448,7 +448,7 @@ class DateButton(QToolButton):
 
     def clear_date(self) -> None:
         """Clear the selected date."""
-        self.date = None  # type: ignore[assignment]
+        self.date = None
 
     def set_today(self) -> None:
         """Set the date to today."""

@@ -90,7 +90,7 @@ class SearchInput(QLineEdit):
         # Set icon if provided
         if search_icon:
             # Setter accepts QIcon | str | None, but mypy sees property return type
-            self.search_icon = search_icon  # type: ignore[assignment]
+            self.search_icon = search_icon
 
     # ------------------------------------------------
     # PRIVATE METHODS

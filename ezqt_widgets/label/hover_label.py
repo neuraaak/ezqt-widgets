@@ -132,7 +132,7 @@ class HoverLabel(QLabel):
 
         # Set icon if provided
         if icon:
-            self.hover_icon = icon  # type: ignore[assignment]
+            self.hover_icon = icon
 
     # ///////////////////////////////////////////////////////////////
     # PROPERTIES
