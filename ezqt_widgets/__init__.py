@@ -79,7 +79,7 @@ from .misc import (
 # META INFORMATIONS
 # ///////////////////////////////////////////////////////////////
 
-__version__ = "2.3.2"
+__version__ = "2.3.3"
 __author__ = "Neuraaak"
 __maintainer__ = "Neuraaak"
 __description__ = (
