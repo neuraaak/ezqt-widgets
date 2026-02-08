@@ -14,7 +14,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "EzQt-Widgets"
-version = "2.3.2"
+version = "2.3.3"
 description = "Une collection de widgets Qt personnalisés et réutilisables pour PySide6. Fournit des composants graphiques avancés, réutilisables et stylés pour faciliter le développement d'interfaces modernes et ergonomiques."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -87,12 +87,24 @@ dev = [
     # Build and distribution
     "build>=1.0.0",
     "twine>=4.0.0",
+
+    # Documentation generation
+    "mkdocs>=1.6.0",
+    "mkdocs-material>=9.5.0",
+    "mkdocstrings[python]>=0.27.0",
+    "mkdocs-section-index>=0.3.0",
 ]
 test = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
     "pytest-mock>=3.10.0",
     "pytest-xdist>=3.0.0",
+]
+docs = [
+    "mkdocs>=1.6.0",
+    "mkdocs-material>=9.5.0",
+    "mkdocstrings[python]>=0.27.0",
+    "mkdocs-section-index>=0.3.0",
 ]
 
 # ///////////////////////////////////////////////////////////////
@@ -102,6 +114,7 @@ test = [
 
 [project.urls]
 Homepage = "https://github.com/neuraaak/ezqt_widgets"
+Documentation = "https://neuraaak.github.io/ezqt_widgets/"
 Repository = "https://github.com/neuraaak/ezqt_widgets"
 PyPI = "https://pypi.org/project/ezqt_widgets/"
 

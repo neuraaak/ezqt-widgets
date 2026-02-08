@@ -1,7 +1,7 @@
 # Makefile pour EzQt Widgets
 # Usage: make <target>
 
-.PHONY: help install install-dev format lint test test-cov clean pre-commit setup-hooks
+.PHONY: help install install-dev format lint test test-cov clean pre-commit setup-hooks docs docs-build docs-deploy
 
 # Configuration
 PYTHON := python
@@ -36,6 +36,11 @@ help:
 	@echo "$(GREEN)Hooks et outils:$(RESET)"
 	@echo "  setup-hooks  - Installer les hooks pre-commit"
 	@echo "  pre-commit   - Lancer les vérifications pre-commit"
+	@echo ""
+	@echo "$(GREEN)Documentation:$(RESET)"
+	@echo "  docs         - Lancer le serveur de documentation (hot-reload)"
+	@echo "  docs-build   - Build statique de la documentation"
+	@echo "  docs-deploy  - Deployer sur GitHub Pages"
 	@echo ""
 	@echo "$(GREEN)Nettoyage:$(RESET)"
 	@echo "  clean        - Nettoyer les fichiers temporaires"
@@ -88,6 +93,19 @@ setup-hooks:
 pre-commit:
 	@echo "$(BLUE)Lancement des vérifications pre-commit...$(RESET)"
 	pre-commit run --all-files
+
+# Documentation
+docs:
+	@echo "$(BLUE)Lancement du serveur de documentation...$(RESET)"
+	mkdocs serve
+
+docs-build:
+	@echo "$(BLUE)Build de la documentation...$(RESET)"
+	mkdocs build --strict
+
+docs-deploy:
+	@echo "$(BLUE)Deploiement sur GitHub Pages...$(RESET)"
+	mkdocs gh-deploy --force
 
 # Nettoyage
 clean:
