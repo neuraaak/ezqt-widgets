@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 # ///////////////////////////////////////////////////////////////
 # LINT - Code Quality Checker
-# Project: EzQt-Widgets
 # ///////////////////////////////////////////////////////////////
 
 """
-Code quality check script for EzQt-Widgets project.
+Code quality check script.
 
 Runs Black, isort, and Ruff on the codebase.
 
@@ -46,7 +45,7 @@ project_name = "ezqt_widgets"
 
 
 class CodeQualityChecker:
-    """Code quality checker for EzQt-Widgets project."""
+    """Code quality checker for your project."""
 
     # ///////////////////////////////////////////////////////////////
     # INIT
