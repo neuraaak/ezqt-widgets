@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 # ///////////////////////////////////////////////////////////////
 # BUILD_PACKAGE - PyPI Package Builder
-# Project: EzQt-Widgets
 # ///////////////////////////////////////////////////////////////
 
 """
-Build script for EzQt-Widgets PyPI package.
+Build script for PyPI package.
 
 This script builds the package and optionally checks it.
 """
@@ -107,7 +106,7 @@ def build_package() -> bool:
     """
     console.print(
         Panel.fit(
-            Text("🔨 Building EzQt-Widgets package", style="bold cyan"),
+            Text(f"🔨 Building {project_name} package", style="bold cyan"),
             border_style="cyan",
         )
     )

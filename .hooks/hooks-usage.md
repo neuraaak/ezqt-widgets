@@ -1,12 +1,12 @@
-## Git Hooks Usage
+# Git Hooks Usage
 
-This directory contains Git hooks used by the MY PROJECT project.
+This directory contains Git hooks used by your project.
 
-### Available Hooks
+## Available Hooks
 
-#### `pre-commit`
+### `pre-commit`
 
-- **Purpose**: Code quality and formatting before each commit  
+- **Purpose**: Code quality and formatting before each commit
 - **Behavior**:
   - Runs **Black**, **isort**, and **Ruff format** on the entire repository
   - Automatically stages reformatted files with `git add .`
@@ -14,17 +14,19 @@ This directory contains Git hooks used by the MY PROJECT project.
 
 > Note: This is a **native Git hook** in `.hooks/`, independent from the Python `pre-commit` tool configured by `make setup-hooks`.
 
-#### `post-commit`
+### `post-commit`
 
-- **Purpose**: Automated tagging and local build after a successful commit  
+- **Purpose**: Automated tagging and local build after a successful commit
 - **Behavior**:
   - Reads the version from `pyproject.toml` (or `setup.py` as fallback)
   - Creates or updates a lightweight tag `v<version>` on `HEAD`
   - Creates or updates a major “latest” tag `v<major>-latest`
   - Builds the local package with:
+
     ```bash
     python .scripts/build/build_package.py build
     ```
+
   - Pushes the tags to `origin` (forced update)
 
 ### Configuration
@@ -41,8 +43,8 @@ This tells Git to use the `.hooks/` directory instead of `.git/hooks/`.
 
 #### Adding a new hook
 
-1. Create the file in `.hooks/` (e.g. `.hooks/pre-push`)  
-2. Make it executable: `chmod +x .hooks/pre-push`  
+1. Create the file in `.hooks/` (e.g. `.hooks/pre-push`)
+2. Make it executable: `chmod +x .hooks/pre-push`
 3. Document the new hook in this file
 
 #### Manual testing
@@ -63,5 +65,3 @@ You can test a hook manually from the project root:
 - `commit-msg`: Validate commit messages (format, IDs, etc.)
 - `post-merge`: Actions after merges (e.g. migrations, regeneration)
 - `pre-rebase`: Checks before rebasing
-
-
