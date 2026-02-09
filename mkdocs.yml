@@ -1,13 +1,14 @@
 # ///////////////////////////////////////////////////////////////
 # MKDOCS CONFIGURATION
-# Documentation site for ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
 site_name: EzQt Widgets Documentation
 site_description: A collection of custom and reusable Qt widgets for PySide6
+site_author: Neuraaak
 site_url: https://neuraaak.github.io/ezqt-widgets/
 repo_url: https://github.com/neuraaak/ezqt_widgets
 repo_name: neuraaak/ezqt_widgets
+edit_uri: edit/main/docs/
 
 # ///////////////////////////////////////////////////////////////
 # THEME
@@ -22,23 +23,34 @@ theme:
       accent: indigo
       toggle:
         icon: material/brightness-7
-        name: Dark mode
+        name: Switch to dark mode
     - scheme: slate
       primary: indigo
       accent: indigo
       toggle:
         icon: material/brightness-4
-        name: Light mode
+        name: Switch to light mode
   features:
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
+    - navigation.path
     - navigation.top
+    - navigation.footer
+    - navigation.indexes
     - search.suggest
     - search.highlight
+    - search.share
     - content.code.copy
+    - content.code.annotate
     - content.tabs.link
+    - toc.follow
   icon:
     repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+  # logo: assets/logo.png       # Uncomment when docs/assets/logo.png exists
+  # favicon: assets/favicon.ico  # Uncomment when docs/assets/favicon.ico exists
 
 # ///////////////////////////////////////////////////////////////
 # NAVIGATION
@@ -47,19 +59,21 @@ theme:
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
+  - User Guides:
+      - guides/index.md
+      - QSS Style Guide: guides/style-guide.md
+      - Development: guides/development.md
+      - Testing: guides/testing.md
   - API Reference:
       - api/index.md
       - Button: api/button.md
       - Input: api/input.md
       - Label: api/label.md
       - Misc: api/misc.md
-  - User Guides:
-      - guides/index.md
-      - QSS Style Guide: guides/style-guide.md
-      - Development: guides/development.md
-      - Testing: guides/testing.md
-  - Examples: examples/index.md
-  - CLI: cli/index.md
+  - CLI Reference:
+      - cli/index.md
+  - Examples:
+      - examples/index.md
 
 # ///////////////////////////////////////////////////////////////
 # PLUGINS
