@@ -15,9 +15,12 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
 # Third-party imports
 from PySide6.QtCore import QSize, Qt, Signal
-from PySide6.QtWidgets import QFrame, QLabel, QSizePolicy, QVBoxLayout
+from PySide6.QtWidgets import QFrame, QLabel, QSizePolicy, QVBoxLayout, QWidget
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -62,13 +65,13 @@ class FramedLabel(QFrame):
     def __init__(
         self,
         text: str = "",
-        parent=None,
+        parent: QWidget | None = None,
         alignment: Qt.AlignmentFlag = Qt.AlignmentFlag.AlignCenter,
         style_sheet: str | None = None,
         min_width: int | None = None,
         min_height: int | None = None,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the framed label."""
         super().__init__(parent, *args, **kwargs)

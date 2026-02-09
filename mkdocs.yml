@@ -3,9 +3,9 @@
 # Documentation site for ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
-site_name: EzQt Widgets
+site_name: EzQt Widgets Documentation
 site_description: A collection of custom and reusable Qt widgets for PySide6
-site_url: https://neuraaak.github.io/ezqt_widgets/
+site_url: https://neuraaak.github.io/ezqt-widgets/
 repo_url: https://github.com/neuraaak/ezqt_widgets
 repo_name: neuraaak/ezqt_widgets
 
@@ -53,7 +53,8 @@ nav:
       - Input: api/input.md
       - Label: api/label.md
       - Misc: api/misc.md
-  - Guides:
+  - User Guides:
+      - guides/index.md
       - QSS Style Guide: guides/style-guide.md
       - Development: guides/development.md
       - Testing: guides/testing.md
@@ -95,14 +96,52 @@ plugins:
 markdown_extensions:
   - admonition
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.highlight:
       anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.snippets
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - attr_list
   - md_in_html
+  - def_list
+  - footnotes
+  - tables
   - toc:
       permalink: true
+      permalink_title: Anchor link to this section
+      toc_depth: 3
+
+# ///////////////////////////////////////////////////////////////
+# EXTRA
+# ///////////////////////////////////////////////////////////////
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/neuraaak/ezqt_widgets
+      name: GitHub Repository
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/ezqt-widgets/
+      name: PyPI Package
+extra_css:
+  - stylesheets/extra.css
+
+copyright: >
+  Copyright &copy; 2026 Neuraaak -
+  <a href="https://github.com/neuraaak/ezqt_widgets/blob/main/LICENSE">MIT License</a>

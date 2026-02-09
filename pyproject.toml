@@ -114,9 +114,9 @@ docs = [
 
 [project.urls]
 Homepage = "https://github.com/neuraaak/ezqt_widgets"
-Documentation = "https://neuraaak.github.io/ezqt_widgets/"
+Documentation = "https://neuraaak.github.io/ezqt-widgets/"
 Repository = "https://github.com/neuraaak/ezqt_widgets"
-PyPI = "https://pypi.org/project/ezqt_widgets/"
+PyPI = "https://pypi.org/project/ezqt-widgets/"
 
 # ///////////////////////////////////////////////////////////////
 # 📦 SETUPTOOLS CONFIGURATION

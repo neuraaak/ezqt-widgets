@@ -15,6 +15,9 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
 # Third-party imports
 from PySide6.QtCore import QSize, Qt, QTimer, Signal
 from PySide6.QtGui import QColor, QIcon, QMouseEvent, QPainter, QPen, QPixmap
@@ -24,6 +27,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QSizePolicy,
     QToolButton,
+    QWidget,
 )
 from typing_extensions import override
 
@@ -198,7 +202,7 @@ class LoaderButton(QToolButton):
 
     def __init__(
         self,
-        parent=None,
+        parent: QWidget | None = None,
         text: str = "",
         icon: QIcon | str | None = None,
         loading_text: str = "Loading...",
@@ -211,8 +215,8 @@ class LoaderButton(QToolButton):
         error_display_time: int = 2000,
         min_width: int | None = None,
         min_height: int | None = None,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the loader button."""
         super().__init__(parent, *args, **kwargs)

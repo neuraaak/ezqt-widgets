@@ -15,10 +15,13 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
 # Third-party imports
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QIcon, QKeyEvent
-from PySide6.QtWidgets import QLineEdit
+from PySide6.QtWidgets import QLineEdit, QWidget
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -64,13 +67,13 @@ class SearchInput(QLineEdit):
 
     def __init__(
         self,
-        parent=None,
+        parent: QWidget | None = None,
         max_history: int = 20,
         search_icon: QIcon | str | None = None,
         icon_position: str = "left",
         clear_button: bool = True,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the search input."""
         super().__init__(parent, *args, **kwargs)

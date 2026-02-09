@@ -16,10 +16,13 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
 # Third-party imports
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QKeyEvent, QKeySequence
-from PySide6.QtWidgets import QApplication, QPlainTextEdit
+from PySide6.QtWidgets import QApplication, QPlainTextEdit, QWidget
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -58,13 +61,13 @@ class TabReplaceTextEdit(QPlainTextEdit):
 
     def __init__(
         self,
-        parent=None,
+        parent: QWidget | None = None,
         tab_replacement: str = "\n",
         sanitize_on_paste: bool = True,
         remove_empty_lines: bool = True,
         preserve_whitespace: bool = False,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the tab replace text edit."""
         super().__init__(parent, *args, **kwargs)

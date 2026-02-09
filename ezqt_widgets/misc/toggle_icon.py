@@ -15,6 +15,9 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
 # Third-party imports
 import requests
 from PySide6.QtCore import QPointF, QRectF, QSize, Qt, Signal
@@ -28,7 +31,7 @@ from PySide6.QtGui import (
     QPixmap,
 )
 from PySide6.QtSvg import QSvgRenderer
-from PySide6.QtWidgets import QLabel
+from PySide6.QtWidgets import QLabel, QWidget
 
 # ///////////////////////////////////////////////////////////////
 # UTILITY FUNCTIONS
@@ -160,7 +163,7 @@ class ToggleIcon(QLabel):
 
     def __init__(
         self,
-        parent=None,
+        parent: QWidget | None = None,
         opened_icon: str | QIcon | QPixmap | None = None,
         closed_icon: str | QIcon | QPixmap | None = None,
         icon_size: int = 16,
@@ -168,8 +171,8 @@ class ToggleIcon(QLabel):
         initial_state: str = "closed",
         min_width: int | None = None,
         min_height: int | None = None,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the toggle icon."""
         super().__init__(parent, *args, **kwargs)

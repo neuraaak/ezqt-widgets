@@ -17,7 +17,7 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # Standard library imports
 import re
-from typing import Literal
+from typing import Any, Literal
 
 # Third-party imports
 from PySide6.QtCore import QSize, Qt, QTimer, Signal
@@ -108,15 +108,15 @@ class CircularTimer(QWidget):
 
     def __init__(
         self,
-        parent=None,
+        parent: QWidget | None = None,
         duration: int = 5000,
         ring_color: QColor | str = "#0078d4",
         node_color: QColor | str = "#2d2d2d",
         ring_width_mode: Literal["small", "medium", "large"] = "medium",
         pen_width: int | float | None = None,
         loop: bool = False,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the circular timer."""
         super().__init__(parent, *args, **kwargs)

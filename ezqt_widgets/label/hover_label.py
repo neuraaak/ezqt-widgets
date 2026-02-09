@@ -15,6 +15,9 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
 # Third-party imports
 import requests
 from PySide6.QtCore import QEvent, QRect, QSize, Qt, Signal
@@ -28,7 +31,7 @@ from PySide6.QtGui import (
     QPixmap,
     QResizeEvent,
 )
-from PySide6.QtWidgets import QLabel
+from PySide6.QtWidgets import QLabel, QWidget
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -92,7 +95,7 @@ class HoverLabel(QLabel):
 
     def __init__(
         self,
-        parent=None,
+        parent: QWidget | None = None,
         icon: QIcon | str | None = None,
         text: str = "",
         opacity: float = 0.5,
@@ -101,8 +104,8 @@ class HoverLabel(QLabel):
         icon_padding: int = 8,
         icon_enabled: bool = True,
         min_width: int | None = None,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the hover label."""
         super().__init__(parent, *args, text=text or "", **kwargs)
