@@ -1,5 +1,5 @@
 # ///////////////////////////////////////////////////////////////
-# 🔧 PRE-COMMIT CONFIGURATION FOR EZPL
+# 🔧 PRE-COMMIT CONFIGURATION FOR EZQT WIDGETS
 # ///////////////////////////////////////////////////////////////
 # Installation: pip install pre-commit && pre-commit install
 # Run manually: pre-commit run --all-files
