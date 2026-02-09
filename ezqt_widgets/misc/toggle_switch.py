@@ -15,6 +15,9 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
 # Third-party imports
 from PySide6.QtCore import (
     Property,
@@ -65,13 +68,13 @@ class ToggleSwitch(QWidget):
 
     def __init__(
         self,
-        parent=None,
+        parent: QWidget | None = None,
         checked: bool = False,
         width: int = 50,
         height: int = 24,
         animation: bool = True,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the toggle switch."""
         super().__init__(parent, *args, **kwargs)

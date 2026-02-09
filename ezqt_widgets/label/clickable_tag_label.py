@@ -15,10 +15,13 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
 # Third-party imports
 from PySide6.QtCore import QSize, Qt, Signal
 from PySide6.QtGui import QFont, QKeyEvent, QMouseEvent
-from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QSizePolicy
+from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QSizePolicy, QWidget
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -68,9 +71,9 @@ class ClickableTagLabel(QFrame):
         status_color: str = "#0078d4",
         min_width: int | None = None,
         min_height: int | None = None,
-        parent=None,
-        *args,
-        **kwargs,
+        parent: QWidget | None = None,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the clickable tag label."""
         super().__init__(parent, *args, **kwargs)

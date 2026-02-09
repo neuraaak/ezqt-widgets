@@ -15,10 +15,13 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
 # Third-party imports
 from PySide6.QtCore import QEasingCurve, QPropertyAnimation, QSize, Qt, Signal
 from PySide6.QtGui import QMouseEvent
-from PySide6.QtWidgets import QFrame, QGridLayout, QSizePolicy
+from PySide6.QtWidgets import QFrame, QGridLayout, QSizePolicy, QWidget
 
 # Local imports
 from ..label.framed_label import FramedLabel
@@ -112,9 +115,9 @@ class OptionSelector(QFrame):
         min_height: int | None = None,
         orientation: str = "horizontal",
         animation_duration: int = 300,
-        parent=None,
-        *args,
-        **kwargs,
+        parent: QWidget | None = None,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the option selector."""
         super().__init__(parent, *args, **kwargs)

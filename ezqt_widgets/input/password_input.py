@@ -17,6 +17,7 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # Standard library imports
 import re
+from typing import Any
 
 # Third-party imports
 import requests
@@ -231,7 +232,7 @@ class PasswordInput(QWidget):
 
     def __init__(
         self,
-        parent=None,
+        parent: QWidget | None = None,
         show_strength: bool = True,
         strength_bar_height: int = 3,
         show_icon: (
@@ -241,8 +242,8 @@ class PasswordInput(QWidget):
             QIcon | str | None
         ) = "https://img.icons8.com/?size=100&id=85137&format=png&color=000000",
         icon_size: QSize | tuple[int, int] = QSize(16, 16),
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the password input widget."""
         super().__init__(parent, *args, **kwargs)

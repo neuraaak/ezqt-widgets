@@ -15,6 +15,9 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
 # Third-party imports
 from PySide6.QtCore import QDate, QSize, Qt, Signal
 from PySide6.QtGui import QColor, QIcon, QMouseEvent, QPainter, QPixmap
@@ -27,6 +30,7 @@ from PySide6.QtWidgets import (
     QSizePolicy,
     QToolButton,
     QVBoxLayout,
+    QWidget,
 )
 
 # ///////////////////////////////////////////////////////////////
@@ -96,7 +100,9 @@ class DatePickerDialog(QDialog):
         current_date: The current selected date (default: None).
     """
 
-    def __init__(self, parent=None, current_date: QDate | None = None) -> None:
+    def __init__(
+        self, parent: QWidget | None = None, current_date: QDate | None = None
+    ) -> None:
         """Initialize the date picker dialog."""
         super().__init__(parent)
 
@@ -208,7 +214,7 @@ class DateButton(QToolButton):
 
     def __init__(
         self,
-        parent=None,
+        parent: QWidget | None = None,
         date: QDate | str | None = None,
         date_format: str = "dd/MM/yyyy",
         placeholder: str = "Select a date",
@@ -216,8 +222,8 @@ class DateButton(QToolButton):
         icon_size: QSize | tuple[int, int] = QSize(16, 16),
         min_width: int | None = None,
         min_height: int | None = None,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the date button."""
         super().__init__(parent, *args, **kwargs)

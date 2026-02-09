@@ -15,11 +15,14 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
 # Third-party imports
 import requests
 from PySide6.QtCore import QSize, Qt, Signal
 from PySide6.QtGui import QColor, QIcon, QPainter, QPixmap
-from PySide6.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QToolButton
+from PySide6.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QToolButton, QWidget
 from typing_extensions import override
 
 # ///////////////////////////////////////////////////////////////
@@ -179,7 +182,7 @@ class IconButton(QToolButton):
 
     def __init__(
         self,
-        parent=None,
+        parent: QWidget | None = None,
         icon: QIcon | str | None = None,
         text: str = "",
         icon_size: QSize | tuple[int, int] = QSize(20, 20),
@@ -187,8 +190,8 @@ class IconButton(QToolButton):
         spacing: int = 10,
         min_width: int | None = None,
         min_height: int | None = None,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the icon button."""
         super().__init__(parent, *args, **kwargs)

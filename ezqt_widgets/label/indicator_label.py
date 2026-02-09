@@ -15,10 +15,13 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
 # Third-party imports
 from PySide6.QtCore import QSize, Qt, Signal
 from PySide6.QtGui import QFont
-from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QSizePolicy
+from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QSizePolicy, QWidget
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -69,11 +72,11 @@ class IndicatorLabel(QFrame):
 
     def __init__(
         self,
-        parent=None,
+        parent: QWidget | None = None,
         status_map: dict[str, dict[str, str]] | None = None,
         initial_status: str = "neutral",
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the indicator label."""
         super().__init__(parent, *args, **kwargs)

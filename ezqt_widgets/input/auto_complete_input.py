@@ -15,9 +15,12 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
+# Standard library imports
+from typing import Any
+
 # Third-party imports
 from PySide6.QtCore import QStringListModel, Qt
-from PySide6.QtWidgets import QCompleter, QLineEdit
+from PySide6.QtWidgets import QCompleter, QLineEdit, QWidget
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -57,13 +60,13 @@ class AutoCompleteInput(QLineEdit):
 
     def __init__(
         self,
-        parent=None,
+        parent: QWidget | None = None,
         suggestions: list[str] | None = None,
         case_sensitive: bool = False,
         filter_mode: Qt.MatchFlag = Qt.MatchFlag.MatchContains,
         completion_mode: QCompleter.CompletionMode = QCompleter.CompletionMode.PopupCompletion,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize the auto-complete input."""
         super().__init__(parent, *args, **kwargs)
