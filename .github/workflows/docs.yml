@@ -12,21 +12,42 @@ on:
 permissions:
   contents: write
 
+env:
+  PACKAGE_NAME: ezqt-widgets
+  PYTHON_VERSION: "3.11"
+  # Dépendances système supplémentaires nécessaires avant l'installation du package
+  # Laisser vide si aucune dépendance système n'est requise
+  EXTRA_SYSTEM_DEPS: ""
+
 jobs:
   deploy:
+    name: Build and Deploy Docs
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
 
-      - name: Install dependencies
+      - name: Install extra system dependencies
+        if: env.EXTRA_SYSTEM_DEPS != ''
         run: |
-          pip install PySide6 --no-cache-dir
+          echo "📦 Installing extra system dependencies..."
+          pip install ${{ env.EXTRA_SYSTEM_DEPS }} --no-cache-dir
+
+      - name: Install package with docs dependencies
+        run: |
+          echo "📦 Installing package and docs dependencies..."
+          python -m pip install --upgrade pip
           pip install -e ".[docs]"
 
       - name: Build and deploy documentation
-        run: mkdocs gh-deploy --force
+        run: |
+          echo "📚 Building and deploying documentation for ${{ env.PACKAGE_NAME }}..."
+          mkdocs gh-deploy --force
+          echo "✅ Documentation deployed successfully!"
