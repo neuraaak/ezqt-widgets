@@ -2,12 +2,10 @@ name: Deploy Documentation
 
 on:
   push:
-    branches: [main]
-    paths:
-      - "docs/**"
-      - "mkdocs.yml"
-      - "ezqt_widgets/**"
+    tags:
+      - "v*.*.*"
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: write
