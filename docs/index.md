@@ -5,12 +5,9 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/ezqt-widgets)](https://pypi.org/project/ezqt-widgets/)
 [![License](https://img.shields.io/pypi/l/ezqt-widgets)](https://github.com/neuraaak/ezqt_widgets/blob/main/LICENSE)
 
-<div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
-  <img src="https://raw.githubusercontent.com/neuraaak/ezplog/refs/heads/main/docs/assets/logo-min.png" alt="Ezpl Logo" style="width: 80px; height: 80px; flex-shrink: 0;">
-  <div>
-    <strong>EzQt Widgets</strong> is a modern collection of custom and reusable Qt widgets for <strong>PySide6</strong> featuring advanced animated components, full type hints, and a simple API suitable for professional desktop applications.
-  </div>
-</div>![Ezpl logo]
+![EzQt Widgets Logo](https://raw.githubusercontent.com/neuraaak/ezqt-widgets/refs/heads/main/docs/assets/logo-min.png)
+
+**EzQt Widgets** is a modern collection of custom and reusable Qt widgets for **PySide6** featuring advanced animated components, full type hints, and a simple API suitable for professional desktop applications.
 
 ## ✨ Key Features
 

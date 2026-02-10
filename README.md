@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?style=for-the-badge&logo=python)](https://www.python.org/)
 [![Platform](https://img.shields.io/badge/OS-Independent-lightgray.svg?style=for-the-badge)](https://pypi.org/project/ezqt-widgets/)
-[![Version](https://img.shields.io/badge/Version-2.3.3-orange.svg?style=for-the-badge)](https://pypi.org/project/ezqt-widgets/)
+[![Version](https://img.shields.io/badge/Version-2.3.4-orange.svg?style=for-the-badge)](https://pypi.org/project/ezqt-widgets/)
 [![PyPI](https://img.shields.io/badge/PyPI-EzQt--Widgets-green.svg?style=for-the-badge&logo=pypi)](https://pypi.org/project/ezqt-widgets/)
 [![Docs](https://img.shields.io/badge/Docs-Online-blue.svg?style=for-the-badge&logo=readthedocs)](https://neuraaak.github.io/ezqt-widgets/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
@@ -10,12 +10,9 @@
 [![Tests](https://img.shields.io/badge/Tests-304%2F305%20passing-success.svg?style=for-the-badge)](https://github.com/neuraaak/ezqt_widgets)
 [![Coverage](https://img.shields.io/badge/Coverage-75%25-success.svg?style=for-the-badge)](https://github.com/neuraaak/ezqt_widgets)
 
-<div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
-  <img src="docs/assets/logo-min.png" alt="Ezpl Logo" style="width: 80px; height: 80px; flex-shrink: 0;">
-  <div>
-    <strong>EzQt Widgets</strong> is a modern collection of custom and reusable Qt widgets for <strong>PySide6</strong> featuring advanced animated components, full type hints, and a simple API suitable for professional desktop applications.
-  </div>
-</div>
+![EzQt Widgets Logo](docs/assets/logo-min.png)
+
+**EzQt Widgets** is a modern collection of custom and reusable Qt widgets for **PySide6** featuring advanced animated components, full type hints, and a simple API suitable for professional desktop applications.
 
 ## 📦 Installation
 
