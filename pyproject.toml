@@ -14,7 +14,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ezqt-widgets"
-version = "2.3.3"
+version = "2.3.4"
 description = "Une collection de widgets Qt personnalisés et réutilisables pour PySide6. Fournit des composants graphiques avancés, réutilisables et stylés pour faciliter le développement d'interfaces modernes et ergonomiques."
 readme = "README.md"
 requires-python = ">=3.10"

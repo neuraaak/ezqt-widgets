@@ -12,7 +12,7 @@ The workflow is triggered automatically in the following cases:
 
 ```bash
 git checkout main
-git add docs/ mkdocs.yml ezpl/
+git add docs/ mkdocs.yml ezqt_widgets/
 git commit -m "docs: update API documentation"
 git push origin main
 ```
@@ -20,7 +20,7 @@ git push origin main
 - Triggers when files are modified in:
   - `docs/**` - Documentation markdown files
   - `mkdocs.yml` - MkDocs configuration
-  - `ezpl/**` - Source code (for auto-generated API docs)
+  - `ezqt_widgets/**` - Source code (for auto-generated API docs)
 - Only deploys when pushing to the `main` branch
 - Automatically builds and deploys to GitHub Pages
 
@@ -63,22 +63,17 @@ docs/
 ├── getting-started.md                # Installation & quick start
 ├── api/
 │   ├── index.md                      # API overview
-│   └── reference/                    # Auto-generated API reference
-│       ├── index.md
-│       ├── ezpl.md                   # ::: ezpl.ezpl.Ezpl
-│       ├── printer.md                # ::: ezpl.handlers.console.EzPrinter
-│       ├── logger.md                 # ::: ezpl.handlers.file.EzLogger
-│       ├── wizard.md                 # ::: ezpl.handlers.wizard.core.RichWizard
-│       ├── configuration.md          # ::: ezpl.config.manager.ConfigurationManager
-│       ├── types.md                  # ::: ezpl.types (LogLevel, Pattern)
-│       └── exceptions.md             # ::: ezpl.core.exceptions
+│   ├── button.md                     # ::: ezqt_widgets.button
+│   ├── input.md                      # ::: ezqt_widgets.input
+│   ├── label.md                      # ::: ezqt_widgets.label
+│   └── misc.md                       # ::: ezqt_widgets.misc
 ├── cli/
 │   └── index.md                      # CLI reference
 ├── examples/
 │   └── index.md                      # Practical examples
 ├── guides/
 │   ├── index.md                      # Guides overview
-│   ├── configuration.md              # Configuration guide
+│   ├── style-guide.md                # QSS style guide
 │   ├── development.md                # Development guide
 │   └── testing.md                    # Testing guide
 └── stylesheets/
@@ -106,11 +101,11 @@ The documentation includes:
 Using **mkdocstrings**, the documentation automatically generates API reference from source code docstrings:
 
 ```markdown
-::: ezpl.ezpl.Ezpl
+::: ezqt_widgets.button.date_button.DateButton
 options:
-show_source: true
-docstring_style: google
-show_signature_annotations: true
+  show_source: true
+  docstring_style: google
+  show_signature_annotations: true
 ```
 
 **Benefits:**
@@ -282,7 +277,7 @@ mkdocs build --strict
 
 # Check specific page
 mkdocs serve
-# Navigate to http://127.0.0.1:8000/api/reference/ezpl/
+# Navigate to http://127.0.0.1:8000/api/button/
 ```
 
 ## 🚨 Troubleshooting
@@ -293,17 +288,17 @@ mkdocs serve
 
 **Solution**:
 
-1. Check that the module path in `docs/api/reference/*.md` is correct:
+1. Check that the module path in `docs/api/*.md` is correct:
 
    ```markdown
-   ::: ezpl.ezpl.Ezpl # Must match actual module path
+   ::: ezqt_widgets.button.date_button.DateButton # Must match actual module path
    ```
 
 2. Verify the package installs correctly:
 
    ```bash
    pip install -e .
-   python -c "from ezpl.ezpl import Ezpl"
+   python -c "from ezqt_widgets.button import DateButton"
    ```
 
 3. Check for missing dependencies in `pyproject.toml`
@@ -403,7 +398,7 @@ mkdocs serve
 Main configuration file:
 
 ```yaml
-site_name: Ezpl Documentation
+site_name: EzQt Widgets Documentation
 site_url: https://neuraaak.github.io/ezqt-widgets/
 theme:
   name: material
@@ -482,7 +477,7 @@ docs = [
 
    ````markdown
    ```python
-   from ezpl import Ezpl
+   from ezqt_widgets.button import DateButton
    ```
    ````
 
