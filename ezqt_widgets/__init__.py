@@ -89,7 +89,7 @@ from .types import (
 # META INFORMATIONS
 # ///////////////////////////////////////////////////////////////
 
-__version__ = "2.3.4"
+__version__ = "2.4.0"
 __author__ = "Neuraaak"
 __maintainer__ = "Neuraaak"
 __description__ = (
