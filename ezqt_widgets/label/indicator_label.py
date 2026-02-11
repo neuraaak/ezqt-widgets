@@ -21,7 +21,10 @@ from typing import Any
 # Third-party imports
 from PySide6.QtCore import QSize, Qt, Signal
 from PySide6.QtGui import QFont
-from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QSizePolicy, QWidget
+from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QSizePolicy
+
+# Local imports
+from ..types import WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -72,7 +75,7 @@ class IndicatorLabel(QFrame):
 
     def __init__(
         self,
-        parent: QWidget | None = None,
+        parent: WidgetParent = None,
         status_map: dict[str, dict[str, str]] | None = None,
         initial_status: str = "neutral",
         *args: Any,

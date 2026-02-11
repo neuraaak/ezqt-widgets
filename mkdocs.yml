@@ -6,8 +6,8 @@ site_name: EzQt Widgets Documentation
 site_description: A collection of custom and reusable Qt widgets for PySide6
 site_author: Neuraaak
 site_url: https://neuraaak.github.io/ezqt-widgets/
-repo_url: https://github.com/neuraaak/ezqt_widgets
-repo_name: neuraaak/ezqt_widgets
+repo_url: https://github.com/neuraaak/ezqt-widgets
+repo_name: neuraaak/ezqt-widgets
 edit_uri: edit/main/docs/
 
 # ///////////////////////////////////////////////////////////////
@@ -74,6 +74,8 @@ nav:
       - cli/index.md
   - Examples:
       - examples/index.md
+  - Coverage: coverage.md
+  - Changelog: changelog.md
 
 # ///////////////////////////////////////////////////////////////
 # PLUGINS
@@ -82,6 +84,9 @@ nav:
 plugins:
   - search
   - section-index
+  - coverage:
+      page_name: coverage
+      html_report_dir: htmlcov
   - mkdocstrings:
       default_handler: python
       handlers:
@@ -148,7 +153,7 @@ markdown_extensions:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/neuraaak/ezqt_widgets
+      link: https://github.com/neuraaak/ezqt-widgets
       name: GitHub Repository
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/ezqt-widgets/
@@ -158,4 +163,4 @@ extra_css:
 
 copyright: >
   Copyright &copy; 2026 Neuraaak -
-  <a href="https://github.com/neuraaak/ezqt_widgets/blob/main/LICENSE">MIT License</a>
+  <a href="https://github.com/neuraaak/ezqt-widgets/blob/main/LICENSE">MIT License</a>

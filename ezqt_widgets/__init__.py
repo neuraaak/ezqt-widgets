@@ -74,12 +74,22 @@ from .misc import (
     ToggleIcon,
     ToggleSwitch,
 )
+from .types import (
+    AnimationDuration,
+    ColorType,
+    EventCallback,
+    IconSource,
+    IconSourceExtended,
+    SizeType,
+    ValueCallback,
+    WidgetParent,
+)
 
 # ///////////////////////////////////////////////////////////////
 # META INFORMATIONS
 # ///////////////////////////////////////////////////////////////
 
-__version__ = "2.3.4"
+__version__ = "2.4.0"
 __author__ = "Neuraaak"
 __maintainer__ = "Neuraaak"
 __description__ = (
@@ -98,8 +108,8 @@ __keywords__ = [
     "ui",
     "desktop",
 ]
-__url__ = "https://github.com/neuraaak/ezqt_widgets"
-__repository__ = "https://github.com/neuraaak/ezqt_widgets"
+__url__ = "https://github.com/neuraaak/ezqt-widgets"
+__repository__ = "https://github.com/neuraaak/ezqt-widgets"
 __license__ = "MIT"
 
 # ///////////////////////////////////////////////////////////////
@@ -138,6 +148,15 @@ __all__ = [
     "OptionSelector",
     "ToggleIcon",
     "ToggleSwitch",
+    # Type aliases
+    "IconSource",
+    "IconSourceExtended",
+    "SizeType",
+    "ColorType",
+    "WidgetParent",
+    "AnimationDuration",
+    "EventCallback",
+    "ValueCallback",
     # Metadata
     "__version__",
     "__author__",
