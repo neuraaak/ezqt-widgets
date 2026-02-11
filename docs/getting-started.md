@@ -13,7 +13,7 @@ pip install ezqt-widgets
 ### From Source
 
 ```bash
-git clone https://github.com/neuraaak/ezqt_widgets.git
+git clone https://github.com/neuraaak/ezqt-widgets.git
 cd ezqt_widgets
 pip install .
 ```
@@ -469,8 +469,8 @@ date_btn.dateChanged.connect(lambda date: print(date))
 
 - **Documentation**: [Full API Reference](api/index.md)
 - **Examples**: [Code Examples](examples/index.md)
-- **Issues**: [GitHub Issues](https://github.com/neuraaak/ezqt_widgets/issues)
-- **Repository**: [https://github.com/neuraaak/ezqt_widgets](https://github.com/neuraaak/ezqt_widgets)
+- **Issues**: [GitHub Issues](https://github.com/neuraaak/ezqt-widgets/issues)
+- **Repository**: [https://github.com/neuraaak/ezqt-widgets](https://github.com/neuraaak/ezqt-widgets)
 
 ---
 

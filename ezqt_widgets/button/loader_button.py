@@ -27,9 +27,11 @@ from PySide6.QtWidgets import (
     QLabel,
     QSizePolicy,
     QToolButton,
-    QWidget,
 )
 from typing_extensions import override
+
+# Local imports
+from ..types import IconSource, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # UTILITY FUNCTIONS
@@ -202,13 +204,13 @@ class LoaderButton(QToolButton):
 
     def __init__(
         self,
-        parent: QWidget | None = None,
+        parent: WidgetParent = None,
         text: str = "",
-        icon: QIcon | str | None = None,
+        icon: IconSource = None,
         loading_text: str = "Loading...",
-        loading_icon: QIcon | str | None = None,
-        success_icon: QIcon | str | None = None,
-        error_icon: QIcon | str | None = None,
+        loading_icon: IconSource = None,
+        success_icon: IconSource = None,
+        error_icon: IconSource = None,
         animation_speed: int = 100,
         auto_reset: bool = True,
         success_display_time: int = 1000,

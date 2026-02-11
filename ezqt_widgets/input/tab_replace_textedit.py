@@ -22,7 +22,10 @@ from typing import Any
 # Third-party imports
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QKeyEvent, QKeySequence
-from PySide6.QtWidgets import QApplication, QPlainTextEdit, QWidget
+from PySide6.QtWidgets import QApplication, QPlainTextEdit
+
+# Local imports
+from ..types import WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -61,7 +64,7 @@ class TabReplaceTextEdit(QPlainTextEdit):
 
     def __init__(
         self,
-        parent: QWidget | None = None,
+        parent: WidgetParent = None,
         tab_replacement: str = "\n",
         sanitize_on_paste: bool = True,
         remove_empty_lines: bool = True,

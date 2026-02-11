@@ -31,7 +31,10 @@ from PySide6.QtGui import (
     QPixmap,
     QResizeEvent,
 )
-from PySide6.QtWidgets import QLabel, QWidget
+from PySide6.QtWidgets import QLabel
+
+# Local imports
+from ..types import ColorType, IconSource, SizeType, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -95,12 +98,12 @@ class HoverLabel(QLabel):
 
     def __init__(
         self,
-        parent: QWidget | None = None,
-        icon: QIcon | str | None = None,
+        parent: WidgetParent = None,
+        icon: IconSource = None,
         text: str = "",
         opacity: float = 0.5,
-        icon_size: QSize | tuple[int, int] = QSize(16, 16),
-        icon_color: QColor | str | None = None,
+        icon_size: SizeType = QSize(16, 16),
+        icon_color: ColorType | None = None,
         icon_padding: int = 8,
         icon_enabled: bool = True,
         min_width: int | None = None,
@@ -170,7 +173,7 @@ class HoverLabel(QLabel):
         return self._hover_icon
 
     @hover_icon.setter
-    def hover_icon(self, value: QIcon | str | None) -> None:
+    def hover_icon(self, value: IconSource) -> None:
         """Set the icon displayed on hover.
 
         Accepts QIcon, str (path, resource, URL, or SVG), or None.
@@ -263,7 +266,7 @@ class HoverLabel(QLabel):
         return self._icon_size
 
     @icon_size.setter
-    def icon_size(self, value: QSize | tuple[int, int]) -> None:
+    def icon_size(self, value: SizeType) -> None:
         """Set the size of the hover icon.
 
         Args:
@@ -293,7 +296,7 @@ class HoverLabel(QLabel):
         return self._icon_color
 
     @icon_color.setter
-    def icon_color(self, value: QColor | str | None) -> None:
+    def icon_color(self, value: ColorType | None) -> None:
         """Set the color overlay of the hover icon.
 
         Args:

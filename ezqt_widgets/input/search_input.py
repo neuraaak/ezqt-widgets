@@ -21,7 +21,10 @@ from typing import Any
 # Third-party imports
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QIcon, QKeyEvent
-from PySide6.QtWidgets import QLineEdit, QWidget
+from PySide6.QtWidgets import QLineEdit
+
+# Local imports
+from ..types import IconSource, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -67,9 +70,9 @@ class SearchInput(QLineEdit):
 
     def __init__(
         self,
-        parent: QWidget | None = None,
+        parent: WidgetParent = None,
         max_history: int = 20,
-        search_icon: QIcon | str | None = None,
+        search_icon: IconSource = None,
         icon_position: str = "left",
         clear_button: bool = True,
         *args: Any,
@@ -118,7 +121,7 @@ class SearchInput(QLineEdit):
         return self._search_icon
 
     @search_icon.setter
-    def search_icon(self, value: QIcon | str | None) -> None:
+    def search_icon(self, value: IconSource) -> None:
         """Set the search icon.
 
         Args:

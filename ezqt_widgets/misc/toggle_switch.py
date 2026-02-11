@@ -31,6 +31,9 @@ from PySide6.QtCore import (
 from PySide6.QtGui import QBrush, QColor, QMouseEvent, QPainter, QPaintEvent, QPen
 from PySide6.QtWidgets import QSizePolicy, QWidget
 
+# Local imports
+from ..types import WidgetParent
+
 # ///////////////////////////////////////////////////////////////
 # CLASSES
 # ///////////////////////////////////////////////////////////////
@@ -68,7 +71,7 @@ class ToggleSwitch(QWidget):
 
     def __init__(
         self,
-        parent: QWidget | None = None,
+        parent: WidgetParent = None,
         checked: bool = False,
         width: int = 50,
         height: int = 24,

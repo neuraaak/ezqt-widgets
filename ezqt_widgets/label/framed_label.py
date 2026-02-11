@@ -20,7 +20,10 @@ from typing import Any
 
 # Third-party imports
 from PySide6.QtCore import QSize, Qt, Signal
-from PySide6.QtWidgets import QFrame, QLabel, QSizePolicy, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QFrame, QLabel, QSizePolicy, QVBoxLayout
+
+# Local imports
+from ..types import WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -65,7 +68,7 @@ class FramedLabel(QFrame):
     def __init__(
         self,
         text: str = "",
-        parent: QWidget | None = None,
+        parent: WidgetParent = None,
         alignment: Qt.AlignmentFlag = Qt.AlignmentFlag.AlignCenter,
         style_sheet: str | None = None,
         min_width: int | None = None,

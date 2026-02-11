@@ -21,10 +21,11 @@ from typing import Any
 # Third-party imports
 from PySide6.QtCore import QEasingCurve, QPropertyAnimation, QSize, Qt, Signal
 from PySide6.QtGui import QMouseEvent
-from PySide6.QtWidgets import QFrame, QGridLayout, QSizePolicy, QWidget
+from PySide6.QtWidgets import QFrame, QGridLayout, QSizePolicy
 
 # Local imports
 from ..label.framed_label import FramedLabel
+from ..types import WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # UTILITY CLASSES
@@ -115,7 +116,7 @@ class OptionSelector(QFrame):
         min_height: int | None = None,
         orientation: str = "horizontal",
         animation_duration: int = 300,
-        parent: QWidget | None = None,
+        parent: WidgetParent = None,
         *args: Any,
         **kwargs: Any,
     ) -> None:

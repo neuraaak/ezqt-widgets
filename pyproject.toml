@@ -14,8 +14,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ezqt-widgets"
-version = "2.3.4"
-description = "Une collection de widgets Qt personnalisés et réutilisables pour PySide6. Fournit des composants graphiques avancés, réutilisables et stylés pour faciliter le développement d'interfaces modernes et ergonomiques."
+version = "2.4.0"
+description = "A collection of custom and reusable Qt widgets for PySide6. Provides advanced, reusable, and stylish graphical components to facilitate the development of modern and user-friendly interfaces."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
@@ -105,6 +105,8 @@ docs = [
     "mkdocs-material>=9.5.0",
     "mkdocstrings[python]>=0.27.0",
     "mkdocs-section-index>=0.3.0",
+    "mkdocs-coverage>=1.1.0",
+    "git-cliff>=2.7.0",
 ]
 
 # ///////////////////////////////////////////////////////////////
@@ -113,9 +115,9 @@ docs = [
 # ///////////////////////////////////////////////////////////////
 
 [project.urls]
-Homepage = "https://github.com/neuraaak/ezqt_widgets"
+Homepage = "https://github.com/neuraaak/ezqt-widgets"
 Documentation = "https://neuraaak.github.io/ezqt-widgets/"
-Repository = "https://github.com/neuraaak/ezqt_widgets"
+Repository = "https://github.com/neuraaak/ezqt-widgets"
 PyPI = "https://pypi.org/project/ezqt-widgets/"
 
 # ///////////////////////////////////////////////////////////////
@@ -157,8 +159,8 @@ exclude = [
 ]
 
 [tool.setuptools.package-data]
-# Examples are now at project root, not included in package
-ezqt_widgets = []
+# Include type checking marker (PEP 561)
+ezqt_widgets = ["py.typed"]
 
 # ///////////////////////////////////////////////////////////////
 # 🎨 CODE FORMATTING & LINTING TOOLS

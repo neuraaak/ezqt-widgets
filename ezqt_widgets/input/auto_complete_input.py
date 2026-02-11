@@ -20,7 +20,10 @@ from typing import Any
 
 # Third-party imports
 from PySide6.QtCore import QStringListModel, Qt
-from PySide6.QtWidgets import QCompleter, QLineEdit, QWidget
+from PySide6.QtWidgets import QCompleter, QLineEdit
+
+# Local imports
+from ..types import WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -60,7 +63,7 @@ class AutoCompleteInput(QLineEdit):
 
     def __init__(
         self,
-        parent: QWidget | None = None,
+        parent: WidgetParent = None,
         suggestions: list[str] | None = None,
         case_sensitive: bool = False,
         filter_mode: Qt.MatchFlag = Qt.MatchFlag.MatchContains,

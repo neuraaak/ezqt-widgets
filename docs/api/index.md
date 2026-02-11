@@ -166,7 +166,7 @@ pip install ezqt-widgets
 For development installation:
 
 ```bash
-git clone https://github.com/neuraaak/ezqt_widgets.git
+git clone https://github.com/neuraaak/ezqt-widgets.git
 cd ezqt_widgets
 pip install -e ".[dev]"
 ```
@@ -199,4 +199,4 @@ Select a module from the navigation menu or the table above to view detailed wid
 - **Quick Start**: See [Getting Started](../getting-started.md)
 - **Examples**: Check out [Examples](../examples/index.md)
 - **Guides**: Read [User Guides](../guides/index.md)
-- **Issues**: Report bugs on [GitHub](https://github.com/neuraaak/ezqt_widgets/issues)
+- **Issues**: Report bugs on [GitHub](https://github.com/neuraaak/ezqt-widgets/issues)

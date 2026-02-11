@@ -30,8 +30,10 @@ from PySide6.QtWidgets import (
     QSizePolicy,
     QToolButton,
     QVBoxLayout,
-    QWidget,
 )
+
+# Local imports
+from ..types import SizeType, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # UTILITY FUNCTIONS
@@ -101,7 +103,7 @@ class DatePickerDialog(QDialog):
     """
 
     def __init__(
-        self, parent: QWidget | None = None, current_date: QDate | None = None
+        self, parent: WidgetParent = None, current_date: QDate | None = None
     ) -> None:
         """Initialize the date picker dialog."""
         super().__init__(parent)
@@ -214,12 +216,12 @@ class DateButton(QToolButton):
 
     def __init__(
         self,
-        parent: QWidget | None = None,
+        parent: WidgetParent = None,
         date: QDate | str | None = None,
         date_format: str = "dd/MM/yyyy",
         placeholder: str = "Select a date",
         show_calendar_icon: bool = True,
-        icon_size: QSize | tuple[int, int] = QSize(16, 16),
+        icon_size: SizeType = QSize(16, 16),
         min_width: int | None = None,
         min_height: int | None = None,
         *args: Any,

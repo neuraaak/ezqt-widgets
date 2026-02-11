@@ -24,6 +24,9 @@ from PySide6.QtCore import QSize, Qt, QTimer, Signal
 from PySide6.QtGui import QColor, QMouseEvent, QPainter, QPaintEvent, QPen
 from PySide6.QtWidgets import QWidget
 
+# Local imports
+from ..types import ColorType, WidgetParent
+
 # ///////////////////////////////////////////////////////////////
 # UTILITY FUNCTIONS
 # ///////////////////////////////////////////////////////////////
@@ -108,10 +111,10 @@ class CircularTimer(QWidget):
 
     def __init__(
         self,
-        parent: QWidget | None = None,
+        parent: WidgetParent = None,
         duration: int = 5000,
-        ring_color: QColor | str = "#0078d4",
-        node_color: QColor | str = "#2d2d2d",
+        ring_color: ColorType = "#0078d4",
+        node_color: ColorType = "#2d2d2d",
         ring_width_mode: Literal["small", "medium", "large"] = "medium",
         pen_width: int | float | None = None,
         loop: bool = False,
@@ -199,7 +202,7 @@ class CircularTimer(QWidget):
         return self._ring_color
 
     @ring_color.setter
-    def ring_color(self, value: QColor | str) -> None:
+    def ring_color(self, value: ColorType) -> None:
         """Set the ring color.
 
         Args:
@@ -218,7 +221,7 @@ class CircularTimer(QWidget):
         return self._node_color
 
     @node_color.setter
-    def node_color(self, value: QColor | str) -> None:
+    def node_color(self, value: ColorType) -> None:
         """Set the node color.
 
         Args:

@@ -3,7 +3,7 @@
 [![PyPI](https://img.shields.io/badge/PyPI-ezqt--widgets-orange.svg)](https://pypi.org/project/ezqt-widgets/)
 [![PyPI version](https://img.shields.io/pypi/v/ezqt-widgets)](https://pypi.org/project/ezqt-widgets/)
 [![Python versions](https://img.shields.io/pypi/pyversions/ezqt-widgets)](https://pypi.org/project/ezqt-widgets/)
-[![License](https://img.shields.io/pypi/l/ezqt-widgets)](https://github.com/neuraaak/ezqt_widgets/blob/main/LICENSE)
+[![License](https://img.shields.io/pypi/l/ezqt-widgets)](https://github.com/neuraaak/ezqt-widgets/blob/main/LICENSE)
 
 ![EzQt Widgets Logo](https://raw.githubusercontent.com/neuraaak/ezqt-widgets/refs/heads/main/docs/assets/logo-min.png)
 
@@ -31,7 +31,7 @@ pip install ezqt-widgets
 Or from source:
 
 ```bash
-git clone https://github.com/neuraaak/ezqt_widgets.git
+git clone https://github.com/neuraaak/ezqt-widgets.git
 cd ezqt_widgets && pip install .
 ```
 
@@ -134,13 +134,13 @@ See the [Testing Guide](guides/testing.md) for complete details.
 
 ## 📝 License
 
-MIT License – See [LICENSE](https://github.com/neuraaak/ezqt_widgets/blob/main/LICENSE) file for details.
+MIT License – See [LICENSE](https://github.com/neuraaak/ezqt-widgets/blob/main/LICENSE) file for details.
 
 ## 🔗 Links
 
-- **Repository**: [https://github.com/neuraaak/ezqt_widgets](https://github.com/neuraaak/ezqt_widgets)
+- **Repository**: [https://github.com/neuraaak/ezqt-widgets](https://github.com/neuraaak/ezqt-widgets)
 - **PyPI**: [https://pypi.org/project/ezqt-widgets/](https://pypi.org/project/ezqt-widgets/)
-- **Issues**: [https://github.com/neuraaak/ezqt_widgets/issues](https://github.com/neuraaak/ezqt_widgets/issues)
+- **Issues**: [https://github.com/neuraaak/ezqt-widgets/issues](https://github.com/neuraaak/ezqt-widgets/issues)
 - **Documentation**: [https://neuraaak.github.io/ezqt-widgets/](https://neuraaak.github.io/ezqt-widgets/)
 
 ---

@@ -38,6 +38,7 @@ from PySide6.QtWidgets import (
 
 # Local imports
 from ..label.hover_label import HoverLabel
+from ..types import WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -74,7 +75,7 @@ class DraggableItem(QFrame):
         self,
         item_id: str,
         text: str,
-        parent: QWidget | None = None,
+        parent: WidgetParent = None,
         icon: str | Any | None = None,
         compact: bool = False,
         **kwargs: Any,
@@ -403,7 +404,7 @@ class DraggableList(QWidget):
 
     def __init__(
         self,
-        parent: QWidget | None = None,
+        parent: WidgetParent = None,
         items: list[str] | None = None,
         allow_drag_drop: bool = True,
         allow_remove: bool = True,
