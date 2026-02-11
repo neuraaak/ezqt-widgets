@@ -74,6 +74,16 @@ from .misc import (
     ToggleIcon,
     ToggleSwitch,
 )
+from .types import (
+    AnimationDuration,
+    ColorType,
+    EventCallback,
+    IconSource,
+    IconSourceExtended,
+    SizeType,
+    ValueCallback,
+    WidgetParent,
+)
 
 # ///////////////////////////////////////////////////////////////
 # META INFORMATIONS
@@ -138,6 +148,15 @@ __all__ = [
     "OptionSelector",
     "ToggleIcon",
     "ToggleSwitch",
+    # Type aliases
+    "IconSource",
+    "IconSourceExtended",
+    "SizeType",
+    "ColorType",
+    "WidgetParent",
+    "AnimationDuration",
+    "EventCallback",
+    "ValueCallback",
     # Metadata
     "__version__",
     "__author__",

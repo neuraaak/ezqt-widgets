@@ -22,8 +22,11 @@ from typing import Any
 import requests
 from PySide6.QtCore import QSize, Qt, Signal
 from PySide6.QtGui import QColor, QIcon, QPainter, QPixmap
-from PySide6.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QToolButton, QWidget
+from PySide6.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QToolButton
 from typing_extensions import override
+
+# Local imports
+from ..types import IconSource, SizeType, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # UTILITY FUNCTIONS
@@ -182,10 +185,10 @@ class IconButton(QToolButton):
 
     def __init__(
         self,
-        parent: QWidget | None = None,
-        icon: QIcon | str | None = None,
+        parent: WidgetParent = None,
+        icon: IconSource = None,
         text: str = "",
-        icon_size: QSize | tuple[int, int] = QSize(20, 20),
+        icon_size: SizeType = QSize(20, 20),
         text_visible: bool = True,
         spacing: int = 10,
         min_width: int | None = None,
@@ -255,7 +258,7 @@ class IconButton(QToolButton):
         return self._current_icon
 
     @icon.setter
-    def icon(self, value: QIcon | str | None) -> None:
+    def icon(self, value: IconSource) -> None:
         """Set the button icon from various sources.
 
         Args:
@@ -302,7 +305,7 @@ class IconButton(QToolButton):
         return self._icon_size
 
     @icon_size.setter
-    def icon_size(self, value: QSize | tuple[int, int]) -> None:
+    def icon_size(self, value: SizeType) -> None:
         """Set the icon size.
 
         Args:

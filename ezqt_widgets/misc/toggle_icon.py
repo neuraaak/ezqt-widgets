@@ -31,7 +31,10 @@ from PySide6.QtGui import (
     QPixmap,
 )
 from PySide6.QtSvg import QSvgRenderer
-from PySide6.QtWidgets import QLabel, QWidget
+from PySide6.QtWidgets import QLabel
+
+# Local imports
+from ..types import ColorType, IconSourceExtended, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # UTILITY FUNCTIONS
@@ -66,7 +69,7 @@ def colorize_pixmap(pixmap: QPixmap, color: QColor) -> QPixmap:
 
 
 def load_icon_from_source(
-    source: str | QIcon | QPixmap, size: QSize | None = None
+    source: str | QIcon | QPixmap | None, size: QSize | None = None
 ) -> QPixmap:
     """Load an icon from various sources (path, URL, QIcon, QPixmap).
 
@@ -77,7 +80,11 @@ def load_icon_from_source(
     Returns:
         The loaded icon pixmap.
     """
-    if isinstance(source, QPixmap):
+    if source is None:
+        # Return empty pixmap if no source provided
+        pixmap = QPixmap(16, 16)
+        pixmap.fill(Qt.GlobalColor.transparent)
+    elif isinstance(source, QPixmap):
         pixmap = source
     elif isinstance(source, QIcon):
         pixmap = source.pixmap(size or QSize(16, 16))
@@ -163,11 +170,11 @@ class ToggleIcon(QLabel):
 
     def __init__(
         self,
-        parent: QWidget | None = None,
-        opened_icon: str | QIcon | QPixmap | None = None,
-        closed_icon: str | QIcon | QPixmap | None = None,
+        parent: WidgetParent = None,
+        opened_icon: IconSourceExtended = None,
+        closed_icon: IconSourceExtended = None,
         icon_size: int = 16,
-        icon_color: QColor | str | None = None,
+        icon_color: ColorType | None = None,
         initial_state: str = "closed",
         min_width: int | None = None,
         min_height: int | None = None,
@@ -253,7 +260,7 @@ class ToggleIcon(QLabel):
         return self._opened_icon
 
     @opened_icon.setter
-    def opened_icon(self, value: str | QIcon | QPixmap) -> None:
+    def opened_icon(self, value: IconSourceExtended) -> None:
         """Set the opened state icon.
 
         Args:
@@ -275,7 +282,7 @@ class ToggleIcon(QLabel):
         return self._closed_icon
 
     @closed_icon.setter
-    def closed_icon(self, value: str | QIcon | QPixmap) -> None:
+    def closed_icon(self, value: IconSourceExtended) -> None:
         """Set the closed state icon.
 
         Args:
@@ -325,7 +332,7 @@ class ToggleIcon(QLabel):
         return self._icon_color
 
     @icon_color.setter
-    def icon_color(self, value: QColor | str) -> None:
+    def icon_color(self, value: ColorType) -> None:
         """Set the icon color.
 
         Args:

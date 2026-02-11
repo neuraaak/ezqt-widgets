@@ -159,8 +159,8 @@ exclude = [
 ]
 
 [tool.setuptools.package-data]
-# Examples are now at project root, not included in package
-ezqt_widgets = []
+# Include type checking marker (PEP 561)
+ezqt_widgets = ["py.typed"]
 
 # ///////////////////////////////////////////////////////////////
 # 🎨 CODE FORMATTING & LINTING TOOLS
