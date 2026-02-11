@@ -32,7 +32,7 @@ This section provides comprehensive guides for mastering EzQt Widgets features a
 
 - [API Reference](../api/index.md) - Detailed widget documentation
 - [CLI Reference](../cli/index.md) - Command-line interface usage
-- [GitHub Repository](https://github.com/neuraaak/ezqt_widgets) - Source code and issues
+- [GitHub Repository](https://github.com/neuraaak/ezqt-widgets) - Source code and issues
 
 ## Topics
 
@@ -71,7 +71,7 @@ This section provides comprehensive guides for mastering EzQt Widgets features a
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/neuraaak/ezqt_widgets.git
+   git clone https://github.com/neuraaak/ezqt-widgets.git
    cd ezqt_widgets
    ```
 
@@ -173,9 +173,9 @@ Documentation is written in Markdown and built with MkDocs Material:
 
 ## Need Help?
 
-- **Issues**: [GitHub Issues](https://github.com/neuraaak/ezqt_widgets/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/neuraaak/ezqt_widgets/discussions)
-- **Repository**: [https://github.com/neuraaak/ezqt_widgets](https://github.com/neuraaak/ezqt_widgets)
+- **Issues**: [GitHub Issues](https://github.com/neuraaak/ezqt-widgets/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/neuraaak/ezqt-widgets/discussions)
+- **Repository**: [https://github.com/neuraaak/ezqt-widgets](https://github.com/neuraaak/ezqt-widgets)
 
 ---
 

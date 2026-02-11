@@ -98,8 +98,8 @@ __keywords__ = [
     "ui",
     "desktop",
 ]
-__url__ = "https://github.com/neuraaak/ezqt_widgets"
-__repository__ = "https://github.com/neuraaak/ezqt_widgets"
+__url__ = "https://github.com/neuraaak/ezqt-widgets"
+__repository__ = "https://github.com/neuraaak/ezqt-widgets"
 __license__ = "MIT"
 
 # ///////////////////////////////////////////////////////////////

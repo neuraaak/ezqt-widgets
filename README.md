@@ -6,9 +6,9 @@
 [![PyPI](https://img.shields.io/badge/PyPI-EzQt--Widgets-green.svg?style=for-the-badge&logo=pypi)](https://pypi.org/project/ezqt-widgets/)
 [![Docs](https://img.shields.io/badge/Docs-Online-blue.svg?style=for-the-badge&logo=readthedocs)](https://neuraaak.github.io/ezqt-widgets/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg?style=for-the-badge)](https://github.com/neuraaak/ezqt_widgets)
-[![Tests](https://img.shields.io/badge/Tests-304%2F305%20passing-success.svg?style=for-the-badge)](https://github.com/neuraaak/ezqt_widgets)
-[![Coverage](https://img.shields.io/badge/Coverage-75%25-success.svg?style=for-the-badge)](https://github.com/neuraaak/ezqt_widgets)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg?style=for-the-badge)](https://github.com/neuraaak/ezqt-widgets)
+[![Tests](https://img.shields.io/badge/Tests-304%2F305%20passing-success.svg?style=for-the-badge)](https://github.com/neuraaak/ezqt-widgets)
+[![Coverage](https://img.shields.io/badge/Coverage-75%25-success.svg?style=for-the-badge)](https://github.com/neuraaak/ezqt-widgets)
 
 ![EzQt Widgets Logo](docs/assets/logo-min.png)
 
@@ -23,7 +23,7 @@ pip install ezqt-widgets
 Or from source:
 
 ```bash
-git clone https://github.com/neuraaak/ezqt_widgets.git
+git clone https://github.com/neuraaak/ezqt-widgets.git
 cd ezqt_widgets && pip install .
 ```
 
@@ -112,7 +112,7 @@ For contributors and developers:
 
 ```bash
 # Clone and install in development mode
-git clone https://github.com/neuraaak/ezqt_widgets.git
+git clone https://github.com/neuraaak/ezqt-widgets.git
 cd ezqt_widgets
 pip install -e ".[dev]"
 
@@ -205,8 +205,8 @@ MIT License – See [LICENSE](LICENSE) file for details.
 
 ## 🔗 Links
 
-- **Repository**: [https://github.com/neuraaak/ezqt_widgets](https://github.com/neuraaak/ezqt_widgets)
-- **Issues**: [GitHub Issues](https://github.com/neuraaak/ezqt_widgets/issues)
+- **Repository**: [https://github.com/neuraaak/ezqt-widgets](https://github.com/neuraaak/ezqt-widgets)
+- **Issues**: [GitHub Issues](https://github.com/neuraaak/ezqt-widgets/issues)
 - **Documentation**: [neuraaak.github.io/ezqt_widgets](https://neuraaak.github.io/ezqt-widgets/)
 - **PyPI**: [pypi.org/project/ezqt-widgets](https://pypi.org/project/ezqt-widgets/)
 - **Changelog**: [CHANGELOG.md](CHANGELOG.md)
