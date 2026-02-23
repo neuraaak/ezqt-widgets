@@ -57,6 +57,13 @@ class FramedLabel(QFrame):
 
     Signals:
         textChanged(str): Emitted when the label text changes.
+
+    Example:
+        >>> from ezqt_widgets import FramedLabel
+        >>> label = FramedLabel(text="Section Title", min_height=30)
+        >>> label.textChanged.connect(lambda t: print(f"New text: {t}"))
+        >>> label.text = "Updated Title"
+        >>> label.show()
     """
 
     textChanged = Signal(str)

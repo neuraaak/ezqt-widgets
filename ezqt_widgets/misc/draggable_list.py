@@ -38,7 +38,7 @@ from PySide6.QtWidgets import (
 
 # Local imports
 from ..label.hover_label import HoverLabel
-from ..types import WidgetParent
+from ..types import IconSourceExtended, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -62,6 +62,13 @@ class DraggableItem(QFrame):
     Signals:
         itemClicked(str): Emitted when the item is clicked.
         itemRemoved(str): Emitted when the item is removed.
+
+    Example:
+        >>> from ezqt_widgets import DraggableItem
+        >>> item = DraggableItem(item_id="item-1", text="First item")
+        >>> item.itemClicked.connect(lambda id: print(f"Clicked: {id}"))
+        >>> item.itemRemoved.connect(lambda id: print(f"Removed: {id}"))
+        >>> item.show()
     """
 
     itemClicked = Signal(str)
@@ -76,7 +83,7 @@ class DraggableItem(QFrame):
         item_id: str,
         text: str,
         parent: WidgetParent = None,
-        icon: str | Any | None = None,
+        icon: IconSourceExtended = None,
         compact: bool = False,
         **kwargs: Any,
     ) -> None:

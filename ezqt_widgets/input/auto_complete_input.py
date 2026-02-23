@@ -55,6 +55,13 @@ class AutoCompleteInput(QLineEdit):
         case_sensitive: Get or set whether autocompletion is case sensitive.
         filter_mode: Get or set the filter mode for completion.
         completion_mode: Get or set the completion mode.
+
+    Example:
+        >>> from ezqt_widgets import AutoCompleteInput
+        >>> inp = AutoCompleteInput(suggestions=["Alice", "Bob", "Charlie"])
+        >>> inp.case_sensitive = False
+        >>> inp.suggestions = ["Alice", "Bob", "Charlie", "Dave"]
+        >>> inp.show()
     """
 
     # ///////////////////////////////////////////////////////////////

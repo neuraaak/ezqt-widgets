@@ -33,58 +33,8 @@ from PySide6.QtWidgets import (
 )
 
 # Local imports
+from ..misc.theme_icon import ThemeIcon
 from ..types import SizeType, WidgetParent
-
-# ///////////////////////////////////////////////////////////////
-# UTILITY FUNCTIONS
-# ///////////////////////////////////////////////////////////////
-
-
-def format_date(date: QDate, format_str: str = "dd/MM/yyyy") -> str:
-    """Format a QDate object to string.
-
-    Args:
-        date: The date to format.
-        format_str: Format string (default: "dd/MM/yyyy").
-
-    Returns:
-        Formatted date string, or empty string if date is invalid.
-    """
-    if not date.isValid():
-        return ""
-    return date.toString(format_str)
-
-
-def parse_date(date_str: str, format_str: str = "dd/MM/yyyy") -> QDate:
-    """Parse a date string to QDate object.
-
-    Args:
-        date_str: The date string to parse.
-        format_str: Format string (default: "dd/MM/yyyy").
-
-    Returns:
-        Parsed QDate object or invalid QDate if parsing fails.
-    """
-    return QDate.fromString(date_str, format_str)
-
-
-def get_calendar_icon() -> QIcon:
-    """Get a default calendar icon.
-
-    Returns:
-        QIcon: Calendar icon pixmap.
-    """
-    pixmap = QPixmap(16, 16)
-    pixmap.fill(Qt.GlobalColor.transparent)
-    painter = QPainter(pixmap)
-    painter.setPen(QColor("#666666"))
-    painter.setBrush(QColor("#f0f0f0"))
-    painter.drawRect(0, 0, 15, 15)
-    painter.setPen(QColor("#333333"))
-    painter.drawText(2, 2, 12, 12, Qt.AlignmentFlag.AlignCenter, "📅")
-    painter.end()
-    return QIcon(pixmap)
-
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -100,6 +50,14 @@ class DatePickerDialog(QDialog):
     Args:
         parent: The parent widget (default: None).
         current_date: The current selected date (default: None).
+
+    Example:
+        >>> from ezqt_widgets import DatePickerDialog
+        >>> from PySide6.QtCore import QDate
+        >>> dialog = DatePickerDialog(current_date=QDate.currentDate())
+        >>> if dialog.exec():
+        ...     date = dialog.selected_date()
+        ...     print(date.toString("dd/MM/yyyy"))
     """
 
     def __init__(
@@ -205,6 +163,13 @@ class DateButton(QToolButton):
     Signals:
         dateChanged(QDate): Emitted when the date changes.
         dateSelected(QDate): Emitted when a date is selected from calendar.
+
+    Example:
+        >>> from ezqt_widgets import DateButton
+        >>> btn = DateButton(date_format="dd/MM/yyyy", placeholder="Pick a date")
+        >>> btn.dateChanged.connect(lambda d: print(d.toString("dd/MM/yyyy")))
+        >>> btn.set_today()
+        >>> btn.show()
     """
 
     dateChanged = Signal(QDate)
@@ -296,7 +261,7 @@ class DateButton(QToolButton):
             value: The date to set (QDate, string, or None).
         """
         if isinstance(value, str):
-            new_date = parse_date(value, self._date_format)
+            new_date = self._parse_date(value, self._date_format)
         elif isinstance(value, QDate):
             new_date = value
         elif value is None:
@@ -316,7 +281,7 @@ class DateButton(QToolButton):
         Returns:
             The formatted date string.
         """
-        return format_date(self._current_date, self._date_format)
+        return self._format_date(self._current_date, self._date_format)
 
     @date_string.setter
     def date_string(self, value: str) -> None:
@@ -384,7 +349,7 @@ class DateButton(QToolButton):
         self._show_calendar_icon = bool(value)
         if self._show_calendar_icon:
             self.icon_label.show()
-            self.icon_label.setPixmap(get_calendar_icon().pixmap(self._icon_size))
+            self.icon_label.setPixmap(self._get_calendar_icon().pixmap(self._icon_size))
             self.icon_label.setFixedSize(self._icon_size)
         else:
             self.icon_label.hide()
@@ -409,7 +374,7 @@ class DateButton(QToolButton):
             QSize(*value) if isinstance(value, (tuple, list)) else QSize(value)
         )
         if self._show_calendar_icon:
-            self.icon_label.setPixmap(get_calendar_icon().pixmap(self._icon_size))
+            self.icon_label.setPixmap(self._get_calendar_icon().pixmap(self._icon_size))
             self.icon_label.setFixedSize(self._icon_size)
 
     @property
@@ -475,10 +440,58 @@ class DateButton(QToolButton):
     # PRIVATE METHODS
     # ------------------------------------------------
 
+    @staticmethod
+    def _format_date(date: QDate, format_str: str = "dd/MM/yyyy") -> str:
+        """Format a QDate object to string.
+
+        Args:
+            date: The date to format.
+            format_str: Format string (default: "dd/MM/yyyy").
+
+        Returns:
+            Formatted date string, or empty string if date is invalid.
+        """
+        if not date.isValid():
+            return ""
+        return date.toString(format_str)
+
+    @staticmethod
+    def _parse_date(date_str: str, format_str: str = "dd/MM/yyyy") -> QDate:
+        """Parse a date string to QDate object.
+
+        Args:
+            date_str: The date string to parse.
+            format_str: Format string (default: "dd/MM/yyyy").
+
+        Returns:
+            Parsed QDate object or invalid QDate if parsing fails.
+        """
+        return QDate.fromString(date_str, format_str)
+
+    @staticmethod
+    def _get_calendar_icon() -> QIcon:
+        """Get a default calendar icon.
+
+        Returns:
+            Calendar icon pixmap.
+        """
+        pixmap = QPixmap(16, 16)
+        pixmap.fill(Qt.GlobalColor.transparent)
+        painter = QPainter(pixmap)
+        painter.setPen(QColor("#666666"))
+        painter.setBrush(QColor("#f0f0f0"))
+        painter.drawRect(0, 0, 15, 15)
+        painter.setPen(QColor("#333333"))
+        painter.drawText(2, 2, 12, 12, Qt.AlignmentFlag.AlignCenter, "📅")
+        painter.end()
+        themed_icon = ThemeIcon.from_source(QIcon(pixmap))
+        assert themed_icon is not None
+        return themed_icon
+
     def _update_display(self) -> None:
         """Update the display text."""
         if self._current_date.isValid():
-            display_text = format_date(self._current_date, self._date_format)
+            display_text = self._format_date(self._current_date, self._date_format)
         else:
             display_text = self._placeholder
 
