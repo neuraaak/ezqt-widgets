@@ -23,11 +23,7 @@ from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QIcon, QPixmap
 
 # Local imports
-from ezqt_widgets.button.icon_button import (
-    IconButton,
-    colorize_pixmap,
-    load_icon_from_source,
-)
+from ezqt_widgets.button.icon_button import IconButton
 
 pytestmark = pytest.mark.unit
 
@@ -46,7 +42,7 @@ class TestColorizePixmap:
         pixmap.fill(Qt.GlobalColor.white)
 
         # Test colorization
-        result = colorize_pixmap(pixmap, "#FF0000", 0.8)
+        result = IconButton._colorize_pixmap(pixmap, "#FF0000", 0.8)
 
         # Verifications
         assert result is not None
@@ -59,7 +55,7 @@ class TestColorizePixmap:
         pixmap = QPixmap(16, 16)
         pixmap.fill(Qt.GlobalColor.white)
 
-        result = colorize_pixmap(pixmap, "#00FF00", 0.0)
+        result = IconButton._colorize_pixmap(pixmap, "#00FF00", 0.0)
 
         assert result is not None
         assert result.size() == pixmap.size()
@@ -70,7 +66,7 @@ class TestLoadIconFromSource:
 
     def test_load_icon_from_none(self, qt_widget_cleanup) -> None:
         """Test with None source."""
-        result = load_icon_from_source(None)
+        result = IconButton._load_icon_from_source(None)
         assert result is None
 
     def test_load_icon_from_qicon(self, qt_widget_cleanup) -> None:
@@ -80,21 +76,21 @@ class TestLoadIconFromSource:
         pixmap.fill(Qt.GlobalColor.red)
         icon = QIcon(pixmap)
 
-        result = load_icon_from_source(icon)
+        result = IconButton._load_icon_from_source(icon)
 
         assert result is not None
         assert isinstance(result, QIcon)
 
     def test_load_icon_from_file_path(self, mock_icon_path) -> None:
         """Test with file path."""
-        result = load_icon_from_source(mock_icon_path)
+        result = IconButton._load_icon_from_source(mock_icon_path)
 
         assert result is not None
         assert isinstance(result, QIcon)
 
     def test_load_icon_from_svg_path(self, mock_svg_path) -> None:
         """Test with SVG file."""
-        result = load_icon_from_source(mock_svg_path)
+        result = IconButton._load_icon_from_source(mock_svg_path)
 
         assert result is not None
         assert isinstance(result, QIcon)
@@ -125,7 +121,7 @@ class TestLoadIconFromSource:
         mock_response.content = png_content
         mock_get.return_value = mock_response
 
-        result = load_icon_from_source("https://example.com/icon.png")
+        result = IconButton._load_icon_from_source("https://example.com/icon.png")
 
         assert result is not None
         assert isinstance(result, QIcon)
@@ -138,7 +134,7 @@ class TestLoadIconFromSource:
         mock_response.raise_for_status.side_effect = Exception("Network error")
         mock_get.return_value = mock_response
 
-        result = load_icon_from_source("https://invalid-url.com/icon.png")
+        result = IconButton._load_icon_from_source("https://invalid-url.com/icon.png")
 
         assert result is None
 
