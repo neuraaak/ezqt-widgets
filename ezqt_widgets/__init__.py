@@ -71,6 +71,7 @@ from .misc import (
     DraggableItem,
     DraggableList,
     OptionSelector,
+    ThemeIcon,
     ToggleIcon,
     ToggleSwitch,
 )
@@ -89,7 +90,7 @@ from .types import (
 # META INFORMATIONS
 # ///////////////////////////////////////////////////////////////
 
-__version__ = "2.4.0"
+__version__ = "2.5.0"
 __author__ = "Neuraaak"
 __maintainer__ = "Neuraaak"
 __description__ = (
@@ -110,7 +111,6 @@ __keywords__ = [
 ]
 __url__ = "https://github.com/neuraaak/ezqt-widgets"
 __repository__ = "https://github.com/neuraaak/ezqt-widgets"
-__license__ = "MIT"
 
 # ///////////////////////////////////////////////////////////////
 # PYTHON VERSION CHECK
@@ -146,6 +146,7 @@ __all__ = [
     "DraggableItem",
     "DraggableList",
     "OptionSelector",
+    "ThemeIcon",
     "ToggleIcon",
     "ToggleSwitch",
     # Type aliases

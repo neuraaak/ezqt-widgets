@@ -61,6 +61,13 @@ class ToggleSwitch(QWidget):
 
     Signals:
         toggled(bool): Emitted when the toggle state changes.
+
+    Example:
+        >>> from ezqt_widgets import ToggleSwitch
+        >>> switch = ToggleSwitch(checked=False, width=50, height=24)
+        >>> switch.toggled.connect(lambda state: print(f"On: {state}"))
+        >>> switch.checked = True
+        >>> switch.show()
     """
 
     toggled = Signal(bool)

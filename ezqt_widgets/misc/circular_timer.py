@@ -28,45 +28,6 @@ from PySide6.QtWidgets import QWidget
 from ..types import ColorType, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
-# UTILITY FUNCTIONS
-# ///////////////////////////////////////////////////////////////
-
-
-def parse_css_color(color_str: QColor | str) -> QColor:
-    """Parse CSS color strings to QColor.
-
-    Supports rgb, rgba, hex, and named colors.
-
-    Args:
-        color_str: CSS color string or QColor object.
-
-    Returns:
-        QColor object.
-    """
-    if isinstance(color_str, QColor):
-        return color_str
-
-    color_str = str(color_str).strip()
-
-    # Parse rgb(r, g, b)
-    rgb_match = re.match(r"rgb\((\d+),\s*(\d+),\s*(\d+)\)", color_str)
-    if rgb_match:
-        r, g, b = map(int, rgb_match.groups())
-        return QColor(r, g, b)
-
-    # Parse rgba(r, g, b, a)
-    rgba_match = re.match(r"rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)", color_str)
-    if rgba_match:
-        r_str, g_str, b_str, a_str = rgba_match.groups()
-        r, g, b = int(r_str), int(g_str), int(b_str)
-        a = float(a_str) * 255  # Convert 0-1 to 0-255
-        return QColor(r, g, b, int(a))
-
-    # Fallback to QColor constructor (hex, named colors, etc.)
-    return QColor(color_str)
-
-
-# ///////////////////////////////////////////////////////////////
 # CLASSES
 # ///////////////////////////////////////////////////////////////
 
@@ -99,6 +60,14 @@ class CircularTimer(QWidget):
         timerReset(): Emitted when the timer is reset.
         clicked(): Emitted when the widget is clicked.
         cycleCompleted(): Emitted at each end of cycle (even if loop=False).
+
+    Example:
+        >>> from ezqt_widgets import CircularTimer
+        >>> timer = CircularTimer(duration=10000, ring_color="#0078d4", loop=True)
+        >>> timer.cycleCompleted.connect(lambda: print("cycle done"))
+        >>> timer.clicked.connect(timer.reset)
+        >>> timer.start()
+        >>> timer.show()
     """
 
     timerReset = Signal()
@@ -129,8 +98,8 @@ class CircularTimer(QWidget):
         self._duration: int = duration
         self._elapsed: int = 0
         self._running: bool = False
-        self._ring_color: QColor = parse_css_color(ring_color)
-        self._node_color: QColor = parse_css_color(node_color)
+        self._ring_color: QColor = self._parse_css_color(ring_color)
+        self._node_color: QColor = self._parse_css_color(node_color)
         self._ring_width_mode: str = ring_width_mode
         self._pen_width: float | None = pen_width
         self._loop: bool = bool(loop)
@@ -208,7 +177,7 @@ class CircularTimer(QWidget):
         Args:
             value: The new ring color (QColor or CSS string).
         """
-        self._ring_color = parse_css_color(value)
+        self._ring_color = self._parse_css_color(value)
         self.update()
 
     @property
@@ -227,7 +196,7 @@ class CircularTimer(QWidget):
         Args:
             value: The new node color (QColor or CSS string).
         """
-        self._node_color = parse_css_color(value)
+        self._node_color = self._parse_css_color(value)
         self.update()
 
     @property
@@ -327,6 +296,37 @@ class CircularTimer(QWidget):
     # ------------------------------------------------
     # PRIVATE METHODS
     # ------------------------------------------------
+
+    @staticmethod
+    def _parse_css_color(color_str: QColor | str) -> QColor:
+        """Parse CSS color strings to QColor.
+
+        Supports rgb, rgba, hex, and named colors.
+
+        Args:
+            color_str: CSS color string or QColor object.
+
+        Returns:
+            QColor object.
+        """
+        if isinstance(color_str, QColor):
+            return color_str
+
+        color_str = str(color_str).strip()
+
+        rgb_match = re.match(r"rgb\((\d+),\s*(\d+),\s*(\d+)\)", color_str)
+        if rgb_match:
+            r, g, b = map(int, rgb_match.groups())
+            return QColor(r, g, b)
+
+        rgba_match = re.match(r"rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)", color_str)
+        if rgba_match:
+            r_str, g_str, b_str, a_str = rgba_match.groups()
+            r, g, b = int(r_str), int(g_str), int(b_str)
+            a = float(a_str) * 255
+            return QColor(r, g, b, int(a))
+
+        return QColor(color_str)
 
     def _on_timer(self) -> None:
         """Internal callback for smooth animation."""

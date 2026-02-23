@@ -57,6 +57,13 @@ class ClickableTagLabel(QFrame):
         clicked(): Emitted when the tag is clicked.
         toggle_keyword(str): Emitted with the tag name when toggled.
         stateChanged(bool): Emitted when the enabled state changes.
+
+    Example:
+        >>> from ezqt_widgets import ClickableTagLabel
+        >>> tag = ClickableTagLabel(name="Python", enabled=False, status_color="#0078d4")
+        >>> tag.stateChanged.connect(lambda state: print(f"Active: {state}"))
+        >>> tag.toggle_keyword.connect(lambda kw: print(f"Toggled: {kw}"))
+        >>> tag.show()
     """
 
     clicked = Signal()

@@ -34,7 +34,8 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QLabel
 
 # Local imports
-from ..types import ColorType, IconSource, SizeType, WidgetParent
+from ..misc.theme_icon import ThemeIcon
+from ..types import ColorType, IconSourceExtended, SizeType, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -64,7 +65,7 @@ class HoverLabel(QLabel):
 
     Args:
         parent: The parent widget (default: None).
-        icon: The icon to display on hover (QIcon, path, resource, URL, or SVG).
+        icon: The icon to display on hover (ThemeIcon, QIcon, QPixmap, path, resource, URL, or SVG).
         text: The label text (default: "").
         opacity: The opacity of the hover icon (default: 0.5).
         icon_size: The size of the hover icon (default: QSize(16, 16)).
@@ -99,7 +100,7 @@ class HoverLabel(QLabel):
     def __init__(
         self,
         parent: WidgetParent = None,
-        icon: IconSource = None,
+        icon: IconSourceExtended = None,
         text: str = "",
         opacity: float = 0.5,
         icon_size: SizeType = QSize(16, 16),
@@ -173,10 +174,10 @@ class HoverLabel(QLabel):
         return self._hover_icon
 
     @hover_icon.setter
-    def hover_icon(self, value: IconSource) -> None:
+    def hover_icon(self, value: IconSourceExtended) -> None:
         """Set the icon displayed on hover.
 
-        Accepts QIcon, str (path, resource, URL, or SVG), or None.
+        Accepts ThemeIcon, QIcon, QPixmap, str (path, resource, URL, or SVG), or None.
 
         Args:
             value: The icon source.
@@ -187,6 +188,8 @@ class HoverLabel(QLabel):
         """
         if value is None:
             self._hover_icon = None
+        elif isinstance(value, QPixmap):
+            self._hover_icon = QIcon(value)
         elif isinstance(value, QIcon):
             self._hover_icon = value
         elif isinstance(value, str):
@@ -251,7 +254,12 @@ class HoverLabel(QLabel):
                     raise ValueError(f"Invalid icon path: {value}")
                 self._hover_icon = icon
         else:
-            raise TypeError("hover_icon must be a QIcon, a path string, or None.")
+            raise TypeError(
+                "hover_icon must be a ThemeIcon, QIcon, QPixmap, a path string, or None."
+            )
+
+        if self._hover_icon is not None:
+            self._hover_icon = ThemeIcon.from_source(self._hover_icon)
 
         self._update_padding_style()
         self.update()
