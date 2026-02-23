@@ -73,7 +73,7 @@ jobs:
           echo "🧪 Running tests and generating coverage report..."
           export QT_QPA_PLATFORM=offscreen
           export QT_QPA_PLATFORM_MINIMAL_PLUGINS=1
-          pytest --cov=ezpl --cov-report=html --cov-report=xml -q || true
+          pytest --cov=ezqt_widgets --cov-report=html --cov-report=xml -q || true
           echo "✅ Coverage report generated!"
 
       - name: Generate changelog
