@@ -98,6 +98,12 @@ class OptionSelector(QFrame):
         clicked(): Emitted when an option is clicked.
         valueChanged(str): Emitted when the selected value changes.
         valueIdChanged(int): Emitted when the selected value ID changes.
+
+    Example:
+        >>> from ezqt_widgets import OptionSelector
+        >>> selector = OptionSelector(items=["Day", "Week", "Month"], default_id=0)
+        >>> selector.valueChanged.connect(lambda v: print(f"Selected: {v}"))
+        >>> selector.show()
     """
 
     clicked = Signal()

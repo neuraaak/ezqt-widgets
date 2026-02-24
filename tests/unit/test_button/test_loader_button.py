@@ -23,13 +23,7 @@ from PySide6.QtCore import QPoint, QSize, Qt
 from PySide6.QtGui import QIcon, QMouseEvent, QPixmap
 
 # Local imports
-from ezqt_widgets.button.loader_button import (
-    LoaderButton,
-    create_error_icon,
-    create_loading_icon,
-    create_spinner_pixmap,
-    create_success_icon,
-)
+from ezqt_widgets.button.loader_button import LoaderButton
 
 pytestmark = pytest.mark.unit
 
@@ -43,7 +37,7 @@ class TestUtilityFunctions:
 
     def test_create_spinner_pixmap(self, qt_widget_cleanup) -> None:
         """Test create_spinner_pixmap."""
-        pixmap = create_spinner_pixmap(16, "#0078d4")
+        pixmap = LoaderButton._create_spinner_pixmap(16, "#0078d4")
 
         assert pixmap is not None
         assert isinstance(pixmap, QPixmap)
@@ -52,13 +46,13 @@ class TestUtilityFunctions:
 
     def test_create_spinner_pixmap_custom_size(self, qt_widget_cleanup) -> None:
         """Test create_spinner_pixmap with custom size."""
-        pixmap = create_spinner_pixmap(32, "#FF0000")
+        pixmap = LoaderButton._create_spinner_pixmap(32, "#FF0000")
 
         assert pixmap.size() == QSize(32, 32)
 
     def test_create_loading_icon(self, qt_widget_cleanup) -> None:
         """Test create_loading_icon."""
-        icon = create_loading_icon(16, "#0078d4")
+        icon = LoaderButton._create_loading_icon(16, "#0078d4")
 
         assert icon is not None
         assert isinstance(icon, QIcon)
@@ -66,7 +60,7 @@ class TestUtilityFunctions:
 
     def test_create_success_icon(self, qt_widget_cleanup) -> None:
         """Test create_success_icon."""
-        icon = create_success_icon(16, "#28a745")
+        icon = LoaderButton._create_success_icon(16, "#28a745")
 
         assert icon is not None
         assert isinstance(icon, QIcon)
@@ -74,7 +68,7 @@ class TestUtilityFunctions:
 
     def test_create_error_icon(self, qt_widget_cleanup) -> None:
         """Test create_error_icon."""
-        icon = create_error_icon(16, "#dc3545")
+        icon = LoaderButton._create_error_icon(16, "#dc3545")
 
         assert icon is not None
         assert isinstance(icon, QIcon)

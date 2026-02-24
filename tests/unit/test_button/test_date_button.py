@@ -27,9 +27,6 @@ from PySide6.QtWidgets import QDialog
 from ezqt_widgets.button.date_button import (
     DateButton,
     DatePickerDialog,
-    format_date,
-    get_calendar_icon,
-    parse_date,
 )
 
 pytestmark = pytest.mark.unit
@@ -45,24 +42,24 @@ class TestUtilityFunctions:
     def test_format_date_valid(self, qt_widget_cleanup) -> None:
         """Test format_date with a valid date."""
         date = QDate(2024, 1, 15)
-        result = format_date(date, "dd/MM/yyyy")
+        result = DateButton._format_date(date, "dd/MM/yyyy")
         assert result == "15/01/2024"
 
     def test_format_date_invalid(self, qt_widget_cleanup) -> None:
         """Test format_date with an invalid date."""
         date = QDate()
-        result = format_date(date, "dd/MM/yyyy")
+        result = DateButton._format_date(date, "dd/MM/yyyy")
         assert result == ""
 
     def test_format_date_custom_format(self, qt_widget_cleanup) -> None:
         """Test format_date with a custom format."""
         date = QDate(2024, 1, 15)
-        result = format_date(date, "yyyy-MM-dd")
+        result = DateButton._format_date(date, "yyyy-MM-dd")
         assert result == "2024-01-15"
 
     def test_parse_date_valid(self, qt_widget_cleanup) -> None:
         """Test parse_date with a valid string."""
-        result = parse_date("15/01/2024", "dd/MM/yyyy")
+        result = DateButton._parse_date("15/01/2024", "dd/MM/yyyy")
         assert result.isValid()
         assert result.year() == 2024
         assert result.month() == 1
@@ -70,12 +67,12 @@ class TestUtilityFunctions:
 
     def test_parse_date_invalid(self, qt_widget_cleanup) -> None:
         """Test parse_date with an invalid string."""
-        result = parse_date("invalid", "dd/MM/yyyy")
+        result = DateButton._parse_date("invalid", "dd/MM/yyyy")
         assert not result.isValid()
 
     def test_get_calendar_icon(self, qt_widget_cleanup) -> None:
         """Test get_calendar_icon."""
-        icon = get_calendar_icon()
+        icon = DateButton._get_calendar_icon()
         assert icon is not None
         assert isinstance(icon, QIcon)
         assert not icon.isNull()

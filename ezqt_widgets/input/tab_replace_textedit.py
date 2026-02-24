@@ -56,6 +56,13 @@ class TabReplaceTextEdit(QPlainTextEdit):
         sanitize_on_paste: Enable or disable sanitizing pasted text.
         remove_empty_lines: Get or set whether to remove empty lines.
         preserve_whitespace: Get or set whether to preserve whitespace.
+
+    Example:
+        >>> from ezqt_widgets import TabReplaceTextEdit
+        >>> editor = TabReplaceTextEdit(tab_replacement=";", remove_empty_lines=True)
+        >>> editor.setPlainText("alpha\\tbeta\\n\\ngamma\\tdelta")
+        >>> # Paste triggers sanitization; tabs become ";" and empty lines removed
+        >>> editor.show()
     """
 
     # ///////////////////////////////////////////////////////////////

@@ -25,6 +25,10 @@ from PySide6.QtCore import QRect, QSize, Qt, Signal
 from PySide6.QtGui import QColor, QIcon, QMouseEvent, QPainter, QPaintEvent, QPixmap
 from PySide6.QtWidgets import QLineEdit, QProgressBar, QVBoxLayout, QWidget
 
+# Local imports
+from ..misc.theme_icon import ThemeIcon
+from ..types import IconSourceExtended
+
 # ///////////////////////////////////////////////////////////////
 # UTILITY FUNCTIONS
 # ///////////////////////////////////////////////////////////////
@@ -99,11 +103,12 @@ def colorize_pixmap(
     return result
 
 
-def load_icon_from_source(source: QIcon | str | None) -> QIcon | None:
-    """Load icon from various sources (QIcon, path, URL, etc.).
+def load_icon_from_source(source: IconSourceExtended) -> QIcon | None:
+    """Load icon from various sources (ThemeIcon, QIcon, QPixmap, path, URL, etc.).
 
     Supports loading icons from:
-        - QIcon objects (returned as-is)
+        - ThemeIcon/QIcon objects (returned as-is)
+        - QPixmap objects (wrapped into QIcon)
         - Local file paths (PNG, JPG, etc.)
         - Local SVG files
         - Remote URLs (HTTP/HTTPS)
@@ -117,8 +122,10 @@ def load_icon_from_source(source: QIcon | str | None) -> QIcon | None:
     """
     if source is None:
         return None
+    elif isinstance(source, QPixmap):
+        return ThemeIcon.from_source(QIcon(source))
     elif isinstance(source, QIcon):
-        return source
+        return ThemeIcon.from_source(source)
     elif isinstance(source, str):
         # Handle URL
         if source.startswith(("http://", "https://")):
@@ -141,13 +148,13 @@ def load_icon_from_source(source: QIcon | str | None) -> QIcon | None:
                     painter = QPainter(pixmap)
                     renderer.render(painter)
                     painter.end()
-                    return QIcon(pixmap)
+                    return ThemeIcon.from_source(QIcon(pixmap))
 
                 # Handle raster image from URL
                 else:
                     pixmap = QPixmap()
                     pixmap.loadFromData(image_data)
-                    return QIcon(pixmap)
+                    return ThemeIcon.from_source(QIcon(pixmap))
 
             except Exception as e:
                 print(f"Failed to load icon from URL {source}: {e}")
@@ -164,7 +171,7 @@ def load_icon_from_source(source: QIcon | str | None) -> QIcon | None:
                 painter = QPainter(pixmap)
                 renderer.render(painter)
                 painter.end()
-                return QIcon(pixmap)
+                return ThemeIcon.from_source(QIcon(pixmap))
             else:
                 print(f"Invalid SVG file: {source}")
                 return None
@@ -173,7 +180,7 @@ def load_icon_from_source(source: QIcon | str | None) -> QIcon | None:
         else:
             pixmap = QPixmap(source)
             if not pixmap.isNull():
-                return QIcon(pixmap)
+                return ThemeIcon.from_source(QIcon(pixmap))
             else:
                 print(f"Failed to load image: {source}")
                 return None
@@ -190,7 +197,7 @@ class PasswordInput(QWidget):
     Features:
         - QLineEdit in password mode with integrated strength bar
         - Right-side icon with click functionality
-        - Icon management system (QIcon, path, URL, SVG)
+        - Icon management system (ThemeIcon, QIcon, QPixmap, path, URL, SVG)
         - Animated strength bar that fills the bottom border
         - Signal strengthChanged(int) emitted on password change
         - Color-coded strength indicator
@@ -202,9 +209,9 @@ class PasswordInput(QWidget):
             (default: True).
         strength_bar_height: Height of the strength bar in pixels
             (default: 3).
-        show_icon: Icon for show password (QIcon, str, or None,
+        show_icon: Icon for show password (ThemeIcon, QIcon, QPixmap, str, or None,
             default: URL to icons8.com).
-        hide_icon: Icon for hide password (QIcon, str, or None,
+        hide_icon: Icon for hide password (ThemeIcon, QIcon, QPixmap, str, or None,
             default: URL to icons8.com).
         icon_size: Size of the icon (QSize or tuple, default: QSize(16, 16)).
         *args: Additional arguments passed to QWidget.
@@ -235,12 +242,12 @@ class PasswordInput(QWidget):
         parent: QWidget | None = None,
         show_strength: bool = True,
         strength_bar_height: int = 3,
-        show_icon: (
-            QIcon | str | None
-        ) = "https://img.icons8.com/?size=100&id=85130&format=png&color=000000",
-        hide_icon: (
-            QIcon | str | None
-        ) = "https://img.icons8.com/?size=100&id=85137&format=png&color=000000",
+        show_icon: IconSourceExtended = (
+            "https://img.icons8.com/?size=100&id=85130&format=png&color=000000"
+        ),
+        hide_icon: IconSourceExtended = (
+            "https://img.icons8.com/?size=100&id=85137&format=png&color=000000"
+        ),
         icon_size: QSize | tuple[int, int] = QSize(16, 16),
         *args: Any,
         **kwargs: Any,
@@ -257,8 +264,8 @@ class PasswordInput(QWidget):
         self._strength_bar_height: int = strength_bar_height
         self._show_icon: QIcon | None = None
         self._hide_icon: QIcon | None = None
-        self._show_icon_source: QIcon | str | None = show_icon
-        self._hide_icon_source: QIcon | str | None = hide_icon
+        self._show_icon_source: IconSourceExtended = show_icon
+        self._hide_icon_source: IconSourceExtended = hide_icon
         self._icon_size: QSize = (
             QSize(*icon_size) if isinstance(icon_size, (tuple, list)) else icon_size
         )
@@ -270,9 +277,9 @@ class PasswordInput(QWidget):
 
         # Set icons
         if show_icon:
-            self.show_icon = show_icon  # type: ignore[assignment]
+            self.show_icon = show_icon
         if hide_icon:
-            self.hide_icon = hide_icon  # type: ignore[assignment]
+            self.hide_icon = hide_icon
 
         # Initialize icon display
         self._update_icon()
@@ -438,11 +445,11 @@ class PasswordInput(QWidget):
         return self._show_icon
 
     @show_icon.setter
-    def show_icon(self, value: QIcon | str | None) -> None:
+    def show_icon(self, value: IconSourceExtended) -> None:
         """Set the show password icon.
 
         Args:
-            value: The icon source (QIcon, path string, URL, or None).
+            value: The icon source (ThemeIcon, QIcon, QPixmap, path, URL, or None).
         """
         self._show_icon_source = value
         self._show_icon = load_icon_from_source(value)
@@ -459,11 +466,11 @@ class PasswordInput(QWidget):
         return self._hide_icon
 
     @hide_icon.setter
-    def hide_icon(self, value: QIcon | str | None) -> None:
+    def hide_icon(self, value: IconSourceExtended) -> None:
         """Set the hide password icon.
 
         Args:
-            value: The icon source (QIcon, path string, URL, or None).
+            value: The icon source (ThemeIcon, QIcon, QPixmap, path, URL, or None).
         """
         self._hide_icon_source = value
         self._hide_icon = load_icon_from_source(value)

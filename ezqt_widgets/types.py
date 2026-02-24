@@ -25,12 +25,16 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # Standard library imports
 from collections.abc import Callable
-from typing import Any, TypeAlias
+from typing import TYPE_CHECKING, Any, TypeAlias
 
 # Third-party imports
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QColor, QIcon, QPixmap
 from PySide6.QtWidgets import QWidget
+
+# Type-checking-only imports (avoids circular import at runtime)
+if TYPE_CHECKING:
+    from .misc.theme_icon import ThemeIcon
 
 # ///////////////////////////////////////////////////////////////
 # TYPE ALIASES
@@ -44,23 +48,31 @@ IconSource: TypeAlias = QIcon | str | None
 """Type alias for icon sources.
 
 Accepts:
-    - QIcon: A Qt icon object
+    - QIcon: A Qt icon object (ThemeIcon recommended)
     - str: Path to an icon file (local path, resource path, or URL)
     - None: No icon
+
+Note:
+    ThemeIcon is a QIcon subclass and is supported wherever QIcon is accepted.
 
 Used by: IconButton, DateButton, LoaderButton, etc.
 """
 
-IconSourceExtended: TypeAlias = QIcon | QPixmap | str | None
-"""Type alias for extended icon sources (includes QPixmap).
+if TYPE_CHECKING:
+    IconSourceExtended: TypeAlias = QIcon | QPixmap | str | ThemeIcon | None
+else:
+    IconSourceExtended: TypeAlias = QIcon | QPixmap | str | None
+"""Type alias for extended icon sources (includes QPixmap and ThemeIcon).
 
 Accepts:
-    - QIcon: A Qt icon object
+    - QIcon: A Qt icon object (ThemeIcon recommended)
     - QPixmap: A Qt pixmap object
     - str: Path to an icon file (local path, resource path, or URL)
+    - ThemeIcon: A theme-aware icon (subclass of QIcon)
     - None: No icon
 
-Used by: ToggleIcon, HoverLabel, and other widgets that support QPixmap.
+Used by: ToggleIcon, HoverLabel, ThemeIcon, IconButton, LoaderButton,
+    SearchInput, PasswordInput, and other widgets that support QPixmap.
 """
 
 # ------------------------------------------------

@@ -20,11 +20,12 @@ from typing import Any
 
 # Third-party imports
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QIcon, QKeyEvent
+from PySide6.QtGui import QIcon, QKeyEvent, QPixmap
 from PySide6.QtWidgets import QLineEdit
 
 # Local imports
-from ..types import IconSource, WidgetParent
+from ..misc.theme_icon import ThemeIcon
+from ..types import IconSourceExtended, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -46,7 +47,7 @@ class SearchInput(QLineEdit):
         max_history: Maximum number of history entries to keep
             (default: 20).
         search_icon: Icon to display as search icon
-            (QIcon, str, or None, default: None).
+            (ThemeIcon, QIcon, QPixmap, str, or None, default: None).
         icon_position: Icon position, 'left' or 'right' (default: 'left').
         clear_button: Whether to show a clear button (default: True).
         *args: Additional arguments passed to QLineEdit.
@@ -60,6 +61,13 @@ class SearchInput(QLineEdit):
 
     Signals:
         searchSubmitted(str): Emitted when a search is submitted (Enter key).
+
+    Example:
+        >>> from ezqt_widgets import SearchInput
+        >>> search = SearchInput(max_history=10, clear_button=True)
+        >>> search.searchSubmitted.connect(lambda q: print(f"Search: {q}"))
+        >>> search.setPlaceholderText("Type and press Enter...")
+        >>> search.show()
     """
 
     searchSubmitted = Signal(str)
@@ -72,7 +80,7 @@ class SearchInput(QLineEdit):
         self,
         parent: WidgetParent = None,
         max_history: int = 20,
-        search_icon: IconSource = None,
+        search_icon: IconSourceExtended = None,
         icon_position: str = "left",
         clear_button: bool = True,
         *args: Any,
@@ -95,7 +103,7 @@ class SearchInput(QLineEdit):
 
         # Set icon if provided
         if search_icon:
-            # Setter accepts QIcon | str | None, but mypy sees property return type
+            # Setter accepts ThemeIcon | QIcon | QPixmap | str | None, but mypy sees return type
             self.search_icon = search_icon
 
     # ------------------------------------------------
@@ -121,17 +129,21 @@ class SearchInput(QLineEdit):
         return self._search_icon
 
     @search_icon.setter
-    def search_icon(self, value: IconSource) -> None:
+    def search_icon(self, value: IconSourceExtended) -> None:
         """Set the search icon.
 
         Args:
-            value: The icon source (QIcon, path string, or None).
+            value: The icon source (ThemeIcon, QIcon, QPixmap, path string, or None).
         """
         if isinstance(value, str):
             # Load icon from path
-            self._search_icon = QIcon(value)
+            icon = QIcon(value)
+        elif isinstance(value, QPixmap):
+            icon = QIcon(value)
         else:
-            self._search_icon = value
+            icon = value
+
+        self._search_icon = ThemeIcon.from_source(icon)
 
         # Update display
         if self._search_icon:

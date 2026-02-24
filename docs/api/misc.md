@@ -1,7 +1,7 @@
 # Miscellaneous Widgets
 
 Utility widgets: animated circular timer, drag & drop list,
-option selector, toggle icon and modern toggle switch.
+option selector, theme-aware icon, toggle icon and modern toggle switch.
 
 ---
 
@@ -38,3 +38,9 @@ option selector, toggle icon and modern toggle switch.
 ## ToggleSwitch
 
 ::: ezqt_widgets.misc.toggle_switch.ToggleSwitch
+
+---
+
+## ThemeIcon
+
+::: ezqt_widgets.misc.theme_icon.ThemeIcon

@@ -31,121 +31,8 @@ from PySide6.QtWidgets import (
 from typing_extensions import override
 
 # Local imports
-from ..types import IconSource, WidgetParent
-
-# ///////////////////////////////////////////////////////////////
-# UTILITY FUNCTIONS
-# ///////////////////////////////////////////////////////////////
-
-
-def create_spinner_pixmap(size: int = 16, color: str = "#0078d4") -> QPixmap:
-    """Create a spinner pixmap for loading animation.
-
-    Args:
-        size: Size of the spinner (default: 16).
-        color: Color of the spinner (default: "#0078d4").
-
-    Returns:
-        Spinner pixmap.
-    """
-    pixmap = QPixmap(size, size)
-    pixmap.fill(Qt.GlobalColor.transparent)
-
-    painter = QPainter(pixmap)
-    painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-
-    pen = QPen(QColor(color))
-    pen.setWidth(2)
-    painter.setPen(pen)
-
-    center = size // 2
-    radius = (size - 4) // 2
-
-    # Draw 8 segments with different opacities
-    for i in range(8):
-        angle = i * 45
-        painter.setOpacity(0.1 + (i * 0.1))
-        painter.drawArc(
-            center - radius,
-            center - radius,
-            radius * 2,
-            radius * 2,
-            angle * 16,
-            30 * 16,
-        )
-
-    painter.end()
-    return pixmap
-
-
-def create_loading_icon(size: int = 16, color: str = "#0078d4") -> QIcon:
-    """Create a loading icon with spinner.
-
-    Args:
-        size: Size of the icon (default: 16).
-        color: Color of the icon (default: "#0078d4").
-
-    Returns:
-        Loading icon.
-    """
-    return QIcon(create_spinner_pixmap(size, color))
-
-
-def create_success_icon(size: int = 16, color: str = "#28a745") -> QIcon:
-    """Create a success icon (checkmark).
-
-    Args:
-        size: Size of the icon (default: 16).
-        color: Color of the icon (default: "#28a745").
-
-    Returns:
-        Success icon.
-    """
-    pixmap = QPixmap(size, size)
-    pixmap.fill(Qt.GlobalColor.transparent)
-
-    painter = QPainter(pixmap)
-    painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-
-    pen = QPen(QColor(color))
-    pen.setWidth(2)
-    painter.setPen(pen)
-
-    margin = size // 4
-    painter.drawLine(margin, size // 2, size // 3, size - margin)
-    painter.drawLine(size // 3, size - margin, size - margin, margin)
-
-    painter.end()
-    return QIcon(pixmap)
-
-
-def create_error_icon(size: int = 16, color: str = "#dc3545") -> QIcon:
-    """Create an error icon (X mark).
-
-    Args:
-        size: Size of the icon (default: 16).
-        color: Color of the icon (default: "#dc3545").
-
-    Returns:
-        Error icon.
-    """
-    pixmap = QPixmap(size, size)
-    pixmap.fill(Qt.GlobalColor.transparent)
-
-    painter = QPainter(pixmap)
-    painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-
-    pen = QPen(QColor(color))
-    pen.setWidth(2)
-    painter.setPen(pen)
-
-    margin = size // 4
-    painter.drawLine(margin, margin, size - margin, size - margin)
-    painter.drawLine(size - margin, margin, margin, size - margin)
-
-    painter.end()
-    return QIcon(pixmap)
-
+from ..misc.theme_icon import ThemeIcon
+from ..types import AnimationDuration, IconSourceExtended, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -169,14 +56,14 @@ class LoaderButton(QToolButton):
     Args:
         parent: The parent widget (default: None).
         text: Button text (default: "").
-        icon: Button icon (default: None).
+        icon: Button icon (ThemeIcon, QIcon, QPixmap, or path, default: None).
         loading_text: Text to display during loading (default: "Loading...").
         loading_icon: Icon to display during loading
-            (default: None, auto-generated).
+            (ThemeIcon, QIcon, QPixmap, or path, default: None, auto-generated).
         success_icon: Icon to display on success
-            (default: None, auto-generated checkmark).
+            (ThemeIcon, QIcon, QPixmap, or path, default: None, auto-generated checkmark).
         error_icon: Icon to display on error
-            (default: None, auto-generated X mark).
+            (ThemeIcon, QIcon, QPixmap, or path, default: None, auto-generated X mark).
         animation_speed: Animation speed in milliseconds (default: 100).
         auto_reset: Whether to auto-reset after loading (default: True).
         success_display_time: Time to display success state in milliseconds
@@ -192,6 +79,15 @@ class LoaderButton(QToolButton):
         loadingStarted(): Emitted when loading starts.
         loadingFinished(): Emitted when loading finishes successfully.
         loadingFailed(str): Emitted when loading fails with error message.
+
+    Example:
+        >>> from ezqt_widgets import LoaderButton
+        >>> btn = LoaderButton(text="Submit", loading_text="Sending...")
+        >>> btn.loadingFinished.connect(lambda: print("done"))
+        >>> btn.start_loading()
+        >>> # After completion:
+        >>> btn.stop_loading(success=True)
+        >>> btn.show()
     """
 
     loadingStarted = Signal()
@@ -206,15 +102,15 @@ class LoaderButton(QToolButton):
         self,
         parent: WidgetParent = None,
         text: str = "",
-        icon: IconSource = None,
+        icon: IconSourceExtended = None,
         loading_text: str = "Loading...",
-        loading_icon: IconSource = None,
-        success_icon: IconSource = None,
-        error_icon: IconSource = None,
-        animation_speed: int = 100,
+        loading_icon: IconSourceExtended = None,
+        success_icon: IconSourceExtended = None,
+        error_icon: IconSourceExtended = None,
+        animation_speed: AnimationDuration = 100,
         auto_reset: bool = True,
-        success_display_time: int = 1000,
-        error_display_time: int = 2000,
+        success_display_time: AnimationDuration = 1000,
+        error_display_time: AnimationDuration = 2000,
         min_width: int | None = None,
         min_height: int | None = None,
         *args: Any,
@@ -274,17 +170,17 @@ class LoaderButton(QToolButton):
         if loading_icon:
             self.loading_icon = loading_icon
         else:
-            self.loading_icon = create_loading_icon(16, "#0078d4")
+            self._loading_icon = self._create_loading_icon(16, "#0078d4")
 
         if success_icon:
             self.success_icon = success_icon
         else:
-            self.success_icon = create_success_icon(16, "#28a745")
+            self._success_icon = self._create_success_icon(16, "#28a745")
 
         if error_icon:
             self.error_icon = error_icon
         else:
-            self.error_icon = create_error_icon(16, "#dc3545")
+            self._error_icon = self._create_error_icon(16, "#dc3545")
 
         # Setup animations
         self._setup_animations()
@@ -332,16 +228,14 @@ class LoaderButton(QToolButton):
         return self._original_icon
 
     @icon.setter
-    def icon(self, value: QIcon | str | None) -> None:
+    def icon(self, value: IconSourceExtended) -> None:
         """Set the button icon.
 
         Args:
-            value: The icon source (QIcon, path, or URL).
+            value: The icon source (ThemeIcon, QIcon, QPixmap, path, or URL).
         """
-        if isinstance(value, str):
-            self._original_icon = QIcon(value)
-        else:
-            self._original_icon = value
+        icon = QIcon(value) if isinstance(value, (str, QPixmap)) else value
+        self._original_icon = ThemeIcon.from_source(icon)
         if not self._is_loading:
             self._update_display()
 
@@ -375,16 +269,14 @@ class LoaderButton(QToolButton):
         return self._loading_icon
 
     @loading_icon.setter
-    def loading_icon(self, value: QIcon | str | None) -> None:
+    def loading_icon(self, value: IconSourceExtended) -> None:
         """Set the loading icon.
 
         Args:
-            value: The icon source (QIcon, path, or URL).
+            value: The icon source (ThemeIcon, QIcon, QPixmap, path, or URL).
         """
-        if isinstance(value, str):
-            self._loading_icon = QIcon(value)
-        else:
-            self._loading_icon = value
+        icon = QIcon(value) if isinstance(value, (str, QPixmap)) else value
+        self._loading_icon = ThemeIcon.from_source(icon)
 
     @property
     def success_icon(self) -> QIcon | None:
@@ -396,16 +288,14 @@ class LoaderButton(QToolButton):
         return self._success_icon
 
     @success_icon.setter
-    def success_icon(self, value: QIcon | str | None) -> None:
+    def success_icon(self, value: IconSourceExtended) -> None:
         """Set the success icon.
 
         Args:
-            value: The icon source (QIcon, path, or URL).
+            value: The icon source (ThemeIcon, QIcon, QPixmap, path, or URL).
         """
-        if isinstance(value, str):
-            self._success_icon = QIcon(value)
-        else:
-            self._success_icon = value
+        icon = QIcon(value) if isinstance(value, (str, QPixmap)) else value
+        self._success_icon = ThemeIcon.from_source(icon)
 
     @property
     def error_icon(self) -> QIcon | None:
@@ -417,19 +307,17 @@ class LoaderButton(QToolButton):
         return self._error_icon
 
     @error_icon.setter
-    def error_icon(self, value: QIcon | str | None) -> None:
+    def error_icon(self, value: IconSourceExtended) -> None:
         """Set the error icon.
 
         Args:
-            value: The icon source (QIcon, path, or URL).
+            value: The icon source (ThemeIcon, QIcon, QPixmap, path, or URL).
         """
-        if isinstance(value, str):
-            self._error_icon = QIcon(value)
-        else:
-            self._error_icon = value
+        icon = QIcon(value) if isinstance(value, (str, QPixmap)) else value
+        self._error_icon = ThemeIcon.from_source(icon)
 
     @property
-    def success_display_time(self) -> int:
+    def success_display_time(self) -> AnimationDuration:
         """Get or set the success display time.
 
         Returns:
@@ -438,7 +326,7 @@ class LoaderButton(QToolButton):
         return self._success_display_time
 
     @success_display_time.setter
-    def success_display_time(self, value: int) -> None:
+    def success_display_time(self, value: AnimationDuration) -> None:
         """Set the success display time.
 
         Args:
@@ -447,7 +335,7 @@ class LoaderButton(QToolButton):
         self._success_display_time = int(value)
 
     @property
-    def error_display_time(self) -> int:
+    def error_display_time(self) -> AnimationDuration:
         """Get or set the error display time.
 
         Returns:
@@ -456,7 +344,7 @@ class LoaderButton(QToolButton):
         return self._error_display_time
 
     @error_display_time.setter
-    def error_display_time(self, value: int) -> None:
+    def error_display_time(self, value: AnimationDuration) -> None:
         """Set the error display time.
 
         Args:
@@ -474,7 +362,7 @@ class LoaderButton(QToolButton):
         return self._is_loading
 
     @property
-    def animation_speed(self) -> int:
+    def animation_speed(self) -> AnimationDuration:
         """Get or set the animation speed.
 
         Returns:
@@ -483,7 +371,7 @@ class LoaderButton(QToolButton):
         return self._animation_speed
 
     @animation_speed.setter
-    def animation_speed(self, value: int) -> None:
+    def animation_speed(self, value: AnimationDuration) -> None:
         """Set the animation speed.
 
         Args:
@@ -611,6 +499,114 @@ class LoaderButton(QToolButton):
     # ------------------------------------------------
     # PRIVATE METHODS
     # ------------------------------------------------
+
+    @staticmethod
+    def _create_spinner_pixmap(size: int = 16, color: str = "#0078d4") -> QPixmap:
+        """Create a spinner pixmap for loading animation.
+
+        Args:
+            size: Size of the spinner (default: 16).
+            color: Color of the spinner (default: "#0078d4").
+
+        Returns:
+            Spinner pixmap.
+        """
+        pixmap = QPixmap(size, size)
+        pixmap.fill(Qt.GlobalColor.transparent)
+
+        painter = QPainter(pixmap)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+
+        pen = QPen(QColor(color))
+        pen.setWidth(2)
+        painter.setPen(pen)
+
+        center = size // 2
+        radius = (size - 4) // 2
+
+        for i in range(8):
+            angle = i * 45
+            painter.setOpacity(0.1 + (i * 0.1))
+            painter.drawArc(
+                center - radius,
+                center - radius,
+                radius * 2,
+                radius * 2,
+                angle * 16,
+                30 * 16,
+            )
+
+        painter.end()
+        return pixmap
+
+    @staticmethod
+    def _create_loading_icon(size: int = 16, color: str = "#0078d4") -> QIcon:
+        """Create a loading icon with spinner.
+
+        Args:
+            size: Size of the icon (default: 16).
+            color: Color of the icon (default: "#0078d4").
+
+        Returns:
+            Loading icon.
+        """
+        return QIcon(LoaderButton._create_spinner_pixmap(size, color))
+
+    @staticmethod
+    def _create_success_icon(size: int = 16, color: str = "#28a745") -> QIcon:
+        """Create a success icon (checkmark).
+
+        Args:
+            size: Size of the icon (default: 16).
+            color: Color of the icon (default: "#28a745").
+
+        Returns:
+            Success icon.
+        """
+        pixmap = QPixmap(size, size)
+        pixmap.fill(Qt.GlobalColor.transparent)
+
+        painter = QPainter(pixmap)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+
+        pen = QPen(QColor(color))
+        pen.setWidth(2)
+        painter.setPen(pen)
+
+        margin = size // 4
+        painter.drawLine(margin, size // 2, size // 3, size - margin)
+        painter.drawLine(size // 3, size - margin, size - margin, margin)
+
+        painter.end()
+        return QIcon(pixmap)
+
+    @staticmethod
+    def _create_error_icon(size: int = 16, color: str = "#dc3545") -> QIcon:
+        """Create an error icon (X mark).
+
+        Args:
+            size: Size of the icon (default: 16).
+            color: Color of the icon (default: "#dc3545").
+
+        Returns:
+            Error icon.
+        """
+        pixmap = QPixmap(size, size)
+        pixmap.fill(Qt.GlobalColor.transparent)
+
+        painter = QPainter(pixmap)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+
+        pen = QPen(QColor(color))
+        pen.setWidth(2)
+        painter.setPen(pen)
+
+        margin = size // 4
+        painter.drawLine(margin, margin, size - margin, size - margin)
+        painter.drawLine(size - margin, margin, margin, size - margin)
+
+        painter.end()
+        return QIcon(pixmap)
 
     def _show_success_state(self) -> None:
         """Show success state with success icon."""
