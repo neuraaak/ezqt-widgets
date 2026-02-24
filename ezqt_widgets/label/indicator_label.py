@@ -65,6 +65,18 @@ class IndicatorLabel(QFrame):
 
     Signals:
         statusChanged(str): Emitted when the status changes.
+
+    Example:
+        >>> from ezqt_widgets import IndicatorLabel
+        >>> status_map = {
+        ...     "neutral": {"text": "Waiting", "state": "none", "color": "#A0A0A0"},
+        ...     "online": {"text": "Online", "state": "ok", "color": "#4CAF50"},
+        ...     "offline": {"text": "Offline", "state": "error", "color": "#F44336"},
+        ... }
+        >>> indicator = IndicatorLabel(status_map=status_map, initial_status="neutral")
+        >>> indicator.statusChanged.connect(lambda s: print(f"Status: {s}"))
+        >>> indicator.status = "online"
+        >>> indicator.show()
     """
 
     statusChanged = Signal(str)

@@ -103,6 +103,24 @@ jobs:
           echo "✅ Version consistency check passed"
           echo "match=true" >> $GITHUB_OUTPUT
 
+      - name: Install system dependencies for PySide6
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq \
+            libegl1 \
+            libxkbcommon-x11-0 \
+            libxcb-icccm4 \
+            libxcb-image0 \
+            libxcb-keysyms1 \
+            libxcb-randr0 \
+            libxcb-render-util0 \
+            libxcb-shape0 \
+            libxcb-xfixes0 \
+            libxcb-xinerama0 \
+            libxcb-xkb1 \
+            libdbus-1-3 \
+            xvfb || true
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -178,7 +196,7 @@ jobs:
         run: |
           echo "🧪 Verifying package can be installed..."
           pip install dist/*.whl --force-reinstall
-          python -c "import sys; import importlib; pkg = importlib.import_module('ezpl'); print(f'✅ Package installed successfully: ${{ env.PACKAGE_NAME }} {getattr(pkg, \"__version__\", \"unknown\")}')"
+          python -c "import sys; import importlib; pkg = importlib.import_module('${{ env.PACKAGE_NAME }}'); print(f'✅ Package installed successfully: ${{ env.PACKAGE_NAME }} {getattr(pkg, \"__version__\", \"unknown\")}')"
           pip uninstall -y ${{ env.PACKAGE_NAME }}
 
       - name: Publish to PyPI
