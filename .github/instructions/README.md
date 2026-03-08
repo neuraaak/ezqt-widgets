@@ -45,36 +45,37 @@ En cas de conflit, le fichier le plus haut dans cette liste prevaut.
 
 ```text
 ezqt_widgets/
-├── ezqt_widgets/              # Package principal
-│   ├── __init__.py            # Exports publics + metadata
-│   ├── button/                # Module boutons (3 widgets)
-│   │   ├── __init__.py
-│   │   ├── date_button.py     # DateButton, DatePickerDialog
-│   │   ├── icon_button.py     # IconButton
-│   │   └── loader_button.py   # LoaderButton
-│   ├── input/                 # Module saisie (4 widgets)
-│   │   ├── __init__.py
-│   │   ├── auto_complete_input.py
-│   │   ├── password_input.py
-│   │   ├── search_input.py
-│   │   └── tab_replace_textedit.py
-│   ├── label/                 # Module labels (4 widgets)
-│   │   ├── __init__.py
-│   │   ├── clickable_tag_label.py
-│   │   ├── framed_label.py
-│   │   ├── hover_label.py
-│   │   └── indicator_label.py
-│   ├── misc/                  # Module utilitaires (6 widgets)
-│   │   ├── __init__.py
-│   │   ├── circular_timer.py
-│   │   ├── draggable_list.py
-│   │   ├── option_selector.py
-│   │   ├── toggle_icon.py
-│   │   └── toggle_switch.py
-│   └── cli/                   # Interface CLI (Click)
-│       ├── __init__.py
-│       ├── main.py
-│       └── runner.py
+├── src/                       # Sources du package (src-layout)
+│   └── ezqt_widgets/          # Package principal
+│       ├── __init__.py        # Exports publics + metadata
+│       ├── button/            # Module boutons (3 widgets)
+│       │   ├── __init__.py
+│       │   ├── date_button.py     # DateButton, DatePickerDialog
+│       │   ├── icon_button.py     # IconButton
+│       │   └── loader_button.py   # LoaderButton
+│       ├── input/             # Module saisie (4 widgets)
+│       │   ├── __init__.py
+│       │   ├── auto_complete_input.py
+│       │   ├── password_input.py
+│       │   ├── search_input.py
+│       │   └── tab_replace_textedit.py
+│       ├── label/             # Module labels (4 widgets)
+│       │   ├── __init__.py
+│       │   ├── clickable_tag_label.py
+│       │   ├── framed_label.py
+│       │   ├── hover_label.py
+│       │   └── indicator_label.py
+│       ├── misc/              # Module utilitaires (6 widgets)
+│       │   ├── __init__.py
+│       │   ├── circular_timer.py
+│       │   ├── draggable_list.py
+│       │   ├── option_selector.py
+│       │   ├── toggle_icon.py
+│       │   └── toggle_switch.py
+│       └── cli/               # Interface CLI (Click)
+│           ├── __init__.py
+│           ├── main.py
+│           └── runner.py
 ├── tests/                     # Tests unitaires
 │   ├── conftest.py            # Fixtures pytest partagees
 │   ├── run_tests.py           # Script d'execution

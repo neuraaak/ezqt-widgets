@@ -16,9 +16,9 @@ include tests/conftest.py
 recursive-include tests/unit *
 
 # Fichiers CLI
-include ezqt_widgets/cli/__init__.py
-include ezqt_widgets/cli/main.py
-include ezqt_widgets/cli/runner.py
+include src/ezqt_widgets/cli/__init__.py
+include src/ezqt_widgets/cli/main.py
+include src/ezqt_widgets/cli/runner.py
 
 # Exclure les fichiers inutiles
 exclude build_upload.bat
