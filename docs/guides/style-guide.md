@@ -186,9 +186,9 @@ IconButton:focus {
 !!! note
 This widget does not use QSS. Colors are controlled via Python properties:
 
-    - `ring_color`: progression arc color
-    - `node_color`: center color
-    - `ring_width_mode`: arc thickness (`"small"`, `"medium"`, `"large"`)
+- `ring_color`: progression arc color
+- `node_color`: center color
+- `ring_width_mode`: arc thickness (`"small"`, `"medium"`, `"large"`)
 
 ```python
 timer = CircularTimer(
