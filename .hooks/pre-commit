@@ -1,6 +1,6 @@
 #!/bin/bash
 # Pre-commit hook for automatic code formatting
-# Automatically formats code before allowing commits
+# Automatically formats code before allowing commits (Ruff)
 
 # Get project root (parent of .hooks directory)
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -39,58 +39,27 @@ if [ -f ".scripts/dev/lint.py" ]; then
 else
     echo "⚠️  Warning: .scripts/dev/lint.py not found, using fallback tools..."
 
-    # Fallback to direct tool calls if lint.py is not available
-    # Function to check if a tool is available
-    check_tool() {
-        local tool="$1"
-        local command="$2"
-        if ! command -v "$command" &>/dev/null; then
-            echo "⚠️  Warning: $tool not found, skipping..."
-            return 1
-        fi
-        return 0
-    }
-
-    # Function to run a formatting tool
-    run_formatter() {
-        local tool="$1"
-        local command="$2"
-        echo "🔧 Running $tool..."
-        if eval "$command"; then
-            echo "✅ $tool completed"
-            return 0
-        else
-            echo "❌ $tool failed"
-            return 1
-        fi
-    }
-
-    # Track overall success
+    # Fallback to direct Ruff calls if lint.py is not available
     overall_success=true
 
-    # Run Black (code formatting) - format automatically
-    if check_tool "Black" "black"; then
-        if ! run_formatter "Black" "black ."; then
+    if command -v ruff &>/dev/null; then
+        echo "🎨 Running Ruff format..."
+        if ruff format .; then
+            echo "✅ Ruff format completed"
+        else
+            echo "❌ Ruff format failed"
             overall_success=false
         fi
-    fi
 
-    # Run isort (import sorting) - format automatically
-    if check_tool "isort" "isort"; then
-        if ! run_formatter "isort" "isort ."; then
+        echo "🔍 Running Ruff check..."
+        if ruff check --fix .; then
+            echo "✅ Ruff check completed"
+        else
+            echo "❌ Ruff check failed"
             overall_success=false
         fi
-    fi
-
-    # Run Ruff format (code formatting) - format automatically
-    if check_tool "Ruff" "ruff"; then
-        if ! run_formatter "Ruff format" "ruff format ."; then
-            overall_success=false
-        fi
-    fi
-
-    if [ "$overall_success" != true ]; then
-        echo "❌ Pre-commit formatting failed!"
+    else
+        echo "❌ Error: Ruff not found"
         overall_success=false
     fi
 fi
@@ -108,7 +77,7 @@ fi
 # Add all reformatted files (and updated README) to staging area
 if [ "$overall_success" = true ]; then
     echo "📝 Adding reformatted files to staging area..."
-    if git add .; then
+    if git add -u; then
         echo "✅ Files added to staging area"
     else
         echo "❌ Failed to add files to staging area"
