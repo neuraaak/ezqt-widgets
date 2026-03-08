@@ -58,9 +58,9 @@ install-dev:
 # Formatage automatique
 format:
 	@echo "$(BLUE)Formatage du code avec Black...$(RESET)"
-	black $(PACKAGE) tests
+	black src/$(PACKAGE) tests
 	@echo "$(BLUE)Organisation des imports avec isort...$(RESET)"
-	isort $(PACKAGE) tests
+	isort src/$(PACKAGE) tests
 
 # Correction automatique
 fix: format
