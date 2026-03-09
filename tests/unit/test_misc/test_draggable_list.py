@@ -21,7 +21,7 @@ from PySide6.QtCore import QMimeData, QPoint, Qt
 from PySide6.QtGui import QDragEnterEvent, QDragMoveEvent, QDropEvent, QMouseEvent
 
 # Local imports
-from ezqt_widgets.misc.draggable_list import DraggableItem, DraggableList
+from ezqt_widgets.widgets.misc.draggable_list import DraggableItem, DraggableList
 
 # ///////////////////////////////////////////////////////////////
 # FIXTURES

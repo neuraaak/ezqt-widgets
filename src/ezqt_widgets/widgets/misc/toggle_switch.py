@@ -32,7 +32,7 @@ from PySide6.QtGui import QBrush, QColor, QMouseEvent, QPainter, QPaintEvent, QP
 from PySide6.QtWidgets import QSizePolicy, QWidget
 
 # Local imports
-from ..types import WidgetParent
+from ...types import WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES

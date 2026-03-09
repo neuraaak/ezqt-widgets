@@ -24,7 +24,7 @@ help:
 	@echo "  install-dev  - Installer les dépendances de développement"
 	@echo ""
 	@echo "$(GREEN)Formatage et qualité:$(RESET)"
-	@echo "  format       - Formater le code (black + isort)"
+	@echo "  format       - Formater le code (ruff format)"
 	@echo "  lint         - Vérifier la qualité du code"
 	@echo "  fix          - Corriger automatiquement les problèmes"
 	@echo ""
@@ -57,10 +57,8 @@ install-dev:
 
 # Formatage automatique
 format:
-	@echo "$(BLUE)Formatage du code avec Black...$(RESET)"
-	black src/$(PACKAGE) tests
-	@echo "$(BLUE)Organisation des imports avec isort...$(RESET)"
-	isort src/$(PACKAGE) tests
+	@echo "$(BLUE)Formatage du code avec Ruff...$(RESET)"
+	ruff format src/$(PACKAGE) tests
 
 # Correction automatique
 fix: format

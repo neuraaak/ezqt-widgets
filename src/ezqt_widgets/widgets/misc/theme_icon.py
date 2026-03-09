@@ -23,7 +23,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QIcon, QPainter, QPixmap
 
 # Local imports
-from ..types import IconSourceExtended
+from ...types import IconSourceExtended
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -54,7 +54,7 @@ class ThemeIcon(QIcon):
         original_icon: Get or set the source icon.
 
     Example:
-        >>> from ezqt_widgets.misc.theme_icon import ThemeIcon
+        >>> from ezqt_widgets.widgets.misc.theme_icon import ThemeIcon
         >>> # Basic usage with automatic white/black color adaptation
         >>> icon = ThemeIcon("path/to/icon.png", theme="dark")
         >>> button.setIcon(icon)
@@ -255,7 +255,11 @@ class ThemeIcon(QIcon):
         if normalized_dark is not None and normalized_light is None:
             return normalized_dark, self._invert_color(normalized_dark)
 
-        assert normalized_dark is not None and normalized_light is not None
+        if normalized_dark is None or normalized_light is None:
+            raise RuntimeError(
+                "ThemeIcon: unexpected state in _resolve_theme_colors; "
+                "both colors should be non-None at this point."
+            )
         return normalized_dark, normalized_light
 
     def _to_qicon(self, source: IconSourceExtended) -> QIcon:
@@ -287,12 +291,11 @@ class ThemeIcon(QIcon):
         - Dark theme: renders the icon in the resolved dark color.
         - Light theme: renders the icon in the resolved light color.
         """
+        if self._original_icon.isNull():
+            return
+
         available_sizes = self._original_icon.availableSizes()
         if not available_sizes:
-            warnings.warn(
-                "ThemeIcon: original icon has no available sizes.",
-                stacklevel=2,
-            )
             return
 
         # Determine target color

@@ -49,32 +49,6 @@ from __future__ import annotations
 import sys
 
 # Local imports
-from .button import (
-    DateButton,
-    DatePickerDialog,
-    IconButton,
-    LoaderButton,
-)
-from .input import (
-    AutoCompleteInput,
-    SearchInput,
-    TabReplaceTextEdit,
-)
-from .label import (
-    ClickableTagLabel,
-    FramedLabel,
-    HoverLabel,
-    IndicatorLabel,
-)
-from .misc import (
-    CircularTimer,
-    DraggableItem,
-    DraggableList,
-    OptionSelector,
-    ThemeIcon,
-    ToggleIcon,
-    ToggleSwitch,
-)
 from .types import (
     AnimationDuration,
     ColorType,
@@ -85,12 +59,39 @@ from .types import (
     ValueCallback,
     WidgetParent,
 )
+from .widgets.button import (
+    DateButton,
+    DatePickerDialog,
+    IconButton,
+    LoaderButton,
+)
+from .widgets.input import (
+    AutoCompleteInput,
+    PasswordInput,
+    SearchInput,
+    TabReplaceTextEdit,
+)
+from .widgets.label import (
+    ClickableTagLabel,
+    FramedLabel,
+    HoverLabel,
+    IndicatorLabel,
+)
+from .widgets.misc import (
+    CircularTimer,
+    DraggableItem,
+    DraggableList,
+    OptionSelector,
+    ThemeIcon,
+    ToggleIcon,
+    ToggleSwitch,
+)
 
 # ///////////////////////////////////////////////////////////////
 # META INFORMATIONS
 # ///////////////////////////////////////////////////////////////
 
-__version__ = "2.5.2"
+__version__ = "2.5.3"
 __author__ = "Neuraaak"
 __maintainer__ = "Neuraaak"
 __description__ = (
@@ -134,6 +135,7 @@ __all__ = [
     "LoaderButton",
     # Input widgets
     "AutoCompleteInput",
+    "PasswordInput",
     "SearchInput",
     "TabReplaceTextEdit",
     # Label widgets

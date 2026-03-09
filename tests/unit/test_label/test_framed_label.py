@@ -19,7 +19,7 @@ import pytest
 from PySide6.QtCore import QSize, Qt
 
 # Local imports
-from ezqt_widgets.label.framed_label import FramedLabel
+from ezqt_widgets.widgets.label.framed_label import FramedLabel
 
 pytestmark = pytest.mark.unit
 

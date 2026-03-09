@@ -20,7 +20,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QCompleter
 
 # Local imports
-from ezqt_widgets.input.auto_complete_input import AutoCompleteInput
+from ezqt_widgets.widgets.input.auto_complete_input import AutoCompleteInput
 
 pytestmark = pytest.mark.unit
 

@@ -32,9 +32,10 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
 )
 
+from ...types import SizeType, WidgetParent
+
 # Local imports
 from ..misc.theme_icon import ThemeIcon
-from ..types import SizeType, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -485,7 +486,10 @@ class DateButton(QToolButton):
         painter.drawText(2, 2, 12, 12, Qt.AlignmentFlag.AlignCenter, "📅")
         painter.end()
         themed_icon = ThemeIcon.from_source(QIcon(pixmap))
-        assert themed_icon is not None
+        if themed_icon is None:
+            raise ValueError(
+                "ThemeIcon.from_source returned None for a non-None QIcon source."
+            )
         return themed_icon
 
     def _update_display(self) -> None:

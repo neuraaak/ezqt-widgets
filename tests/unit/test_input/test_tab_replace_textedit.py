@@ -18,7 +18,7 @@ from __future__ import annotations
 import pytest
 
 # Local imports
-from ezqt_widgets.input.tab_replace_textedit import TabReplaceTextEdit
+from ezqt_widgets.widgets.input.tab_replace_textedit import TabReplaceTextEdit
 
 pytestmark = pytest.mark.unit
 

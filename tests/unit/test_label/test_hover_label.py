@@ -20,7 +20,7 @@ from PySide6.QtCore import QEvent, QPoint, QRect, QSize, Qt
 from PySide6.QtGui import QEnterEvent, QIcon, QMouseEvent, QPixmap
 
 # Local imports
-from ezqt_widgets.label.hover_label import HoverLabel
+from ezqt_widgets.widgets.label.hover_label import HoverLabel
 
 pytestmark = pytest.mark.unit
 

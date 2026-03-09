@@ -19,15 +19,15 @@ from __future__ import annotations
 from typing import Any
 
 # Third-party imports
-import requests
 from PySide6.QtCore import QSize, Qt, Signal
 from PySide6.QtGui import QColor, QIcon, QPainter, QPixmap
 from PySide6.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QToolButton
 from typing_extensions import override
 
 # Local imports
+from ...types import IconSourceExtended, SizeType, WidgetParent
+from ...utils.network_utils import UrlFetcher, fetch_url_bytes
 from ..misc.theme_icon import ThemeIcon
-from ..types import IconSourceExtended, SizeType, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -104,6 +104,8 @@ class IconButton(QToolButton):
         self._current_icon: QIcon | None = None
         self._min_width: int | None = min_width
         self._min_height: int | None = min_height
+        self._pending_icon_url: str | None = None
+        self._url_fetcher: UrlFetcher | None = None
 
         # Setup UI components
         self.icon_label = QLabel()
@@ -157,10 +159,18 @@ class IconButton(QToolButton):
         Args:
             value: The icon source (ThemeIcon, QIcon, QPixmap, path, URL, or SVG).
         """
+        if isinstance(value, str) and value.startswith(("http://", "https://")):
+            self._pending_icon_url = value
+            self._start_icon_url_fetch(value)
+            return
+
         icon = self._load_icon_from_source(value)
         if icon:
             themed_icon = ThemeIcon.from_source(icon)
-            assert themed_icon is not None
+            if themed_icon is None:
+                raise ValueError(
+                    "ThemeIcon.from_source returned None for a non-None icon source."
+                )
             self._current_icon = themed_icon
             self.icon_label.setPixmap(themed_icon.pixmap(self._icon_size))
             self.icon_label.setFixedSize(self._icon_size)
@@ -340,32 +350,27 @@ class IconButton(QToolButton):
             return source
         elif isinstance(source, str):
             if source.startswith(("http://", "https://")):
-                try:
-                    response = requests.get(source, timeout=5)
-                    response.raise_for_status()
-                    if "image" not in response.headers.get("Content-Type", ""):
-                        raise ValueError("URL does not point to an image file.")
-                    image_data = response.content
-
-                    if source.lower().endswith(".svg"):
-                        from PySide6.QtCore import QByteArray
-                        from PySide6.QtSvg import QSvgRenderer
-
-                        renderer = QSvgRenderer(QByteArray(image_data))
-                        pixmap = QPixmap(QSize(16, 16))
-                        pixmap.fill(Qt.GlobalColor.transparent)
-                        painter = QPainter(pixmap)
-                        renderer.render(painter)
-                        painter.end()
-                        return QIcon(pixmap)
-                    else:
-                        pixmap = QPixmap()
-                        if not pixmap.loadFromData(image_data):
-                            raise ValueError("Failed to load image data from URL.")
-                        pixmap = IconButton._colorize_pixmap(pixmap, "#FFFFFF", 0.5)
-                        return QIcon(pixmap)
-                except Exception:
+                image_data = fetch_url_bytes(source)
+                if not image_data:
                     return None
+
+                if source.lower().endswith(".svg"):
+                    from PySide6.QtCore import QByteArray
+                    from PySide6.QtSvg import QSvgRenderer
+
+                    renderer = QSvgRenderer(QByteArray(image_data))
+                    pixmap = QPixmap(QSize(16, 16))
+                    pixmap.fill(Qt.GlobalColor.transparent)
+                    painter = QPainter(pixmap)
+                    renderer.render(painter)
+                    painter.end()
+                    return QIcon(pixmap)
+                else:
+                    pixmap = QPixmap()
+                    if not pixmap.loadFromData(image_data):
+                        return None
+                    pixmap = IconButton._colorize_pixmap(pixmap, "#FFFFFF", 0.5)
+                    return QIcon(pixmap)
 
             elif source.lower().endswith(".svg"):
                 try:
@@ -393,6 +398,51 @@ class IconButton(QToolButton):
                     return None
                 return icon
         return None
+
+    def _start_icon_url_fetch(self, url: str) -> None:
+        if self._url_fetcher is None:
+            self._url_fetcher = UrlFetcher(self)
+            self._url_fetcher.fetched.connect(self._on_icon_url_fetched)
+        self._url_fetcher.fetch(url)
+
+    def _on_icon_url_fetched(self, url: str, data: bytes | None) -> None:
+        if url != self._pending_icon_url or data is None:
+            return
+
+        icon = self._icon_from_url_data(url, data)
+        if icon is None:
+            return
+
+        themed_icon = ThemeIcon.from_source(icon)
+        if themed_icon is None:
+            raise ValueError(
+                "ThemeIcon.from_source returned None for a non-None icon source."
+            )
+        self._current_icon = themed_icon
+        self.icon_label.setPixmap(themed_icon.pixmap(self._icon_size))
+        self.icon_label.setFixedSize(self._icon_size)
+        self.icon_label.setStyleSheet("background-color: transparent;")
+        self.iconChanged.emit(themed_icon)
+
+    @staticmethod
+    def _icon_from_url_data(url: str, data: bytes) -> QIcon | None:
+        if url.lower().endswith(".svg"):
+            from PySide6.QtCore import QByteArray
+            from PySide6.QtSvg import QSvgRenderer
+
+            renderer = QSvgRenderer(QByteArray(data))
+            pixmap = QPixmap(QSize(16, 16))
+            pixmap.fill(Qt.GlobalColor.transparent)
+            painter = QPainter(pixmap)
+            renderer.render(painter)
+            painter.end()
+            return QIcon(pixmap)
+
+        pixmap = QPixmap()
+        if not pixmap.loadFromData(data):
+            return None
+        pixmap = IconButton._colorize_pixmap(pixmap, "#FFFFFF", 0.5)
+        return QIcon(pixmap)
 
     # ///////////////////////////////////////////////////////////////
     # PUBLIC METHODS

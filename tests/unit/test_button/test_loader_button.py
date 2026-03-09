@@ -23,7 +23,7 @@ from PySide6.QtCore import QPoint, QSize, Qt
 from PySide6.QtGui import QIcon, QMouseEvent, QPixmap
 
 # Local imports
-from ezqt_widgets.button.loader_button import LoaderButton
+from ezqt_widgets.widgets.button.loader_button import LoaderButton
 
 pytestmark = pytest.mark.unit
 
@@ -396,7 +396,7 @@ class TestLoaderButton:
         assert button.success_display_time == 2000
         assert button.error_display_time == 3000
 
-    @patch("ezqt_widgets.button.loader_button.QTimer")
+    @patch("ezqt_widgets.widgets.button.loader_button.QTimer")
     def test_loader_button_timer_integration(
         self, mock_timer_class, qt_widget_cleanup
     ) -> None:

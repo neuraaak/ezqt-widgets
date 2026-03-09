@@ -18,7 +18,7 @@ from __future__ import annotations
 import pytest
 
 # Local imports
-from ezqt_widgets.label.indicator_label import IndicatorLabel
+from ezqt_widgets.widgets.label.indicator_label import IndicatorLabel
 
 pytestmark = pytest.mark.unit
 

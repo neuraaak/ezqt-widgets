@@ -23,7 +23,7 @@ from PySide6.QtCore import QStringListModel, Qt
 from PySide6.QtWidgets import QCompleter, QLineEdit
 
 # Local imports
-from ..types import WidgetParent
+from ...types import WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES

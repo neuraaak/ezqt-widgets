@@ -20,7 +20,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon, QPixmap
 
 # Local imports
-from ezqt_widgets.input.search_input import SearchInput
+from ezqt_widgets.widgets.input.search_input import SearchInput
 
 pytestmark = pytest.mark.unit
 

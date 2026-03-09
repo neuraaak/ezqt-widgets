@@ -1,4 +1,4 @@
-# ///////////////////////////////////////////////////////////////
+﻿# ///////////////////////////////////////////////////////////////
 # TEST_PASSWORD_INPUT - PasswordInput Widget Tests
 # Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
@@ -15,7 +15,7 @@ from __future__ import annotations
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
 # Standard library imports
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 # Third-party imports
 import pytest
@@ -23,7 +23,7 @@ from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QIcon, QPixmap
 
 # Local imports
-from ezqt_widgets.input.password_input import (
+from ezqt_widgets.widgets.input.password_input import (
     PasswordInput,
     PasswordLineEdit,
     colorize_pixmap,
@@ -171,25 +171,31 @@ class TestLoadIconFromSource:
         icon = load_icon_from_source(original_icon)
         assert isinstance(icon, QIcon)
 
-    @patch("requests.get")
-    def test_load_icon_from_source_url(self, mock_get, qt_widget_cleanup) -> None:
+    @patch("ezqt_widgets.widgets.input.password_input.fetch_url_bytes")
+    def test_load_icon_from_source_url(self, mock_fetch, qt_widget_cleanup) -> None:
         """Test load_icon_from_source with URL."""
-        # Mock HTTP response
-        mock_response = MagicMock()
-        mock_response.content = b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x02\x00\x00\x00\x90wS\xde\x00\x00\x00\x0cIDATx\x9cc```\x00\x00\x00\x04\x00\x01\xf5\x01\x00\x00\x00\x00IEND\xaeB`\x82"
-        mock_response.status_code = 200
-        mock_response.headers = {"Content-Type": "image/png"}
-        mock_get.return_value = mock_response
+        from PySide6.QtCore import QBuffer, QIODevice
+        from PySide6.QtGui import QColor
+
+        pixmap = QPixmap(16, 16)
+        pixmap.fill(QColor(255, 0, 0))
+
+        buffer = QBuffer()
+        buffer.open(QIODevice.OpenModeFlag.WriteOnly)
+        pixmap.save(buffer, "PNG")
+        png_content = buffer.data()
+        buffer.close()
+
+        mock_fetch.return_value = bytes(png_content)
 
         # Test icon loading from URL
         icon = load_icon_from_source("https://example.com/icon.png")
         assert isinstance(icon, QIcon)
 
-    @patch("requests.get")
-    def test_load_icon_from_source_url_failure(self, mock_get) -> None:
+    @patch("ezqt_widgets.widgets.input.password_input.fetch_url_bytes")
+    def test_load_icon_from_source_url_failure(self, mock_fetch) -> None:
         """Test load_icon_from_source with URL failure."""
-        # Mock HTTP failure
-        mock_get.side_effect = Exception("Network error")
+        mock_fetch.return_value = None
 
         # Test loading failure
         icon = load_icon_from_source("https://example.com/icon.png")
