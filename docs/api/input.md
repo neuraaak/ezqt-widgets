@@ -7,22 +7,22 @@ search with history and text editor with tab replacement.
 
 ## AutoCompleteInput
 
-::: ezqt_widgets.input.auto_complete_input.AutoCompleteInput
+::: ezqt_widgets.widgets.input.auto_complete_input.AutoCompleteInput
 
 ---
 
 ## PasswordInput
 
-::: ezqt_widgets.input.password_input.PasswordInput
+::: ezqt_widgets.widgets.input.password_input.PasswordInput
 
 ---
 
 ## SearchInput
 
-::: ezqt_widgets.input.search_input.SearchInput
+::: ezqt_widgets.widgets.input.search_input.SearchInput
 
 ---
 
 ## TabReplaceTextEdit
 
-::: ezqt_widgets.input.tab_replace_textedit.TabReplaceTextEdit
+::: ezqt_widgets.widgets.input.tab_replace_textedit.TabReplaceTextEdit
