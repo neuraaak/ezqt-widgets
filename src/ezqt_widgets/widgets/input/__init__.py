@@ -18,6 +18,7 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # Local imports
 from .auto_complete_input import AutoCompleteInput
+from .password_input import PasswordInput
 from .search_input import SearchInput
 from .tab_replace_textedit import TabReplaceTextEdit
 
@@ -27,6 +28,7 @@ from .tab_replace_textedit import TabReplaceTextEdit
 
 __all__ = [
     "AutoCompleteInput",
+    "PasswordInput",
     "SearchInput",
     "TabReplaceTextEdit",
 ]

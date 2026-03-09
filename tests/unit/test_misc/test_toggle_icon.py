@@ -19,7 +19,7 @@ import pytest
 from PySide6.QtGui import QColor
 
 # Local imports
-from ezqt_widgets.misc.toggle_icon import ToggleIcon
+from ezqt_widgets.widgets.misc.toggle_icon import ToggleIcon
 
 pytestmark = pytest.mark.unit
 

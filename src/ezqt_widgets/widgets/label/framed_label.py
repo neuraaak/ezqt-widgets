@@ -23,7 +23,7 @@ from PySide6.QtCore import QSize, Qt, Signal
 from PySide6.QtWidgets import QFrame, QLabel, QSizePolicy, QVBoxLayout
 
 # Local imports
-from ..types import WidgetParent
+from ...types import WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES

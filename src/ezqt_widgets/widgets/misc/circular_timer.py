@@ -25,7 +25,7 @@ from PySide6.QtGui import QColor, QMouseEvent, QPainter, QPaintEvent, QPen
 from PySide6.QtWidgets import QWidget
 
 # Local imports
-from ..types import ColorType, WidgetParent
+from ...types import ColorType, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES

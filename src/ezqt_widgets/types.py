@@ -34,7 +34,7 @@ from PySide6.QtWidgets import QWidget
 
 # Type-checking-only imports (avoids circular import at runtime)
 if TYPE_CHECKING:
-    from .misc.theme_icon import ThemeIcon
+    from .widgets.misc.theme_icon import ThemeIcon
 
 # ///////////////////////////////////////////////////////////////
 # TYPE ALIASES

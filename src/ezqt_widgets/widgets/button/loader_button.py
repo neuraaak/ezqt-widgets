@@ -30,9 +30,10 @@ from PySide6.QtWidgets import (
 )
 from typing_extensions import override
 
+from ...types import AnimationDuration, IconSourceExtended, WidgetParent
+
 # Local imports
 from ..misc.theme_icon import ThemeIcon
-from ..types import AnimationDuration, IconSourceExtended, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES

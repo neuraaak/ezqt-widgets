@@ -25,7 +25,7 @@ from PySide6.QtGui import QKeyEvent, QKeySequence
 from PySide6.QtWidgets import QApplication, QPlainTextEdit
 
 # Local imports
-from ..types import WidgetParent
+from ...types import WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES

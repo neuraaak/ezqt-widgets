@@ -23,7 +23,7 @@ from PySide6.QtCore import QPoint, QSize, Qt
 from PySide6.QtGui import QMouseEvent
 
 # Local imports
-from ezqt_widgets.label.clickable_tag_label import ClickableTagLabel
+from ezqt_widgets.widgets.label.clickable_tag_label import ClickableTagLabel
 
 pytestmark = pytest.mark.unit
 

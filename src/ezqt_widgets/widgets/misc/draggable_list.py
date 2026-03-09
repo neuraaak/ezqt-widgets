@@ -36,9 +36,10 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from ...types import IconSourceExtended, WidgetParent
+
 # Local imports
 from ..label.hover_label import HoverLabel
-from ..types import IconSourceExtended, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES

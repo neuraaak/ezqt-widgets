@@ -19,7 +19,7 @@ import pytest
 from PySide6.QtGui import QColor
 
 # Local imports
-from ezqt_widgets.misc.circular_timer import CircularTimer
+from ezqt_widgets.widgets.misc.circular_timer import CircularTimer
 
 pytestmark = pytest.mark.unit
 

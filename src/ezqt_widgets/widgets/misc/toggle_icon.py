@@ -19,7 +19,6 @@ from __future__ import annotations
 from typing import Any
 
 # Third-party imports
-import requests
 from PySide6.QtCore import QPointF, QRectF, QSize, Qt, Signal
 from PySide6.QtGui import (
     QColor,
@@ -34,8 +33,9 @@ from PySide6.QtSvg import QSvgRenderer
 from PySide6.QtWidgets import QLabel
 
 # Local imports
+from ...types import ColorType, IconSourceExtended, WidgetParent
+from ...utils.network_utils import fetch_url_bytes
 from ..misc.theme_icon import ThemeIcon
-from ..types import ColorType, IconSourceExtended, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -471,16 +471,18 @@ class ToggleIcon(QLabel):
             pixmap = source
         elif isinstance(source, QIcon):
             themed_icon = ThemeIcon.from_source(source)
-            assert themed_icon is not None
+            if themed_icon is None:
+                raise ValueError(
+                    "ThemeIcon.from_source returned None for a non-None QIcon source."
+                )
             pixmap = themed_icon.pixmap(size or QSize(16, 16))
         elif isinstance(source, str):
             if source.startswith(("http://", "https://")):
-                try:
-                    response = requests.get(source, timeout=5)
-                    response.raise_for_status()
+                image_data = fetch_url_bytes(source)
+                if image_data:
                     pixmap = QPixmap()
-                    pixmap.loadFromData(response.content)
-                except Exception:
+                    pixmap.loadFromData(image_data)
+                else:
                     pixmap = QPixmap(16, 16)
                     pixmap.fill(Qt.GlobalColor.transparent)
             elif source.lower().endswith(".svg"):

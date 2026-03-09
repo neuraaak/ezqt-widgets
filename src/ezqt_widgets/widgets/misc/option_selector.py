@@ -23,9 +23,10 @@ from PySide6.QtCore import QEasingCurve, QPropertyAnimation, QSize, Qt, Signal
 from PySide6.QtGui import QMouseEvent
 from PySide6.QtWidgets import QFrame, QGridLayout, QSizePolicy
 
+from ...types import WidgetParent
+
 # Local imports
 from ..label.framed_label import FramedLabel
-from ..types import WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # UTILITY CLASSES

@@ -23,9 +23,10 @@ from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QIcon, QKeyEvent, QPixmap
 from PySide6.QtWidgets import QLineEdit
 
+from ...types import IconSourceExtended, WidgetParent
+
 # Local imports
 from ..misc.theme_icon import ThemeIcon
-from ..types import IconSourceExtended, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES

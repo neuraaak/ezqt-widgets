@@ -15,7 +15,7 @@ from __future__ import annotations
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
 # Standard library imports
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 # Third-party imports
 import pytest
@@ -23,7 +23,7 @@ from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QIcon, QPixmap
 
 # Local imports
-from ezqt_widgets.button.icon_button import IconButton
+from ezqt_widgets.widgets.button.icon_button import IconButton
 
 pytestmark = pytest.mark.unit
 
@@ -95,14 +95,9 @@ class TestLoadIconFromSource:
         assert result is not None
         assert isinstance(result, QIcon)
 
-    @patch("requests.get")
-    def test_load_icon_from_url(self, mock_get, qt_widget_cleanup) -> None:
+    @patch("ezqt_widgets.widgets.button.icon_button.fetch_url_bytes")
+    def test_load_icon_from_url(self, mock_fetch, qt_widget_cleanup) -> None:
         """Test with URL."""
-        # Mock HTTP response
-        mock_response = MagicMock()
-        mock_response.raise_for_status.return_value = None
-        mock_response.headers = {"Content-Type": "image/png"}
-
         # Create a valid PNG using QPixmap
         from PySide6.QtCore import QBuffer, QIODevice
         from PySide6.QtGui import QColor
@@ -118,21 +113,18 @@ class TestLoadIconFromSource:
         png_content = buffer.data()
         buffer.close()
 
-        mock_response.content = png_content
-        mock_get.return_value = mock_response
+        mock_fetch.return_value = bytes(png_content)
 
         result = IconButton._load_icon_from_source("https://example.com/icon.png")
 
         assert result is not None
         assert isinstance(result, QIcon)
-        mock_get.assert_called_once_with("https://example.com/icon.png", timeout=5)
+        mock_fetch.assert_called_once_with("https://example.com/icon.png")
 
-    @patch("requests.get")
-    def test_load_icon_from_invalid_url(self, mock_get) -> None:
+    @patch("ezqt_widgets.widgets.button.icon_button.fetch_url_bytes")
+    def test_load_icon_from_invalid_url(self, mock_fetch) -> None:
         """Test with invalid URL."""
-        mock_response = MagicMock()
-        mock_response.raise_for_status.side_effect = Exception("Network error")
-        mock_get.return_value = mock_response
+        mock_fetch.return_value = None
 
         result = IconButton._load_icon_from_source("https://invalid-url.com/icon.png")
 

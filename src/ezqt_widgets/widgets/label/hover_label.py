@@ -19,7 +19,6 @@ from __future__ import annotations
 from typing import Any
 
 # Third-party imports
-import requests
 from PySide6.QtCore import QEvent, QRect, QSize, Qt, Signal
 from PySide6.QtGui import (
     QColor,
@@ -34,8 +33,9 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import QLabel
 
 # Local imports
+from ...types import ColorType, IconSourceExtended, SizeType, WidgetParent
+from ...utils.network_utils import UrlFetcher
 from ..misc.theme_icon import ThemeIcon
-from ..types import ColorType, IconSourceExtended, SizeType, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -125,6 +125,8 @@ class HoverLabel(QLabel):
         self._icon_padding: int = icon_padding
         self._icon_enabled: bool = icon_enabled
         self._min_width: int | None = min_width
+        self._pending_icon_url: str | None = None
+        self._url_fetcher: UrlFetcher | None = None
 
         # State variables
         self._show_hover_icon: bool = False
@@ -195,36 +197,9 @@ class HoverLabel(QLabel):
         elif isinstance(value, str):
             # Handle URL
             if value.startswith(("http://", "https://")):
-                print(f"Loading icon from URL: {value}")
-                try:
-                    response = requests.get(value, timeout=5)
-                    response.raise_for_status()
-                    if "image" not in response.headers.get("Content-Type", ""):
-                        raise ValueError("URL does not point to an image file.")
-                    image_data = response.content
-
-                    # Handle SVG from URL
-                    if value.lower().endswith(".svg"):
-                        from PySide6.QtCore import QByteArray
-                        from PySide6.QtSvg import QSvgRenderer
-
-                        renderer = QSvgRenderer(QByteArray(image_data))
-                        pixmap = QPixmap(self._icon_size)
-                        pixmap.fill(Qt.GlobalColor.transparent)
-                        painter = QPainter(pixmap)
-                        renderer.render(painter)
-                        painter.end()
-                        self._hover_icon = QIcon(pixmap)
-                    # Handle raster image from URL
-                    else:
-                        pixmap = QPixmap()
-                        if not pixmap.loadFromData(image_data):
-                            raise ValueError(
-                                "Failed to load image data from URL (unsupported format or corrupt image)."
-                            )
-                        self._hover_icon = QIcon(pixmap)
-                except Exception as e:
-                    raise ValueError(f"Failed to load icon from URL: {e}") from e
+                self._pending_icon_url = value
+                self._start_icon_url_fetch(value)
+                return
 
             # Handle local SVG
             elif value.lower().endswith(".svg"):
@@ -263,6 +238,42 @@ class HoverLabel(QLabel):
 
         self._update_padding_style()
         self.update()
+
+    def _start_icon_url_fetch(self, url: str) -> None:
+        if self._url_fetcher is None:
+            self._url_fetcher = UrlFetcher(self)
+            self._url_fetcher.fetched.connect(self._on_icon_url_fetched)
+        self._url_fetcher.fetch(url)
+
+    def _on_icon_url_fetched(self, url: str, data: bytes | None) -> None:
+        if url != self._pending_icon_url or data is None:
+            return
+
+        icon = self._icon_from_url_data(url, data)
+        if icon is None:
+            return
+
+        self._hover_icon = ThemeIcon.from_source(icon)
+        self._update_padding_style()
+        self.update()
+
+    def _icon_from_url_data(self, url: str, data: bytes) -> QIcon | None:
+        if url.lower().endswith(".svg"):
+            from PySide6.QtCore import QByteArray
+            from PySide6.QtSvg import QSvgRenderer
+
+            renderer = QSvgRenderer(QByteArray(data))
+            pixmap = QPixmap(self._icon_size)
+            pixmap.fill(Qt.GlobalColor.transparent)
+            painter = QPainter(pixmap)
+            renderer.render(painter)
+            painter.end()
+            return QIcon(pixmap)
+
+        pixmap = QPixmap()
+        if not pixmap.loadFromData(data):
+            return None
+        return QIcon(pixmap)
 
     @property
     def icon_size(self) -> QSize:

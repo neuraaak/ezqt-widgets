@@ -18,7 +18,7 @@ from __future__ import annotations
 import pytest
 
 # Local imports
-from ezqt_widgets.misc.option_selector import OptionSelector
+from ezqt_widgets.widgets.misc.option_selector import OptionSelector
 
 pytestmark = pytest.mark.unit
 
@@ -163,7 +163,6 @@ class TestOptionSelector:
         # FramedLabel.text is a property, not a method
         assert selected_option.text == "Option 1"
 
-    @pytest.mark.skip(reason="TypeError: 'str' object is not callable")
     def test_option_selector_size_hints(self, qt_widget_cleanup) -> None:
         """Test size hint methods."""
         items = ["Option 1", "Option 2"]

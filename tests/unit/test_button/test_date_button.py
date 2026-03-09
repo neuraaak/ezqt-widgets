@@ -24,7 +24,7 @@ from PySide6.QtGui import QIcon, QMouseEvent
 from PySide6.QtWidgets import QDialog
 
 # Local imports
-from ezqt_widgets.button.date_button import (
+from ezqt_widgets.widgets.button.date_button import (
     DateButton,
     DatePickerDialog,
 )
@@ -204,7 +204,7 @@ class TestDateButton:
         assert button.date.isValid()
         assert button.date == QDate.currentDate()
 
-    @patch("ezqt_widgets.button.date_button.DatePickerDialog")
+    @patch("ezqt_widgets.widgets.button.date_button.DatePickerDialog")
     def test_date_button_open_calendar(
         self, mock_dialog_class, qt_widget_cleanup
     ) -> None:
@@ -272,7 +272,7 @@ class TestDateButton:
         assert button.min_width is None
         assert button.min_height is None
 
-    @patch("ezqt_widgets.button.date_button.DatePickerDialog")
+    @patch("ezqt_widgets.widgets.button.date_button.DatePickerDialog")
     def test_date_button_mouse_press_event(
         self, mock_dialog_class, qt_widget_cleanup
     ) -> None:

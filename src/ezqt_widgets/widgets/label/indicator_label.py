@@ -24,7 +24,7 @@ from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QSizePolicy
 
 # Local imports
-from ..types import WidgetParent
+from ...types import WidgetParent
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES

@@ -20,7 +20,7 @@ from PySide6.QtCore import QPoint, Qt
 from PySide6.QtGui import QMouseEvent
 
 # Local imports
-from ezqt_widgets.misc.toggle_switch import ToggleSwitch
+from ezqt_widgets.widgets.misc.toggle_switch import ToggleSwitch
 
 pytestmark = pytest.mark.unit
 
