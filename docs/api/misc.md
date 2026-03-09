@@ -7,40 +7,40 @@ option selector, theme-aware icon, toggle icon and modern toggle switch.
 
 ## CircularTimer
 
-::: ezqt_widgets.misc.circular_timer.CircularTimer
+::: ezqt_widgets.widgets.misc.circular_timer.CircularTimer
 
 ---
 
 ## DraggableList
 
-::: ezqt_widgets.misc.draggable_list.DraggableList
+::: ezqt_widgets.widgets.misc.draggable_list.DraggableList
 
 ---
 
 ## DraggableItem
 
-::: ezqt_widgets.misc.draggable_list.DraggableItem
+::: ezqt_widgets.widgets.misc.draggable_list.DraggableItem
 
 ---
 
 ## OptionSelector
 
-::: ezqt_widgets.misc.option_selector.OptionSelector
+::: ezqt_widgets.widgets.misc.option_selector.OptionSelector
 
 ---
 
 ## ToggleIcon
 
-::: ezqt_widgets.misc.toggle_icon.ToggleIcon
+::: ezqt_widgets.widgets.misc.toggle_icon.ToggleIcon
 
 ---
 
 ## ToggleSwitch
 
-::: ezqt_widgets.misc.toggle_switch.ToggleSwitch
+::: ezqt_widgets.widgets.misc.toggle_switch.ToggleSwitch
 
 ---
 
 ## ThemeIcon
 
-::: ezqt_widgets.misc.theme_icon.ThemeIcon
+::: ezqt_widgets.widgets.misc.theme_icon.ThemeIcon
