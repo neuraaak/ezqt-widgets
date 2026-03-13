@@ -30,7 +30,9 @@ pytestmark = pytest.mark.unit
 class TestOptionSelector:
     """Test cases for OptionSelector widget."""
 
-    def test_option_selector_creation_default(self, qt_widget_cleanup) -> None:
+    def test_should_have_default_properties_when_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test OptionSelector creation with default parameters."""
         items = ["Option 1", "Option 2", "Option 3"]
         selector = OptionSelector(items)
@@ -42,7 +44,9 @@ class TestOptionSelector:
         assert selector.orientation == "horizontal"
         assert selector.animation_duration == 300
 
-    def test_option_selector_creation_custom(self, qt_widget_cleanup) -> None:
+    def test_should_use_custom_options_when_created_with_parameters(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test OptionSelector creation with custom parameters."""
         items = ["A", "B", "C", "D"]
         selector = OptionSelector(
@@ -59,7 +63,9 @@ class TestOptionSelector:
         assert selector.orientation == "vertical"
         assert selector.animation_duration == 500
 
-    def test_option_selector_add_option(self, qt_widget_cleanup) -> None:
+    def test_should_add_option_when_add_option_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test adding options to the selector."""
         items = ["Option 1", "Option 2"]
         selector = OptionSelector(items)
@@ -70,7 +76,9 @@ class TestOptionSelector:
         assert len(selector.options) == 3
         assert "Option 3" in selector.options
 
-    def test_option_selector_set_value_id(self, qt_widget_cleanup) -> None:
+    def test_should_set_selection_by_id_when_set_value_id_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test setting value by ID."""
         items = ["Option 1", "Option 2", "Option 3"]
         selector = OptionSelector(items)
@@ -79,7 +87,9 @@ class TestOptionSelector:
         assert selector.value == "Option 3"
         assert selector.value_id == 2
 
-    def test_option_selector_set_value(self, qt_widget_cleanup) -> None:
+    def test_should_set_selection_by_value_when_set_value_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test setting value by text."""
         items = ["Option 1", "Option 2", "Option 3"]
         selector = OptionSelector(items)
@@ -88,7 +98,9 @@ class TestOptionSelector:
         assert selector.value == "Option 2"
         assert selector.value_id == 1
 
-    def test_option_selector_signals(self, qt_widget_cleanup) -> None:
+    def test_should_emit_changed_signal_when_selection_changes(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test option selector signals."""
         items = ["Option 1", "Option 2"]
         selector = OptionSelector(items)
@@ -118,7 +130,9 @@ class TestOptionSelector:
         assert value_changed_called
         assert value_id_changed_called
 
-    def test_option_selector_properties(self, qt_widget_cleanup) -> None:
+    def test_should_update_properties_when_setters_are_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test option selector properties."""
         items = ["Option 1", "Option 2"]
         selector = OptionSelector(items)
@@ -143,7 +157,9 @@ class TestOptionSelector:
         selector.animation_duration = 400
         assert selector.animation_duration == 400
 
-    def test_option_selector_toggle_selection(self, qt_widget_cleanup) -> None:
+    def test_should_toggle_option_selection_when_toggle_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test toggling selection."""
         items = ["Option 1", "Option 2", "Option 3"]
         selector = OptionSelector(items)
@@ -153,7 +169,9 @@ class TestOptionSelector:
         assert selector.value_id == 1
         assert selector.value == "Option 2"
 
-    def test_option_selector_selected_option_property(self, qt_widget_cleanup) -> None:
+    def test_should_return_selected_option_when_selected_option_is_queried(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test getting the selected option widget."""
         items = ["Option 1", "Option 2"]
         selector = OptionSelector(items)
@@ -163,7 +181,9 @@ class TestOptionSelector:
         # FramedLabel.text is a property, not a method
         assert selected_option.text == "Option 1"
 
-    def test_option_selector_size_hints(self, qt_widget_cleanup) -> None:
+    def test_should_return_valid_size_hints_when_queried(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test size hint methods."""
         items = ["Option 1", "Option 2"]
         selector = OptionSelector(items)

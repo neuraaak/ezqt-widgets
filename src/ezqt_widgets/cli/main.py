@@ -22,6 +22,7 @@ import sys
 import click
 
 # Local imports
+from ..version import __version__
 from .runner import (
     list_available_examples,
     run_all_examples,
@@ -34,7 +35,7 @@ from .runner import (
 
 
 @click.group()
-@click.version_option(version="1.0.0", prog_name="EzQt Widgets CLI")
+@click.version_option(version=__version__, prog_name="EzQt Widgets CLI")
 def cli() -> None:
     """EzQt Widgets CLI - Launch examples and utilities.
 
@@ -43,6 +44,9 @@ def cli() -> None:
     """
 
 
+# ///////////////////////////////////////////////////////////////
+# COMMANDS
+# ///////////////////////////////////////////////////////////////
 @cli.command()
 @click.option(
     "--all", "-a", "run_all", is_flag=True, help="Run all examples with GUI launcher"

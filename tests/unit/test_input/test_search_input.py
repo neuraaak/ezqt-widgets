@@ -32,7 +32,9 @@ pytestmark = pytest.mark.unit
 class TestSearchInput:
     """Tests for SearchInput class."""
 
-    def test_search_input_creation_default(self, qt_widget_cleanup) -> None:
+    def test_should_have_default_properties_when_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with default parameters."""
         search_widget = SearchInput()
 
@@ -43,7 +45,9 @@ class TestSearchInput:
         assert search_widget.icon_position == "left"
         assert search_widget.clear_button is True
 
-    def test_search_input_creation_with_parameters(self, qt_widget_cleanup) -> None:
+    def test_should_use_custom_properties_when_created_with_parameters(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with custom parameters."""
         pixmap = QPixmap(16, 16)
         pixmap.fill(Qt.GlobalColor.red)
@@ -61,7 +65,9 @@ class TestSearchInput:
         assert search_widget.icon_position == "right"
         assert search_widget.clear_button is False
 
-    def test_search_input_properties(self, qt_widget_cleanup) -> None:
+    def test_should_update_properties_when_setters_are_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test widget properties."""
         search_widget = SearchInput()
 
@@ -84,7 +90,9 @@ class TestSearchInput:
         search_widget.max_history = 100
         assert search_widget.max_history == 100
 
-    def test_search_input_history_management(self, qt_widget_cleanup) -> None:
+    def test_should_limit_history_to_max_size_when_items_are_added(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test history management."""
         search_widget = SearchInput(max_history=5)
 
@@ -112,7 +120,9 @@ class TestSearchInput:
         assert "search6" in history  # Most recent
         assert "search1" not in history  # Oldest removed
 
-    def test_search_input_clear_history(self, qt_widget_cleanup) -> None:
+    def test_should_clear_all_history_when_clear_history_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test history clearing."""
         search_widget = SearchInput()
 
@@ -125,7 +135,9 @@ class TestSearchInput:
         search_widget.clear_history()
         assert search_widget.get_history() == []
 
-    def test_search_input_set_history(self, qt_widget_cleanup) -> None:
+    def test_should_set_history_list_when_set_history_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test history setting."""
         search_widget = SearchInput(max_history=10)
 
@@ -139,7 +151,9 @@ class TestSearchInput:
         for item in history_list:
             assert item in history
 
-    def test_search_input_trim_history(self, qt_widget_cleanup) -> None:
+    def test_should_keep_only_most_recent_when_history_exceeds_max(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test history trimming."""
         search_widget = SearchInput(max_history=3)
 
@@ -159,7 +173,9 @@ class TestSearchInput:
         assert "item1" not in history
         assert "item2" not in history
 
-    def test_search_input_duplicate_history(self, qt_widget_cleanup) -> None:
+    def test_should_deduplicate_items_when_same_item_is_added_twice(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test with duplicate items in history."""
         search_widget = SearchInput()
 
@@ -172,7 +188,9 @@ class TestSearchInput:
         history = search_widget.get_history()
         assert history.count("item") == 1  # Only one occurrence
 
-    def test_search_input_empty_history(self, qt_widget_cleanup) -> None:
+    def test_should_return_empty_list_when_history_is_cleared(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test with empty history."""
         search_widget = SearchInput()
 
@@ -186,7 +204,7 @@ class TestSearchInput:
         search_widget.clear_history()
         assert search_widget.get_history() == []
 
-    def test_search_input_icon_management(self, qt_widget_cleanup) -> None:
+    def test_should_store_icon_when_search_icon_is_set(self, qt_widget_cleanup) -> None:
         """Test icon management."""
         search_widget = SearchInput()
 
@@ -204,7 +222,9 @@ class TestSearchInput:
         search_widget.search_icon = "path/to/icon.png"
         # Note: The widget can handle icon paths according to implementation
 
-    def test_search_input_icon_positions(self, qt_widget_cleanup) -> None:
+    def test_should_update_icon_position_when_icon_position_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test icon positions."""
         search_widget = SearchInput()
 
@@ -220,7 +240,9 @@ class TestSearchInput:
         # Value remains "right"
         assert search_widget.icon_position == "right"
 
-    def test_search_input_clear_button_toggle(self, qt_widget_cleanup) -> None:
+    def test_should_show_or_hide_clear_button_when_text_changes(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test clear button toggle."""
         search_widget = SearchInput()
 
@@ -235,7 +257,9 @@ class TestSearchInput:
         search_widget.clear_button = True
         assert search_widget.clear_button is True
 
-    def test_search_input_max_history_validation(self, qt_widget_cleanup) -> None:
+    def test_should_validate_max_history_when_max_history_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test max_history validation."""
         search_widget = SearchInput()
 
@@ -251,7 +275,9 @@ class TestSearchInput:
         search_widget.max_history = -5
         assert search_widget.max_history == 1
 
-    def test_search_input_text_handling(self, qt_widget_cleanup) -> None:
+    def test_should_handle_text_changes_when_user_types(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test text handling."""
         search_widget = SearchInput()
 
@@ -267,7 +293,9 @@ class TestSearchInput:
         search_widget.setPlaceholderText("Search...")
         assert search_widget.placeholderText() == "Search..."
 
-    def test_search_input_signals(self, qt_widget_cleanup) -> None:
+    def test_should_emit_search_changed_signal_when_text_changes(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test widget signals."""
         search_widget = SearchInput()
 
@@ -290,7 +318,9 @@ class TestSearchInput:
         # Verify that the signal is connected
         assert search_widget.searchSubmitted is not None
 
-    def test_search_input_refresh_style(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_refresh_style_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test refresh_style method."""
         search_widget = SearchInput()
 
@@ -300,7 +330,9 @@ class TestSearchInput:
         except Exception as e:
             pytest.fail(f"refresh_style() raised an exception: {e}")
 
-    def test_search_input_large_history(self, qt_widget_cleanup) -> None:
+    def test_should_handle_large_history_when_many_items_are_added(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test with large history."""
         search_widget = SearchInput(max_history=1000)
 
@@ -319,7 +351,9 @@ class TestSearchInput:
         assert "overflow" in history  # Most recent
         assert "search_0" not in history  # Oldest removed
 
-    def test_search_input_special_characters(self, qt_widget_cleanup) -> None:
+    def test_should_handle_special_characters_in_search_when_text_contains_special_chars(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test with special characters in history."""
         search_widget = SearchInput()
 
@@ -344,7 +378,9 @@ class TestSearchInput:
         for search in special_searches:
             assert search in history
 
-    def test_search_input_property_type(self, qt_widget_cleanup) -> None:
+    def test_should_have_correct_type_property_when_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test type property for QSS."""
         search_widget = SearchInput()
 

@@ -35,7 +35,9 @@ pytestmark = pytest.mark.unit
 class TestColorizePixmap:
     """Tests for colorize_pixmap function."""
 
-    def test_colorize_pixmap_basic(self, qt_widget_cleanup) -> None:
+    def test_should_colorize_pixel_data_when_colorize_pixmap_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Basic test for colorize_pixmap."""
         # Create a test pixmap
         pixmap = QPixmap(16, 16)
@@ -50,7 +52,9 @@ class TestColorizePixmap:
         assert result.width() == 16
         assert result.height() == 16
 
-    def test_colorize_pixmap_transparent(self, qt_widget_cleanup) -> None:
+    def test_should_preserve_transparency_when_colorize_pixmap_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test with transparent opacity."""
         pixmap = QPixmap(16, 16)
         pixmap.fill(Qt.GlobalColor.white)
@@ -64,12 +68,12 @@ class TestColorizePixmap:
 class TestLoadIconFromSource:
     """Tests for load_icon_from_source function."""
 
-    def test_load_icon_from_none(self, qt_widget_cleanup) -> None:
+    def test_should_return_none_when_source_is_none(self, qt_widget_cleanup) -> None:
         """Test with None source."""
         result = IconButton._load_icon_from_source(None)
         assert result is None
 
-    def test_load_icon_from_qicon(self, qt_widget_cleanup) -> None:
+    def test_should_return_icon_when_source_is_qicon(self, qt_widget_cleanup) -> None:
         """Test with existing QIcon."""
         # Create a test QIcon
         pixmap = QPixmap(16, 16)
@@ -81,14 +85,18 @@ class TestLoadIconFromSource:
         assert result is not None
         assert isinstance(result, QIcon)
 
-    def test_load_icon_from_file_path(self, mock_icon_path) -> None:
+    def test_should_load_icon_from_file_when_source_is_file_path(
+        self, mock_icon_path
+    ) -> None:
         """Test with file path."""
         result = IconButton._load_icon_from_source(mock_icon_path)
 
         assert result is not None
         assert isinstance(result, QIcon)
 
-    def test_load_icon_from_svg_path(self, mock_svg_path) -> None:
+    def test_should_load_icon_from_svg_when_source_is_svg_path(
+        self, mock_svg_path
+    ) -> None:
         """Test with SVG file."""
         result = IconButton._load_icon_from_source(mock_svg_path)
 
@@ -96,7 +104,9 @@ class TestLoadIconFromSource:
         assert isinstance(result, QIcon)
 
     @patch("ezqt_widgets.widgets.button.icon_button.fetch_url_bytes")
-    def test_load_icon_from_url(self, mock_fetch, qt_widget_cleanup) -> None:
+    def test_should_load_icon_from_url_when_source_is_url(
+        self, mock_fetch, qt_widget_cleanup
+    ) -> None:
         """Test with URL."""
         # Create a valid PNG using QPixmap
         from PySide6.QtCore import QBuffer, QIODevice
@@ -122,7 +132,7 @@ class TestLoadIconFromSource:
         mock_fetch.assert_called_once_with("https://example.com/icon.png")
 
     @patch("ezqt_widgets.widgets.button.icon_button.fetch_url_bytes")
-    def test_load_icon_from_invalid_url(self, mock_fetch) -> None:
+    def test_should_return_none_when_url_fetch_fails(self, mock_fetch) -> None:
         """Test with invalid URL."""
         mock_fetch.return_value = None
 
@@ -134,7 +144,9 @@ class TestLoadIconFromSource:
 class TestIconButton:
     """Tests for IconButton class."""
 
-    def test_icon_button_creation_default(self, qt_widget_cleanup) -> None:
+    def test_should_have_default_properties_when_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with default parameters."""
         button = IconButton()
 
@@ -145,7 +157,7 @@ class TestIconButton:
         assert button.text_visible is True
         assert button.spacing == 10
 
-    def test_icon_button_creation_with_parameters(
+    def test_should_use_custom_properties_when_created_with_parameters(
         self, qt_widget_cleanup, mock_icon_path
     ) -> None:
         """Test creation with custom parameters."""
@@ -164,7 +176,9 @@ class TestIconButton:
         assert button.text_visible is False
         assert button.spacing == 15
 
-    def test_icon_button_properties(self, qt_widget_cleanup) -> None:
+    def test_should_update_properties_when_setters_are_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test button properties."""
         button = IconButton()
 
@@ -192,7 +206,9 @@ class TestIconButton:
         button.spacing = 20
         assert button.spacing == 20
 
-    def test_icon_button_signals(self, qt_widget_cleanup) -> None:
+    def test_should_emit_clicked_signal_when_button_is_clicked(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test button signals."""
         button = IconButton()
 
@@ -228,7 +244,7 @@ class TestIconButton:
         # Verify that the signal was emitted
         assert text_signal_received
 
-    def test_icon_button_methods(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_methods_are_called(self, qt_widget_cleanup) -> None:
         """Test button methods."""
         button = IconButton(text="Test", icon=QIcon())
 
@@ -248,7 +264,9 @@ class TestIconButton:
         button.toggle_text_visibility()
         assert button.text_visible == initial_visibility
 
-    def test_icon_button_size_hints(self, qt_widget_cleanup) -> None:
+    def test_should_return_valid_size_hints_when_queried(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test size hint methods."""
         button = IconButton(text="Test Button", icon=QIcon())
 
@@ -266,7 +284,9 @@ class TestIconButton:
         assert min_size_hint.width() > 0
         assert min_size_hint.height() > 0
 
-    def test_icon_button_set_icon_color(self, qt_widget_cleanup) -> None:
+    def test_should_update_icon_color_when_set_icon_color_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test set_icon_color method."""
         # Create a button with icon
         pixmap = QPixmap(16, 16)
@@ -280,7 +300,9 @@ class TestIconButton:
         # Verify that the icon was modified
         assert button.icon is not None
 
-    def test_icon_button_refresh_style(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_refresh_style_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test refresh_style method."""
         button = IconButton()
 
@@ -290,7 +312,9 @@ class TestIconButton:
         except Exception as e:
             pytest.fail(f"refresh_style() raised an exception: {e}")
 
-    def test_icon_button_minimum_dimensions(self, qt_widget_cleanup) -> None:
+    def test_should_have_minimum_dimensions_when_instantiated(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test minimum dimensions."""
         button = IconButton(min_width=100, min_height=50)
 

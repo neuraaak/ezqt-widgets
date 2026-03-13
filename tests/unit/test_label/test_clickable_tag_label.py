@@ -35,7 +35,9 @@ pytestmark = pytest.mark.unit
 class TestClickableTagLabel:
     """Tests for ClickableTagLabel class."""
 
-    def test_clickable_tag_label_creation_default(self, qt_widget_cleanup) -> None:
+    def test_should_have_default_properties_when_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with default parameters."""
         tag = ClickableTagLabel()
 
@@ -45,7 +47,7 @@ class TestClickableTagLabel:
         assert tag.enabled is False
         assert tag.status_color == "#0078d4"
 
-    def test_clickable_tag_label_creation_with_parameters(
+    def test_should_use_custom_properties_when_created_with_parameters(
         self, qt_widget_cleanup
     ) -> None:
         """Test creation with custom parameters."""
@@ -63,7 +65,9 @@ class TestClickableTagLabel:
         assert tag.min_width == 100
         assert tag.min_height == 30
 
-    def test_clickable_tag_label_properties(self, qt_widget_cleanup) -> None:
+    def test_should_update_properties_when_setters_are_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test tag properties."""
         tag = ClickableTagLabel()
 
@@ -93,7 +97,9 @@ class TestClickableTagLabel:
         assert tag.min_width is None
         assert tag.min_height is None
 
-    def test_clickable_tag_label_signals(self, qt_widget_cleanup) -> None:
+    def test_should_emit_signals_when_tag_is_interacted_with(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test tag signals."""
         tag = ClickableTagLabel(name="Test Tag")
 
@@ -156,7 +162,9 @@ class TestClickableTagLabel:
         assert state_signal_received
         assert received_state is True
 
-    def test_clickable_tag_label_mouse_press_event(self, qt_widget_cleanup) -> None:
+    def test_should_toggle_selection_when_mouse_is_pressed(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test mousePressEvent."""
         tag = ClickableTagLabel(name="Test Tag")
 
@@ -191,7 +199,9 @@ class TestClickableTagLabel:
         except Exception as e:
             pytest.fail(f"mousePressEvent() raised an exception: {e}")
 
-    def test_clickable_tag_label_key_press_event(self, qt_widget_cleanup) -> None:
+    def test_should_toggle_selection_when_space_key_is_pressed(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test keyPressEvent."""
         tag = ClickableTagLabel(name="Test Tag")
 
@@ -213,7 +223,7 @@ class TestClickableTagLabel:
         except Exception as e:
             pytest.fail(f"keyPressEvent() raised an exception: {e}")
 
-    def test_clickable_tag_label_toggle_behavior(self, qt_widget_cleanup) -> None:
+    def test_should_change_selected_state_when_toggled(self, qt_widget_cleanup) -> None:
         """Test toggle behavior."""
         tag = ClickableTagLabel(name="Test Tag")
 
@@ -250,7 +260,9 @@ class TestClickableTagLabel:
         assert tag.enabled is False
         assert clicked_count == 2
 
-    def test_clickable_tag_label_toggle_via_property(self, qt_widget_cleanup) -> None:
+    def test_should_update_selection_when_selected_property_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test toggle via enabled property."""
         tag = ClickableTagLabel(name="Test Tag")
 
@@ -278,7 +290,9 @@ class TestClickableTagLabel:
         tag.enabled = False
         assert tag.enabled is False
 
-    def test_clickable_tag_label_keyboard_toggle(self, qt_widget_cleanup) -> None:
+    def test_should_toggle_when_keyboard_interaction_occurs(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test keyboard toggle."""
         tag = ClickableTagLabel(name="Test Tag")
 
@@ -309,7 +323,9 @@ class TestClickableTagLabel:
         assert tag.enabled is False
         assert clicked_count == 2
 
-    def test_clickable_tag_label_size_hints(self, qt_widget_cleanup) -> None:
+    def test_should_return_valid_size_hints_when_queried(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test size hint methods."""
         tag = ClickableTagLabel(name="Test Tag")
 
@@ -327,7 +343,9 @@ class TestClickableTagLabel:
         assert min_size_hint.width() > 0
         assert min_size_hint.height() > 0
 
-    def test_clickable_tag_label_refresh_style(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_refresh_style_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test refresh_style method."""
         tag = ClickableTagLabel()
 
@@ -337,7 +355,7 @@ class TestClickableTagLabel:
         except Exception as e:
             pytest.fail(f"refresh_style() raised an exception: {e}")
 
-    def test_clickable_tag_label_display_update(self, qt_widget_cleanup) -> None:
+    def test_should_update_display_when_state_changes(self, qt_widget_cleanup) -> None:
         """Test display update."""
         tag = ClickableTagLabel(name="Test Tag")
 
@@ -352,7 +370,9 @@ class TestClickableTagLabel:
         tag.status_color = "#FF0000"
         assert tag.status_color == "#FF0000"
 
-    def test_clickable_tag_label_accessibility(self, qt_widget_cleanup) -> None:
+    def test_should_have_accessibility_attributes_when_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test accessibility."""
         tag = ClickableTagLabel(name="Test Tag")
 
@@ -375,7 +395,9 @@ class TestClickableTagLabel:
         except Exception as e:
             pytest.fail(f"setFocus() raised an exception: {e}")
 
-    def test_clickable_tag_label_properties_validation(self, qt_widget_cleanup) -> None:
+    def test_should_validate_properties_when_setters_are_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test property validation."""
         tag = ClickableTagLabel()
 

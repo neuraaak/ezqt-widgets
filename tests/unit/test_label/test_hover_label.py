@@ -32,7 +32,9 @@ pytestmark = pytest.mark.unit
 class TestHoverLabel:
     """Tests for HoverLabel class."""
 
-    def test_hover_label_creation_default(self, qt_widget_cleanup) -> None:
+    def test_should_have_default_properties_when_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with default parameters."""
         label = HoverLabel()
 
@@ -45,7 +47,9 @@ class TestHoverLabel:
         assert label.icon_padding == 8
         assert label.icon_enabled is True
 
-    def test_hover_label_creation_with_parameters(self, qt_widget_cleanup) -> None:
+    def test_should_use_custom_properties_when_created_with_parameters(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with custom parameters."""
         pixmap = QPixmap(16, 16)
         pixmap.fill(Qt.GlobalColor.red)
@@ -69,7 +73,9 @@ class TestHoverLabel:
         assert label.icon_padding == 12
         assert label.icon_enabled is False
 
-    def test_hover_label_properties(self, qt_widget_cleanup) -> None:
+    def test_should_update_properties_when_setters_are_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test label properties."""
         label = HoverLabel()
 
@@ -100,7 +106,7 @@ class TestHoverLabel:
         label.icon_enabled = False
         assert label.icon_enabled is False
 
-    def test_hover_label_signals(self, qt_widget_cleanup) -> None:
+    def test_should_emit_signals_when_events_occur(self, qt_widget_cleanup) -> None:
         """Test label signals."""
         # Create a label with an icon so the signal can be emitted
         pixmap = QPixmap(16, 16)
@@ -140,7 +146,7 @@ class TestHoverLabel:
         # Verify that the signal was emitted
         assert signal_received
 
-    def test_hover_label_mouse_events(self, qt_widget_cleanup) -> None:
+    def test_should_handle_mouse_events_when_clicked(self, qt_widget_cleanup) -> None:
         """Test mouse events."""
         label = HoverLabel()
 
@@ -174,7 +180,9 @@ class TestHoverLabel:
         except Exception as e:
             pytest.fail(f"mousePressEvent() raised an exception: {e}")
 
-    def test_hover_label_enter_leave_events(self, qt_widget_cleanup) -> None:
+    def test_should_update_state_when_mouse_enters_or_leaves(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test enter/leave events."""
         label = HoverLabel()
 
@@ -192,7 +200,7 @@ class TestHoverLabel:
         except Exception as e:
             pytest.fail(f"leaveEvent() raised an exception: {e}")
 
-    def test_hover_label_paint_event(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_paint_event_occurs(self, qt_widget_cleanup) -> None:
         """Test paint event."""
         label = HoverLabel()
 
@@ -205,7 +213,7 @@ class TestHoverLabel:
         except Exception as e:
             pytest.fail(f"paintEvent() raised an exception: {e}")
 
-    def test_hover_label_resize_event(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_resize_event_occurs(self, qt_widget_cleanup) -> None:
         """Test resize event."""
         label = HoverLabel()
 
@@ -218,7 +226,9 @@ class TestHoverLabel:
         except Exception as e:
             pytest.fail(f"resizeEvent() raised an exception: {e}")
 
-    def test_hover_label_size_hints(self, qt_widget_cleanup) -> None:
+    def test_should_return_valid_size_hints_when_queried(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test size hint methods."""
         label = HoverLabel(text="Test Label")
 
@@ -229,7 +239,9 @@ class TestHoverLabel:
         assert min_size_hint.width() > 0
         assert min_size_hint.height() > 0
 
-    def test_hover_label_refresh_style(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_refresh_style_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test refresh_style method."""
         label = HoverLabel()
 
@@ -239,7 +251,9 @@ class TestHoverLabel:
         except Exception as e:
             pytest.fail(f"refresh_style() raised an exception: {e}")
 
-    def test_hover_label_clear_icon(self, qt_widget_cleanup) -> None:
+    def test_should_clear_icon_when_clear_icon_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test clear_icon method."""
         label = HoverLabel()
 
@@ -255,7 +269,9 @@ class TestHoverLabel:
         # Verify that the icon is cleared
         assert label.hover_icon is None
 
-    def test_hover_label_icon_enabled_disabled(self, qt_widget_cleanup) -> None:
+    def test_should_show_or_hide_icon_when_icon_enabled_is_toggled(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test icon enable/disable."""
         label = HoverLabel()
 
@@ -270,7 +286,9 @@ class TestHoverLabel:
         label.icon_enabled = True
         assert label.icon_enabled is True
 
-    def test_hover_label_icon_color_changes(self, qt_widget_cleanup) -> None:
+    def test_should_update_icon_color_when_icon_color_is_changed(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test icon color changes."""
         label = HoverLabel()
 
@@ -286,7 +304,9 @@ class TestHoverLabel:
         label.icon_color = None
         assert label.icon_color is None
 
-    def test_hover_label_icon_size_changes(self, qt_widget_cleanup) -> None:
+    def test_should_update_icon_size_when_icon_size_is_changed(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test icon size changes."""
         label = HoverLabel()
 
@@ -301,7 +321,9 @@ class TestHoverLabel:
         label.icon_size = (24, 24)
         assert label.icon_size == QSize(24, 24)
 
-    def test_hover_label_opacity_changes(self, qt_widget_cleanup) -> None:
+    def test_should_update_opacity_when_opacity_is_changed(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test opacity changes."""
         label = HoverLabel()
 
@@ -320,7 +342,9 @@ class TestHoverLabel:
         label.opacity = 1.0
         assert label.opacity == 1.0
 
-    def test_hover_label_padding_changes(self, qt_widget_cleanup) -> None:
+    def test_should_update_padding_when_padding_is_changed(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test padding changes."""
         label = HoverLabel()
 
@@ -339,7 +363,7 @@ class TestHoverLabel:
         label.icon_padding = -5
         assert label.icon_padding == -5
 
-    def test_hover_label_text_changes(self, qt_widget_cleanup) -> None:
+    def test_should_update_text_when_text_is_set(self, qt_widget_cleanup) -> None:
         """Test text changes."""
         label = HoverLabel()
 
@@ -358,7 +382,7 @@ class TestHoverLabel:
         label.setText("")
         assert label.text() == ""
 
-    def test_hover_label_icon_from_path(
+    def test_should_load_icon_from_path_when_path_is_given(
         self, qt_widget_cleanup, mock_icon_path
     ) -> None:
         """Test icon loading from path."""
@@ -371,7 +395,9 @@ class TestHoverLabel:
         assert label.hover_icon is not None
         assert isinstance(label.hover_icon, QIcon)
 
-    def test_hover_label_icon_from_svg(self, qt_widget_cleanup, mock_svg_path) -> None:
+    def test_should_load_icon_from_svg_when_svg_path_is_given(
+        self, qt_widget_cleanup, mock_svg_path
+    ) -> None:
         """Test SVG icon loading."""
         label = HoverLabel()
 
@@ -382,7 +408,9 @@ class TestHoverLabel:
         assert label.hover_icon is not None
         assert isinstance(label.hover_icon, QIcon)
 
-    def test_hover_label_cursor_changes(self, qt_widget_cleanup) -> None:
+    def test_should_update_cursor_when_cursor_is_changed(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test cursor changes."""
         label = HoverLabel()
 

@@ -59,6 +59,7 @@ from .types import (
     ValueCallback,
     WidgetParent,
 )
+from .version import __version__
 from .widgets.button import (
     DateButton,
     DatePickerDialog,
@@ -91,7 +92,6 @@ from .widgets.misc import (
 # META INFORMATIONS
 # ///////////////////////////////////////////////////////////////
 
-__version__ = "2.5.3"
 __author__ = "Neuraaak"
 __maintainer__ = "Neuraaak"
 __description__ = (

@@ -39,25 +39,33 @@ pytestmark = pytest.mark.unit
 class TestUtilityFunctions:
     """Tests for utility functions."""
 
-    def test_format_date_valid(self, qt_widget_cleanup) -> None:
+    def test_should_format_date_string_when_date_is_valid(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test format_date with a valid date."""
         date = QDate(2024, 1, 15)
         result = DateButton._format_date(date, "dd/MM/yyyy")
         assert result == "15/01/2024"
 
-    def test_format_date_invalid(self, qt_widget_cleanup) -> None:
+    def test_should_return_empty_string_when_date_is_invalid(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test format_date with an invalid date."""
         date = QDate()
         result = DateButton._format_date(date, "dd/MM/yyyy")
         assert result == ""
 
-    def test_format_date_custom_format(self, qt_widget_cleanup) -> None:
+    def test_should_use_custom_format_when_format_is_given(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test format_date with a custom format."""
         date = QDate(2024, 1, 15)
         result = DateButton._format_date(date, "yyyy-MM-dd")
         assert result == "2024-01-15"
 
-    def test_parse_date_valid(self, qt_widget_cleanup) -> None:
+    def test_should_return_date_object_when_date_string_is_valid(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test parse_date with a valid string."""
         result = DateButton._parse_date("15/01/2024", "dd/MM/yyyy")
         assert result.isValid()
@@ -65,12 +73,16 @@ class TestUtilityFunctions:
         assert result.month() == 1
         assert result.day() == 15
 
-    def test_parse_date_invalid(self, qt_widget_cleanup) -> None:
+    def test_should_return_none_when_date_string_is_invalid(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test parse_date with an invalid string."""
         result = DateButton._parse_date("invalid", "dd/MM/yyyy")
         assert not result.isValid()
 
-    def test_get_calendar_icon(self, qt_widget_cleanup) -> None:
+    def test_should_return_icon_when_get_calendar_icon_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test get_calendar_icon."""
         icon = DateButton._get_calendar_icon()
         assert icon is not None
@@ -81,19 +93,23 @@ class TestUtilityFunctions:
 class TestDatePickerDialog:
     """Tests for DatePickerDialog class."""
 
-    def test_date_picker_dialog_creation(self, qt_widget_cleanup) -> None:
+    def test_should_create_dialog_when_instantiated(self, qt_widget_cleanup) -> None:
         """Test dialog creation."""
         dialog = DatePickerDialog()
         assert dialog is not None
         assert isinstance(dialog, DatePickerDialog)
 
-    def test_date_picker_dialog_with_date(self, qt_widget_cleanup) -> None:
+    def test_should_initialize_with_date_when_date_is_given(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with a date."""
         date = QDate(2024, 1, 15)
         dialog = DatePickerDialog(current_date=date)
         assert dialog.selected_date() == date
 
-    def test_date_picker_dialog_selected_date(self, qt_widget_cleanup) -> None:
+    def test_should_return_selected_date_when_date_is_picked(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test selected_date property."""
         dialog = DatePickerDialog()
         assert dialog.selected_date() is None
@@ -102,7 +118,9 @@ class TestDatePickerDialog:
 class TestDateButton:
     """Tests for DateButton class."""
 
-    def test_date_button_creation_default(self, qt_widget_cleanup) -> None:
+    def test_should_have_default_properties_when_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with default parameters."""
         button = DateButton()
 
@@ -113,7 +131,9 @@ class TestDateButton:
         assert button.show_calendar_icon is True
         assert button.icon_size == QSize(16, 16)
 
-    def test_date_button_creation_with_parameters(self, qt_widget_cleanup) -> None:
+    def test_should_use_custom_properties_when_created_with_parameters(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with custom parameters."""
         date = QDate(2024, 1, 15)
         button = DateButton(
@@ -130,7 +150,9 @@ class TestDateButton:
         assert button.show_calendar_icon is False
         assert button.icon_size == QSize(24, 24)
 
-    def test_date_button_creation_with_string_date(self, qt_widget_cleanup) -> None:
+    def test_should_parse_string_date_when_date_string_is_given(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with a string date."""
         button = DateButton(date="15/01/2024")
 
@@ -139,7 +161,9 @@ class TestDateButton:
         assert button.date.month() == 1
         assert button.date.day() == 15
 
-    def test_date_button_properties(self, qt_widget_cleanup) -> None:
+    def test_should_update_properties_when_setters_are_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test button properties."""
         button = DateButton()
 
@@ -170,7 +194,9 @@ class TestDateButton:
         button.icon_size = QSize(32, 32)
         assert button.icon_size == QSize(32, 32)
 
-    def test_date_button_signals(self, qt_widget_cleanup) -> None:
+    def test_should_emit_date_changed_signal_when_date_changes(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test button signals."""
         button = DateButton()
 
@@ -190,7 +216,7 @@ class TestDateButton:
         # Verify that the signal was emitted
         assert signal_received
 
-    def test_date_button_methods(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_methods_are_called(self, qt_widget_cleanup) -> None:
         """Test button methods."""
         button = DateButton()
 
@@ -205,7 +231,7 @@ class TestDateButton:
         assert button.date == QDate.currentDate()
 
     @patch("ezqt_widgets.widgets.button.date_button.DatePickerDialog")
-    def test_date_button_open_calendar(
+    def test_should_open_calendar_dialog_when_open_calendar_is_called(
         self, mock_dialog_class, qt_widget_cleanup
     ) -> None:
         """Test open_calendar method."""
@@ -223,7 +249,9 @@ class TestDateButton:
         mock_dialog_class.assert_called_once()
         mock_dialog.exec.assert_called_once()
 
-    def test_date_button_size_hints(self, qt_widget_cleanup) -> None:
+    def test_should_return_valid_size_hints_when_queried(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test size hint methods."""
         button = DateButton(text="Test Button")
 
@@ -241,7 +269,9 @@ class TestDateButton:
         assert min_size_hint.width() > 0
         assert min_size_hint.height() > 0
 
-    def test_date_button_refresh_style(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_refresh_style_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test refresh_style method."""
         button = DateButton()
 
@@ -251,7 +281,9 @@ class TestDateButton:
         except Exception as e:
             pytest.fail(f"refresh_style() raised an exception: {e}")
 
-    def test_date_button_minimum_dimensions(self, qt_widget_cleanup) -> None:
+    def test_should_have_minimum_dimensions_when_instantiated(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test minimum dimensions."""
         button = DateButton(min_width=150, min_height=50)
 
@@ -273,7 +305,7 @@ class TestDateButton:
         assert button.min_height is None
 
     @patch("ezqt_widgets.widgets.button.date_button.DatePickerDialog")
-    def test_date_button_mouse_press_event(
+    def test_should_open_calendar_when_mouse_is_pressed(
         self, mock_dialog_class, qt_widget_cleanup
     ) -> None:
         """Test mousePressEvent."""
@@ -305,7 +337,9 @@ class TestDateButton:
         mock_dialog_class.assert_called_once()
         mock_dialog.exec.assert_called_once()
 
-    def test_date_button_display_with_date(self, qt_widget_cleanup) -> None:
+    def test_should_display_formatted_date_when_date_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test display with a date."""
         date = QDate(2024, 1, 15)
         button = DateButton(date=date)
@@ -313,7 +347,9 @@ class TestDateButton:
         # Verify that the date is displayed
         assert button.date_string == "15/01/2024"
 
-    def test_date_button_display_without_date(self, qt_widget_cleanup) -> None:
+    def test_should_display_placeholder_when_no_date_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test display without a date."""
         button = DateButton()
 
@@ -334,7 +370,9 @@ class TestDateButton:
         # The internal label should display the placeholder
         assert button.date_label.text() == button.placeholder
 
-    def test_date_button_custom_format(self, qt_widget_cleanup) -> None:
+    def test_should_display_custom_format_when_format_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test with a custom format."""
         date = QDate(2024, 1, 15)
         button = DateButton(date=date, date_format="yyyy-MM-dd")

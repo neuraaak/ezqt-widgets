@@ -42,7 +42,7 @@ pytestmark = pytest.mark.unit
 class TestPasswordStrength:
     """Tests for password strength utility functions."""
 
-    def test_password_strength_weak(self) -> None:
+    def test_should_return_weak_strength_when_password_is_simple(self) -> None:
         """Test weak password strength."""
         # Very weak password
         assert password_strength("") == 0
@@ -53,14 +53,18 @@ class TestPasswordStrength:
         assert password_strength("password") == 40  # 8+ chars + lowercase
         assert password_strength("12345678") == 45  # 8+ chars + digits
 
-    def test_password_strength_medium(self) -> None:
+    def test_should_return_medium_strength_when_password_has_letters_and_numbers(
+        self,
+    ) -> None:
         """Test medium password strength."""
         # Medium password
         assert password_strength("Password") == 55  # 8+ chars + lowercase + uppercase
         assert password_strength("pass1234") == 60  # 8+ chars + lowercase + digits
         assert password_strength("PASS1234") == 60  # 8+ chars + uppercase + digits
 
-    def test_password_strength_strong(self) -> None:
+    def test_should_return_strong_strength_when_password_meets_strong_criteria(
+        self,
+    ) -> None:
         """Test strong password strength."""
         # Strong password
         assert (
@@ -73,14 +77,16 @@ class TestPasswordStrength:
             password_strength("Pass@123") == 100
         )  # 8+ chars + lowercase + uppercase + digits + special (max 100)
 
-    def test_password_strength_very_strong(self) -> None:
+    def test_should_return_very_strong_strength_when_password_is_very_complex(
+        self,
+    ) -> None:
         """Test very strong password strength."""
         # Very strong password
         assert password_strength("MyP@ssw0rd!") == 100  # All criteria
         assert password_strength("SuperS3cret#") == 100  # All criteria
         assert password_strength("C0mpl3x!P@ss") == 100  # All criteria
 
-    def test_password_strength_edge_cases(self) -> None:
+    def test_should_handle_edge_cases_when_password_is_empty_or_minimal(self) -> None:
         """Test password strength with edge cases."""
         # Special characters
         assert password_strength("pass@word") == 65  # 8+ chars + lowercase + special
@@ -90,25 +96,25 @@ class TestPasswordStrength:
         assert password_strength("a" * 100) == 40  # Length + lowercase
         assert password_strength("A" * 100) == 40  # Length + uppercase
 
-    def test_get_strength_color_weak(self) -> None:
+    def test_should_return_red_color_when_strength_is_weak(self) -> None:
         """Test colors for weak passwords."""
         assert get_strength_color(0) == "#ff4444"  # Red
         assert get_strength_color(10) == "#ff4444"  # Red
         assert get_strength_color(29) == "#ff4444"  # Red
 
-    def test_get_strength_color_medium(self) -> None:
+    def test_should_return_orange_color_when_strength_is_medium(self) -> None:
         """Test colors for medium passwords."""
         assert get_strength_color(30) == "#ffaa00"  # Orange
         assert get_strength_color(50) == "#ffaa00"  # Orange
         assert get_strength_color(59) == "#ffaa00"  # Orange
 
-    def test_get_strength_color_good(self) -> None:
+    def test_should_return_yellow_color_when_strength_is_good(self) -> None:
         """Test colors for good passwords."""
         assert get_strength_color(60) == "#44aa44"  # Green
         assert get_strength_color(70) == "#44aa44"  # Green
         assert get_strength_color(79) == "#44aa44"  # Green
 
-    def test_get_strength_color_strong(self) -> None:
+    def test_should_return_green_color_when_strength_is_strong(self) -> None:
         """Test colors for strong passwords."""
         assert get_strength_color(80) == "#00aa00"  # Dark green
         assert get_strength_color(90) == "#00aa00"  # Dark green
@@ -118,7 +124,9 @@ class TestPasswordStrength:
 class TestColorizePixmap:
     """Tests for colorize_pixmap function."""
 
-    def test_colorize_pixmap_basic(self, qt_widget_cleanup) -> None:
+    def test_should_colorize_pixmap_when_colorize_pixmap_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Basic test for colorize_pixmap."""
         # Create a test pixmap
         original_pixmap = QPixmap(16, 16)
@@ -131,7 +139,9 @@ class TestColorizePixmap:
         assert isinstance(colored_pixmap, QPixmap)
         assert colored_pixmap.size() == original_pixmap.size()
 
-    def test_colorize_pixmap_different_colors(self, qt_widget_cleanup) -> None:
+    def test_should_apply_different_colors_when_colorize_pixmap_is_called_with_color(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test colorize_pixmap with different colors."""
         original_pixmap = QPixmap(16, 16)
         original_pixmap.fill(Qt.GlobalColor.white)
@@ -142,7 +152,9 @@ class TestColorizePixmap:
             colored_pixmap = colorize_pixmap(original_pixmap, color, 0.5)
             assert isinstance(colored_pixmap, QPixmap)
 
-    def test_colorize_pixmap_different_opacities(self, qt_widget_cleanup) -> None:
+    def test_should_apply_opacity_when_colorize_pixmap_is_called_with_opacity(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test colorize_pixmap with different opacities."""
         original_pixmap = QPixmap(16, 16)
         original_pixmap.fill(Qt.GlobalColor.white)
@@ -157,12 +169,12 @@ class TestColorizePixmap:
 class TestLoadIconFromSource:
     """Tests for load_icon_from_source function."""
 
-    def test_load_icon_from_source_none(self) -> None:
+    def test_should_return_none_when_icon_source_is_none(self) -> None:
         """Test load_icon_from_source with None."""
         icon = load_icon_from_source(None)
         assert icon is None
 
-    def test_load_icon_from_source_qicon(self, qt_widget_cleanup) -> None:
+    def test_should_return_icon_when_source_is_qicon(self, qt_widget_cleanup) -> None:
         """Test load_icon_from_source with QIcon."""
         pixmap = QPixmap(16, 16)
         pixmap.fill(Qt.GlobalColor.red)
@@ -172,7 +184,9 @@ class TestLoadIconFromSource:
         assert isinstance(icon, QIcon)
 
     @patch("ezqt_widgets.widgets.input.password_input.fetch_url_bytes")
-    def test_load_icon_from_source_url(self, mock_fetch, qt_widget_cleanup) -> None:
+    def test_should_load_icon_from_url_when_source_is_url_string(
+        self, mock_fetch, qt_widget_cleanup
+    ) -> None:
         """Test load_icon_from_source with URL."""
         from PySide6.QtCore import QBuffer, QIODevice
         from PySide6.QtGui import QColor
@@ -193,7 +207,7 @@ class TestLoadIconFromSource:
         assert isinstance(icon, QIcon)
 
     @patch("ezqt_widgets.widgets.input.password_input.fetch_url_bytes")
-    def test_load_icon_from_source_url_failure(self, mock_fetch) -> None:
+    def test_should_return_none_when_url_fetch_fails(self, mock_fetch) -> None:
         """Test load_icon_from_source with URL failure."""
         mock_fetch.return_value = None
 
@@ -205,7 +219,9 @@ class TestLoadIconFromSource:
 class TestPasswordLineEdit:
     """Tests for PasswordLineEdit class."""
 
-    def test_password_line_edit_creation(self, qt_widget_cleanup) -> None:
+    def test_should_create_line_edit_when_password_line_edit_is_instantiated(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test PasswordLineEdit creation."""
         line_edit = PasswordLineEdit()
 
@@ -213,7 +229,9 @@ class TestPasswordLineEdit:
         assert isinstance(line_edit, PasswordLineEdit)
         assert line_edit.echoMode() == line_edit.EchoMode.Password
 
-    def test_password_line_edit_set_right_icon(self, qt_widget_cleanup) -> None:
+    def test_should_set_right_icon_when_set_right_icon_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test set_right_icon."""
         line_edit = PasswordLineEdit()
 
@@ -230,7 +248,9 @@ class TestPasswordLineEdit:
         # but we can verify that the method doesn't raise an exception
         assert line_edit is not None
 
-    def test_password_line_edit_refresh_style(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_password_line_edit_refresh_style_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test refresh_style."""
         line_edit = PasswordLineEdit()
 
@@ -244,7 +264,9 @@ class TestPasswordLineEdit:
 class TestPasswordInput:
     """Tests for PasswordInput class."""
 
-    def test_password_input_creation_default(self, qt_widget_cleanup) -> None:
+    def test_should_have_default_properties_when_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with default parameters."""
         password_widget = PasswordInput()
 
@@ -256,7 +278,9 @@ class TestPasswordInput:
         assert password_widget.hide_icon is not None
         assert password_widget.icon_size == QSize(16, 16)
 
-    def test_password_input_creation_with_parameters(self, qt_widget_cleanup) -> None:
+    def test_should_use_custom_properties_when_created_with_parameters(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with custom parameters."""
         pixmap = QPixmap(16, 16)
         pixmap.fill(Qt.GlobalColor.red)
@@ -276,7 +300,9 @@ class TestPasswordInput:
         assert password_widget.hide_icon is not None
         assert password_widget.icon_size == QSize(24, 24)
 
-    def test_password_input_properties(self, qt_widget_cleanup) -> None:
+    def test_should_update_password_properties_when_setters_are_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test widget properties."""
         password_widget = PasswordInput()
 
@@ -307,7 +333,9 @@ class TestPasswordInput:
         password_widget.icon_size = QSize(32, 32)
         assert password_widget.icon_size == QSize(32, 32)
 
-    def test_password_input_toggle_password(self, qt_widget_cleanup) -> None:
+    def test_should_toggle_password_visibility_when_toggle_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test toggle_password."""
         password_widget = PasswordInput()
 
@@ -326,7 +354,9 @@ class TestPasswordInput:
         final_mode = password_widget._password_input.echoMode()
         assert final_mode == initial_mode
 
-    def test_password_input_update_strength(self, qt_widget_cleanup) -> None:
+    def test_should_update_strength_indicator_when_password_changes(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test update_strength."""
         password_widget = PasswordInput()
 
@@ -339,7 +369,9 @@ class TestPasswordInput:
         password_widget.update_strength("StrongP@ss123!")
         # Method should not raise an exception
 
-    def test_password_input_signals(self, qt_widget_cleanup) -> None:
+    def test_should_emit_password_changed_signal_when_password_is_typed(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test widget signals."""
         password_widget = PasswordInput()
 
@@ -372,7 +404,9 @@ class TestPasswordInput:
         # Verify that the signal is connected
         assert password_widget.iconClicked is not None
 
-    def test_password_input_refresh_style(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_password_input_refresh_style_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test refresh_style."""
         password_widget = PasswordInput()
 
@@ -382,7 +416,9 @@ class TestPasswordInput:
         except Exception as e:
             pytest.fail(f"refresh_style() raised an exception: {e}")
 
-    def test_password_input_password_validation(self, qt_widget_cleanup) -> None:
+    def test_should_validate_password_properties_when_password_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test password validation."""
         password_widget = PasswordInput()
 
@@ -403,7 +439,9 @@ class TestPasswordInput:
         password_widget.password = ""
         assert password_widget.password == ""
 
-    def test_password_input_icon_size_validation(self, qt_widget_cleanup) -> None:
+    def test_should_validate_icon_size_when_icon_size_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test icon size validation."""
         password_widget = PasswordInput()
 
@@ -414,7 +452,7 @@ class TestPasswordInput:
             password_widget.icon_size = size
             assert password_widget.icon_size == size
 
-    def test_password_input_strength_bar_height_validation(
+    def test_should_validate_strength_bar_height_when_height_is_set(
         self, qt_widget_cleanup
     ) -> None:
         """Test strength bar height validation."""
@@ -434,7 +472,9 @@ class TestPasswordInput:
         password_widget.strength_bar_height = -5
         assert password_widget.strength_bar_height == 1
 
-    def test_password_input_multiple_instances(self, qt_widget_cleanup) -> None:
+    def test_should_be_independent_when_multiple_password_inputs_are_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test with multiple instances."""
         password_widget1 = PasswordInput(show_strength=True)
         password_widget2 = PasswordInput(show_strength=False)
@@ -447,7 +487,9 @@ class TestPasswordInput:
         assert password_widget2.password == "password2"
         assert password_widget1.password != password_widget2.password
 
-    def test_password_input_dynamic_property_changes(self, qt_widget_cleanup) -> None:
+    def test_should_apply_changes_when_properties_are_updated_dynamically(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test dynamic property changes."""
         password_widget = PasswordInput()
 
@@ -465,7 +507,9 @@ class TestPasswordInput:
         password_widget.strength_bar_height = 5
         assert password_widget.strength_bar_height == 5
 
-    def test_password_input_special_characters(self, qt_widget_cleanup) -> None:
+    def test_should_handle_special_characters_when_password_has_special_chars(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test with special characters in password."""
         password_widget = PasswordInput()
 
@@ -484,7 +528,9 @@ class TestPasswordInput:
             password_widget.password = password
             assert password_widget.password == password
 
-    def test_password_input_large_password(self, qt_widget_cleanup) -> None:
+    def test_should_handle_large_password_when_password_is_very_long(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test with very long password."""
         password_widget = PasswordInput()
 

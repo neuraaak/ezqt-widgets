@@ -14,10 +14,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ezqt-widgets"
-version = "2.5.3"
+version = "2.5.4"
 description = "A collection of custom and reusable Qt widgets for PySide6. Provides advanced, reusable, and stylish graphical components to facilitate the development of modern and user-friendly interfaces."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [{ name = "Neuraaak" }]
 maintainers = [{ name = "Neuraaak" }]
@@ -33,7 +33,6 @@ keywords = [
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -75,6 +74,7 @@ dev = [
     "ty>=0.0.13",
     "pyright>=1.1.0",
     "pre-commit>=3.0.0",
+    "import-linter>=2.0.0",
 
     # Security
     "bandit>=1.7.0",
@@ -100,6 +100,7 @@ test = [
     "pytest-cov>=4.0.0",
     "pytest-mock>=3.10.0",
     "pytest-xdist>=3.0.0",
+    "import-linter>=2.0.0",
 ]
 docs = [
     "mkdocs>=1.6.0,<2.0.0",
@@ -122,13 +123,24 @@ Repository = "https://github.com/neuraaak/ezqt-widgets"
 PyPI = "https://pypi.org/project/ezqt-widgets/"
 
 # ///////////////////////////////////////////////////////////////
+# 🖥️ SCRIPTS
+# Entry points for command-line tools
+# ///////////////////////////////////////////////////////////////
+
+[project.scripts]
+ezqt-widgets = "ezqt_widgets.cli.main:cli"
+
+# ///////////////////////////////////////////////////////////////
 # 📦 SETUPTOOLS CONFIGURATION
 # Package discovery and inclusion/exclusion patterns
 # ///////////////////////////////////////////////////////////////
 
+[tool.setuptools]
+include-package-data = true
+
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["ezqt_widgets", "ezqt_widgets.*"]
+include = ["ezqt_widgets*"]
 exclude = [
     "tests*",
     "build*",
@@ -170,7 +182,7 @@ ezqt_widgets = ["py.typed"]
 
 # Ruff: All-in-one linter with comprehensive rule sets
 [tool.ruff]
-target-version = "py310"
+target-version = "py311"
 line-length = 88
 
 [tool.ruff.lint]
@@ -178,7 +190,7 @@ select = [
     "E",   # pycodestyle errors
     "W",   # pycodestyle warnings
     "F",   # pyflakes
-    "I",   # isort
+    "I",   # isort-compatible import sorting (via ruff)
     "B",   # flake8-bugbear
     "C4",  # flake8-comprehensions
     "UP",  # pyupgrade
@@ -189,7 +201,7 @@ select = [
     "SIM", # flake8-simplify
 ]
 ignore = [
-    "E501", # line too long, handled by black
+    "E501", # line too long, handled by ruff format
     "B008", # do not perform function calls in argument defaults
     "S101", # assert_used (for tests)
     "S106", # hardcoded_password_funcarg
@@ -213,13 +225,13 @@ line-ending = "auto"
 
 # ///////////////////////////////////////////////////////////////
 # ✅ TYPE CHECKING TOOLS
-# Static type checking with minimal configuration
+# Static type analysis with minimal and comprehensive modes
 # ///////////////////////////////////////////////////////////////
 
-# Ty: Type checking tool with minimal configuration
+# Ty: Type checking with minimal configuration
 [tool.ty.environment]
-python-version = "3.10"
-root = [".", "./src/ezqt_widgets"]
+python-version = "3.11"
+root = ["src", "src/ezqt_widgets"]
 
 [tool.ty.src]
 include = ["src/ezqt_widgets/**/*.py"]
@@ -243,9 +255,9 @@ error-on-warning = false
 # Ignore PySide6 stub issues (isValid, setIcon, setText overloads)
 no-matching-overload = "ignore"
 
-# Pyright: Type checking tool with comprehensive reporting
+# Pyright: Comprehensive type checking with detailed reporting
 [tool.pyright]
-pythonVersion = "3.10"
+pythonVersion = "3.11"
 typeCheckingMode = "basic"
 include = ["src/ezqt_widgets"]
 exclude = [
@@ -257,6 +269,8 @@ exclude = [
     "tests",
     "docs",
     "examples",
+    "**/node_modules",
+    "**/.*",
 ]
 reportMissingImports = true
 reportMissingTypeStubs = false
@@ -283,18 +297,37 @@ reportIncompatibleVariableOverride = true
 reportInconsistentConstructor = true
 
 # ///////////////////////////////////////////////////////////////
-# 🧪 TESTING & COVERAGE TOOLS
+# � IMPORT LINTER CONTRACTS
+# Layer dependency contracts enforced in CI
+# ///////////////////////////////////////////////////////////////
+
+[tool.importlinter]
+root_packages = ["ezqt_widgets"]
+# Note: import-linter 2.x ne supporte pas source_paths (feature pending PR #323).
+# Le package doit être installé en mode editable (pip install -e .)
+# ou lancer avec PYTHONPATH=src lint-imports
+
+[[tool.importlinter.contracts]]
+name = "layer dependency flow"
+type = "layers"
+layers = [
+    "ezqt_widgets.cli",
+    "ezqt_widgets.widgets",
+    "ezqt_widgets.utils",
+]
+
+# ///////////////////////////////////////////////////////////////
+# �🧪 TESTING & COVERAGE TOOLS
 # Test execution, coverage analysis, and test configuration
 # ///////////////////////////////////////////////////////////////
 
 # Pytest: Test runner with coverage and detailed reporting
 [tool.pytest.ini_options]
 minversion = "7.0"
-pythonpath = ["src"]
 addopts = [
     "--strict-markers",
     "--strict-config",
-    "--cov=ezqt_widgets",
+    "--cov=src/ezqt_widgets",
     "--cov-report=term-missing",
     "--cov-report=html",
     "--cov-report=xml",
@@ -306,6 +339,7 @@ addopts = [
     "--maxfail=5",
 ]
 testpaths = ["tests"]
+pythonpath = ["src"]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
@@ -325,7 +359,7 @@ filterwarnings = [
 
 # Coverage: Code coverage measurement and reporting (60% minimum)
 [tool.coverage.run]
-source = ["ezqt_widgets"]
+source = ["src/ezqt_widgets"]
 branch = true
 omit = [
     "*/tests/*",
@@ -348,6 +382,9 @@ omit = [
     "docs/*",
     "examples/*",
     "_temp/*",
+    # Modules non testables unitairement (CLI / lanceur d'exemples Qt via subprocess)
+    "*/cli/main.py",
+    "*/cli/runner.py",
 ]
 
 [tool.coverage.report]
