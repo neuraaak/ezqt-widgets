@@ -12,13 +12,13 @@
         <meta name="author" content="Neuraaak">
       
       
-        <link rel="canonical" href="https://neuraaak.github.io/ezqt-widgets/guides/">
+        <link rel="canonical" href="https://neuraaak.github.io/ezqt-widgets/architecture/">
       
       
-        <link rel="prev" href="../getting-started/">
+        <link rel="prev" href="../examples/">
       
       
-        <link rel="next" href="style-guide/">
+        <link rel="next" href="../coverage/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>User Guides - EzQt Widgets Documentation</title>
+        <title>Architecture - EzQt Widgets Documentation</title>
       
     
     
@@ -84,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#user-guides" class="md-skip">
+        <a href="#architecture-layer-dependency-graph" class="md-skip">
           Skip to content
         </a>
       
@@ -120,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              User Guides
+              Architecture
             
           </span>
         </div>
@@ -268,11 +268,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../guides/" class="md-tabs__link">
         
   
   
@@ -346,9 +344,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../architecture/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -508,10 +508,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -525,23 +523,20 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../guides/" class="md-nav__link ">
               
   
   
@@ -559,13 +554,13 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_3" id="__nav_3_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -583,7 +578,7 @@
   
   
     <li class="md-nav__item">
-      <a href="style-guide/" class="md-nav__link">
+      <a href="../guides/style-guide/" class="md-nav__link">
         
   
   
@@ -611,7 +606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="development/" class="md-nav__link">
+      <a href="../guides/development/" class="md-nav__link">
         
   
   
@@ -639,7 +634,7 @@
   
   
     <li class="md-nav__item">
-      <a href="testing/" class="md-nav__link">
+      <a href="../guides/testing/" class="md-nav__link">
         
   
   
@@ -913,10 +908,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../architecture/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -932,6 +954,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dependency-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependency Graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-import-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer Import Matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-responsibilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer Responsibilities
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1017,10 +1092,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#dependency-graph" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overview
+        Dependency Graph
       
     </span>
   </a>
@@ -1028,10 +1103,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#available-guides" class="md-nav__link">
+  <a href="#layer-import-matrix" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Available Guides
+        Layer Import Matrix
       
     </span>
   </a>
@@ -1039,232 +1114,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-links" class="md-nav__link">
+  <a href="#layer-responsibilities" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Links
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Quick Links">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#for-beginners" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        For Beginners
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#for-developers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        For Developers
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#for-advanced-users" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        For Advanced Users
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#topics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Topics
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Topics">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#core-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Core Concepts
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#widget-features" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Widget Features
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Integration
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Best Practices
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#development-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Development Workflow
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Development Workflow">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#setting-up" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Setting Up
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#contributing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Contributing
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#code-style" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Code Style
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Documentation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Documentation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#building-docs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Building Docs
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#writing-docs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Writing Docs
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        See Also
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#need-help" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Need Help?
+        Layer Responsibilities
       
     </span>
   </a>
@@ -1299,179 +1152,77 @@
   
 
 
-<h1 id="user-guides">User Guides<a class="headerlink" href="#user-guides" title="Anchor link to this section">&para;</a></h1>
-<p>In-depth guides and tutorials for <strong>EzQt Widgets</strong> library.</p>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Anchor link to this section">&para;</a></h2>
-<p>This section provides comprehensive guides for mastering EzQt Widgets features and best practices. Whether you're just getting started or looking to contribute to the project, you'll find detailed documentation here.</p>
-<h2 id="available-guides">Available Guides<a class="headerlink" href="#available-guides" title="Anchor link to this section">&para;</a></h2>
+<h1 id="architecture-layer-dependency-graph">Architecture — Layer Dependency Graph<a class="headerlink" href="#architecture-layer-dependency-graph" title="Anchor link to this section">&para;</a></h1>
+<p>Import dependency graph generated by <a href="https://github.com/seddonym/grimp">grimp</a>
+from the live <code>ezqt_widgets</code> source tree.</p>
+<div class="admonition info">
+<p class="admonition-title">Auto-generated</p>
+<p>This page is regenerated at each documentation build from the actual source code.
+It reflects the <strong>real</strong> import graph, not a manually maintained diagram.</p>
+<p>To regenerate locally:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">PYTHONPATH</span><span class="o">=</span>src<span class="w"> </span>python<span class="w"> </span>.scripts/dev/generate_architecture_graph.py
+</span></code></pre></div>
+</div>
+<hr />
+<h2 id="dependency-graph">Dependency Graph<a class="headerlink" href="#dependency-graph" title="Anchor link to this section">&para;</a></h2>
+<pre class="mermaid"><code>graph TD
+    cli["cli/&lt;br/&gt;(CLI Entry Point)"]
+    widgets["widgets/&lt;br/&gt;(Qt Widget Library)"]
+    utils["utils/&lt;br/&gt;(Utilities)"]
+
+    widgets --&gt; utils
+
+    style cli fill:#4A90D9,color:#fff,stroke:#2C5F8A
+    style widgets fill:#E8922A,color:#fff,stroke:#A3621B
+    style utils fill:#7F8C8D,color:#fff,stroke:#566573</code></pre>
+<hr />
+<h2 id="layer-import-matrix">Layer Import Matrix<a class="headerlink" href="#layer-import-matrix" title="Anchor link to this section">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Guide</th>
-<th>Description</th>
-<th>Level</th>
+<th>Layer</th>
+<th>Imports from</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="style-guide/">QSS Style Guide</a></td>
-<td>Visual customization with Qt stylesheets</td>
-<td>Beginner</td>
+<td><code>cli</code></td>
+<td>—</td>
 </tr>
 <tr>
-<td><a href="development/">Development Guide</a></td>
-<td>Development workflow and contribution guide</td>
-<td>Intermediate</td>
+<td><code>widgets</code></td>
+<td><code>utils</code></td>
 </tr>
 <tr>
-<td><a href="testing/">Testing Guide</a></td>
-<td>Test suite documentation and testing practices</td>
-<td>Advanced</td>
+<td><code>utils</code></td>
+<td>—</td>
 </tr>
 </tbody>
 </table>
-<h2 id="quick-links">Quick Links<a class="headerlink" href="#quick-links" title="Anchor link to this section">&para;</a></h2>
-<h3 id="for-beginners">For Beginners<a class="headerlink" href="#for-beginners" title="Anchor link to this section">&para;</a></h3>
-<ul>
-<li><a href="../getting-started/">Getting Started</a> - Start here if you're new to EzQt Widgets</li>
-<li><a href="../examples/">Basic Examples</a> - Simple usage examples for each widget</li>
-<li><a href="style-guide/">QSS Style Guide</a> - Learn to customize widget appearance</li>
-</ul>
-<h3 id="for-developers">For Developers<a class="headerlink" href="#for-developers" title="Anchor link to this section">&para;</a></h3>
-<ul>
-<li><a href="development/">Development Guide</a> - Set up your development environment</li>
-<li><a href="testing/">Testing Guide</a> - Run tests and understand the test suite</li>
-<li><a href="../api/">API Reference</a> - Complete API documentation</li>
-</ul>
-<h3 id="for-advanced-users">For Advanced Users<a class="headerlink" href="#for-advanced-users" title="Anchor link to this section">&para;</a></h3>
-<ul>
-<li><a href="../api/">API Reference</a> - Detailed widget documentation</li>
-<li><a href="../cli/">CLI Reference</a> - Command-line interface usage</li>
-<li><a href="https://github.com/neuraaak/ezqt-widgets">GitHub Repository</a> - Source code and issues</li>
-</ul>
-<h2 id="topics">Topics<a class="headerlink" href="#topics" title="Anchor link to this section">&para;</a></h2>
-<h3 id="core-concepts">Core Concepts<a class="headerlink" href="#core-concepts" title="Anchor link to this section">&para;</a></h3>
-<ul>
-<li><strong>Qt Signals &amp; Slots</strong> - Understanding widget communication through Qt's signal/slot mechanism</li>
-<li><strong>QPropertyAnimation</strong> - Smooth animations with configurable easing curves</li>
-<li><strong>QSS Styling</strong> - Customizing widget appearance with Qt stylesheets</li>
-<li><strong>Type Hints</strong> - Using Python type annotations for better IDE support</li>
-</ul>
-<h3 id="widget-features">Widget Features<a class="headerlink" href="#widget-features" title="Anchor link to this section">&para;</a></h3>
-<ul>
-<li><strong>Button Widgets</strong> - Date pickers, icon buttons, and loading buttons</li>
-<li><strong>Input Widgets</strong> - Auto-complete, search, and password inputs</li>
-<li><strong>Label Widgets</strong> - Clickable tags, hover labels, and status indicators</li>
-<li><strong>Misc Widgets</strong> - Timers, drag-and-drop lists, toggles, and selectors</li>
-</ul>
-<h3 id="integration">Integration<a class="headerlink" href="#integration" title="Anchor link to this section">&para;</a></h3>
-<ul>
-<li><strong>Application Integration</strong> - Integrating EzQt Widgets into your PySide6 applications</li>
-<li><strong>Custom Styling</strong> - Creating custom themes and visual styles</li>
-<li><strong>Signal Management</strong> - Connecting widgets with signals and slots</li>
-<li><strong>Layout Management</strong> - Organizing widgets in layouts</li>
-</ul>
-<h3 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Anchor link to this section">&para;</a></h3>
-<ul>
-<li><strong>Performance</strong> - Optimizing widget performance in large applications</li>
-<li><strong>Error Handling</strong> - Robust error handling with Qt widgets</li>
-<li><strong>Testing</strong> - Testing applications that use EzQt Widgets</li>
-<li><strong>Code Organization</strong> - Structuring your Qt application code</li>
-</ul>
-<h2 id="development-workflow">Development Workflow<a class="headerlink" href="#development-workflow" title="Anchor link to this section">&para;</a></h2>
-<h3 id="setting-up">Setting Up<a class="headerlink" href="#setting-up" title="Anchor link to this section">&para;</a></h3>
-<ol>
-<li><strong>Clone the repository</strong></li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/neuraaak/ezqt-widgets.git
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>ezqt_widgets
-</span></code></pre></div>
-<ol>
-<li><strong>Install in development mode</strong></li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
-</span></code></pre></div>
-<ol>
-<li><strong>Install pre-commit hooks</strong></li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pre-commit<span class="w"> </span>install
-</span></code></pre></div>
-<p>See the <a href="development/">Development Guide</a> for detailed setup instructions.</p>
-<h3 id="testing">Testing<a class="headerlink" href="#testing" title="Anchor link to this section">&para;</a></h3>
-<p>Run the test suite to ensure everything works:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Run all tests</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>pytest<span class="w"> </span>tests/
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Run with coverage</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>pytest<span class="w"> </span>tests/<span class="w"> </span>--cov<span class="o">=</span>ezqt_widgets
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># Run specific test types</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>pytest<span class="w"> </span>tests/unit/
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>pytest<span class="w"> </span>tests/integration/
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># Using the CLI</span>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>ezqt<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--unit
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>ezqt<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--coverage
-</span></code></pre></div>
-<p>See the <a href="testing/">Testing Guide</a> for more information.</p>
-<h3 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Anchor link to this section">&para;</a></h3>
-<p>We welcome contributions! Here's how to get started:</p>
-<ol>
-<li><strong>Fork the repository</strong> on GitHub</li>
-<li><strong>Create a feature branch</strong> (<code>git checkout -b feature/amazing-widget</code>)</li>
-<li><strong>Make your changes</strong> with tests</li>
-<li><strong>Run tests and linting</strong> (<code>pytest</code>, <code>ruff check</code>)</li>
-<li><strong>Commit your changes</strong> with conventional commits</li>
-<li><strong>Push to your fork</strong> (<code>git push origin feature/amazing-widget</code>)</li>
-<li><strong>Open a Pull Request</strong> on GitHub</li>
-</ol>
-<p>See the <a href="development/">Development Guide</a> for contribution guidelines.</p>
-<h2 id="code-style">Code Style<a class="headerlink" href="#code-style" title="Anchor link to this section">&para;</a></h2>
-<p>EzQt Widgets follows these coding standards:</p>
-<ul>
-<li><strong>PEP 8</strong> - Python style guide</li>
-<li><strong>Type Hints</strong> - Full type annotations for Python 3.10+</li>
-<li><strong>Docstrings</strong> - Google-style docstrings for all public APIs</li>
-<li><strong>Testing</strong> - Comprehensive test coverage (~75%)</li>
-<li><strong>Black</strong> - Code formatting (88 character line length)</li>
-<li><strong>Ruff</strong> - Linting and code quality</li>
-</ul>
-<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Anchor link to this section">&para;</a></h2>
-<h3 id="building-docs">Building Docs<a class="headerlink" href="#building-docs" title="Anchor link to this section">&para;</a></h3>
-<p>Build the documentation locally:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Install docs dependencies</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[docs]&quot;</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Build documentation</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>mkdocs<span class="w"> </span>build
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># Serve locally</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>mkdocs<span class="w"> </span>serve
-</span></code></pre></div>
-<p>Then open <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a> in your browser.</p>
-<h3 id="writing-docs">Writing Docs<a class="headerlink" href="#writing-docs" title="Anchor link to this section">&para;</a></h3>
-<p>Documentation is written in Markdown and built with MkDocs Material:</p>
-<ul>
-<li><strong>Guides</strong> - Located in <code>docs/guides/</code></li>
-<li><strong>API Reference</strong> - Auto-generated from docstrings with mkdocstrings</li>
-<li><strong>Examples</strong> - Code examples in <code>docs/examples/</code></li>
-<li><strong>CLI</strong> - Command-line interface docs in <code>docs/cli/</code></li>
-</ul>
-<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Anchor link to this section">&para;</a></h2>
-<ul>
-<li><a href="../getting-started/">Getting Started</a> - Quick start guide</li>
-<li><a href="../api/">API Reference</a> - Complete API documentation</li>
-<li><a href="../examples/">Examples</a> - Practical code examples</li>
-<li><a href="../cli/">CLI Reference</a> - Command-line interface</li>
-</ul>
-<h2 id="need-help">Need Help?<a class="headerlink" href="#need-help" title="Anchor link to this section">&para;</a></h2>
-<ul>
-<li><strong>Issues</strong>: <a href="https://github.com/neuraaak/ezqt-widgets/issues">GitHub Issues</a></li>
-<li><strong>Discussions</strong>: <a href="https://github.com/neuraaak/ezqt-widgets/discussions">GitHub Discussions</a></li>
-<li><strong>Repository</strong>: <a href="https://github.com/neuraaak/ezqt-widgets">https://github.com/neuraaak/ezqt-widgets</a></li>
-</ul>
 <hr />
-<p><strong>Happy coding with EzQt Widgets!</strong> 🚀</p>
+<h2 id="layer-responsibilities">Layer Responsibilities<a class="headerlink" href="#layer-responsibilities" title="Anchor link to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cli</code></td>
+<td>Public entry point — Click CLI (<code>ezqt-widgets</code> command)</td>
+</tr>
+<tr>
+<td><code>widgets</code></td>
+<td>Reusable Qt widget components (buttons, inputs, labels, misc)</td>
+</tr>
+<tr>
+<td><code>utils</code></td>
+<td>Pure utility functions and style helpers</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -1509,7 +1260,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../getting-started/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Getting Started">
+          <a href="../examples/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Examples">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1519,20 +1270,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Getting Started
+                Examples
               </div>
             </div>
           </a>
         
         
           
-          <a href="style-guide/" class="md-footer__link md-footer__link--next" aria-label="Next: QSS Style Guide">
+          <a href="../coverage/" class="md-footer__link md-footer__link--next" aria-label="Next: Coverage">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                QSS Style Guide
+                Coverage
               </div>
             </div>
             <div class="md-footer__button md-icon">
