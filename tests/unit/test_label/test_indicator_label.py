@@ -30,7 +30,9 @@ pytestmark = pytest.mark.unit
 class TestIndicatorLabel:
     """Tests for IndicatorLabel class."""
 
-    def test_indicator_label_creation_default(self, qt_widget_cleanup) -> None:
+    def test_should_have_neutral_status_when_created_with_defaults(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with default parameters."""
         label = IndicatorLabel()
 
@@ -38,7 +40,9 @@ class TestIndicatorLabel:
         assert isinstance(label, IndicatorLabel)
         assert label.status == "neutral"
 
-    def test_indicator_label_creation_with_parameters(self, qt_widget_cleanup) -> None:
+    def test_should_use_custom_initial_status_when_status_map_is_given(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with custom parameters."""
         custom_status_map = {
             "custom1": {"text": "Custom 1", "state": "state1", "color": "#FF0000"},
@@ -49,7 +53,9 @@ class TestIndicatorLabel:
 
         assert label.status == "custom1"
 
-    def test_indicator_label_properties(self, qt_widget_cleanup) -> None:
+    def test_should_update_status_and_raise_for_invalid_when_status_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test label properties."""
         label = IndicatorLabel()
 
@@ -61,7 +67,9 @@ class TestIndicatorLabel:
         with pytest.raises(ValueError, match="Unknown status"):
             label.status = "invalid_status"
 
-    def test_indicator_label_signals(self, qt_widget_cleanup) -> None:
+    def test_should_emit_status_changed_signal_when_status_changes(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test label signals."""
         label = IndicatorLabel()
 
@@ -83,7 +91,9 @@ class TestIndicatorLabel:
         assert signal_received
         assert received_status == "online"
 
-    def test_indicator_label_set_status_method(self, qt_widget_cleanup) -> None:
+    def test_should_update_status_when_set_status_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test set_status method."""
         label = IndicatorLabel()
 
@@ -98,7 +108,9 @@ class TestIndicatorLabel:
         label.set_status("offline")
         assert label.status == "offline"
 
-    def test_indicator_label_refresh_style(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_refresh_style_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test refresh_style method."""
         label = IndicatorLabel()
 
@@ -108,7 +120,9 @@ class TestIndicatorLabel:
         except Exception as e:
             pytest.fail(f"refresh_style() raised an exception: {e}")
 
-    def test_indicator_label_default_status_map(self, qt_widget_cleanup) -> None:
+    def test_should_accept_neutral_online_offline_when_default_map_is_used(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test default status map."""
         label = IndicatorLabel()
 
@@ -132,7 +146,9 @@ class TestIndicatorLabel:
         with pytest.raises(ValueError, match="Unknown status"):
             label.status = "success"
 
-    def test_indicator_label_custom_status_map(self, qt_widget_cleanup) -> None:
+    def test_should_accept_custom_statuses_when_custom_status_map_is_given(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test with custom status map."""
         custom_map = {
             "ready": {"text": "Ready", "state": "ready", "color": "#4CAF50"},
@@ -156,7 +172,9 @@ class TestIndicatorLabel:
         with pytest.raises(ValueError, match="Unknown status"):
             label.status = "unknown"
 
-    def test_indicator_label_status_transitions(self, qt_widget_cleanup) -> None:
+    def test_should_transition_between_statuses_when_status_is_changed(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test status transitions."""
         label = IndicatorLabel()
 
@@ -175,14 +193,18 @@ class TestIndicatorLabel:
         label.status = "neutral"
         assert label.status == "neutral"
 
-    def test_indicator_label_property_type(self, qt_widget_cleanup) -> None:
+    def test_should_have_indicator_label_type_property_when_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test type property for QSS."""
         label = IndicatorLabel()
 
         # Verify that the type property is defined
         assert label.property("type") == "IndicatorLabel"
 
-    def test_indicator_label_multiple_instances(self, qt_widget_cleanup) -> None:
+    def test_should_be_independent_when_multiple_instances_are_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test multiple instances."""
         # Create multiple instances
         label1 = IndicatorLabel(initial_status="online")
@@ -200,7 +222,9 @@ class TestIndicatorLabel:
         assert label2.status == "offline"  # Not affected
         assert label3.status == "neutral"  # Not affected
 
-    def test_indicator_label_empty_status_map(self, qt_widget_cleanup) -> None:
+    def test_should_raise_when_empty_status_map_is_given(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test with empty status map."""
         empty_map = {}
         label = IndicatorLabel(status_map=empty_map)
@@ -213,13 +237,17 @@ class TestIndicatorLabel:
         with pytest.raises(ValueError, match="Unknown status"):
             label.status = "any_status"
 
-    def test_indicator_label_invalid_initial_status(self, qt_widget_cleanup) -> None:
+    def test_should_raise_when_initial_status_is_invalid(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test with invalid initial status."""
         # Create a label with invalid status (should raise an exception)
         with pytest.raises(ValueError, match="Unknown status"):
             IndicatorLabel(initial_status="invalid_status")
 
-    def test_indicator_label_status_map_structure(self, qt_widget_cleanup) -> None:
+    def test_should_have_correct_structure_when_status_map_is_queried(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test status map structure."""
         # Map with complete structure
         complete_map = {
@@ -241,7 +269,7 @@ class TestIndicatorLabel:
         label2 = IndicatorLabel(status_map=incomplete_map, initial_status="test3")
         assert label2.status == "test3"
 
-    def test_indicator_label_status_changes_with_signals(
+    def test_should_emit_signal_for_each_status_change_when_status_cycles(
         self, qt_widget_cleanup
     ) -> None:
         """Test status changes with signals."""
@@ -267,7 +295,7 @@ class TestIndicatorLabel:
         assert signal_count == 3
         assert received_statuses == ["online", "offline", "neutral"]
 
-    def test_indicator_label_same_status_multiple_times(
+    def test_should_handle_repeated_status_when_same_status_is_set_multiple_times(
         self, qt_widget_cleanup
     ) -> None:
         """Test same status set multiple times."""
@@ -295,7 +323,7 @@ class TestIndicatorLabel:
         # depending on implementation
         assert signal_count >= 1
 
-    def test_indicator_label_constructor_without_parameters(
+    def test_should_have_default_neutral_status_when_created_without_parameters(
         self, qt_widget_cleanup
     ) -> None:
         """Test constructor without parameters."""

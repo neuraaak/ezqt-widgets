@@ -35,7 +35,9 @@ pytestmark = pytest.mark.unit
 class TestUtilityFunctions:
     """Tests for utility functions."""
 
-    def test_create_spinner_pixmap(self, qt_widget_cleanup) -> None:
+    def test_should_create_pixmap_when_spinner_pixmap_is_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test create_spinner_pixmap."""
         pixmap = LoaderButton._create_spinner_pixmap(16, "#0078d4")
 
@@ -44,13 +46,17 @@ class TestUtilityFunctions:
         assert pixmap.size() == QSize(16, 16)
         assert not pixmap.isNull()
 
-    def test_create_spinner_pixmap_custom_size(self, qt_widget_cleanup) -> None:
+    def test_should_use_custom_size_when_spinner_pixmap_is_created_with_size(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test create_spinner_pixmap with custom size."""
         pixmap = LoaderButton._create_spinner_pixmap(32, "#FF0000")
 
         assert pixmap.size() == QSize(32, 32)
 
-    def test_create_loading_icon(self, qt_widget_cleanup) -> None:
+    def test_should_create_loading_icon_when_helper_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test create_loading_icon."""
         icon = LoaderButton._create_loading_icon(16, "#0078d4")
 
@@ -58,7 +64,9 @@ class TestUtilityFunctions:
         assert isinstance(icon, QIcon)
         assert not icon.isNull()
 
-    def test_create_success_icon(self, qt_widget_cleanup) -> None:
+    def test_should_create_success_icon_when_helper_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test create_success_icon."""
         icon = LoaderButton._create_success_icon(16, "#28a745")
 
@@ -66,7 +74,9 @@ class TestUtilityFunctions:
         assert isinstance(icon, QIcon)
         assert not icon.isNull()
 
-    def test_create_error_icon(self, qt_widget_cleanup) -> None:
+    def test_should_create_error_icon_when_helper_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test create_error_icon."""
         icon = LoaderButton._create_error_icon(16, "#dc3545")
 
@@ -78,7 +88,9 @@ class TestUtilityFunctions:
 class TestLoaderButton:
     """Tests for LoaderButton class."""
 
-    def test_loader_button_creation_default(self, qt_widget_cleanup) -> None:
+    def test_should_have_default_properties_when_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with default parameters."""
         button = LoaderButton()
 
@@ -92,7 +104,9 @@ class TestLoaderButton:
         assert button.error_display_time == 2000
         assert not button.is_loading
 
-    def test_loader_button_creation_with_parameters(self, qt_widget_cleanup) -> None:
+    def test_should_use_custom_properties_when_created_with_parameters(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with custom parameters."""
         button = LoaderButton(
             text="Test Button",
@@ -110,7 +124,9 @@ class TestLoaderButton:
         assert button.success_display_time == 2000
         assert button.error_display_time == 3000
 
-    def test_loader_button_properties(self, qt_widget_cleanup) -> None:
+    def test_should_update_properties_when_setters_are_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test button properties."""
         button = LoaderButton()
 
@@ -157,7 +173,9 @@ class TestLoaderButton:
         button.error_display_time = 2500
         assert button.error_display_time == 2500
 
-    def test_loader_button_signals(self, qt_widget_cleanup) -> None:
+    def test_should_emit_clicked_signal_when_button_is_clicked(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test button signals."""
         button = LoaderButton()
 
@@ -206,7 +224,9 @@ class TestLoaderButton:
         # Let's verify that stop_loading() with error works instead
         assert not button.is_loading
 
-    def test_loader_button_start_loading(self, qt_widget_cleanup) -> None:
+    def test_should_show_loading_state_when_start_loading_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test start_loading method."""
         button = LoaderButton()
 
@@ -220,7 +240,9 @@ class TestLoaderButton:
         assert button.is_loading
         assert not button.isEnabled()  # Button disabled during loading
 
-    def test_loader_button_stop_loading_success(self, qt_widget_cleanup) -> None:
+    def test_should_show_success_state_when_stop_loading_is_called_with_success(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test stop_loading with success."""
         button = LoaderButton()
 
@@ -232,7 +254,9 @@ class TestLoaderButton:
         assert not button.is_loading
         assert button.isEnabled()  # Button re-enabled
 
-    def test_loader_button_stop_loading_error(self, qt_widget_cleanup) -> None:
+    def test_should_show_error_state_when_stop_loading_is_called_with_error(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test stop_loading with error."""
         button = LoaderButton()
 
@@ -244,7 +268,9 @@ class TestLoaderButton:
         assert not button.is_loading
         assert button.isEnabled()  # Button re-enabled
 
-    def test_loader_button_auto_reset_disabled(self, qt_widget_cleanup) -> None:
+    def test_should_not_auto_reset_when_auto_reset_is_disabled(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test with auto_reset disabled."""
         button = LoaderButton(auto_reset=False)
 
@@ -256,7 +282,9 @@ class TestLoaderButton:
         assert not button.is_loading
         # Note: Success state persists because auto_reset=False
 
-    def test_loader_button_size_hints(self, qt_widget_cleanup) -> None:
+    def test_should_return_valid_size_hints_when_queried(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test size hint methods."""
         button = LoaderButton(text="Test Button")
 
@@ -274,7 +302,9 @@ class TestLoaderButton:
         assert min_size_hint.width() > 0
         assert min_size_hint.height() > 0
 
-    def test_loader_button_refresh_style(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_refresh_style_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test refresh_style method."""
         button = LoaderButton()
 
@@ -284,7 +314,9 @@ class TestLoaderButton:
         except Exception as e:
             pytest.fail(f"refresh_style() raised an exception: {e}")
 
-    def test_loader_button_minimum_dimensions(self, qt_widget_cleanup) -> None:
+    def test_should_have_minimum_dimensions_when_instantiated(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test minimum dimensions."""
         button = LoaderButton(min_width=150, min_height=50)
 
@@ -305,7 +337,7 @@ class TestLoaderButton:
         assert button.min_width is None
         assert button.min_height is None
 
-    def test_loader_button_mouse_press_event(self, qt_widget_cleanup) -> None:
+    def test_should_emit_clicked_when_mouse_is_pressed(self, qt_widget_cleanup) -> None:
         """Test mousePressEvent."""
         button = LoaderButton()
 
@@ -325,7 +357,9 @@ class TestLoaderButton:
         except Exception as e:
             pytest.fail(f"mousePressEvent() raised an exception: {e}")
 
-    def test_loader_button_mouse_press_event_loading(self, qt_widget_cleanup) -> None:
+    def test_should_not_emit_clicked_when_mouse_is_pressed_during_loading(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test mousePressEvent during loading."""
         button = LoaderButton()
 
@@ -348,7 +382,7 @@ class TestLoaderButton:
         except Exception as e:
             pytest.fail(f"mousePressEvent() raised an exception: {e}")
 
-    def test_loader_button_mouse_press_event_right_button(
+    def test_should_not_emit_clicked_when_right_button_is_pressed(
         self, qt_widget_cleanup
     ) -> None:
         """Test mousePressEvent with right button (should be ignored)."""
@@ -370,7 +404,9 @@ class TestLoaderButton:
         except Exception as e:
             pytest.fail(f"mousePressEvent() raised an exception: {e}")
 
-    def test_loader_button_animation_speed(self, qt_widget_cleanup) -> None:
+    def test_should_update_animation_speed_when_animation_speed_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test animation speed."""
         button = LoaderButton(animation_speed=50)
 
@@ -381,7 +417,9 @@ class TestLoaderButton:
         button.animation_speed = 75
         assert button.animation_speed == 75
 
-    def test_loader_button_display_times(self, qt_widget_cleanup) -> None:
+    def test_should_update_display_times_when_display_times_are_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test display times."""
         button = LoaderButton(success_display_time=1500, error_display_time=2500)
 
@@ -397,7 +435,7 @@ class TestLoaderButton:
         assert button.error_display_time == 3000
 
     @patch("ezqt_widgets.widgets.button.loader_button.QTimer")
-    def test_loader_button_timer_integration(
+    def test_should_auto_reset_after_display_time_when_auto_reset_is_enabled(
         self, mock_timer_class, qt_widget_cleanup
     ) -> None:
         """Test QTimer integration."""
@@ -411,7 +449,9 @@ class TestLoaderButton:
         # Note: Timers are created in _setup_animations
         assert mock_timer_class.call_count >= 0  # At least 0 timers created
 
-    def test_loader_button_state_transitions(self, qt_widget_cleanup) -> None:
+    def test_should_transition_through_states_when_loading_completes(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test state transitions."""
         button = LoaderButton()
 

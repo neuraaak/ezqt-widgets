@@ -78,7 +78,9 @@ def draggable_item(_app):
 class TestDraggableItem:
     """Tests for DraggableItem class."""
 
-    def test_init(self, draggable_item) -> None:
+    def test_should_have_default_properties_when_draggable_item_is_created(
+        self, draggable_item
+    ) -> None:
         """Test DraggableItem initialization."""
         assert draggable_item.item_id == "test_item"
         assert draggable_item.text == "Test Item"
@@ -86,20 +88,24 @@ class TestDraggableItem:
         assert draggable_item._compact is False
         assert draggable_item._icon_color == "grey"
 
-    def test_init_compact(self, app) -> None:
+    def test_should_switch_to_compact_layout_when_compact_is_true(self, app) -> None:
         """Test DraggableItem initialization in compact mode."""
         item = DraggableItem(item_id="compact_item", text="Compact Item", compact=True)
         assert item._compact is True
         assert item.minimumHeight() == 24
         assert item.maximumHeight() == 32
 
-    def test_icon_color_property(self, draggable_item) -> None:
+    def test_should_update_icon_color_when_item_icon_color_is_set(
+        self, draggable_item
+    ) -> None:
         """Test icon_color property."""
         draggable_item.icon_color = "red"
         assert draggable_item.icon_color == "red"
         assert draggable_item.content_widget.icon_color == "red"
 
-    def test_compact_property(self, draggable_item) -> None:
+    def test_should_toggle_compact_mode_when_item_compact_is_changed(
+        self, draggable_item
+    ) -> None:
         """Test compact property."""
         # Normal mode
         assert draggable_item.compact is False
@@ -112,33 +118,41 @@ class TestDraggableItem:
         assert draggable_item.minimumHeight() == 24
         assert draggable_item.maximumHeight() == 32
 
-    def test_size_hint(self, draggable_item) -> None:
+    def test_should_return_standard_size_when_item_size_hint_is_called(
+        self, draggable_item
+    ) -> None:
         """Test sizeHint calculation."""
         size = draggable_item.sizeHint()
         assert size.width() > 0
         assert 40 <= size.height() <= 60
 
-    def test_size_hint_compact(self, _app) -> None:
+    def test_should_return_compact_size_when_item_is_in_compact_mode(
+        self, _app
+    ) -> None:
         """Test sizeHint calculation in compact mode."""
         item = DraggableItem(item_id="compact_item", text="Compact Item", compact=True)
         size = item.sizeHint()
         assert size.width() > 0
         assert 24 <= size.height() <= 32
 
-    def test_minimum_size_hint(self, draggable_item) -> None:
+    def test_should_return_minimum_size_when_item_minimum_size_hint_is_called(
+        self, draggable_item
+    ) -> None:
         """Test minimumSizeHint calculation."""
         size = draggable_item.minimumSizeHint()
         assert size.width() > 0
         assert size.height() == 40
 
-    def test_minimum_size_hint_compact(self, _app) -> None:
+    def test_should_return_compact_minimum_size_when_item_is_in_compact_mode(
+        self, _app
+    ) -> None:
         """Test minimumSizeHint calculation in compact mode."""
         item = DraggableItem(item_id="compact_item", text="Compact Item", compact=True)
         size = item.minimumSizeHint()
         assert size.width() > 0
         assert size.height() == 24
 
-    def test_mouse_press_event(self, draggable_item) -> None:
+    def test_should_start_drag_when_item_mouse_is_pressed(self, draggable_item) -> None:
         """Test mousePressEvent."""
         # Simulate left click
         event = QMouseEvent(
@@ -152,7 +166,9 @@ class TestDraggableItem:
         draggable_item.mousePressEvent(event)
         assert draggable_item.drag_start_pos == QPoint(10, 10)
 
-    def test_on_remove_clicked(self, draggable_item) -> None:
+    def test_should_emit_remove_signal_when_remove_button_is_clicked(
+        self, draggable_item
+    ) -> None:
         """Test itemRemoved signal."""
         # Connect a callback to verify signal emission
         called = False
@@ -166,7 +182,9 @@ class TestDraggableItem:
         draggable_item._on_remove_clicked()
         assert called is True
 
-    def test_refresh_style(self, draggable_item) -> None:
+    def test_should_not_raise_when_item_refresh_style_is_called(
+        self, draggable_item
+    ) -> None:
         """Test refresh_style method."""
         # This method should not raise an exception
         draggable_item.refresh_style()
@@ -175,7 +193,9 @@ class TestDraggableItem:
 class TestDraggableList:
     """Tests for DraggableList class."""
 
-    def test_init(self, draggable_list) -> None:
+    def test_should_have_default_properties_when_draggable_list_is_created(
+        self, draggable_list
+    ) -> None:
         """Test DraggableList initialization."""
         assert draggable_list._items == ["Item 1", "Item 2", "Item 3"]
         assert draggable_list._allow_drag_drop is True
@@ -186,13 +206,17 @@ class TestDraggableList:
         assert draggable_list._icon_color == "grey"
         assert len(draggable_list._item_widgets) == 3
 
-    def test_init_compact(self, compact_draggable_list) -> None:
+    def test_should_switch_to_compact_mode_when_list_is_compact(
+        self, compact_draggable_list
+    ) -> None:
         """Test compact DraggableList initialization."""
         assert compact_draggable_list._compact is True
         assert compact_draggable_list._items == ["Option A", "Option B"]
         assert len(compact_draggable_list._item_widgets) == 2
 
-    def test_items_property(self, draggable_list) -> None:
+    def test_should_return_all_items_when_items_property_is_read(
+        self, draggable_list
+    ) -> None:
         """Test items property."""
         # Getter
         items = draggable_list.items
@@ -205,18 +229,24 @@ class TestDraggableList:
         assert draggable_list._items == new_items
         assert len(draggable_list._item_widgets) == 2
 
-    def test_item_count_property(self, draggable_list) -> None:
+    def test_should_return_count_when_item_count_is_queried(
+        self, draggable_list
+    ) -> None:
         """Test item_count property."""
         assert draggable_list.item_count == 3
 
-    def test_allow_drag_drop_property(self, draggable_list) -> None:
+    def test_should_update_drag_drop_flag_when_allow_drag_drop_is_set(
+        self, draggable_list
+    ) -> None:
         """Test allow_drag_drop property."""
         assert draggable_list.allow_drag_drop is True
 
         draggable_list.allow_drag_drop = False
         assert draggable_list.allow_drag_drop is False
 
-    def test_allow_remove_property(self, draggable_list) -> None:
+    def test_should_update_remove_flag_when_allow_remove_is_set(
+        self, draggable_list
+    ) -> None:
         """Test allow_remove property."""
         assert draggable_list.allow_remove is True
 
@@ -227,7 +257,9 @@ class TestDraggableList:
         for widget in draggable_list._item_widgets.values():
             assert widget.content_widget.icon_enabled is False
 
-    def test_icon_color_property(self, draggable_list) -> None:
+    def test_should_update_icon_color_when_list_icon_color_is_set(
+        self, draggable_list
+    ) -> None:
         """Test icon_color property."""
         assert draggable_list.icon_color == "grey"
 
@@ -238,7 +270,9 @@ class TestDraggableList:
         for widget in draggable_list._item_widgets.values():
             assert widget.icon_color == "red"
 
-    def test_compact_property(self, draggable_list) -> None:
+    def test_should_toggle_compact_mode_when_list_compact_is_changed(
+        self, draggable_list
+    ) -> None:
         """Test compact property."""
         assert draggable_list.compact is False
 
@@ -249,14 +283,16 @@ class TestDraggableList:
         for widget in draggable_list._item_widgets.values():
             assert widget.compact is True
 
-    def test_min_width_property(self, draggable_list) -> None:
+    def test_should_set_minimum_width_when_min_width_is_set(
+        self, draggable_list
+    ) -> None:
         """Test min_width property."""
         assert draggable_list.min_width == 150
 
         draggable_list.min_width = 200
         assert draggable_list.min_width == 200
 
-    def test_add_item(self, draggable_list) -> None:
+    def test_should_add_item_when_add_item_is_called(self, draggable_list) -> None:
         """Test adding an item."""
         initial_count = draggable_list.item_count
 
@@ -278,13 +314,17 @@ class TestDraggableList:
         assert "new_item" in draggable_list._item_widgets
         assert called is True
 
-    def test_add_item_duplicate(self, draggable_list) -> None:
+    def test_should_not_add_duplicate_when_same_text_is_added(
+        self, draggable_list
+    ) -> None:
         """Test adding an already present item."""
         initial_count = draggable_list.item_count
         draggable_list.add_item("Item 1", "Item 1")  # Already present
         assert draggable_list.item_count == initial_count  # No addition
 
-    def test_remove_item(self, draggable_list) -> None:
+    def test_should_remove_item_when_remove_item_is_called(
+        self, draggable_list
+    ) -> None:
         """Test removing an item."""
         initial_count = draggable_list.item_count
 
@@ -307,14 +347,18 @@ class TestDraggableList:
         assert "Item 2" not in draggable_list._item_widgets
         assert called is True
 
-    def test_remove_item_not_found(self, draggable_list) -> None:
+    def test_should_not_raise_when_nonexistent_item_is_removed(
+        self, draggable_list
+    ) -> None:
         """Test removing a non-existent item."""
         initial_count = draggable_list.item_count
         result = draggable_list.remove_item("inexistant")
         assert result is False
         assert draggable_list.item_count == initial_count
 
-    def test_clear_items(self, draggable_list) -> None:
+    def test_should_remove_all_items_when_clear_items_is_called(
+        self, draggable_list
+    ) -> None:
         """Test clearing the list."""
         assert draggable_list.item_count > 0
 
@@ -335,7 +379,7 @@ class TestDraggableList:
         assert len(draggable_list._item_widgets) == 0
         assert called is True
 
-    def test_move_item(self, draggable_list) -> None:
+    def test_should_reorder_item_when_move_item_is_called(self, draggable_list) -> None:
         """Test moving an item."""
         # Connect a callback to verify signal emission
         called = False
@@ -355,41 +399,53 @@ class TestDraggableList:
         assert draggable_list._items == ["Item 2", "Item 3", "Item 1"]
         assert called is True
 
-    def test_move_item_same_position(self, draggable_list) -> None:
+    def test_should_not_raise_when_item_is_moved_to_same_position(
+        self, draggable_list
+    ) -> None:
         """Test moving an item to the same position."""
         original_items = draggable_list._items.copy()
         result = draggable_list.move_item("Item 1", 0)
         assert result is True
         assert draggable_list._items == original_items
 
-    def test_move_item_not_found(self, draggable_list) -> None:
+    def test_should_not_raise_when_nonexistent_item_is_moved(
+        self, draggable_list
+    ) -> None:
         """Test moving a non-existent item."""
         result = draggable_list.move_item("inexistant", 1)
         assert result is False
 
-    def test_get_item_position(self, draggable_list) -> None:
+    def test_should_return_index_when_item_exists(self, draggable_list) -> None:
         """Test getting an item's position."""
         position = draggable_list.get_item_position("Item 2")
         assert position == 1
 
-    def test_get_item_position_not_found(self, draggable_list) -> None:
+    def test_should_return_minus_one_when_item_is_not_found(
+        self, draggable_list
+    ) -> None:
         """Test getting position of a non-existent item."""
         position = draggable_list.get_item_position("inexistant")
         assert position == -1
 
-    def test_size_hint(self, draggable_list) -> None:
+    def test_should_return_valid_size_when_list_size_hint_is_called(
+        self, draggable_list
+    ) -> None:
         """Test sizeHint calculation."""
         size = draggable_list.sizeHint()
         assert size.width() >= draggable_list._min_width
         assert size.height() > 0
 
-    def test_minimum_size_hint(self, draggable_list) -> None:
+    def test_should_return_valid_minimum_size_when_list_minimum_size_hint_is_called(
+        self, draggable_list
+    ) -> None:
         """Test minimumSizeHint calculation."""
         size = draggable_list.minimumSizeHint()
         assert size.width() >= draggable_list._min_width
         assert size.height() > 0
 
-    def test_drag_enter_event(self, draggable_list) -> None:
+    def test_should_accept_drag_when_drag_enter_event_occurs(
+        self, draggable_list
+    ) -> None:
         """Test dragEnterEvent."""
         mime_data = QMimeData()
         mime_data.setText("Item 1")
@@ -418,7 +474,9 @@ class TestDraggableList:
         draggable_list.dragEnterEvent(event)
         assert not event.isAccepted()
 
-    def test_drag_move_event(self, draggable_list) -> None:
+    def test_should_handle_drag_position_when_drag_move_event_occurs(
+        self, draggable_list
+    ) -> None:
         """Test dragMoveEvent."""
         mime_data = QMimeData()
         mime_data.setText("Item 1")
@@ -447,7 +505,7 @@ class TestDraggableList:
         draggable_list.dragMoveEvent(event)
         assert not event.isAccepted()
 
-    def test_drop_event(self, draggable_list) -> None:
+    def test_should_reorder_items_when_drop_event_occurs(self, draggable_list) -> None:
         """Test dropEvent."""
         mime_data = QMimeData()
         mime_data.setText("Item 1")
@@ -476,7 +534,9 @@ class TestDraggableList:
         draggable_list.dropEvent(event)
         assert not event.isAccepted()
 
-    def test_calculate_drop_position(self, draggable_list) -> None:
+    def test_should_calculate_correct_drop_index_when_drop_position_is_computed(
+        self, draggable_list
+    ) -> None:
         """Test drop position calculation."""
         # Test with a position at the top
         drop_pos = QPoint(10, 5)
@@ -488,12 +548,16 @@ class TestDraggableList:
         position = draggable_list._calculate_drop_position(drop_pos)
         assert position == 2  # len(items) - 1
 
-    def test_refresh_style(self, draggable_list) -> None:
+    def test_should_not_raise_when_list_refresh_style_is_called(
+        self, draggable_list
+    ) -> None:
         """Test refresh_style method."""
         # This method should not raise an exception
         draggable_list.refresh_style()
 
-    def test_on_item_removed(self, draggable_list) -> None:
+    def test_should_remove_item_when_item_removed_signal_is_emitted(
+        self, draggable_list
+    ) -> None:
         """Test on_item_removed callback."""
         # Simulate item removal via signal
         draggable_list._on_item_removed("Item 1")
@@ -503,7 +567,7 @@ class TestDraggableList:
 class TestDraggableListIntegration:
     """Integration tests for DraggableList."""
 
-    def test_signal_chain(self, draggable_list) -> None:
+    def test_should_emit_signal_chain_when_item_is_moved(self, draggable_list) -> None:
         """Test signal chain during operations."""
         signals_received: list[tuple[str, ...]] = []
 
@@ -523,7 +587,9 @@ class TestDraggableListIntegration:
         assert signals_received[0][0] == "moved"
         assert signals_received[1][0] == "order_changed"
 
-    def test_compact_mode_switch(self, draggable_list) -> None:
+    def test_should_switch_all_items_to_compact_when_compact_mode_is_enabled(
+        self, draggable_list
+    ) -> None:
         """Test compact mode switching."""
         # Verify initial state
         assert draggable_list.compact is False
@@ -536,7 +602,9 @@ class TestDraggableListIntegration:
         for widget in draggable_list._item_widgets.values():
             assert widget.compact is True
 
-    def test_icon_color_propagation(self, draggable_list) -> None:
+    def test_should_propagate_icon_color_to_all_items_when_icon_color_is_set(
+        self, draggable_list
+    ) -> None:
         """Test icon color propagation."""
         # Change color
         draggable_list.icon_color = "blue"
@@ -545,7 +613,9 @@ class TestDraggableListIntegration:
         for widget in draggable_list._item_widgets.values():
             assert widget.icon_color == "blue"
 
-    def test_allow_remove_propagation(self, draggable_list) -> None:
+    def test_should_propagate_allow_remove_to_items_when_allow_remove_is_set(
+        self, draggable_list
+    ) -> None:
         """Test allow_remove propagation."""
         # Disable removal
         draggable_list.allow_remove = False

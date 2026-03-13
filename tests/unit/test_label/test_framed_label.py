@@ -31,7 +31,9 @@ pytestmark = pytest.mark.unit
 class TestFramedLabel:
     """Tests for FramedLabel class."""
 
-    def test_framed_label_creation_default(self, qt_widget_cleanup) -> None:
+    def test_should_have_default_properties_when_created_with_defaults(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with default parameters."""
         label = FramedLabel()
 
@@ -42,7 +44,9 @@ class TestFramedLabel:
         assert label.min_width is None
         assert label.min_height is None
 
-    def test_framed_label_creation_with_parameters(self, qt_widget_cleanup) -> None:
+    def test_should_use_custom_properties_when_parameters_are_given(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test creation with custom parameters."""
         label = FramedLabel(
             text="Test Label",
@@ -57,7 +61,9 @@ class TestFramedLabel:
         assert label.min_width == 200
         assert label.min_height == 50
 
-    def test_framed_label_properties(self, qt_widget_cleanup) -> None:
+    def test_should_update_properties_when_setters_are_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test label properties."""
         label = FramedLabel()
 
@@ -83,7 +89,9 @@ class TestFramedLabel:
         assert label.min_width is None
         assert label.min_height is None
 
-    def test_framed_label_signals(self, qt_widget_cleanup) -> None:
+    def test_should_emit_text_changed_signal_when_text_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test label signals."""
         label = FramedLabel()
 
@@ -105,7 +113,9 @@ class TestFramedLabel:
         assert signal_received
         assert received_text == "Signal Test"
 
-    def test_framed_label_size_hints(self, qt_widget_cleanup) -> None:
+    def test_should_return_valid_size_hints_when_text_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test size hint methods."""
         label = FramedLabel(text="Test Label")
 
@@ -116,7 +126,9 @@ class TestFramedLabel:
         assert min_size_hint.width() > 0
         assert min_size_hint.height() > 0
 
-    def test_framed_label_refresh_style(self, qt_widget_cleanup) -> None:
+    def test_should_not_raise_when_refresh_style_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test refresh_style method."""
         label = FramedLabel()
 
@@ -126,7 +138,9 @@ class TestFramedLabel:
         except Exception as e:
             pytest.fail(f"refresh_style() raised an exception: {e}")
 
-    def test_framed_label_alignment_options(self, qt_widget_cleanup) -> None:
+    def test_should_support_all_alignment_options_when_alignment_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test different alignment options."""
         # Test alignment left
         label_left = FramedLabel(alignment=Qt.AlignmentFlag.AlignLeft)
@@ -148,7 +162,9 @@ class TestFramedLabel:
         label_bottom = FramedLabel(alignment=Qt.AlignmentFlag.AlignBottom)
         assert label_bottom.alignment == Qt.AlignmentFlag.AlignBottom
 
-    def test_framed_label_text_changes(self, qt_widget_cleanup) -> None:
+    def test_should_store_any_text_content_when_text_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test text changes."""
         label = FramedLabel()
 
@@ -173,7 +189,9 @@ class TestFramedLabel:
         label.text = special_text
         assert label.text == special_text
 
-    def test_framed_label_style_sheet(self, qt_widget_cleanup) -> None:
+    def test_should_create_without_error_when_style_sheet_is_applied(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test stylesheet application."""
         # Create a label with stylesheet
         style_sheet = "background-color: #FF0000; color: white; border: 2px solid blue;"
@@ -185,7 +203,9 @@ class TestFramedLabel:
         assert label is not None
         assert isinstance(label, FramedLabel)
 
-    def test_framed_label_dimensions(self, qt_widget_cleanup) -> None:
+    def test_should_update_dimensions_when_min_width_and_height_are_set(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test minimum dimensions."""
         label = FramedLabel(min_width=100, min_height=30)
 
@@ -205,14 +225,18 @@ class TestFramedLabel:
         assert label.min_width == -10
         assert label.min_height == -5
 
-    def test_framed_label_property_type(self, qt_widget_cleanup) -> None:
+    def test_should_have_framed_label_type_property_when_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test type property for QSS."""
         label = FramedLabel()
 
         # Verify that the type property is defined
         assert label.property("type") == "FramedLabel"
 
-    def test_framed_label_multiple_instances(self, qt_widget_cleanup) -> None:
+    def test_should_be_independent_when_multiple_instances_are_created(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test multiple instances."""
         # Create multiple instances
         label1 = FramedLabel(text="Label 1")
@@ -230,7 +254,9 @@ class TestFramedLabel:
         assert label2.text == "Label 2"  # Not affected
         assert label3.text == "Label 3"  # Not affected
 
-    def test_framed_label_empty_constructor(self, qt_widget_cleanup) -> None:
+    def test_should_have_empty_text_when_created_without_parameters(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test constructor without parameters."""
         label = FramedLabel()
 
@@ -240,7 +266,9 @@ class TestFramedLabel:
         assert label.min_width is None
         assert label.min_height is None
 
-    def test_framed_label_text_property_changes(self, qt_widget_cleanup) -> None:
+    def test_should_update_text_property_when_text_is_changed(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test text property changes."""
         label = FramedLabel()
 

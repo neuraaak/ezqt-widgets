@@ -39,7 +39,9 @@ class TestThemeIcon:
     # CONSTRUCTION
     # ------------------------------------------------
 
-    def test_theme_icon_creation_default(self, qt_application) -> None:
+    def test_should_have_default_properties_when_created_without_parameters(
+        self, qt_application
+    ) -> None:
         """Test ThemeIcon creation with default parameters."""
         icon = ThemeIcon(QIcon())
 
@@ -48,7 +50,7 @@ class TestThemeIcon:
             not icon.original_icon.isNull() or icon.original_icon.isNull()
         )  # QIcon() is null
 
-    def test_theme_icon_creation_with_path_string(
+    def test_should_accept_path_string_when_created_with_path(
         self, qt_application, mock_icon_path
     ) -> None:
         """Test ThemeIcon creation from a file path string."""
@@ -57,7 +59,7 @@ class TestThemeIcon:
         assert icon.theme == "dark"
         assert isinstance(icon.original_icon, QIcon)
 
-    def test_theme_icon_creation_with_qicon(self, qt_application) -> None:
+    def test_should_accept_qicon_when_created_with_qicon(self, qt_application) -> None:
         """Test ThemeIcon creation from a QIcon instance."""
         source_icon = QIcon()
         icon = ThemeIcon(source_icon)
@@ -65,7 +67,9 @@ class TestThemeIcon:
         assert icon.theme == "dark"
         assert isinstance(icon.original_icon, QIcon)
 
-    def test_theme_icon_creation_with_qpixmap(self, qt_application) -> None:
+    def test_should_accept_qpixmap_when_created_with_qpixmap(
+        self, qt_application
+    ) -> None:
         """Test ThemeIcon creation from a QPixmap instance."""
         pixmap = QPixmap(16, 16)
         pixmap.fill(QColor("red"))
@@ -74,27 +78,31 @@ class TestThemeIcon:
         assert icon.theme == "dark"
         assert isinstance(icon.original_icon, QIcon)
 
-    def test_theme_icon_creation_with_custom_theme(self, qt_application) -> None:
+    def test_should_use_custom_theme_when_created_with_theme_parameter(
+        self, qt_application
+    ) -> None:
         """Test ThemeIcon creation with a custom initial theme."""
         icon = ThemeIcon(QIcon(), theme="light")
 
         assert icon.theme == "light"
 
-    def test_theme_icon_creation_with_dark_color(self, qt_application) -> None:
+    def test_should_accept_dark_color_when_created_with_dark_color_parameter(
+        self, qt_application
+    ) -> None:
         """Test ThemeIcon creation with a custom dark color."""
         icon = ThemeIcon(QIcon(), dark_color="#ff0000")
 
         assert icon.theme == "dark"
 
-    def test_theme_icon_creation_with_both_colors(self, qt_application) -> None:
+    def test_should_store_both_colors_when_created_with_light_and_dark_colors(
+        self, qt_application
+    ) -> None:
         """Test ThemeIcon creation with both dark and light colors specified."""
         icon = ThemeIcon(QIcon(), dark_color="#ffffff", light_color="#000000")
 
         assert icon.theme == "dark"
 
-    def test_theme_icon_raises_type_error_when_source_is_none(
-        self, qt_application
-    ) -> None:
+    def test_should_raise_type_error_when_source_is_none(self, qt_application) -> None:
         """Test ThemeIcon raises TypeError when constructed with None source."""
         with pytest.raises(TypeError):
             ThemeIcon(None)  # type: ignore[arg-type]
@@ -103,7 +111,7 @@ class TestThemeIcon:
     # from_source FACTORY
     # ------------------------------------------------
 
-    def test_theme_icon_from_source_returns_none_when_source_is_none(
+    def test_should_return_none_when_from_source_receives_none(
         self, qt_application
     ) -> None:
         """Test from_source returns None when source is None."""
@@ -111,7 +119,7 @@ class TestThemeIcon:
 
         assert result is None
 
-    def test_theme_icon_from_source_returns_same_instance_when_already_theme_icon(
+    def test_should_return_same_instance_when_source_is_already_theme_icon(
         self, qt_application
     ) -> None:
         """Test from_source returns the same instance when source is already a ThemeIcon."""
@@ -120,7 +128,7 @@ class TestThemeIcon:
 
         assert result is original
 
-    def test_theme_icon_from_source_creates_instance_from_qicon(
+    def test_should_create_instance_from_qicon_when_from_source_is_called(
         self, qt_application
     ) -> None:
         """Test from_source creates a ThemeIcon from a QIcon."""
@@ -130,7 +138,7 @@ class TestThemeIcon:
         assert result is not None
         assert isinstance(result, ThemeIcon)
 
-    def test_theme_icon_from_source_creates_instance_from_qpixmap(
+    def test_should_create_instance_from_qpixmap_when_from_source_is_called(
         self, qt_application
     ) -> None:
         """Test from_source creates a ThemeIcon from a QPixmap."""
@@ -141,7 +149,7 @@ class TestThemeIcon:
         assert result is not None
         assert isinstance(result, ThemeIcon)
 
-    def test_theme_icon_from_source_creates_instance_from_path(
+    def test_should_create_instance_from_path_when_from_source_is_called(
         self, qt_application, mock_icon_path
     ) -> None:
         """Test from_source creates a ThemeIcon from a file path string."""
@@ -150,7 +158,7 @@ class TestThemeIcon:
         assert result is not None
         assert isinstance(result, ThemeIcon)
 
-    def test_theme_icon_from_source_respects_theme_argument(
+    def test_should_respect_theme_argument_when_from_source_is_called(
         self, qt_application
     ) -> None:
         """Test from_source passes the theme argument through to the new instance."""
@@ -163,21 +171,27 @@ class TestThemeIcon:
     # set_theme / theme property
     # ------------------------------------------------
 
-    def test_theme_icon_set_theme_dark(self, qt_application) -> None:
+    def test_should_set_dark_theme_when_set_theme_is_called_with_dark(
+        self, qt_application
+    ) -> None:
         """Test set_theme switches to dark theme."""
         icon = ThemeIcon(QIcon(), theme="light")
         icon.set_theme("dark")
 
         assert icon.theme == "dark"
 
-    def test_theme_icon_set_theme_light(self, qt_application) -> None:
+    def test_should_set_light_theme_when_set_theme_is_called_with_light(
+        self, qt_application
+    ) -> None:
         """Test set_theme switches to light theme."""
         icon = ThemeIcon(QIcon(), theme="dark")
         icon.set_theme("light")
 
         assert icon.theme == "light"
 
-    def test_theme_icon_set_theme_invalid_emits_warning(self, qt_application) -> None:
+    def test_should_emit_warning_when_set_theme_is_called_with_invalid_value(
+        self, qt_application
+    ) -> None:
         """Test set_theme with invalid value emits a UserWarning and does not update theme."""
         icon = ThemeIcon(QIcon(), theme="dark")
 
@@ -190,7 +204,7 @@ class TestThemeIcon:
         assert "invalid theme" in str(captured[0].message).lower()
         assert icon.theme == "dark"  # Theme must remain unchanged
 
-    def test_theme_icon_theme_property_setter_invalid_value_keeps_previous_theme(
+    def test_should_keep_previous_theme_when_theme_setter_receives_invalid_value(
         self, qt_application
     ) -> None:
         """Test theme property setter with invalid value keeps previous theme unchanged."""
@@ -206,7 +220,7 @@ class TestThemeIcon:
     # original_icon property
     # ------------------------------------------------
 
-    def test_theme_icon_original_icon_setter_accepts_qicon(
+    def test_should_accept_qicon_when_original_icon_setter_is_called(
         self, qt_application
     ) -> None:
         """Test original_icon setter accepts a QIcon and updates internal state."""
@@ -216,7 +230,7 @@ class TestThemeIcon:
 
         assert isinstance(icon.original_icon, QIcon)
 
-    def test_theme_icon_original_icon_setter_accepts_qpixmap(
+    def test_should_accept_qpixmap_when_original_icon_setter_is_called(
         self, qt_application
     ) -> None:
         """Test original_icon setter accepts a QPixmap."""
@@ -227,7 +241,7 @@ class TestThemeIcon:
 
         assert isinstance(icon.original_icon, QIcon)
 
-    def test_theme_icon_original_icon_setter_raises_on_none(
+    def test_should_raise_when_original_icon_setter_receives_none(
         self, qt_application
     ) -> None:
         """Test original_icon setter raises TypeError when given None."""
@@ -240,7 +254,7 @@ class TestThemeIcon:
     # _normalize_color
     # ------------------------------------------------
 
-    def test_theme_icon_normalize_color_returns_none_for_none_input(
+    def test_should_return_none_when_normalize_color_receives_none(
         self, qt_application
     ) -> None:
         """Test _normalize_color returns None when input is None."""
@@ -248,7 +262,7 @@ class TestThemeIcon:
 
         assert result is None
 
-    def test_theme_icon_normalize_color_returns_valid_qcolor_for_valid_qcolor(
+    def test_should_return_valid_qcolor_when_normalize_color_receives_valid_qcolor(
         self, qt_application
     ) -> None:
         """Test _normalize_color returns the QColor when input is a valid QColor."""
@@ -258,7 +272,7 @@ class TestThemeIcon:
         assert result is not None
         assert result == color
 
-    def test_theme_icon_normalize_color_returns_none_for_invalid_qcolor(
+    def test_should_return_none_when_normalize_color_receives_invalid_qcolor(
         self, qt_application
     ) -> None:
         """Test _normalize_color returns None when input is an invalid QColor."""
@@ -267,14 +281,16 @@ class TestThemeIcon:
 
         assert result is None
 
-    def test_theme_icon_normalize_color_parses_hex_string(self, qt_application) -> None:
+    def test_should_parse_hex_string_when_normalize_color_receives_hex_string(
+        self, qt_application
+    ) -> None:
         """Test _normalize_color parses a valid hex color string."""
         result = ThemeIcon._normalize_color("#ff5500")
 
         assert result is not None
         assert result.isValid()
 
-    def test_theme_icon_normalize_color_returns_none_for_invalid_string(
+    def test_should_return_none_when_normalize_color_receives_invalid_string(
         self, qt_application
     ) -> None:
         """Test _normalize_color returns None and emits warning for invalid color string."""
@@ -286,7 +302,7 @@ class TestThemeIcon:
         assert len(captured) == 1
         assert issubclass(captured[0].category, UserWarning)
 
-    def test_theme_icon_normalize_color_parses_named_color(
+    def test_should_parse_named_color_when_normalize_color_receives_color_name(
         self, qt_application
     ) -> None:
         """Test _normalize_color parses a valid named color string."""
@@ -299,7 +315,7 @@ class TestThemeIcon:
     # _update_icon (null icon guard)
     # ------------------------------------------------
 
-    def test_theme_icon_update_icon_on_null_icon_does_not_raise(
+    def test_should_not_raise_when_update_icon_is_called_with_null_icon(
         self, qt_application
     ) -> None:
         """Test _update_icon does not raise when original icon is null (QIcon())."""
@@ -310,7 +326,7 @@ class TestThemeIcon:
         icon.set_theme("light")
         icon.set_theme("dark")
 
-    def test_theme_icon_update_icon_on_pixmap_icon_does_not_raise(
+    def test_should_not_raise_when_update_icon_is_called_with_pixmap_icon(
         self, qt_application, mock_icon_path
     ) -> None:
         """Test _update_icon does not raise when icon has a real pixmap."""
@@ -323,7 +339,7 @@ class TestThemeIcon:
     # _resolve_theme_colors edge cases
     # ------------------------------------------------
 
-    def test_theme_icon_resolve_colors_defaults_to_white_black_when_no_colors(
+    def test_should_default_to_white_and_black_when_no_colors_are_set(
         self, qt_application
     ) -> None:
         """Test _resolve_theme_colors defaults to white/black when no colors given."""
@@ -332,7 +348,7 @@ class TestThemeIcon:
         # Dark color should be white, light color should be black (project defaults)
         assert icon._dark_color == QColor("white")
 
-    def test_theme_icon_resolve_colors_auto_inverts_light_when_dark_only(
+    def test_should_auto_invert_to_light_when_only_dark_color_is_set(
         self, qt_application
     ) -> None:
         """Test _resolve_theme_colors auto-inverts light color when only dark is given."""
@@ -341,7 +357,7 @@ class TestThemeIcon:
         # Light color must be the inversion of white = black
         assert icon._light_color == QColor(0, 0, 0, 255)
 
-    def test_theme_icon_resolve_colors_auto_inverts_dark_when_light_only(
+    def test_should_auto_invert_to_dark_when_only_light_color_is_set(
         self, qt_application
     ) -> None:
         """Test _resolve_theme_colors auto-inverts dark color when only light is given."""

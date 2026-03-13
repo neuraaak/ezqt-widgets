@@ -31,7 +31,7 @@ pytestmark = pytest.mark.unit
 class TestCircularTimer:
     """Test cases for CircularTimer widget."""
 
-    def test_circular_timer_creation_default(self, qt_application) -> None:
+    def test_should_have_default_properties_when_created(self, qt_application) -> None:
         """Test CircularTimer creation with default parameters."""
         timer = CircularTimer()
 
@@ -44,7 +44,9 @@ class TestCircularTimer:
         assert timer.pen_width is None
         assert not timer.loop
 
-    def test_circular_timer_creation_custom(self, qt_application) -> None:
+    def test_should_use_custom_parameters_when_created_with_custom_values(
+        self, qt_application
+    ) -> None:
         """Test CircularTimer creation with custom parameters."""
         timer = CircularTimer(
             duration=10000,
@@ -62,21 +64,27 @@ class TestCircularTimer:
         assert timer.pen_width == 5.0
         assert timer.loop
 
-    def test_circular_timer_set_duration(self, qt_application) -> None:
+    def test_should_update_duration_when_set_duration_is_called(
+        self, qt_application
+    ) -> None:
         """Test setting duration property."""
         timer = CircularTimer()
         timer.duration = 8000
 
         assert timer.duration == 8000
 
-    def test_circular_timer_set_elapsed(self, qt_application) -> None:
+    def test_should_update_elapsed_when_set_elapsed_is_called(
+        self, qt_application
+    ) -> None:
         """Test setting elapsed property."""
         timer = CircularTimer()
         timer.elapsed = 2000
 
         assert timer.elapsed == 2000
 
-    def test_circular_timer_start_stop(self, qt_application) -> None:
+    def test_should_start_and_stop_timer_when_start_and_stop_are_called(
+        self, qt_application
+    ) -> None:
         """Test starting and stopping the timer."""
         timer = CircularTimer(duration=1000)
 
@@ -88,7 +96,7 @@ class TestCircularTimer:
         timer.stopTimer()
         assert not timer.running
 
-    def test_circular_timer_reset(self, qt_application) -> None:
+    def test_should_reset_timer_when_reset_is_called(self, qt_application) -> None:
         """Test resetting the timer."""
         timer = CircularTimer()
         timer.elapsed = 3000
@@ -97,7 +105,9 @@ class TestCircularTimer:
         assert timer.elapsed == 0
         assert not timer.running
 
-    def test_circular_timer_signals(self, qt_application) -> None:
+    def test_should_emit_timeout_signal_when_timer_completes(
+        self, qt_application
+    ) -> None:
         """Test timer signals."""
         timer = CircularTimer(duration=100)
         clicked_called = False
@@ -128,7 +138,9 @@ class TestCircularTimer:
         timer.resetTimer()
         assert reset_called
 
-    def test_circular_timer_color_properties(self, qt_application) -> None:
+    def test_should_update_color_when_color_properties_are_set(
+        self, qt_application
+    ) -> None:
         """Test color property setters."""
         timer = CircularTimer()
 
@@ -140,7 +152,9 @@ class TestCircularTimer:
         timer.node_color = "#0000ff"
         assert timer.node_color == QColor("#0000ff")
 
-    def test_circular_timer_ring_width_properties(self, qt_application) -> None:
+    def test_should_update_ring_width_when_ring_width_properties_are_set(
+        self, qt_application
+    ) -> None:
         """Test ring width property setters."""
         timer = CircularTimer()
 
@@ -152,14 +166,18 @@ class TestCircularTimer:
         timer.pen_width = 3.0
         assert timer.pen_width == 3.0
 
-    def test_circular_timer_loop_property(self, qt_application) -> None:
+    def test_should_update_loop_flag_when_loop_property_is_set(
+        self, qt_application
+    ) -> None:
         """Test loop property setter."""
         timer = CircularTimer()
 
         timer.loop = True
         assert timer.loop
 
-    def test_circular_timer_size_hints(self, qt_widget_cleanup) -> None:
+    def test_should_return_valid_size_hints_when_queried(
+        self, qt_widget_cleanup
+    ) -> None:
         """Test size hint methods."""
         timer = CircularTimer()
 

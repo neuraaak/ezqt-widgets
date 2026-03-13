@@ -16,18 +16,11 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # Standard library imports
 import sys
-from pathlib import Path
 
 # Third-party imports
 import pytest
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication
-
-# Ensure src/ is on sys.path for imports during tests
-project_root = Path(__file__).resolve().parents[1]
-src_path = project_root / "src"
-if src_path.exists() and str(src_path) not in sys.path:
-    sys.path.insert(0, str(src_path))
 
 # ///////////////////////////////////////////////////////////////
 # FIXTURES

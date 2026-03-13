@@ -1,0 +1,10 @@
+# ///////////////////////////////////////////////////////////////
+# VERSION - Package version metadata
+# Project: ezqt_widgets
+# ///////////////////////////////////////////////////////////////
+
+"""Centralized package version metadata."""
+
+from __future__ import annotations
+
+__version__ = "2.5.4"
