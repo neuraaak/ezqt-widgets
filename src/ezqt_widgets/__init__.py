@@ -99,7 +99,8 @@ __description__ = (
     "Provides advanced, reusable, and styled graphical components "
     "to facilitate the development of modern and ergonomic interfaces."
 )
-__python_requires__ = ">=3.10"
+__python_requires__ = ">=3.11"
+__license__ = "MIT"
 __keywords__ = [
     "qt",
     "pyside6",
@@ -117,9 +118,9 @@ __repository__ = "https://github.com/neuraaak/ezqt-widgets"
 # PYTHON VERSION CHECK
 # ///////////////////////////////////////////////////////////////
 
-if sys.version_info < (3, 10):  # noqa: UP036
+if sys.version_info < (3, 11):  # noqa: UP036
     raise RuntimeError(
-        f"ezqt_widgets {__version__} requires Python 3.10 or higher. "
+        f"ezqt_widgets {__version__} requires Python 3.11 or higher. "
         f"Current version: {sys.version}"
     )
 
