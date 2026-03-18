@@ -401,7 +401,7 @@ wheels = [
 
 [[package]]
 name = "ezqt-widgets"
-version = "2.5.3"
+version = "2.5.5"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
