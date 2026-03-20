@@ -343,7 +343,7 @@ class ToggleSwitch(QWidget):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget style.
 
         Useful after dynamic stylesheet changes.

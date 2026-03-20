@@ -187,11 +187,11 @@ class TestLoaderButton:
             signal_started = True
 
         button.loadingStarted.connect(on_loading_started)
-        button.start_loading()
+        button.startLoading()
 
         # Verify that the signal was emitted
         # Note: In a test context, signals may not be emitted immediately
-        # Let's verify that start_loading() works instead
+        # Let's verify that startLoading() works instead
         assert button.is_loading
 
         # Test loadingFinished signal
@@ -202,10 +202,10 @@ class TestLoaderButton:
             signal_finished = True
 
         button.loadingFinished.connect(on_loading_finished)
-        button.stop_loading(success=True)
+        button.stopLoading(success=True)
 
         # Verify that the signal was emitted
-        # Let's verify that stop_loading() works instead
+        # Let's verify that stopLoading() works instead
         assert not button.is_loading
 
         # Test loadingFailed signal
@@ -218,10 +218,10 @@ class TestLoaderButton:
             error_message = message
 
         button.loadingFailed.connect(on_loading_failed)
-        button.stop_loading(success=False, error_message="Test error")
+        button.stopLoading(success=False, error_message="Test error")
 
         # Verify that the signal was emitted
-        # Let's verify that stop_loading() with error works instead
+        # Let's verify that stopLoading() with error works instead
         assert not button.is_loading
 
     def test_should_show_loading_state_when_start_loading_is_called(
@@ -234,7 +234,7 @@ class TestLoaderButton:
         assert not button.is_loading
 
         # Start loading
-        button.start_loading()
+        button.startLoading()
 
         # Verify loading state
         assert button.is_loading
@@ -243,12 +243,12 @@ class TestLoaderButton:
     def test_should_show_success_state_when_stop_loading_is_called_with_success(
         self, qt_widget_cleanup
     ) -> None:
-        """Test stop_loading with success."""
+        """Test stopLoading with success."""
         button = LoaderButton()
 
         # Start then stop loading
-        button.start_loading()
-        button.stop_loading(success=True)
+        button.startLoading()
+        button.stopLoading(success=True)
 
         # Verify final state
         assert not button.is_loading
@@ -257,12 +257,12 @@ class TestLoaderButton:
     def test_should_show_error_state_when_stop_loading_is_called_with_error(
         self, qt_widget_cleanup
     ) -> None:
-        """Test stop_loading with error."""
+        """Test stopLoading with error."""
         button = LoaderButton()
 
         # Start then stop loading with error
-        button.start_loading()
-        button.stop_loading(success=False, error_message="Test error")
+        button.startLoading()
+        button.stopLoading(success=False, error_message="Test error")
 
         # Verify final state
         assert not button.is_loading
@@ -275,8 +275,8 @@ class TestLoaderButton:
         button = LoaderButton(auto_reset=False)
 
         # Start and stop loading
-        button.start_loading()
-        button.stop_loading(success=True)
+        button.startLoading()
+        button.stopLoading(success=True)
 
         # Verify that success state persists
         assert not button.is_loading
@@ -305,14 +305,14 @@ class TestLoaderButton:
     def test_should_not_raise_when_refresh_style_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test refresh_style method."""
+        """Test refreshStyle method."""
         button = LoaderButton()
 
         # Method should not raise an exception
         try:
-            button.refresh_style()
+            button.refreshStyle()
         except Exception as e:
-            pytest.fail(f"refresh_style() raised an exception: {e}")
+            pytest.fail(f"refreshStyle() raised an exception: {e}")
 
     def test_should_have_minimum_dimensions_when_instantiated(
         self, qt_widget_cleanup
@@ -364,7 +364,7 @@ class TestLoaderButton:
         button = LoaderButton()
 
         # Start loading
-        button.start_loading()
+        button.startLoading()
 
         # Create a real Qt mouse event
         event = QMouseEvent(
@@ -459,14 +459,184 @@ class TestLoaderButton:
         assert not button.is_loading
 
         # Transition to loading
-        button.start_loading()
+        button.startLoading()
         assert button.is_loading
 
         # Transition to success
-        button.stop_loading(success=True)
+        button.stopLoading(success=True)
         assert not button.is_loading
 
         # Transition to error
-        button.start_loading()
-        button.stop_loading(success=False, error_message="Error")
+        button.startLoading()
+        button.stopLoading(success=False, error_message="Error")
         assert not button.is_loading
+
+    # ------------------------------------------------
+    # New feature tests
+    # ------------------------------------------------
+
+    def test_should_use_custom_success_text_when_provided(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that custom success_text is displayed after successful loading."""
+        button = LoaderButton(success_text="Done!")
+
+        assert button.success_text == "Done!"
+
+        button.startLoading()
+        button.stopLoading(success=True)
+
+        assert button.text_label.text() == "Done!"
+
+    def test_should_use_custom_error_text_when_provided(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that custom error_text is used in the error label."""
+        button = LoaderButton(error_text="Oops")
+
+        assert button.error_text == "Oops"
+
+        button.startLoading()
+        button.stopLoading(success=False)
+
+        assert button.text_label.text() == "Oops"
+
+    def test_should_append_error_message_to_error_text_when_message_provided(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that error_message is appended to error_text."""
+        button = LoaderButton(error_text="Fail")
+
+        button.startLoading()
+        button.stopLoading(success=False, error_message="timeout")
+
+        assert button.text_label.text() == "Fail: timeout"
+
+    def test_should_update_success_text_property_when_setter_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test success_text property getter/setter."""
+        button = LoaderButton()
+
+        button.success_text = "All good"
+        assert button.success_text == "All good"
+
+    def test_should_update_error_text_property_when_setter_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test error_text property getter/setter."""
+        button = LoaderButton()
+
+        button.error_text = "Bad"
+        assert button.error_text == "Bad"
+
+    def test_should_use_custom_icon_size_when_provided(self, qt_widget_cleanup) -> None:
+        """Test that icon_size parameter is stored correctly."""
+        button = LoaderButton(icon_size=QSize(24, 24))
+
+        assert button.icon_size == QSize(24, 24)
+
+    def test_should_update_icon_size_property_when_setter_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test icon_size property getter/setter."""
+        button = LoaderButton()
+
+        button.icon_size = QSize(32, 32)
+        assert button.icon_size == QSize(32, 32)
+
+    def test_should_accept_tuple_icon_size_when_tuple_is_given(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that icon_size can be set via a tuple."""
+        button = LoaderButton(icon_size=(20, 20))
+
+        assert button.icon_size == QSize(20, 20)
+
+    def test_should_ignore_progress_when_not_loading(self, qt_widget_cleanup) -> None:
+        """Test that setting progress outside loading state is silently ignored."""
+        button = LoaderButton()
+
+        assert not button.is_loading
+        button.progress = 50
+        assert button.progress == 0  # unchanged
+
+    def test_should_update_progress_when_loading(self, qt_widget_cleanup) -> None:
+        """Test that progress is updated and clamped during loading."""
+        button = LoaderButton()
+        button.startLoading()
+
+        button.progress = 50
+        assert button.progress == 50
+
+        # Clamp above 100
+        button.progress = 150
+        assert button.progress == 100
+
+        # Clamp below 0
+        button.progress = -10
+        assert button.progress == 0
+
+    def test_should_emit_progress_changed_signal_when_progress_changes(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that progressChanged is emitted when progress changes during loading."""
+        button = LoaderButton()
+        button.startLoading()
+
+        received: list[int] = []
+        button.progressChanged.connect(received.append)
+
+        button.progress = 42
+        assert 42 in received
+
+    def test_should_show_percentage_label_when_progress_is_set_during_loading(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that text_label shows the percentage during loading."""
+        button = LoaderButton()
+        button.startLoading()
+
+        button.progress = 75
+        assert button.text_label.text() == "75%"
+
+    def test_should_reset_to_original_state_when_reset_loading_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that resetLoading() restores the button to its original state."""
+        button = LoaderButton(text="Go", auto_reset=False)
+        button.startLoading()
+
+        assert button.is_loading
+
+        button.stopLoading(success=True)
+        # Button is in success state; resetLoading brings it back to original
+        button.resetLoading()
+
+        assert not button.is_loading
+        assert button.text_label.text() == "Go"
+
+    def test_should_not_raise_when_cleanup_timer_called_without_timer(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that _cleanup_timer is safe when no timer exists."""
+        button = LoaderButton()
+
+        # No timer active — should not raise
+        try:
+            button._cleanup_timer()
+        except Exception as e:
+            pytest.fail(f"_cleanup_timer() raised an exception: {e}")
+
+    def test_should_stop_timer_when_cleanup_timer_called_during_loading(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that _cleanup_timer stops the active timer."""
+        button = LoaderButton()
+        button.startLoading()
+
+        assert button._animation_timer is not None
+
+        button._cleanup_timer()
+
+        assert button._animation_timer is None

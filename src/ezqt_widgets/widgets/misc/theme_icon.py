@@ -63,7 +63,7 @@ class ThemeIcon(QIcon):
         >>> # Factory method from any source (QIcon, QPixmap, path, or None)
         >>> themed = ThemeIcon.from_source("icon.svg", theme="light")
         >>> # Adapt to a new theme dynamically
-        >>> icon.set_theme("light")
+        >>> icon.setTheme("light")
     """
 
     # ///////////////////////////////////////////////////////////////
@@ -181,7 +181,7 @@ class ThemeIcon(QIcon):
             light_color=light_color,
         )
 
-    def set_theme(self, theme: str) -> None:
+    def setTheme(self, theme: str) -> None:
         """Update the icon color for the given theme.
 
         Convenience method equivalent to setting the :attr:`theme` property.

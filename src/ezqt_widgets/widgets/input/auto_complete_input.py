@@ -198,7 +198,7 @@ class AutoCompleteInput(QLineEdit):
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def add_suggestion(self, suggestion: str) -> None:
+    def addSuggestion(self, suggestion: str) -> None:
         """Add a suggestion to the list.
 
         Args:
@@ -208,7 +208,7 @@ class AutoCompleteInput(QLineEdit):
             self._suggestions.append(suggestion)
             self._model.setStringList(self._suggestions)
 
-    def remove_suggestion(self, suggestion: str) -> None:
+    def removeSuggestion(self, suggestion: str) -> None:
         """Remove a suggestion from the list.
 
         Args:
@@ -218,7 +218,7 @@ class AutoCompleteInput(QLineEdit):
             self._suggestions.remove(suggestion)
             self._model.setStringList(self._suggestions)
 
-    def clear_suggestions(self) -> None:
+    def clearSuggestions(self) -> None:
         """Clear all suggestions."""
         self._suggestions.clear()
         self._model.setStringList(self._suggestions)
@@ -227,7 +227,7 @@ class AutoCompleteInput(QLineEdit):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget's style.
 
         Useful after dynamic stylesheet changes.

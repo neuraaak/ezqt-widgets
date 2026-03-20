@@ -185,9 +185,9 @@ class TestDraggableItem:
     def test_should_not_raise_when_item_refresh_style_is_called(
         self, draggable_item
     ) -> None:
-        """Test refresh_style method."""
+        """Test refreshStyle method."""
         # This method should not raise an exception
-        draggable_item.refresh_style()
+        draggable_item.refreshStyle()
 
 
 class TestDraggableList:
@@ -307,7 +307,7 @@ class TestDraggableList:
 
         draggable_list.itemAdded.connect(callback)
 
-        draggable_list.add_item("new_item", "New Item")
+        draggable_list.addItem("new_item", "New Item")
 
         assert draggable_list.item_count == initial_count + 1
         assert "new_item" in draggable_list._items
@@ -319,7 +319,7 @@ class TestDraggableList:
     ) -> None:
         """Test adding an already present item."""
         initial_count = draggable_list.item_count
-        draggable_list.add_item("Item 1", "Item 1")  # Already present
+        draggable_list.addItem("Item 1", "Item 1")  # Already present
         assert draggable_list.item_count == initial_count  # No addition
 
     def test_should_remove_item_when_remove_item_is_called(
@@ -339,7 +339,7 @@ class TestDraggableList:
 
         draggable_list.itemRemoved.connect(callback)
 
-        result = draggable_list.remove_item("Item 2")
+        result = draggable_list.removeItem("Item 2")
 
         assert result is True
         assert draggable_list.item_count == initial_count - 1
@@ -352,7 +352,7 @@ class TestDraggableList:
     ) -> None:
         """Test removing a non-existent item."""
         initial_count = draggable_list.item_count
-        result = draggable_list.remove_item("inexistant")
+        result = draggable_list.removeItem("inexistant")
         assert result is False
         assert draggable_list.item_count == initial_count
 
@@ -372,7 +372,7 @@ class TestDraggableList:
 
         draggable_list.orderChanged.connect(callback)
 
-        draggable_list.clear_items()
+        draggable_list.clearItems()
 
         assert draggable_list.item_count == 0
         assert len(draggable_list._items) == 0
@@ -393,7 +393,7 @@ class TestDraggableList:
 
         draggable_list.itemMoved.connect(callback)
 
-        result = draggable_list.move_item("Item 1", 2)
+        result = draggable_list.moveItem("Item 1", 2)
 
         assert result is True
         assert draggable_list._items == ["Item 2", "Item 3", "Item 1"]
@@ -404,7 +404,7 @@ class TestDraggableList:
     ) -> None:
         """Test moving an item to the same position."""
         original_items = draggable_list._items.copy()
-        result = draggable_list.move_item("Item 1", 0)
+        result = draggable_list.moveItem("Item 1", 0)
         assert result is True
         assert draggable_list._items == original_items
 
@@ -412,19 +412,19 @@ class TestDraggableList:
         self, draggable_list
     ) -> None:
         """Test moving a non-existent item."""
-        result = draggable_list.move_item("inexistant", 1)
+        result = draggable_list.moveItem("inexistant", 1)
         assert result is False
 
     def test_should_return_index_when_item_exists(self, draggable_list) -> None:
         """Test getting an item's position."""
-        position = draggable_list.get_item_position("Item 2")
+        position = draggable_list.getItemPosition("Item 2")
         assert position == 1
 
     def test_should_return_minus_one_when_item_is_not_found(
         self, draggable_list
     ) -> None:
         """Test getting position of a non-existent item."""
-        position = draggable_list.get_item_position("inexistant")
+        position = draggable_list.getItemPosition("inexistant")
         assert position == -1
 
     def test_should_return_valid_size_when_list_size_hint_is_called(
@@ -551,9 +551,9 @@ class TestDraggableList:
     def test_should_not_raise_when_list_refresh_style_is_called(
         self, draggable_list
     ) -> None:
-        """Test refresh_style method."""
+        """Test refreshStyle method."""
         # This method should not raise an exception
-        draggable_list.refresh_style()
+        draggable_list.refreshStyle()
 
     def test_should_remove_item_when_item_removed_signal_is_emitted(
         self, draggable_list
@@ -581,7 +581,7 @@ class TestDraggableListIntegration:
         draggable_list.orderChanged.connect(on_order_changed)
 
         # Move an item
-        draggable_list.move_item("Item 1", 2)
+        draggable_list.moveItem("Item 1", 2)
 
         assert len(signals_received) == 2
         assert signals_received[0][0] == "moved"

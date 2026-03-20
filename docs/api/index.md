@@ -1,202 +1,67 @@
 # API Reference
 
-Complete API reference for **EzQt Widgets** library.
+Complete parameter-level documentation for all public classes in ezqt_widgets 2.6.0.
 
-## Overview
-
-The EzQt Widgets API provides **16 specialized Qt widgets** organized into **4 modules**. All widgets are fully typed, support Qt signals, and can be styled with QSS (Qt Style Sheets).
-
-## Quick Reference
-
-| Component           | Description                    | Documentation                          |
-| ------------------- | ------------------------------ | -------------------------------------- |
-| [Button](button.md) | Date, icon, and loader buttons | Specialized button widgets             |
-| [Input](input.md)   | Advanced input fields          | Auto-complete, search, password        |
-| [Label](label.md)   | Interactive label widgets      | Tags, hover effects, status indicators |
-| [Misc](misc.md)     | Utility widgets                | Timers, drag-drop, toggles, selectors  |
-
-## Import Examples
-
-All widgets can be imported directly from the package:
+All classes are importable directly from the top-level package:
 
 ```python
-from ezqt_widgets import ToggleSwitch, DateButton, AutoCompleteInput
-```
-
-Or from submodules:
-
-```python
-from ezqt_widgets.button import DateButton
-from ezqt_widgets.input import AutoCompleteInput
-from ezqt_widgets.label import IndicatorLabel
-from ezqt_widgets.misc import ToggleSwitch
+from ezqt_widgets import ClassName
 ```
 
 ---
 
-## Modules
+## Button
 
-| Module              | Widgets                                                                                           | Description                                                     |
-| ------------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| [Button](button.md) | `DateButton`, `DatePickerDialog`, `IconButton`, `LoaderButton`                                    | Specialized buttons with calendar, icons and loading animations |
-| [Input](input.md)   | `AutoCompleteInput`, `PasswordInput`, `SearchInput`, `TabReplaceTextEdit`                         | Input fields with auto-completion, search and advanced editing  |
-| [Label](label.md)   | `ClickableTagLabel`, `FramedLabel`, `HoverLabel`, `IndicatorLabel`                                | Interactive labels with tags, hover effects and LED indicators  |
-| [Misc](misc.md)     | `CircularTimer`, `DraggableList`, `DraggableItem`, `OptionSelector`, `ToggleIcon`, `ToggleSwitch` | Utility widgets: timers, drag & drop, toggles, selectors        |
+| Class | Base class | Description |
+| --- | --- | --- |
+| [`DateButton`](button.md#datebutton) | `QToolButton` | Button displaying a date; opens calendar on click |
+| [`DatePickerDialog`](button.md#datepickerdialog) | `QDialog` | Modal calendar dialog |
+| [`IconButton`](button.md#iconbutton) | `QToolButton` | Button with icon from any source and optional text |
+| [`LoaderButton`](button.md#loaderbutton) | `QToolButton` | Button with animated spinner and state management |
 
----
+## Input
 
-## API Design Principles
+| Class | Base class | Description |
+| --- | --- | --- |
+| [`AutoCompleteInput`](input.md#autocompleteinput) | `QLineEdit` | Text input with configurable auto-completion |
+| [`PasswordInput`](input.md#passwordinput) | `QWidget` | Password field with strength bar and visibility toggle |
+| [`SearchInput`](input.md#searchinput) | `QLineEdit` | Search field with keyboard-navigable history |
+| [`TabReplaceTextEdit`](input.md#tabreplacetextedit) | `QPlainTextEdit` | Text editor that sanitizes pasted tabs |
 
-### Type Safety
+## Label
 
-EzQt Widgets provides complete type hints for all public APIs:
+| Class | Base class | Description |
+| --- | --- | --- |
+| [`ClickableTagLabel`](label.md#clickabletaglabel) | `QFrame` | Toggleable tag label with signals |
+| [`FramedLabel`](label.md#framedlabel) | `QFrame` | QLabel inside a QFrame for advanced styling |
+| [`HoverLabel`](label.md#hoverlabel) | `QLabel` | Label that shows a floating icon on hover |
+| [`IndicatorLabel`](label.md#indicatorlabel) | `QFrame` | Status indicator with a colored LED |
 
-- **Full type annotations** - Python 3.10+ type hints throughout
-- **IDE support** - Excellent auto-completion and error detection
-- **Type checking** - Compatible with mypy, pyright, and other type checkers
-- **Runtime validation** - Type hints used for parameter validation
+## Misc
 
-```python
-from ezqt_widgets import DateButton, ToggleSwitch
-from PySide6.QtCore import QDate
-
-# Type-safe widget creation
-date_btn: DateButton = DateButton(placeholder="Select date")
-switch: ToggleSwitch = ToggleSwitch(checked=True)
-
-# Type-safe signal connections
-def handle_date(date: QDate) -> None:
-    print(f"Date: {date.toString()}")
-
-date_btn.dateChanged.connect(handle_date)
-```
-
-### Qt Integration
-
-Seamless integration with PySide6 and Qt framework:
-
-- **Native Qt Signals** - Standard Qt signal/slot mechanism
-- **QWidget inheritance** - All widgets inherit from Qt base classes
-- **Qt properties** - Widgets expose Qt properties for binding
-- **Event handling** - Standard Qt event system support
-
-```python
-from ezqt_widgets import ToggleSwitch
-from PySide6.QtCore import Signal, QObject
-
-class MyController(QObject):
-    stateChanged = Signal(bool)
-
-    def __init__(self):
-        super().__init__()
-        self.switch = ToggleSwitch()
-        self.switch.toggled.connect(self.stateChanged.emit)
-```
-
-### QSS Customization
-
-Full Qt stylesheet support for visual customization:
-
-- **QSS styling** - Complete Qt stylesheet customization
-- **Pseudo-states** - Support for `:hover`, `:pressed`, `:disabled`, etc.
-- **Custom properties** - Widgets can be styled with custom QSS properties
-- **Theme support** - Easy to create custom themes
-
-```python
-from ezqt_widgets import DateButton
-
-date_btn = DateButton()
-date_btn.setStyleSheet("""
-    DateButton {
-        background-color: #3498db;
-        color: white;
-        border-radius: 8px;
-        padding: 10px 20px;
-    }
-    DateButton:hover {
-        background-color: #2980b9;
-    }
-""")
-```
-
-### Animation Support
-
-Smooth animations with configurable easing curves:
-
-- **QPropertyAnimation** - Built-in property animations
-- **Easing curves** - Configurable easing functions
-- **Duration control** - Adjustable animation timing
-- **Performance** - Optimized for smooth 60 FPS animations
-
-```python
-from ezqt_widgets import ToggleSwitch
-from PySide6.QtCore import QEasingCurve
-
-switch = ToggleSwitch(
-    animation_duration=300,  # milliseconds
-    animation_curve=QEasingCurve.Type.OutCubic
-)
-```
+| Class | Base class | Description |
+| --- | --- | --- |
+| [`CircularTimer`](misc.md#circulartimer) | `QWidget` | Animated circular arc timer |
+| [`DraggableItem`](misc.md#draggableitem) | `QFrame` | Single draggable item for DraggableList |
+| [`DraggableList`](misc.md#draggablelist) | `QWidget` | Scrollable list with drag-and-drop reordering |
+| [`OptionSelector`](misc.md#optionselector) | `QFrame` | Animated single-selection option bar |
+| [`ThemeIcon`](misc.md#themeicon) | `QIcon` | Theme-aware icon that adapts color to dark/light mode |
+| [`ToggleIcon`](misc.md#toggleicon) | `QLabel` | Label toggling between two icons |
+| [`ToggleSwitch`](misc.md#toggleswitch) | `QWidget` | Animated toggle switch |
 
 ---
 
-## Quick Start Example
+## Type Aliases
 
-```python
-from PySide6.QtWidgets import QApplication
-from ezqt_widgets import ToggleSwitch
+The following type aliases are exported from `ezqt_widgets.types` and re-exported at the top level:
 
-app = QApplication([])
-
-switch = ToggleSwitch(checked=True)
-switch.toggled.connect(lambda state: print(f"Switch: {state}"))
-switch.show()
-
-app.exec()
-```
-
----
-
-## Installation
-
-```bash
-pip install ezqt-widgets
-```
-
-For development installation:
-
-```bash
-git clone https://github.com/neuraaak/ezqt-widgets.git
-cd ezqt_widgets
-pip install -e ".[dev]"
-```
-
----
-
-## Detailed Documentation
-
-Select a module from the navigation menu or the table above to view detailed widget documentation with:
-
-- Complete method signatures
-- Signal descriptions
-- Property documentation
-- Usage examples
-- QSS styling examples
-
-## Module Documentation
-
-| Module              | Description                                                 |
-| ------------------- | ----------------------------------------------------------- |
-| [Button](button.md) | Specialized buttons with calendar, icons, and loading       |
-| [Input](input.md)   | Input fields with auto-completion and advanced editing      |
-| [Label](label.md)   | Interactive labels with tags, hover effects, and indicators |
-| [Misc](misc.md)     | Utility widgets: timers, drag & drop, toggles, selectors    |
-
----
-
-## Need Help?
-
-- **Quick Start**: See [Getting Started](../getting-started.md)
-- **Examples**: Check out [Examples](../examples/index.md)
-- **Guides**: Read [User Guides](../guides/index.md)
-- **Issues**: Report bugs on [GitHub](https://github.com/neuraaak/ezqt-widgets/issues)
+| Alias | Resolves to |
+| --- | --- |
+| `IconSource` | `QIcon \| str \| None` |
+| `IconSourceExtended` | `QIcon \| QPixmap \| str \| None` |
+| `SizeType` | `QSize \| tuple[int, int]` |
+| `ColorType` | `QColor \| str` |
+| `WidgetParent` | `QWidget \| None` |
+| `AnimationDuration` | `int` (milliseconds) |
+| `EventCallback` | `Callable[[], None]` |
+| `ValueCallback` | `Callable[[Any], None]` |

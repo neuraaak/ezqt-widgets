@@ -153,7 +153,7 @@ class ClickableTagLabel(QFrame):
                 "color: rgb(86, 86, 86); background-color: transparent; border: none;"
             )
 
-        self.refresh_style()
+        self.refreshStyle()
         self.adjustSize()
 
     # ///////////////////////////////////////////////////////////////
@@ -222,7 +222,7 @@ class ClickableTagLabel(QFrame):
             self._label.setStyleSheet(
                 f"color: {value}; background-color: transparent; border: none;"
             )
-            self.refresh_style()
+            self.refreshStyle()
 
     @property
     def min_width(self) -> int | None:
@@ -328,7 +328,7 @@ class ClickableTagLabel(QFrame):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget style.
 
         Useful after dynamic stylesheet changes.

@@ -248,20 +248,20 @@ class TestIconButton:
         """Test button methods."""
         button = IconButton(text="Test", icon=QIcon())
 
-        # Test clear_icon
-        button.clear_icon()
+        # Test clearIcon
+        button.clearIcon()
         assert button.icon is None
 
-        # Test clear_text
-        button.clear_text()
+        # Test clearText
+        button.clearText()
         assert button.text == ""
 
-        # Test toggle_text_visibility
+        # Test toggleTextVisibility
         initial_visibility = button.text_visible
-        button.toggle_text_visibility()
+        button.toggleTextVisibility()
         assert button.text_visible != initial_visibility
 
-        button.toggle_text_visibility()
+        button.toggleTextVisibility()
         assert button.text_visible == initial_visibility
 
     def test_should_return_valid_size_hints_when_queried(
@@ -295,7 +295,7 @@ class TestIconButton:
         button = IconButton(icon=icon)
 
         # Test colorization
-        button.set_icon_color("#FF0000", 0.7)
+        button.setIconColor("#FF0000", 0.7)
 
         # Verify that the icon was modified
         assert button.icon is not None
@@ -303,14 +303,14 @@ class TestIconButton:
     def test_should_not_raise_when_refresh_style_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test refresh_style method."""
+        """Test refreshStyle method."""
         button = IconButton()
 
         # Method should not raise an exception
         try:
-            button.refresh_style()
+            button.refreshStyle()
         except Exception as e:
-            pytest.fail(f"refresh_style() raised an exception: {e}")
+            pytest.fail(f"refreshStyle() raised an exception: {e}")
 
     def test_should_have_minimum_dimensions_when_instantiated(
         self, qt_widget_cleanup
@@ -334,3 +334,38 @@ class TestIconButton:
 
         assert button.min_width is None
         assert button.min_height is None
+
+    # ------------------------------------------------
+    # New feature tests
+    # ------------------------------------------------
+
+    def test_should_emit_icon_load_failed_when_url_fetch_returns_none(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that iconLoadFailed is emitted when a URL fetch returns no data."""
+        button = IconButton()
+
+        failed_urls: list[str] = []
+        button.iconLoadFailed.connect(failed_urls.append)
+
+        url = "https://example.com/missing.png"
+        # Simulate fetcher callback with data=None
+        button._pending_icon_url = url
+        button._on_icon_url_fetched(url, None)
+
+        assert url in failed_urls
+
+    def test_should_not_emit_icon_load_failed_when_url_does_not_match(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that iconLoadFailed is not emitted for stale/mismatched URLs."""
+        button = IconButton()
+
+        failed_urls: list[str] = []
+        button.iconLoadFailed.connect(failed_urls.append)
+
+        button._pending_icon_url = "https://example.com/current.png"
+        # Deliver result for a different URL
+        button._on_icon_url_fetched("https://example.com/old.png", None)
+
+        assert len(failed_urls) == 0

@@ -12,6 +12,18 @@ Groups widget modules under a single namespace.
 from __future__ import annotations
 
 # ///////////////////////////////////////////////////////////////
+# IMPORTS
+# ///////////////////////////////////////////////////////////////
+# Local imports — import sub-packages so Pyright resolves them as package members
+from . import (
+    button,
+    input,  # noqa: A004
+    label,
+    misc,
+    shared,
+)
+
+# ///////////////////////////////////////////////////////////////
 # PUBLIC API
 # ///////////////////////////////////////////////////////////////
 
@@ -20,4 +32,5 @@ __all__ = [
     "input",
     "label",
     "misc",
+    "shared",
 ]

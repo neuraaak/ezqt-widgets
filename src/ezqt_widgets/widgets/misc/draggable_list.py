@@ -333,7 +333,7 @@ class DraggableItem(QFrame):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget's style.
 
         Useful after dynamic stylesheet changes.
@@ -605,7 +605,7 @@ class DraggableList(QWidget):
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def add_item(self, item_id: str, text: str | None = None) -> None:
+    def addItem(self, item_id: str, text: str | None = None) -> None:
         """Add an item to the list.
 
         Args:
@@ -638,7 +638,7 @@ class DraggableList(QWidget):
         self.itemAdded.emit(item_id, len(self._items) - 1)
         self.orderChanged.emit(self._items.copy())
 
-    def remove_item(self, item_id: str) -> bool:
+    def removeItem(self, item_id: str) -> bool:
         """Remove an item from the list.
 
         Args:
@@ -667,7 +667,7 @@ class DraggableList(QWidget):
 
         return True
 
-    def clear_items(self) -> None:
+    def clearItems(self) -> None:
         """Remove all items from the list."""
         # Clean up widgets
         for widget in self._item_widgets.values():
@@ -681,7 +681,7 @@ class DraggableList(QWidget):
         # Emit signal
         self.orderChanged.emit([])
 
-    def move_item(self, item_id: str, new_position: int) -> bool:
+    def moveItem(self, item_id: str, new_position: int) -> bool:
         """Move an item to a new position.
 
         Args:
@@ -714,7 +714,7 @@ class DraggableList(QWidget):
 
         return True
 
-    def get_item_position(self, item_id: str) -> int:
+    def getItemPosition(self, item_id: str) -> int:
         """Get the position of an item.
 
         Args:
@@ -759,7 +759,7 @@ class DraggableList(QWidget):
 
     def _on_item_removed(self, item_id: str) -> None:
         """Handle item removal."""
-        self.remove_item(item_id)
+        self.removeItem(item_id)
 
     def _calculate_drop_position(self, drop_pos: QPoint) -> int:
         """Calculate drop position based on coordinates.
@@ -824,7 +824,7 @@ class DraggableList(QWidget):
         new_position = self._calculate_drop_position(drop_pos)
 
         # Move item
-        self.move_item(item_id, new_position)
+        self.moveItem(item_id, new_position)
 
         event.acceptProposedAction()
 
@@ -904,7 +904,7 @@ class DraggableList(QWidget):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget's style.
 
         Useful after dynamic stylesheet changes.

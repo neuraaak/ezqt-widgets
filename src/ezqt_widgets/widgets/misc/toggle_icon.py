@@ -77,7 +77,7 @@ class ToggleIcon(QLabel):
         >>> from ezqt_widgets import ToggleIcon
         >>> toggle = ToggleIcon(initial_state="closed", icon_size=20)
         >>> toggle.stateChanged.connect(lambda s: print(f"State: {s}"))
-        >>> toggle.toggle()
+        >>> toggle.toggleState()
         >>> toggle.show()
     """
 
@@ -309,7 +309,7 @@ class ToggleIcon(QLabel):
         Args:
             event: The mouse event.
         """
-        self.toggle_state()
+        self.toggleState()
         self.clicked.emit()
         super().mousePressEvent(event)
 
@@ -324,7 +324,7 @@ class ToggleIcon(QLabel):
             Qt.Key.Key_Enter,
             Qt.Key.Key_Space,
         ]:
-            self.toggle_state()
+            self.toggleState()
             self.clicked.emit()
         super().keyPressEvent(event)
 
@@ -390,19 +390,34 @@ class ToggleIcon(QLabel):
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def toggle_state(self) -> None:
+    def setTheme(self, theme: str) -> None:
+        """Update all icons' color for the given theme.
+
+        Can be connected directly to a theme-change signal to keep
+        icons in sync with the application's color scheme.
+
+        Args:
+            theme: The new theme (``"dark"`` or ``"light"``).
+        """
+        if isinstance(self._opened_icon, ThemeIcon):
+            self._opened_icon.setTheme(theme)
+        if isinstance(self._closed_icon, ThemeIcon):
+            self._closed_icon.setTheme(theme)
+        self._update_icon()
+
+    def toggleState(self) -> None:
         """Toggle between opened and closed states."""
         self.state = "opened" if self._state == "closed" else "closed"
 
-    def set_state_opened(self) -> None:
+    def setStateOpened(self) -> None:
         """Force the state to opened."""
         self.state = "opened"
 
-    def set_state_closed(self) -> None:
+    def setStateClosed(self) -> None:
         """Force the state to closed."""
         self.state = "closed"
 
-    def is_opened(self) -> bool:
+    def isOpened(self) -> bool:
         """Check if the state is opened.
 
         Returns:
@@ -410,7 +425,7 @@ class ToggleIcon(QLabel):
         """
         return self._state == "opened"
 
-    def is_closed(self) -> bool:
+    def isClosed(self) -> bool:
         """Check if the state is closed.
 
         Returns:
@@ -526,7 +541,7 @@ class ToggleIcon(QLabel):
         else:
             self.setPixmap(QPixmap())
             self.update()
-        self.refresh_style()
+        self.refreshStyle()
 
     def _apply_initial_state(self) -> None:
         """Apply the initial state and update QSS properties."""
@@ -534,13 +549,13 @@ class ToggleIcon(QLabel):
             self.setProperty("class", "drop_down")
         else:
             self.setProperty("class", "drop_up")
-        self.refresh_style()
+        self.refreshStyle()
 
     # ///////////////////////////////////////////////////////////////
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget style.
 
         Useful after dynamic stylesheet changes.

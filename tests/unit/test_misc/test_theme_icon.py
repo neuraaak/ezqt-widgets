@@ -176,7 +176,7 @@ class TestThemeIcon:
     ) -> None:
         """Test set_theme switches to dark theme."""
         icon = ThemeIcon(QIcon(), theme="light")
-        icon.set_theme("dark")
+        icon.setTheme("dark")
 
         assert icon.theme == "dark"
 
@@ -185,7 +185,7 @@ class TestThemeIcon:
     ) -> None:
         """Test set_theme switches to light theme."""
         icon = ThemeIcon(QIcon(), theme="dark")
-        icon.set_theme("light")
+        icon.setTheme("light")
 
         assert icon.theme == "light"
 
@@ -197,7 +197,7 @@ class TestThemeIcon:
 
         with warnings.catch_warnings(record=True) as captured:
             warnings.simplefilter("always")
-            icon.set_theme("invalid_theme")
+            icon.setTheme("invalid_theme")
 
         assert len(captured) == 1
         assert issubclass(captured[0].category, UserWarning)
@@ -323,8 +323,8 @@ class TestThemeIcon:
         icon = ThemeIcon(QIcon())
 
         # Calling set_theme triggers _update_icon; must not raise
-        icon.set_theme("light")
-        icon.set_theme("dark")
+        icon.setTheme("light")
+        icon.setTheme("dark")
 
     def test_should_not_raise_when_update_icon_is_called_with_pixmap_icon(
         self, qt_application, mock_icon_path
@@ -332,8 +332,8 @@ class TestThemeIcon:
         """Test _update_icon does not raise when icon has a real pixmap."""
         icon = ThemeIcon(mock_icon_path)
 
-        icon.set_theme("light")
-        icon.set_theme("dark")
+        icon.setTheme("light")
+        icon.setTheme("dark")
 
     # ------------------------------------------------
     # _resolve_theme_colors edge cases

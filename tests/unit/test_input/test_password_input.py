@@ -241,7 +241,7 @@ class TestPasswordLineEdit:
         icon = QIcon(pixmap)
 
         # Set the icon
-        line_edit.set_right_icon(icon, QSize(20, 20))
+        line_edit.setRightIcon(icon, QSize(20, 20))
 
         # Verify that the icon is set
         # Note: We can't easily verify the internal icon
@@ -251,14 +251,14 @@ class TestPasswordLineEdit:
     def test_should_not_raise_when_password_line_edit_refresh_style_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test refresh_style."""
+        """Test refreshStyle."""
         line_edit = PasswordLineEdit()
 
         # Method should not raise an exception
         try:
-            line_edit.refresh_style()
+            line_edit.refreshStyle()
         except Exception as e:
-            pytest.fail(f"refresh_style() raised an exception: {e}")
+            pytest.fail(f"refreshStyle() raised an exception: {e}")
 
 
 class TestPasswordInput:
@@ -343,14 +343,14 @@ class TestPasswordInput:
         initial_mode = password_widget._password_input.echoMode()
 
         # Toggle display
-        password_widget.toggle_password()
+        password_widget.togglePassword()
 
         # Verify that the mode changed
         new_mode = password_widget._password_input.echoMode()
         assert new_mode != initial_mode
 
         # Toggle again
-        password_widget.toggle_password()
+        password_widget.togglePassword()
         final_mode = password_widget._password_input.echoMode()
         assert final_mode == initial_mode
 
@@ -361,12 +361,12 @@ class TestPasswordInput:
         password_widget = PasswordInput()
 
         # Test weak password
-        password_widget.update_strength("weak")
+        password_widget.updateStrength("weak")
         # Note: We can't easily verify the internal state
         # but we can verify that the method doesn't raise an exception
 
         # Test strong password
-        password_widget.update_strength("StrongP@ss123!")
+        password_widget.updateStrength("StrongP@ss123!")
         # Method should not raise an exception
 
     def test_should_emit_password_changed_signal_when_password_is_typed(
@@ -387,7 +387,7 @@ class TestPasswordInput:
         password_widget.strengthChanged.connect(on_strength_changed)
 
         # Simulate a strength change
-        password_widget.update_strength("test123")
+        password_widget.updateStrength("test123")
 
         # Verify that the signal is connected
         assert password_widget.strengthChanged is not None
@@ -407,14 +407,14 @@ class TestPasswordInput:
     def test_should_not_raise_when_password_input_refresh_style_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test refresh_style."""
+        """Test refreshStyle."""
         password_widget = PasswordInput()
 
         # Method should not raise an exception
         try:
-            password_widget.refresh_style()
+            password_widget.refreshStyle()
         except Exception as e:
-            pytest.fail(f"refresh_style() raised an exception: {e}")
+            pytest.fail(f"refreshStyle() raised an exception: {e}")
 
     def test_should_validate_password_properties_when_password_is_set(
         self, qt_widget_cleanup
@@ -544,5 +544,5 @@ class TestPasswordInput:
         assert password_widget.password == long_password
 
         # Verify that strength is calculated
-        password_widget.update_strength(long_password)
+        password_widget.updateStrength(long_password)
         # Method should not raise an exception

@@ -60,6 +60,7 @@ class IconButton(QToolButton):
     Signals:
         iconChanged(QIcon): Emitted when the icon changes.
         textChanged(str): Emitted when the text changes.
+        iconLoadFailed(str): Emitted when an icon URL fetch fails, with the URL.
 
     Example:
         >>> from ezqt_widgets import IconButton
@@ -71,6 +72,7 @@ class IconButton(QToolButton):
 
     iconChanged = Signal(QIcon)
     textChanged = Signal(str)
+    iconLoadFailed = Signal(str)
 
     # ///////////////////////////////////////////////////////////////
     # INIT
@@ -406,7 +408,10 @@ class IconButton(QToolButton):
         self._url_fetcher.fetch(url)
 
     def _on_icon_url_fetched(self, url: str, data: bytes | None) -> None:
-        if url != self._pending_icon_url or data is None:
+        if url != self._pending_icon_url:
+            return
+        if data is None:
+            self.iconLoadFailed.emit(url)
             return
 
         icon = self._icon_from_url_data(url, data)
@@ -448,21 +453,34 @@ class IconButton(QToolButton):
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def clear_icon(self) -> None:
+    def setTheme(self, theme: str) -> None:
+        """Update the icon color for the given theme.
+
+        Can be connected directly to a theme-change signal to keep
+        the icon in sync with the application's color scheme.
+
+        Args:
+            theme: The new theme (``"dark"`` or ``"light"``).
+        """
+        if isinstance(self._current_icon, ThemeIcon):
+            self._current_icon.setTheme(theme)
+            self.icon_label.setPixmap(self._current_icon.pixmap(self._icon_size))
+
+    def clearIcon(self) -> None:
         """Remove the current icon."""
         self._current_icon = None
         self.icon_label.clear()
         self.iconChanged.emit(QIcon())
 
-    def clear_text(self) -> None:
+    def clearText(self) -> None:
         """Clear the button text."""
         self.text = ""
 
-    def toggle_text_visibility(self) -> None:
+    def toggleTextVisibility(self) -> None:
         """Toggle text visibility."""
         self.text_visible = not self.text_visible
 
-    def set_icon_color(self, color: str = "#FFFFFF", opacity: float = 0.5) -> None:
+    def setIconColor(self, color: str = "#FFFFFF", opacity: float = 0.5) -> None:
         """Apply color and opacity to the current icon.
 
         Args:
@@ -515,7 +533,7 @@ class IconButton(QToolButton):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget's style.
 
         Useful after dynamic stylesheet changes.

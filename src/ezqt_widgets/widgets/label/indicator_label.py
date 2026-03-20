@@ -203,13 +203,13 @@ class IndicatorLabel(QFrame):
         Args:
             value: The new status key.
         """
-        self.set_status(value)
+        self.setStatus(value)
 
     # ///////////////////////////////////////////////////////////////
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def set_status(self, status: str) -> None:
+    def setStatus(self, status: str) -> None:
         """Set the current status and update the display.
 
         Args:
@@ -230,7 +230,7 @@ class IndicatorLabel(QFrame):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget style.
 
         Useful after dynamic stylesheet changes.

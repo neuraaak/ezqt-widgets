@@ -105,14 +105,14 @@ class TestDatePickerDialog:
         """Test creation with a date."""
         date = QDate(2024, 1, 15)
         dialog = DatePickerDialog(current_date=date)
-        assert dialog.selected_date() == date
+        assert dialog.selectedDate() == date
 
     def test_should_return_selected_date_when_date_is_picked(
         self, qt_widget_cleanup
     ) -> None:
         """Test selected_date property."""
         dialog = DatePickerDialog()
-        assert dialog.selected_date() is None
+        assert dialog.selectedDate() is None
 
 
 class TestDateButton:
@@ -220,13 +220,13 @@ class TestDateButton:
         """Test button methods."""
         button = DateButton()
 
-        # Test clear_date
+        # Test clearDate
         button.date = QDate(2024, 1, 15)
-        button.clear_date()
+        button.clearDate()
         assert not button.date.isValid()
 
-        # Test set_today
-        button.set_today()
+        # Test setToday
+        button.setToday()
         assert button.date.isValid()
         assert button.date == QDate.currentDate()
 
@@ -239,11 +239,11 @@ class TestDateButton:
 
         # Mock the dialog
         mock_dialog = MagicMock()
-        mock_dialog.selected_date.return_value = QDate(2024, 1, 15)
+        mock_dialog.selectedDate.return_value = QDate(2024, 1, 15)
         mock_dialog_class.return_value = mock_dialog
 
         # Test calendar opening
-        button.open_calendar()
+        button.openCalendar()
 
         # Verify that the dialog was created and executed
         mock_dialog_class.assert_called_once()
@@ -272,14 +272,14 @@ class TestDateButton:
     def test_should_not_raise_when_refresh_style_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test refresh_style method."""
+        """Test refreshStyle method."""
         button = DateButton()
 
         # Method should not raise an exception
         try:
-            button.refresh_style()
+            button.refreshStyle()
         except Exception as e:
-            pytest.fail(f"refresh_style() raised an exception: {e}")
+            pytest.fail(f"refreshStyle() raised an exception: {e}")
 
     def test_should_have_minimum_dimensions_when_instantiated(
         self, qt_widget_cleanup
@@ -313,7 +313,7 @@ class TestDateButton:
 
         # Mock the dialog to avoid blocking
         mock_dialog = MagicMock()
-        mock_dialog.selected_date.return_value = QDate(2024, 1, 15)
+        mock_dialog.selectedDate.return_value = QDate(2024, 1, 15)
         mock_dialog.exec.return_value = QDialog.DialogCode.Accepted
         mock_dialog_class.return_value = mock_dialog
 
@@ -359,10 +359,10 @@ class TestDateButton:
         assert button.date.isValid()
 
         # Clear the date
-        button.clear_date()
+        button.clearDate()
 
         # Verify that the date is cleared
-        # Note: clear_date() sets an invalid QDate, so date_string returns ""
+        # Note: clearDate() sets an invalid QDate, so date_string returns ""
         assert button.date_string == ""
         assert not button.date.isValid()
 
@@ -379,3 +379,138 @@ class TestDateButton:
 
         # Verify that the format is applied
         assert button.date_string == "2024-01-15"
+
+    # ------------------------------------------------
+    # New feature tests — min/max date constraints
+    # ------------------------------------------------
+
+    def test_should_store_minimum_date_when_provided(self, qt_widget_cleanup) -> None:
+        """Test that minimum_date is stored on construction."""
+        min_d = QDate(2024, 1, 1)
+        button = DateButton(minimum_date=min_d)
+
+        assert button.minimum_date == min_d
+
+    def test_should_store_maximum_date_when_provided(self, qt_widget_cleanup) -> None:
+        """Test that maximum_date is stored on construction."""
+        max_d = QDate(2024, 12, 31)
+        button = DateButton(maximum_date=max_d)
+
+        assert button.maximum_date == max_d
+
+    def test_should_reject_date_below_minimum_when_minimum_date_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that dates before minimum_date are silently rejected."""
+        min_d = QDate(2024, 6, 1)
+        button = DateButton(minimum_date=min_d)
+
+        # Force a known valid date first
+        button.date = QDate(2024, 6, 15)
+        stored = button.date
+
+        # Attempt to set a date below the minimum
+        button.date = QDate(2024, 1, 1)
+        assert button.date == stored  # unchanged
+
+    def test_should_reject_date_above_maximum_when_maximum_date_is_set(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that dates after maximum_date are silently rejected."""
+        max_d = QDate(2024, 6, 30)
+        button = DateButton(maximum_date=max_d)
+
+        button.date = QDate(2024, 6, 15)
+        stored = button.date
+
+        # Attempt to set a date above the maximum
+        button.date = QDate(2024, 12, 31)
+        assert button.date == stored  # unchanged
+
+    def test_should_accept_date_within_range_when_constraints_are_set(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that a date within [min, max] is accepted."""
+        min_d = QDate(2024, 1, 1)
+        max_d = QDate(2024, 12, 31)
+        button = DateButton(minimum_date=min_d, maximum_date=max_d)
+
+        target = QDate(2024, 6, 15)
+        button.date = target
+        assert button.date == target
+
+    def test_should_update_minimum_date_property_when_setter_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test minimum_date property setter."""
+        button = DateButton()
+
+        new_min = QDate(2025, 1, 1)
+        button.minimum_date = new_min
+        assert button.minimum_date == new_min
+
+        button.minimum_date = None
+        assert button.minimum_date is None
+
+    def test_should_update_maximum_date_property_when_setter_is_called(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test maximum_date property setter."""
+        button = DateButton()
+
+        new_max = QDate(2025, 12, 31)
+        button.maximum_date = new_max
+        assert button.maximum_date == new_max
+
+        button.maximum_date = None
+        assert button.maximum_date is None
+
+    def test_should_not_call_super_when_left_button_pressed(
+        self, qt_widget_cleanup
+    ) -> None:
+        """Test that left-button press absorbs the event (no QToolButton clicked)."""
+        button = DateButton()
+
+        clicked_count = 0
+
+        def on_clicked() -> None:
+            nonlocal clicked_count
+            clicked_count += 1
+
+        button.clicked.connect(on_clicked)
+
+        event = QMouseEvent(
+            QMouseEvent.Type.MouseButtonPress,
+            QPoint(10, 10),
+            QPoint(10, 10),
+            Qt.MouseButton.LeftButton,
+            Qt.MouseButton.LeftButton,
+            Qt.KeyboardModifier.NoModifier,
+        )
+
+        # Patch openCalendar so the dialog does not block
+        with patch.object(button, "openCalendar"):
+            button.mousePressEvent(event)
+
+        # clicked must NOT have been emitted by QToolButton
+        assert clicked_count == 0
+
+    @patch("ezqt_widgets.widgets.button.date_button.DatePickerDialog")
+    def test_should_pass_min_max_to_dialog_when_constraints_set(
+        self, mock_dialog_class, qt_widget_cleanup
+    ) -> None:
+        """Test that min/max dates are forwarded to DatePickerDialog."""
+        min_d = QDate(2024, 1, 1)
+        max_d = QDate(2024, 12, 31)
+        button = DateButton(minimum_date=min_d, maximum_date=max_d)
+
+        mock_dialog = MagicMock()
+        mock_dialog.exec.return_value = QDialog.DialogCode.Rejected
+        mock_dialog_class.return_value = mock_dialog
+
+        button.openCalendar()
+
+        # Verify the dialog was instantiated with the constraints
+        _, kwargs = mock_dialog_class.call_args
+        assert kwargs.get("min_date") == min_d
+        assert kwargs.get("max_date") == max_d

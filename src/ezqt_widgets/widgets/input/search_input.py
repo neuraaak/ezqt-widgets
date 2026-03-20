@@ -220,7 +220,7 @@ class SearchInput(QLineEdit):
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def add_to_history(self, text: str) -> None:
+    def addToHistory(self, text: str) -> None:
         """Add a search term to history.
 
         Args:
@@ -238,7 +238,7 @@ class SearchInput(QLineEdit):
         self._trim_history()
         self._history_index = -1
 
-    def get_history(self) -> list[str]:
+    def getHistory(self) -> list[str]:
         """Get the search history.
 
         Returns:
@@ -246,12 +246,12 @@ class SearchInput(QLineEdit):
         """
         return self._history.copy()
 
-    def clear_history(self) -> None:
+    def clearHistory(self) -> None:
         """Clear the search history."""
         self._history.clear()
         self._history_index = -1
 
-    def set_history(self, history_list: list[str]) -> None:
+    def setHistory(self, history_list: list[str]) -> None:
         """Set the search history.
 
         Args:
@@ -286,7 +286,7 @@ class SearchInput(QLineEdit):
             # Submit search
             text = self.text().strip()
             if text:
-                self.add_to_history(text)
+                self.addToHistory(text)
                 self.searchSubmitted.emit(text)
         elif event.key() == Qt.Key.Key_Up:
             # Navigate history up
@@ -315,11 +315,24 @@ class SearchInput(QLineEdit):
 
         super().keyPressEvent(event)
 
+    def setTheme(self, theme: str) -> None:
+        """Update the search icon color for the given theme.
+
+        Can be connected directly to a theme-change signal to keep
+        the icon in sync with the application's color scheme.
+
+        Args:
+            theme: The new theme (``"dark"`` or ``"light"``).
+        """
+        if isinstance(self._search_icon, ThemeIcon):
+            self._search_icon.setTheme(theme)
+            self.update()
+
     # ///////////////////////////////////////////////////////////////
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget style.
 
         Useful after dynamic stylesheet changes.

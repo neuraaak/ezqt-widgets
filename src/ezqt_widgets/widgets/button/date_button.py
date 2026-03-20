@@ -16,11 +16,13 @@ from __future__ import annotations
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
 # Standard library imports
+import base64
 from typing import Any
 
 # Third-party imports
-from PySide6.QtCore import QDate, QSize, Qt, Signal
-from PySide6.QtGui import QColor, QIcon, QMouseEvent, QPainter, QPixmap
+from PySide6.QtCore import QByteArray, QDate, QSize, Qt, Signal
+from PySide6.QtGui import QIcon, QMouseEvent, QPainter, QPixmap
+from PySide6.QtSvg import QSvgRenderer
 from PySide6.QtWidgets import (
     QCalendarWidget,
     QDialog,
@@ -36,6 +38,7 @@ from ...types import SizeType, WidgetParent
 
 # Local imports
 from ..misc.theme_icon import ThemeIcon
+from ..shared.defaults import SVG_CALENDAR
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -51,6 +54,8 @@ class DatePickerDialog(QDialog):
     Args:
         parent: The parent widget (default: None).
         current_date: The current selected date (default: None).
+        min_date: The minimum selectable date (default: None).
+        max_date: The maximum selectable date (default: None).
 
     Example:
         >>> from ezqt_widgets import DatePickerDialog
@@ -62,7 +67,11 @@ class DatePickerDialog(QDialog):
     """
 
     def __init__(
-        self, parent: WidgetParent = None, current_date: QDate | None = None
+        self,
+        parent: WidgetParent = None,
+        current_date: QDate | None = None,
+        min_date: QDate | None = None,
+        max_date: QDate | None = None,
     ) -> None:
         """Initialize the date picker dialog."""
         super().__init__(parent)
@@ -72,6 +81,8 @@ class DatePickerDialog(QDialog):
         # ///////////////////////////////////////////////////////////////
 
         self._selected_date: QDate | None = current_date
+        self._min_date: QDate | None = min_date
+        self._max_date: QDate | None = max_date
 
         # ///////////////////////////////////////////////////////////////
         # SETUP UI
@@ -99,6 +110,13 @@ class DatePickerDialog(QDialog):
 
         self._calendar = QCalendarWidget(self)
         self._calendar.clicked.connect(self._on_date_selected)
+
+        # Apply date range constraints if provided
+        if self._min_date and self._min_date.isValid():
+            self._calendar.setMinimumDate(self._min_date)
+        if self._max_date and self._max_date.isValid():
+            self._calendar.setMaximumDate(self._max_date)
+
         layout.addWidget(self._calendar)
 
         button_layout = QHBoxLayout()
@@ -128,7 +146,7 @@ class DatePickerDialog(QDialog):
     # PUBLIC METHODS
     # ------------------------------------------------
 
-    def selected_date(self) -> QDate | None:
+    def selectedDate(self) -> QDate | None:
         """Get the selected date.
 
         Returns:
@@ -147,6 +165,7 @@ class DateButton(QToolButton):
         - Placeholder text when no date selected
         - Calendar icon with customizable appearance
         - Date validation and parsing
+        - Optional minimum and maximum date constraints
 
     Args:
         parent: The parent widget (default: None).
@@ -156,6 +175,8 @@ class DateButton(QToolButton):
             (default: "Select a date").
         show_calendar_icon: Whether to show calendar icon (default: True).
         icon_size: Size of the calendar icon (default: QSize(16, 16)).
+        minimum_date: Minimum selectable date (default: None, no constraint).
+        maximum_date: Maximum selectable date (default: None, no constraint).
         min_width: Minimum width of the button (default: None, auto-calculated).
         min_height: Minimum height of the button (default: None, auto-calculated).
         *args: Additional arguments passed to QToolButton.
@@ -169,7 +190,7 @@ class DateButton(QToolButton):
         >>> from ezqt_widgets import DateButton
         >>> btn = DateButton(date_format="dd/MM/yyyy", placeholder="Pick a date")
         >>> btn.dateChanged.connect(lambda d: print(d.toString("dd/MM/yyyy")))
-        >>> btn.set_today()
+        >>> btn.setToday()
         >>> btn.show()
     """
 
@@ -188,6 +209,8 @@ class DateButton(QToolButton):
         placeholder: str = "Select a date",
         show_calendar_icon: bool = True,
         icon_size: SizeType = QSize(16, 16),
+        minimum_date: QDate | None = None,
+        maximum_date: QDate | None = None,
         min_width: int | None = None,
         min_height: int | None = None,
         *args: Any,
@@ -206,9 +229,12 @@ class DateButton(QToolButton):
             if isinstance(icon_size, (tuple, list))
             else QSize(icon_size)
         )
+        self._minimum_date: QDate | None = minimum_date
+        self._maximum_date: QDate | None = maximum_date
         self._min_width: int | None = min_width
         self._min_height: int | None = min_height
         self._current_date: QDate = QDate()
+        self._calendar_icon: ThemeIcon = self._get_calendar_icon()
 
         # Setup UI components
         self.date_label = QLabel()
@@ -258,6 +284,9 @@ class DateButton(QToolButton):
     def date(self, value: QDate | str | None) -> None:
         """Set the date from QDate, string, or None.
 
+        Dates outside the [minimum_date, maximum_date] range are silently
+        rejected (the current date is left unchanged).
+
         Args:
             value: The date to set (QDate, string, or None).
         """
@@ -269,6 +298,21 @@ class DateButton(QToolButton):
             new_date = QDate()
         else:
             raise TypeError(f"Invalid date value: {value}")
+
+        # Silently reject dates outside the configured range
+        if new_date.isValid():
+            if (
+                self._minimum_date
+                and self._minimum_date.isValid()
+                and new_date < self._minimum_date
+            ):
+                return
+            if (
+                self._maximum_date
+                and self._maximum_date.isValid()
+                and new_date > self._maximum_date
+            ):
+                return
 
         if new_date != self._current_date:
             self._current_date = new_date
@@ -350,7 +394,7 @@ class DateButton(QToolButton):
         self._show_calendar_icon = bool(value)
         if self._show_calendar_icon:
             self.icon_label.show()
-            self.icon_label.setPixmap(self._get_calendar_icon().pixmap(self._icon_size))
+            self.icon_label.setPixmap(self._calendar_icon.pixmap(self._icon_size))
             self.icon_label.setFixedSize(self._icon_size)
         else:
             self.icon_label.hide()
@@ -375,8 +419,44 @@ class DateButton(QToolButton):
             QSize(*value) if isinstance(value, (tuple, list)) else QSize(value)
         )
         if self._show_calendar_icon:
-            self.icon_label.setPixmap(self._get_calendar_icon().pixmap(self._icon_size))
+            self.icon_label.setPixmap(self._calendar_icon.pixmap(self._icon_size))
             self.icon_label.setFixedSize(self._icon_size)
+
+    @property
+    def minimum_date(self) -> QDate | None:
+        """Get or set the minimum selectable date.
+
+        Returns:
+            The minimum date, or None if no constraint is set.
+        """
+        return self._minimum_date
+
+    @minimum_date.setter
+    def minimum_date(self, value: QDate | None) -> None:
+        """Set the minimum selectable date.
+
+        Args:
+            value: The minimum date, or None to remove the constraint.
+        """
+        self._minimum_date = value
+
+    @property
+    def maximum_date(self) -> QDate | None:
+        """Get or set the maximum selectable date.
+
+        Returns:
+            The maximum date, or None if no constraint is set.
+        """
+        return self._maximum_date
+
+    @maximum_date.setter
+    def maximum_date(self, value: QDate | None) -> None:
+        """Set the maximum selectable date.
+
+        Args:
+            value: The maximum date, or None to remove the constraint.
+        """
+        self._maximum_date = value
 
     @property
     def min_width(self) -> int | None:
@@ -420,22 +500,40 @@ class DateButton(QToolButton):
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def clear_date(self) -> None:
+    def clearDate(self) -> None:
         """Clear the selected date."""
         self.date = None
 
-    def set_today(self) -> None:
+    def setToday(self) -> None:
         """Set the date to today."""
         self.date = QDate.currentDate()
 
-    def open_calendar(self) -> None:
+    def openCalendar(self) -> None:
         """Open the calendar dialog."""
-        dialog = DatePickerDialog(self, self._current_date)
+        dialog = DatePickerDialog(
+            self,
+            self._current_date,
+            min_date=self._minimum_date,
+            max_date=self._maximum_date,
+        )
         if dialog.exec() == QDialog.DialogCode.Accepted:
-            selected_date = dialog.selected_date()
+            selected_date = dialog.selectedDate()
             if selected_date and selected_date.isValid():
                 self.date = selected_date
                 self.dateSelected.emit(selected_date)
+
+    def setTheme(self, theme: str) -> None:
+        """Update the calendar icon color for the given theme.
+
+        Can be connected directly to a theme-change signal to keep
+        the icon in sync with the application's color scheme.
+
+        Args:
+            theme: The new theme (``"dark"`` or ``"light"``).
+        """
+        self._calendar_icon.setTheme(theme)
+        if self._show_calendar_icon:
+            self.icon_label.setPixmap(self._calendar_icon.pixmap(self._icon_size))
 
     # ------------------------------------------------
     # PRIVATE METHODS
@@ -470,21 +568,26 @@ class DateButton(QToolButton):
         return QDate.fromString(date_str, format_str)
 
     @staticmethod
-    def _get_calendar_icon() -> QIcon:
-        """Get a default calendar icon.
+    def _get_calendar_icon() -> ThemeIcon:
+        """Get a default calendar icon built from the shared SVG.
 
         Returns:
-            Calendar icon pixmap.
+            Calendar ThemeIcon built from SVG_CALENDAR.
+
+        Raises:
+            ValueError: If SVG rendering fails or ThemeIcon cannot be created.
         """
-        pixmap = QPixmap(16, 16)
+        svg_bytes = base64.b64decode(base64.b64encode(SVG_CALENDAR))
+        renderer = QSvgRenderer(QByteArray(svg_bytes))
+        if not renderer.isValid():
+            raise ValueError("SVG_CALENDAR could not be rendered.")
+
+        pixmap = QPixmap(QSize(16, 16))
         pixmap.fill(Qt.GlobalColor.transparent)
         painter = QPainter(pixmap)
-        painter.setPen(QColor("#666666"))
-        painter.setBrush(QColor("#f0f0f0"))
-        painter.drawRect(0, 0, 15, 15)
-        painter.setPen(QColor("#333333"))
-        painter.drawText(2, 2, 12, 12, Qt.AlignmentFlag.AlignCenter, "📅")
+        renderer.render(painter)
         painter.end()
+
         themed_icon = ThemeIcon.from_source(QIcon(pixmap))
         if themed_icon is None:
             raise ValueError(
@@ -508,12 +611,18 @@ class DateButton(QToolButton):
     def mousePressEvent(self, event: QMouseEvent) -> None:
         """Handle mouse press events.
 
+        The left-button press opens the calendar dialog directly. The
+        ``clicked`` signal is emitted only after the user confirms a date
+        (inside ``openCalendar``), not unconditionally on press.
+
         Args:
             event: The mouse event.
         """
         if event.button() == Qt.MouseButton.LeftButton:
-            self.open_calendar()
-        super().mousePressEvent(event)
+            self.openCalendar()
+            event.accept()  # absorb — do not forward to QToolButton
+        else:
+            super().mousePressEvent(event)
 
     # ///////////////////////////////////////////////////////////////
     # OVERRIDE METHODS
@@ -556,7 +665,7 @@ class DateButton(QToolButton):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget's style.
 
         Useful after dynamic stylesheet changes.

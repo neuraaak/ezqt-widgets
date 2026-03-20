@@ -129,14 +129,14 @@ class TestFramedLabel:
     def test_should_not_raise_when_refresh_style_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test refresh_style method."""
+        """Test refreshStyle method."""
         label = FramedLabel()
 
         # Method should not raise an exception
         try:
-            label.refresh_style()
+            label.refreshStyle()
         except Exception as e:
-            pytest.fail(f"refresh_style() raised an exception: {e}")
+            pytest.fail(f"refreshStyle() raised an exception: {e}")
 
     def test_should_support_all_alignment_options_when_alignment_is_set(
         self, qt_widget_cleanup

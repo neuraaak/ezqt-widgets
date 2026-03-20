@@ -48,11 +48,14 @@ class LoaderButton(QToolButton):
         - Success state with checkmark icon
         - Error state with X icon
         - Configurable loading, success, and error text/icons
+        - Configurable success and error result texts
         - Smooth transitions between states
         - Disabled state during loading
         - Customizable animation speed
-        - Progress indication support
+        - Progress indication support (0-100)
         - Auto-reset after completion with configurable display times
+        - Configurable spinner icon size
+        - Safe timer cleanup on widget destruction
 
     Args:
         parent: The parent widget (default: None).
@@ -65,6 +68,9 @@ class LoaderButton(QToolButton):
             (ThemeIcon, QIcon, QPixmap, or path, default: None, auto-generated checkmark).
         error_icon: Icon to display on error
             (ThemeIcon, QIcon, QPixmap, or path, default: None, auto-generated X mark).
+        success_text: Text to display when loading succeeds (default: "Success!").
+        error_text: Text to display when loading fails (default: "Error").
+        icon_size: Size of spinner and state icons (default: QSize(16, 16)).
         animation_speed: Animation speed in milliseconds (default: 100).
         auto_reset: Whether to auto-reset after loading (default: True).
         success_display_time: Time to display success state in milliseconds
@@ -80,20 +86,22 @@ class LoaderButton(QToolButton):
         loadingStarted(): Emitted when loading starts.
         loadingFinished(): Emitted when loading finishes successfully.
         loadingFailed(str): Emitted when loading fails with error message.
+        progressChanged(int): Emitted when progress value changes (0-100).
 
     Example:
         >>> from ezqt_widgets import LoaderButton
         >>> btn = LoaderButton(text="Submit", loading_text="Sending...")
         >>> btn.loadingFinished.connect(lambda: print("done"))
-        >>> btn.start_loading()
+        >>> btn.startLoading()
         >>> # After completion:
-        >>> btn.stop_loading(success=True)
+        >>> btn.stopLoading(success=True)
         >>> btn.show()
     """
 
     loadingStarted = Signal()
     loadingFinished = Signal()
     loadingFailed = Signal(str)
+    progressChanged = Signal(int)
 
     # ///////////////////////////////////////////////////////////////
     # INIT
@@ -108,6 +116,9 @@ class LoaderButton(QToolButton):
         loading_icon: IconSourceExtended = None,
         success_icon: IconSourceExtended = None,
         error_icon: IconSourceExtended = None,
+        success_text: str = "Success!",
+        error_text: str = "Error",
+        icon_size: QSize | tuple[int, int] = QSize(16, 16),
         animation_speed: AnimationDuration = 100,
         auto_reset: bool = True,
         success_display_time: AnimationDuration = 1000,
@@ -128,7 +139,13 @@ class LoaderButton(QToolButton):
         self._loading_icon: QIcon | None = None
         self._success_icon: QIcon | None = None
         self._error_icon: QIcon | None = None
+        self._success_text = success_text
+        self._error_text = error_text
+        self._icon_size: QSize = (
+            QSize(*icon_size) if isinstance(icon_size, tuple) else QSize(icon_size)
+        )
         self._is_loading = False
+        self._progress: int = 0
         self._animation_speed = animation_speed
         self._auto_reset = auto_reset
         self._success_display_time = success_display_time
@@ -137,6 +154,7 @@ class LoaderButton(QToolButton):
         self._min_height = min_height
         self._animation_group = None
         self._spinner_animation = None
+        self._animation_timer: QTimer | None = None
 
         # Setup UI components
         self.text_label = QLabel()
@@ -167,24 +185,28 @@ class LoaderButton(QToolButton):
         if text:
             self.text = text
 
-        # Setup icons
+        # Setup icons using the resolved _icon_size
+        _sz = self._icon_size.width()
         if loading_icon:
             self.loading_icon = loading_icon
         else:
-            self._loading_icon = self._create_loading_icon(16, "#0078d4")
+            self._loading_icon = self._create_loading_icon(_sz, "#0078d4")
 
         if success_icon:
             self.success_icon = success_icon
         else:
-            self._success_icon = self._create_success_icon(16, "#28a745")
+            self._success_icon = self._create_success_icon(_sz, "#28a745")
 
         if error_icon:
             self.error_icon = error_icon
         else:
-            self._error_icon = self._create_error_icon(16, "#dc3545")
+            self._error_icon = self._create_error_icon(_sz, "#dc3545")
 
         # Setup animations
         self._setup_animations()
+
+        # Connect destroyed signal to clean up the timer safely (fix #18)
+        self.destroyed.connect(self._cleanup_timer)
 
         # Initial display
         self._update_display()
@@ -318,6 +340,93 @@ class LoaderButton(QToolButton):
         self._error_icon = ThemeIcon.from_source(icon)
 
     @property
+    def success_text(self) -> str:
+        """Get or set the text displayed on success.
+
+        Returns:
+            The current success text.
+        """
+        return self._success_text
+
+    @success_text.setter
+    def success_text(self, value: str) -> None:
+        """Set the text displayed on success.
+
+        Args:
+            value: The new success text.
+        """
+        self._success_text = str(value)
+
+    @property
+    def error_text(self) -> str:
+        """Get or set the base text displayed on error.
+
+        Returns:
+            The current error text.
+        """
+        return self._error_text
+
+    @error_text.setter
+    def error_text(self, value: str) -> None:
+        """Set the base text displayed on error.
+
+        Args:
+            value: The new error text.
+        """
+        self._error_text = str(value)
+
+    @property
+    def icon_size(self) -> QSize:
+        """Get or set the spinner and state icon size.
+
+        Returns:
+            The current icon size.
+        """
+        return self._icon_size
+
+    @icon_size.setter
+    def icon_size(self, value: QSize | tuple[int, int]) -> None:
+        """Set the spinner and state icon size.
+
+        Args:
+            value: The new icon size (QSize or (width, height) tuple).
+        """
+        self._icon_size = QSize(*value) if isinstance(value, tuple) else QSize(value)
+        if not self._is_loading:
+            self._update_display()
+
+    @property
+    def progress(self) -> int:
+        """Get or set the current progress value (0-100).
+
+        When set during loading, the progress percentage is shown in the
+        text label instead of the generic loading text. The spinner is
+        kept visible. Setting this property outside of loading state is
+        silently ignored.
+
+        Returns:
+            The current progress value.
+        """
+        return self._progress
+
+    @progress.setter
+    def progress(self, value: int) -> None:
+        """Set the current progress value.
+
+        Args:
+            value: The progress value to set (clamped to 0-100).
+                   Silently ignored if the button is not in loading state.
+        """
+        if not self._is_loading:
+            return
+        clamped = max(0, min(100, int(value)))
+        if clamped != self._progress:
+            self._progress = clamped
+            self.progressChanged.emit(self._progress)
+            # Refresh the label to show the percentage
+            self.text_label.setText(f"{self._progress}%")
+
+    @property
     def success_display_time(self) -> AnimationDuration:
         """Get or set the success display time.
 
@@ -442,12 +551,13 @@ class LoaderButton(QToolButton):
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def start_loading(self) -> None:
+    def startLoading(self) -> None:
         """Start the loading animation."""
         if self._is_loading:
             return
 
         self._is_loading = True
+        self._progress = 0
         self.setEnabled(False)
         self._update_display()
 
@@ -459,7 +569,7 @@ class LoaderButton(QToolButton):
 
         self.loadingStarted.emit()
 
-    def stop_loading(self, success: bool = True, error_message: str = "") -> None:
+    def stopLoading(self, success: bool = True, error_message: str = "") -> None:
         """Stop the loading animation.
 
         Args:
@@ -472,9 +582,10 @@ class LoaderButton(QToolButton):
         self._is_loading = False
 
         # Stop spinner animation
-        if hasattr(self, "_animation_timer"):
+        if self._animation_timer is not None:
             self._animation_timer.stop()
             self._animation_timer.deleteLater()
+            self._animation_timer = None
 
         # Show result state
         if success:
@@ -497,9 +608,46 @@ class LoaderButton(QToolButton):
             )
             QTimer.singleShot(display_time, self._reset_to_original)
 
+    def resetLoading(self) -> None:
+        """Reset the button to its original state.
+
+        Can be called manually when auto_reset is False.
+        """
+        self._is_loading = False
+        self._reset_to_original()
+
+    def setTheme(self, theme: str) -> None:
+        """Update all icons' color for the given theme.
+
+        Can be connected directly to a theme-change signal to keep
+        icons in sync with the application's color scheme.
+
+        Args:
+            theme: The new theme (``"dark"`` or ``"light"``).
+        """
+        for icon in (
+            self._original_icon,
+            self._loading_icon,
+            self._success_icon,
+            self._error_icon,
+        ):
+            if isinstance(icon, ThemeIcon):
+                icon.setTheme(theme)
+        self._update_display()
+
     # ------------------------------------------------
     # PRIVATE METHODS
     # ------------------------------------------------
+
+    def _cleanup_timer(self) -> None:
+        """Stop and release the animation timer when the widget is destroyed.
+
+        Connected to the ``destroyed`` signal to prevent the timer from
+        firing on a dead C++ object.
+        """
+        if self._animation_timer is not None:
+            self._animation_timer.stop()
+            self._animation_timer = None
 
     @staticmethod
     def _create_spinner_pixmap(size: int = 16, color: str = "#0078d4") -> QPixmap:
@@ -611,9 +759,9 @@ class LoaderButton(QToolButton):
 
     def _show_success_state(self) -> None:
         """Show success state with success icon."""
-        self.text_label.setText("Success!")
+        self.text_label.setText(self._success_text)
         if self._success_icon:
-            self.icon_label.setPixmap(self._success_icon.pixmap(16, 16))
+            self.icon_label.setPixmap(self._success_icon.pixmap(self._icon_size))
             self.icon_label.show()
         else:
             self.icon_label.hide()
@@ -625,12 +773,12 @@ class LoaderButton(QToolButton):
             error_message: Optional error message to display.
         """
         if error_message:
-            self.text_label.setText(f"Error: {error_message}")
+            self.text_label.setText(f"{self._error_text}: {error_message}")
         else:
-            self.text_label.setText("Error")
+            self.text_label.setText(self._error_text)
 
         if self._error_icon:
-            self.icon_label.setPixmap(self._error_icon.pixmap(16, 16))
+            self.icon_label.setPixmap(self._error_icon.pixmap(self._icon_size))
             self.icon_label.show()
         else:
             self.icon_label.hide()
@@ -654,7 +802,7 @@ class LoaderButton(QToolButton):
         self._rotation_angle = (self._rotation_angle + 10) % 360
 
         if self._loading_icon:
-            pixmap = self._loading_icon.pixmap(16, 16)
+            pixmap = self._loading_icon.pixmap(self._icon_size)
             if pixmap:
                 rotated_pixmap = QPixmap(pixmap.size())
                 rotated_pixmap.fill(Qt.GlobalColor.transparent)
@@ -676,14 +824,14 @@ class LoaderButton(QToolButton):
         if self._is_loading:
             self.text_label.setText(self._loading_text)
             if self._loading_icon:
-                self.icon_label.setPixmap(self._loading_icon.pixmap(16, 16))
+                self.icon_label.setPixmap(self._loading_icon.pixmap(self._icon_size))
                 self.icon_label.show()
             else:
                 self.icon_label.hide()
         else:
             self.text_label.setText(self._original_text)
             if self._original_icon:
-                self.icon_label.setPixmap(self._original_icon.pixmap(16, 16))
+                self.icon_label.setPixmap(self._original_icon.pixmap(self._icon_size))
                 self.icon_label.show()
             else:
                 self.icon_label.hide()
@@ -725,7 +873,11 @@ class LoaderButton(QToolButton):
             self._loading_text if self._is_loading else self._original_text
         )
 
-        icon_width = 16 if (self._loading_icon or self._original_icon) else 0
+        icon_width = (
+            self._icon_size.width()
+            if (self._loading_icon or self._original_icon)
+            else 0
+        )
 
         total_width = text_width + icon_width + 16 + 8  # margins + spacing
 
@@ -742,7 +894,7 @@ class LoaderButton(QToolButton):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget's style.
 
         Useful after dynamic stylesheet changes.
