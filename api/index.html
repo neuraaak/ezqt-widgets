@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -681,6 +681,8 @@
       
         
       
+        
+      
     
     
     
@@ -835,6 +837,34 @@
     
   
     Misc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="shared/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shared Constants
   
 
     
@@ -1017,10 +1047,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#button" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overview
+        Button
       
     </span>
   </a>
@@ -1028,10 +1058,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-reference" class="md-nav__link">
+  <a href="#input" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Reference
+        Input
       
     </span>
   </a>
@@ -1039,10 +1069,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#import-examples" class="md-nav__link">
+  <a href="#label" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Import Examples
+        Label
       
     </span>
   </a>
@@ -1050,10 +1080,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#modules" class="md-nav__link">
+  <a href="#misc" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Modules
+        Misc
       
     </span>
   </a>
@@ -1061,115 +1091,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#api-design-principles" class="md-nav__link">
+  <a href="#type-aliases" class="md-nav__link">
     <span class="md-ellipsis">
       
-        API Design Principles
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="API Design Principles">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#type-safety" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Type Safety
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#qt-integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Qt Integration
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#qss-customization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        QSS Customization
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#animation-support" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Animation Support
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Start Example
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Installation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#detailed-documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Detailed Documentation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#module-documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Module Documentation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#need-help" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Need Help?
+        Type Aliases
       
     </span>
   </a>
@@ -1205,232 +1130,199 @@
 
 
 <h1 id="api-reference">API Reference<a class="headerlink" href="#api-reference" title="Anchor link to this section">&para;</a></h1>
-<p>Complete API reference for <strong>EzQt Widgets</strong> library.</p>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Anchor link to this section">&para;</a></h2>
-<p>The EzQt Widgets API provides <strong>16 specialized Qt widgets</strong> organized into <strong>4 modules</strong>. All widgets are fully typed, support Qt signals, and can be styled with QSS (Qt Style Sheets).</p>
-<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Anchor link to this section">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Description</th>
-<th>Documentation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="button/">Button</a></td>
-<td>Date, icon, and loader buttons</td>
-<td>Specialized button widgets</td>
-</tr>
-<tr>
-<td><a href="input/">Input</a></td>
-<td>Advanced input fields</td>
-<td>Auto-complete, search, password</td>
-</tr>
-<tr>
-<td><a href="label/">Label</a></td>
-<td>Interactive label widgets</td>
-<td>Tags, hover effects, status indicators</td>
-</tr>
-<tr>
-<td><a href="misc/">Misc</a></td>
-<td>Utility widgets</td>
-<td>Timers, drag-drop, toggles, selectors</td>
-</tr>
-</tbody>
-</table>
-<h2 id="import-examples">Import Examples<a class="headerlink" href="#import-examples" title="Anchor link to this section">&para;</a></h2>
-<p>All widgets can be imported directly from the package:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToggleSwitch</span><span class="p">,</span> <span class="n">DateButton</span><span class="p">,</span> <span class="n">AutoCompleteInput</span>
-</span></code></pre></div>
-<p>Or from submodules:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets.button</span><span class="w"> </span><span class="kn">import</span> <span class="n">DateButton</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets.input</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoCompleteInput</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets.label</span><span class="w"> </span><span class="kn">import</span> <span class="n">IndicatorLabel</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToggleSwitch</span>
+<p>Complete parameter-level documentation for all public classes in ezqt_widgets 2.6.0.</p>
+<p>All classes are importable directly from the top-level package:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClassName</span>
 </span></code></pre></div>
 <hr />
-<h2 id="modules">Modules<a class="headerlink" href="#modules" title="Anchor link to this section">&para;</a></h2>
+<h2 id="button">Button<a class="headerlink" href="#button" title="Anchor link to this section">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Module</th>
-<th>Widgets</th>
+<th>Class</th>
+<th>Base class</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="button/">Button</a></td>
-<td><code>DateButton</code>, <code>DatePickerDialog</code>, <code>IconButton</code>, <code>LoaderButton</code></td>
-<td>Specialized buttons with calendar, icons and loading animations</td>
+<td><a href="button/#datebutton"><code>DateButton</code></a></td>
+<td><code>QToolButton</code></td>
+<td>Button displaying a date; opens calendar on click</td>
 </tr>
 <tr>
-<td><a href="input/">Input</a></td>
-<td><code>AutoCompleteInput</code>, <code>PasswordInput</code>, <code>SearchInput</code>, <code>TabReplaceTextEdit</code></td>
-<td>Input fields with auto-completion, search and advanced editing</td>
+<td><a href="button/#datepickerdialog"><code>DatePickerDialog</code></a></td>
+<td><code>QDialog</code></td>
+<td>Modal calendar dialog</td>
 </tr>
 <tr>
-<td><a href="label/">Label</a></td>
-<td><code>ClickableTagLabel</code>, <code>FramedLabel</code>, <code>HoverLabel</code>, <code>IndicatorLabel</code></td>
-<td>Interactive labels with tags, hover effects and LED indicators</td>
+<td><a href="button/#iconbutton"><code>IconButton</code></a></td>
+<td><code>QToolButton</code></td>
+<td>Button with icon from any source and optional text</td>
 </tr>
 <tr>
-<td><a href="misc/">Misc</a></td>
-<td><code>CircularTimer</code>, <code>DraggableList</code>, <code>DraggableItem</code>, <code>OptionSelector</code>, <code>ToggleIcon</code>, <code>ToggleSwitch</code></td>
-<td>Utility widgets: timers, drag &amp; drop, toggles, selectors</td>
+<td><a href="button/#loaderbutton"><code>LoaderButton</code></a></td>
+<td><code>QToolButton</code></td>
+<td>Button with animated spinner and state management</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="api-design-principles">API Design Principles<a class="headerlink" href="#api-design-principles" title="Anchor link to this section">&para;</a></h2>
-<h3 id="type-safety">Type Safety<a class="headerlink" href="#type-safety" title="Anchor link to this section">&para;</a></h3>
-<p>EzQt Widgets provides complete type hints for all public APIs:</p>
-<ul>
-<li><strong>Full type annotations</strong> - Python 3.10+ type hints throughout</li>
-<li><strong>IDE support</strong> - Excellent auto-completion and error detection</li>
-<li><strong>Type checking</strong> - Compatible with mypy, pyright, and other type checkers</li>
-<li><strong>Runtime validation</strong> - Type hints used for parameter validation</li>
-</ul>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">DateButton</span><span class="p">,</span> <span class="n">ToggleSwitch</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">QDate</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Type-safe widget creation</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">date_btn</span><span class="p">:</span> <span class="n">DateButton</span> <span class="o">=</span> <span class="n">DateButton</span><span class="p">(</span><span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Select date&quot;</span><span class="p">)</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">switch</span><span class="p">:</span> <span class="n">ToggleSwitch</span> <span class="o">=</span> <span class="n">ToggleSwitch</span><span class="p">(</span><span class="n">checked</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1"># Type-safe signal connections</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">handle_date</span><span class="p">(</span><span class="n">date</span><span class="p">:</span> <span class="n">QDate</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Date: </span><span class="si">{</span><span class="n">date</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">date_btn</span><span class="o">.</span><span class="n">dateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">handle_date</span><span class="p">)</span>
-</span></code></pre></div>
-<h3 id="qt-integration">Qt Integration<a class="headerlink" href="#qt-integration" title="Anchor link to this section">&para;</a></h3>
-<p>Seamless integration with PySide6 and Qt framework:</p>
-<ul>
-<li><strong>Native Qt Signals</strong> - Standard Qt signal/slot mechanism</li>
-<li><strong>QWidget inheritance</strong> - All widgets inherit from Qt base classes</li>
-<li><strong>Qt properties</strong> - Widgets expose Qt properties for binding</li>
-<li><strong>Event handling</strong> - Standard Qt event system support</li>
-</ul>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToggleSwitch</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">QObject</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">class</span><span class="w"> </span><span class="nc">MyController</span><span class="p">(</span><span class="n">QObject</span><span class="p">):</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">stateChanged</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">switch</span> <span class="o">=</span> <span class="n">ToggleSwitch</span><span class="p">()</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">switch</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">)</span>
-</span></code></pre></div>
-<h3 id="qss-customization">QSS Customization<a class="headerlink" href="#qss-customization" title="Anchor link to this section">&para;</a></h3>
-<p>Full Qt stylesheet support for visual customization:</p>
-<ul>
-<li><strong>QSS styling</strong> - Complete Qt stylesheet customization</li>
-<li><strong>Pseudo-states</strong> - Support for <code>:hover</code>, <code>:pressed</code>, <code>:disabled</code>, etc.</li>
-<li><strong>Custom properties</strong> - Widgets can be styled with custom QSS properties</li>
-<li><strong>Theme support</strong> - Easy to create custom themes</li>
-</ul>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">DateButton</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">date_btn</span> <span class="o">=</span> <span class="n">DateButton</span><span class="p">()</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">date_btn</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="s2">    DateButton {</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="s2">        background-color: #3498db;</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="s2">        color: white;</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="s2">        border-radius: 8px;</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="s2">        padding: 10px 20px;</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="s2">    }</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="s2">    DateButton:hover {</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="s2">        background-color: #2980b9;</span>
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="s2">    }</span>
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
-</span></code></pre></div>
-<h3 id="animation-support">Animation Support<a class="headerlink" href="#animation-support" title="Anchor link to this section">&para;</a></h3>
-<p>Smooth animations with configurable easing curves:</p>
-<ul>
-<li><strong>QPropertyAnimation</strong> - Built-in property animations</li>
-<li><strong>Easing curves</strong> - Configurable easing functions</li>
-<li><strong>Duration control</strong> - Adjustable animation timing</li>
-<li><strong>Performance</strong> - Optimized for smooth 60 FPS animations</li>
-</ul>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToggleSwitch</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">QEasingCurve</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">switch</span> <span class="o">=</span> <span class="n">ToggleSwitch</span><span class="p">(</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="n">animation_duration</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>  <span class="c1"># milliseconds</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="n">animation_curve</span><span class="o">=</span><span class="n">QEasingCurve</span><span class="o">.</span><span class="n">Type</span><span class="o">.</span><span class="n">OutCubic</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">)</span>
-</span></code></pre></div>
-<hr />
-<h2 id="quick-start-example">Quick Start Example<a class="headerlink" href="#quick-start-example" title="Anchor link to this section">&para;</a></h2>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QApplication</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToggleSwitch</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">switch</span> <span class="o">=</span> <span class="n">ToggleSwitch</span><span class="p">(</span><span class="n">checked</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">switch</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">state</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Switch: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">switch</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
-</span></code></pre></div>
-<hr />
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Anchor link to this section">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ezqt-widgets
-</span></code></pre></div>
-<p>For development installation:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/neuraaak/ezqt-widgets.git
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">cd</span><span class="w"> </span>ezqt_widgets
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
-</span></code></pre></div>
-<hr />
-<h2 id="detailed-documentation">Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Anchor link to this section">&para;</a></h2>
-<p>Select a module from the navigation menu or the table above to view detailed widget documentation with:</p>
-<ul>
-<li>Complete method signatures</li>
-<li>Signal descriptions</li>
-<li>Property documentation</li>
-<li>Usage examples</li>
-<li>QSS styling examples</li>
-</ul>
-<h2 id="module-documentation">Module Documentation<a class="headerlink" href="#module-documentation" title="Anchor link to this section">&para;</a></h2>
+<h2 id="input">Input<a class="headerlink" href="#input" title="Anchor link to this section">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Module</th>
+<th>Class</th>
+<th>Base class</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="button/">Button</a></td>
-<td>Specialized buttons with calendar, icons, and loading</td>
+<td><a href="input/#autocompleteinput"><code>AutoCompleteInput</code></a></td>
+<td><code>QLineEdit</code></td>
+<td>Text input with configurable auto-completion</td>
 </tr>
 <tr>
-<td><a href="input/">Input</a></td>
-<td>Input fields with auto-completion and advanced editing</td>
+<td><a href="input/#passwordinput"><code>PasswordInput</code></a></td>
+<td><code>QWidget</code></td>
+<td>Password field with strength bar and visibility toggle</td>
 </tr>
 <tr>
-<td><a href="label/">Label</a></td>
-<td>Interactive labels with tags, hover effects, and indicators</td>
+<td><a href="input/#searchinput"><code>SearchInput</code></a></td>
+<td><code>QLineEdit</code></td>
+<td>Search field with keyboard-navigable history</td>
 </tr>
 <tr>
-<td><a href="misc/">Misc</a></td>
-<td>Utility widgets: timers, drag &amp; drop, toggles, selectors</td>
+<td><a href="input/#tabreplacetextedit"><code>TabReplaceTextEdit</code></a></td>
+<td><code>QPlainTextEdit</code></td>
+<td>Text editor that sanitizes pasted tabs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="label">Label<a class="headerlink" href="#label" title="Anchor link to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Base class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="label/#clickabletaglabel"><code>ClickableTagLabel</code></a></td>
+<td><code>QFrame</code></td>
+<td>Toggleable tag label with signals</td>
+</tr>
+<tr>
+<td><a href="label/#framedlabel"><code>FramedLabel</code></a></td>
+<td><code>QFrame</code></td>
+<td>QLabel inside a QFrame for advanced styling</td>
+</tr>
+<tr>
+<td><a href="label/#hoverlabel"><code>HoverLabel</code></a></td>
+<td><code>QLabel</code></td>
+<td>Label that shows a floating icon on hover</td>
+</tr>
+<tr>
+<td><a href="label/#indicatorlabel"><code>IndicatorLabel</code></a></td>
+<td><code>QFrame</code></td>
+<td>Status indicator with a colored LED</td>
+</tr>
+</tbody>
+</table>
+<h2 id="misc">Misc<a class="headerlink" href="#misc" title="Anchor link to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Base class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="misc/#circulartimer"><code>CircularTimer</code></a></td>
+<td><code>QWidget</code></td>
+<td>Animated circular arc timer</td>
+</tr>
+<tr>
+<td><a href="misc/#draggableitem"><code>DraggableItem</code></a></td>
+<td><code>QFrame</code></td>
+<td>Single draggable item for DraggableList</td>
+</tr>
+<tr>
+<td><a href="misc/#draggablelist"><code>DraggableList</code></a></td>
+<td><code>QWidget</code></td>
+<td>Scrollable list with drag-and-drop reordering</td>
+</tr>
+<tr>
+<td><a href="misc/#optionselector"><code>OptionSelector</code></a></td>
+<td><code>QFrame</code></td>
+<td>Animated single-selection option bar</td>
+</tr>
+<tr>
+<td><a href="misc/#themeicon"><code>ThemeIcon</code></a></td>
+<td><code>QIcon</code></td>
+<td>Theme-aware icon that adapts color to dark/light mode</td>
+</tr>
+<tr>
+<td><a href="misc/#toggleicon"><code>ToggleIcon</code></a></td>
+<td><code>QLabel</code></td>
+<td>Label toggling between two icons</td>
+</tr>
+<tr>
+<td><a href="misc/#toggleswitch"><code>ToggleSwitch</code></a></td>
+<td><code>QWidget</code></td>
+<td>Animated toggle switch</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="need-help">Need Help?<a class="headerlink" href="#need-help" title="Anchor link to this section">&para;</a></h2>
-<ul>
-<li><strong>Quick Start</strong>: See <a href="../getting-started/">Getting Started</a></li>
-<li><strong>Examples</strong>: Check out <a href="../examples/">Examples</a></li>
-<li><strong>Guides</strong>: Read <a href="../guides/">User Guides</a></li>
-<li><strong>Issues</strong>: Report bugs on <a href="https://github.com/neuraaak/ezqt-widgets/issues">GitHub</a></li>
-</ul>
+<h2 id="type-aliases">Type Aliases<a class="headerlink" href="#type-aliases" title="Anchor link to this section">&para;</a></h2>
+<p>The following type aliases are exported from <code>ezqt_widgets.types</code> and re-exported at the top level:</p>
+<table>
+<thead>
+<tr>
+<th>Alias</th>
+<th>Resolves to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IconSource</code></td>
+<td><code>QIcon \| str \| None</code></td>
+</tr>
+<tr>
+<td><code>IconSourceExtended</code></td>
+<td><code>QIcon \| QPixmap \| str \| None</code></td>
+</tr>
+<tr>
+<td><code>SizeType</code></td>
+<td><code>QSize \| tuple[int, int]</code></td>
+</tr>
+<tr>
+<td><code>ColorType</code></td>
+<td><code>QColor \| str</code></td>
+</tr>
+<tr>
+<td><code>WidgetParent</code></td>
+<td><code>QWidget \| None</code></td>
+</tr>
+<tr>
+<td><code>AnimationDuration</code></td>
+<td><code>int</code> (milliseconds)</td>
+</tr>
+<tr>
+<td><code>EventCallback</code></td>
+<td><code>Callable[[], None]</code></td>
+</tr>
+<tr>
+<td><code>ValueCallback</code></td>
+<td><code>Callable[[Any], None]</code></td>
+</tr>
+</tbody>
+</table>
 
 
 

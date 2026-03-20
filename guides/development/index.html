@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -682,10 +682,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-setup" class="md-nav__link">
+  <a href="#environment-setup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Setup
+        Environment Setup
       
     </span>
   </a>
@@ -693,41 +693,24 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#development-tools" class="md-nav__link">
+  <a href="#project-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Development Tools
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Development Tools">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#code-formatting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Code Formatting
+        Project Structure
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#development-commands" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#make-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Development Commands
+        Make Commands
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -744,10 +727,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ruff-configuration" class="md-nav__link">
+  <a href="#file-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ruff Configuration
+        File Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#naming-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming Conventions
       
     </span>
   </a>
@@ -776,11 +770,105 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#section-markers" class="md-nav__link">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-a-new-widget" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Section Markers
+        Adding a New Widget
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding a New Widget">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-choose-the-right-category" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Choose the right category
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-create-the-module-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Create the module file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-register-in-the-category-__init__py" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Register in the category __init__.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-register-in-the-top-level-__init__py" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Register in the top-level __init__.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-write-unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Write unit tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-write-an-example-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Write an example script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-document-the-widget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Document the widget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-run-the-full-quality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Run the full quality check
       
     </span>
   </a>
@@ -793,33 +881,77 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#quality-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quality Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formatting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formatting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-scanning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security scanning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-checking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type checking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#import-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import contracts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pre-commit-hooks" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pre-commit Hooks
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Pre-commit Hooks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Installation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#automatic-checks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Automatic Checks
+        Pre-commit hooks
       
     </span>
   </a>
@@ -832,27 +964,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tests" class="md-nav__link">
+  <a href="#testing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tests
+        Testing
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Tests">
+    <nav class="md-nav" aria-label="Testing">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#test-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Test Structure
-      
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#running-tests" class="md-nav__link">
@@ -865,39 +986,11 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#built-in-cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Built-in CLI
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recommended-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Recommended Workflow
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Recommended Workflow">
-      <ul class="md-nav__list">
-        
           <li class="md-nav__item">
-  <a href="#1-before-starting" class="md-nav__link">
+  <a href="#coverage-threshold" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Before Starting
+        Coverage Threshold
       
     </span>
   </a>
@@ -905,32 +998,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-during-development" class="md-nav__link">
+  <a href="#test-markers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. During Development
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-before-committing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Before Committing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-pre-commit-hooks-run-automatically" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Pre-commit hooks run automatically
+        Test Markers
       
     </span>
   </a>
@@ -947,34 +1018,6 @@
     <span class="md-ellipsis">
       
         Troubleshooting
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Issues
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project Structure
       
     </span>
   </a>
@@ -1044,6 +1087,8 @@
   
     
     
+      
+        
       
         
       
@@ -1204,6 +1249,34 @@
     
   
     Misc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/shared/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shared Constants
   
 
     
@@ -1397,10 +1470,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-setup" class="md-nav__link">
+  <a href="#environment-setup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick Setup
+        Environment Setup
       
     </span>
   </a>
@@ -1408,41 +1481,24 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#development-tools" class="md-nav__link">
+  <a href="#project-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Development Tools
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Development Tools">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#code-formatting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Code Formatting
+        Project Structure
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#development-commands" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#make-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Development Commands
+        Make Commands
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1459,10 +1515,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ruff-configuration" class="md-nav__link">
+  <a href="#file-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ruff Configuration
+        File Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#naming-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming Conventions
       
     </span>
   </a>
@@ -1491,11 +1558,105 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#section-markers" class="md-nav__link">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-a-new-widget" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Section Markers
+        Adding a New Widget
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding a New Widget">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-choose-the-right-category" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Choose the right category
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-create-the-module-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Create the module file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-register-in-the-category-__init__py" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Register in the category __init__.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-register-in-the-top-level-__init__py" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Register in the top-level __init__.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-write-unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Write unit tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-write-an-example-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Write an example script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-document-the-widget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Document the widget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-run-the-full-quality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Run the full quality check
       
     </span>
   </a>
@@ -1508,33 +1669,77 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#quality-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quality Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formatting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formatting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-scanning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security scanning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-checking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type checking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#import-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import contracts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pre-commit-hooks" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pre-commit Hooks
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Pre-commit Hooks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Installation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#automatic-checks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Automatic Checks
+        Pre-commit hooks
       
     </span>
   </a>
@@ -1547,27 +1752,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tests" class="md-nav__link">
+  <a href="#testing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tests
+        Testing
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Tests">
+    <nav class="md-nav" aria-label="Testing">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#test-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Test Structure
-      
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#running-tests" class="md-nav__link">
@@ -1580,39 +1774,11 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#built-in-cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Built-in CLI
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recommended-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Recommended Workflow
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Recommended Workflow">
-      <ul class="md-nav__list">
-        
           <li class="md-nav__item">
-  <a href="#1-before-starting" class="md-nav__link">
+  <a href="#coverage-threshold" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Before Starting
+        Coverage Threshold
       
     </span>
   </a>
@@ -1620,32 +1786,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-during-development" class="md-nav__link">
+  <a href="#test-markers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. During Development
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-before-committing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Before Committing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-pre-commit-hooks-run-automatically" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Pre-commit hooks run automatically
+        Test Markers
       
     </span>
   </a>
@@ -1662,34 +1806,6 @@
     <span class="md-ellipsis">
       
         Troubleshooting
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Issues
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project Structure
       
     </span>
   </a>
@@ -1776,160 +1892,447 @@
 
 
 <h1 id="development-guide">Development Guide<a class="headerlink" href="#development-guide" title="Anchor link to this section">&para;</a></h1>
-<p>Complete guide for setting up the development environment, using tools
-and contributing to the <strong>ezqt_widgets</strong> project.</p>
+<p>Everything you need to set up the development environment, maintain code quality, and contribute a new widget to <strong>ezqt-widgets</strong>.</p>
 <hr />
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Anchor link to this section">&para;</a></h2>
-<ul>
-<li><strong>Python</strong>: 3.10 or higher</li>
-<li><strong>PySide6</strong>: 6.x</li>
-<li><strong>Git</strong>: for version control</li>
-</ul>
-<h2 id="quick-setup">Quick Setup<a class="headerlink" href="#quick-setup" title="Anchor link to this section">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Install in development mode</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Or with Make</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>make<span class="w"> </span>install-dev
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td>&gt;= 3.11</td>
+</tr>
+<tr>
+<td>PySide6</td>
+<td>&gt;= 6.7.3, &lt; 7.0.0</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>any recent version</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="environment-setup">Environment Setup<a class="headerlink" href="#environment-setup" title="Anchor link to this section">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Clone the repository</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/neuraaak/ezqt-widgets.git
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>ezqt-widgets
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Install in editable mode with all development extras</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Install pre-commit hooks</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>pre-commit<span class="w"> </span>install
+</span></code></pre></div>
+<p>Or with Make:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>make<span class="w"> </span>install-dev
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>make<span class="w"> </span>setup-hooks
+</span></code></pre></div>
+<p>Verify the CLI is available after installation:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ezqt-widgets<span class="w"> </span>info
 </span></code></pre></div>
 <hr />
-<h2 id="development-tools">Development Tools<a class="headerlink" href="#development-tools" title="Anchor link to this section">&para;</a></h2>
-<h3 id="code-formatting">Code Formatting<a class="headerlink" href="#code-formatting" title="Anchor link to this section">&para;</a></h3>
-<h4 id="vscode-recommended">VSCode (recommended)<a class="headerlink" href="#vscode-recommended" title="Anchor link to this section">&para;</a></h4>
-<p>The project includes a VSCode configuration that enables:</p>
-<ul>
-<li><strong>Auto-format on save</strong> with Ruff</li>
-<li><strong>Automatic import sorting</strong> with Ruff</li>
-<li><strong>Real-time linting</strong> with Ruff</li>
-<li><strong>Test discovery</strong> with pytest</li>
-</ul>
-<h4 id="recommended-vscode-extensions">Recommended VSCode Extensions<a class="headerlink" href="#recommended-vscode-extensions" title="Anchor link to this section">&para;</a></h4>
-<ul>
-<li><code>ms-python.python</code> -- Full Python support</li>
-<li><code>charliermarsh.ruff</code> -- Ruff formatter and linter</li>
-<li><code>ms-python.mypy-type-checker</code> -- Type checking</li>
-</ul>
-<h3 id="development-commands">Development Commands<a class="headerlink" href="#development-commands" title="Anchor link to this section">&para;</a></h3>
-<h4 id="with-make">With Make<a class="headerlink" href="#with-make" title="Anchor link to this section">&para;</a></h4>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>make<span class="w"> </span><span class="nb">help</span><span class="w">           </span><span class="c1"># Display help</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>make<span class="w"> </span>format<span class="w">         </span><span class="c1"># Format code (Black + isort)</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>make<span class="w"> </span>lint<span class="w">           </span><span class="c1"># Check code quality</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>make<span class="w"> </span>fix<span class="w">            </span><span class="c1"># Auto-fix issues</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>make<span class="w"> </span><span class="nb">test</span><span class="w">           </span><span class="c1"># Run tests</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>make<span class="w"> </span>test-cov<span class="w">       </span><span class="c1"># Tests with coverage</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>make<span class="w"> </span>clean<span class="w">          </span><span class="c1"># Clean temporary files</span>
+<h2 id="project-structure">Project Structure<a class="headerlink" href="#project-structure" title="Anchor link to this section">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ezqt_widgets/
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>├── src/
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>│   └── ezqt_widgets/
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>│       ├── __init__.py           # Public API — __all__ and re-exports
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>│       ├── version.py            # Single source of truth for __version__
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>│       ├── types.py              # Shared type aliases
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>│       ├── widgets/
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>│       │   ├── button/           # DateButton, IconButton, LoaderButton
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>│       │   ├── input/            # AutoCompleteInput, PasswordInput, SearchInput, TabReplaceTextEdit
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>│       │   ├── label/            # ClickableTagLabel, FramedLabel, HoverLabel, IndicatorLabel
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>│       │   └── misc/             # CircularTimer, DraggableList, OptionSelector, ThemeIcon, ToggleIcon, ToggleSwitch
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>│       └── cli/
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>│           └── main.py           # Click entry point: ezqt-widgets
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>├── tests/
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>│   ├── conftest.py
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>│   ├── run_tests.py
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>│   └── unit/
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>│       ├── test_button/
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>│       ├── test_input/
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>│       ├── test_label/
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>│       └── test_misc/
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>├── examples/                     # Runnable example scripts
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>├── docs/                         # MkDocs documentation source
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>├── pyproject.toml
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>└── Makefile
 </span></code></pre></div>
-<h4 id="native-python-scripts">Native Python Scripts<a class="headerlink" href="#native-python-scripts" title="Anchor link to this section">&para;</a></h4>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Linting and formatting</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python<span class="w"> </span>.scripts/dev/lint.py<span class="w">              </span><span class="c1"># Check quality</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>python<span class="w"> </span>.scripts/dev/lint.py<span class="w"> </span>--fix<span class="w">        </span><span class="c1"># Auto-fix</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># Tests</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>python<span class="w"> </span>tests/run_tests.py<span class="w"> </span>--type<span class="w"> </span>unit<span class="w">    </span><span class="c1"># Unit tests</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>python<span class="w"> </span>tests/run_tests.py<span class="w"> </span>--coverage<span class="w">     </span><span class="c1"># With coverage</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>python<span class="w"> </span>tests/run_tests.py<span class="w"> </span>--fast<span class="w">         </span><span class="c1"># Fast tests</span>
-</span></code></pre></div>
+<hr />
+<h2 id="make-commands">Make Commands<a class="headerlink" href="#make-commands" title="Anchor link to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>make help</code></td>
+<td>List all available targets</td>
+</tr>
+<tr>
+<td><code>make install</code></td>
+<td>Install the package in editable mode</td>
+</tr>
+<tr>
+<td><code>make install-dev</code></td>
+<td>Install the package with all development extras</td>
+</tr>
+<tr>
+<td><code>make format</code></td>
+<td>Format source code with <code>ruff format</code></td>
+</tr>
+<tr>
+<td><code>make fix</code></td>
+<td>Alias for <code>make format</code></td>
+</tr>
+<tr>
+<td><code>make lint</code></td>
+<td>Run <code>python lint.py</code> (Ruff + Bandit + import-linter)</td>
+</tr>
+<tr>
+<td><code>make test</code></td>
+<td>Run unit tests via <code>python tests/run_tests.py --type unit</code></td>
+</tr>
+<tr>
+<td><code>make test-cov</code></td>
+<td>Run tests with HTML coverage report</td>
+</tr>
+<tr>
+<td><code>make test-fast</code></td>
+<td>Run tests excluding slow-marked cases</td>
+</tr>
+<tr>
+<td><code>make check</code></td>
+<td>Run <code>format</code> + <code>lint</code> + <code>test</code> in sequence</td>
+</tr>
+<tr>
+<td><code>make prepare</code></td>
+<td>Run <code>format</code> + <code>lint</code> + <code>test-fast</code> — use before committing</td>
+</tr>
+<tr>
+<td><code>make setup-hooks</code></td>
+<td>Install pre-commit hooks</td>
+</tr>
+<tr>
+<td><code>make pre-commit</code></td>
+<td>Run all pre-commit hooks against every file</td>
+</tr>
+<tr>
+<td><code>make docs</code></td>
+<td>Start the MkDocs dev server with live reload</td>
+</tr>
+<tr>
+<td><code>make docs-build</code></td>
+<td>Build the static site (<code>mkdocs build --strict</code>)</td>
+</tr>
+<tr>
+<td><code>make docs-deploy</code></td>
+<td>Deploy to GitHub Pages (<code>mkdocs gh-deploy --force</code>)</td>
+</tr>
+<tr>
+<td><code>make clean</code></td>
+<td>Remove <code>__pycache__</code>, <code>*.pyc</code>, <code>dist/</code>, <code>htmlcov/</code>, etc.</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="code-standards">Code Standards<a class="headerlink" href="#code-standards" title="Anchor link to this section">&para;</a></h2>
-<h3 id="ruff-configuration">Ruff Configuration<a class="headerlink" href="#ruff-configuration" title="Anchor link to this section">&para;</a></h3>
-<ul>
-<li><strong>Line length</strong>: 88 characters</li>
-<li><strong>Python versions</strong>: 3.10, 3.11, 3.12</li>
-<li><strong>Format on save</strong>: enabled</li>
-</ul>
+<h3 id="file-structure">File Structure<a class="headerlink" href="#file-structure" title="Anchor link to this section">&para;</a></h3>
+<p>Every widget module follows this internal section order:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># ///////////////////////////////////////////////////////////////</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># SECTION NAME</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># ///////////////////////////////////////////////////////////////</span>
+</span></code></pre></div>
+<p>Mandatory sections, in order:</p>
+<ol>
+<li>Module docstring</li>
+<li><code>from __future__ import annotations</code></li>
+<li>Standard library imports</li>
+<li>Third-party imports (PySide6)</li>
+<li>Local imports</li>
+<li><code>__all__</code> declaration</li>
+<li>Class definition</li>
+</ol>
+<h3 id="naming-conventions">Naming Conventions<a class="headerlink" href="#naming-conventions" title="Anchor link to this section">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Convention</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Module file</td>
+<td><code>snake_case.py</code></td>
+<td><code>date_button.py</code></td>
+</tr>
+<tr>
+<td>Class</td>
+<td><code>PascalCase</code></td>
+<td><code>DateButton</code></td>
+</tr>
+<tr>
+<td>Public method</td>
+<td><code>camelCase</code></td>
+<td><code>startLoading()</code></td>
+</tr>
+<tr>
+<td>Private method</td>
+<td><code>_snake_case</code></td>
+<td><code>_apply_style()</code></td>
+</tr>
+<tr>
+<td>Signal</td>
+<td><code>camelCase</code></td>
+<td><code>dateChanged</code></td>
+</tr>
+<tr>
+<td>Qt Property</td>
+<td><code>snake_case</code></td>
+<td><code>date_format</code></td>
+</tr>
+</tbody>
+</table>
 <h3 id="type-hints">Type Hints<a class="headerlink" href="#type-hints" title="Anchor link to this section">&para;</a></h3>
-<ul>
-<li><strong>Required</strong> for all public functions and methods</li>
-<li><strong>Style</strong>: native types (<code>list</code>, <code>dict</code>) with <code>from __future__ import annotations</code></li>
-</ul>
+<p>All public methods and constructors require type hints. Use the shared type aliases from <code>ezqt_widgets.types</code> where applicable:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">IconSource</span><span class="p">,</span> <span class="n">SizeType</span><span class="p">,</span> <span class="n">WidgetParent</span>
+</span></code></pre></div>
+<p>Use native generics (<code>list[str]</code>, <code>dict[str, str]</code>) with <code>from __future__ import annotations</code> rather than <code>typing.List</code> or <code>typing.Dict</code>.</p>
 <h3 id="docstrings">Docstrings<a class="headerlink" href="#docstrings" title="Anchor link to this section">&para;</a></h3>
-<ul>
-<li><strong>Format</strong>: Google-style</li>
-<li><strong>Language</strong>: English</li>
-<li><strong>Required</strong> for all public classes, methods and functions</li>
-</ul>
-<h3 id="section-markers">Section Markers<a class="headerlink" href="#section-markers" title="Anchor link to this section">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># ///////////////////////////////////////////////////////////////</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># SECTION NAME</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># ///////////////////////////////////////////////////////////////</span>
-</span></code></pre></div>
-<hr />
-<h2 id="pre-commit-hooks">Pre-commit Hooks<a class="headerlink" href="#pre-commit-hooks" title="Anchor link to this section">&para;</a></h2>
-<h3 id="installation">Installation<a class="headerlink" href="#installation" title="Anchor link to this section">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span>pre-commit
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>pre-commit<span class="w"> </span>install
-</span></code></pre></div>
-<h3 id="automatic-checks">Automatic Checks<a class="headerlink" href="#automatic-checks" title="Anchor link to this section">&para;</a></h3>
-<p>Hooks run before each commit:</p>
-<ul>
-<li>Formatting with Ruff</li>
-<li>Import sorting</li>
-<li>Linting with Ruff</li>
-<li>Type checking</li>
-<li>Cleanup (trailing whitespace, etc.)</li>
-</ul>
-<hr />
-<h2 id="tests">Tests<a class="headerlink" href="#tests" title="Anchor link to this section">&para;</a></h2>
-<h3 id="test-structure">Test Structure<a class="headerlink" href="#test-structure" title="Anchor link to this section">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>tests/
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>├── conftest.py                 # pytest configuration
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>├── run_tests.py                # Execution script
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>└── unit/                       # Unit tests
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    ├── test_button/
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    ├── test_input/
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    ├── test_label/
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    └── test_misc/
-</span></code></pre></div>
-<h3 id="running-tests">Running Tests<a class="headerlink" href="#running-tests" title="Anchor link to this section">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Fast tests</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>python<span class="w"> </span>tests/run_tests.py<span class="w"> </span>--type<span class="w"> </span>unit<span class="w"> </span>--fast
+<p>Google-style docstrings are required for all public classes and methods. Mandatory sections for non-trivial methods:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">setStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the current status and update the display.</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Full tests with coverage</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>python<span class="w"> </span>tests/run_tests.py<span class="w"> </span>--coverage
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="sd">    Args:</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="sd">        status: Key from the ``status_map`` passed at construction.</span>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Specific tests</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>pytest<span class="w"> </span>tests/unit/test_button/<span class="w"> </span>-v
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="sd">    Raises:</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="sd">        ValueError: If ``status`` is not a key in ``status_map``.</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="sd">    &quot;&quot;&quot;</span>
 </span></code></pre></div>
-<hr />
-<h2 id="built-in-cli">Built-in CLI<a class="headerlink" href="#built-in-cli" title="Anchor link to this section">&para;</a></h2>
-<p>The project includes a CLI accessible via <code>ezqt</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Package information</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ezqt<span class="w"> </span>info
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Run examples</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>ezqt<span class="w"> </span>run<span class="w"> </span>--all
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>ezqt<span class="w"> </span>run<span class="w"> </span>--buttons
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>ezqt<span class="w"> </span>run<span class="w"> </span>--inputs
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1"># Tests from CLI</span>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>ezqt<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--unit
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>ezqt<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--coverage
-</span></code></pre></div>
-<hr />
-<h2 id="recommended-workflow">Recommended Workflow<a class="headerlink" href="#recommended-workflow" title="Anchor link to this section">&para;</a></h2>
-<h3 id="1-before-starting">1. Before Starting<a class="headerlink" href="#1-before-starting" title="Anchor link to this section">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>pre-commit<span class="w"> </span>install
-</span></code></pre></div>
-<h3 id="2-during-development">2. During Development<a class="headerlink" href="#2-during-development" title="Anchor link to this section">&para;</a></h3>
+<p>Rules:</p>
 <ul>
-<li><strong>VSCode</strong> auto-formats on save</li>
-<li><strong>Or manually</strong>: <code>make format</code></li>
-<li><strong>Quick tests</strong>: <code>make test</code></li>
+<li>First line: one complete sentence ending with a period</li>
+<li><code>Args</code>: document every non-obvious parameter</li>
+<li><code>Returns</code>: always document non-trivial return values</li>
+<li><code>Raises</code>: document only exceptions the caller is expected to handle</li>
+<li>Internal helper methods: one-line docstring is sufficient</li>
 </ul>
-<h3 id="3-before-committing">3. Before Committing<a class="headerlink" href="#3-before-committing" title="Anchor link to this section">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Full check</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>make<span class="w"> </span>check<span class="w">        </span><span class="c1"># format + lint + test</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Or step by step</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>make<span class="w"> </span>format<span class="w">       </span><span class="c1"># Format</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>make<span class="w"> </span>lint<span class="w">         </span><span class="c1"># Check</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>make<span class="w"> </span><span class="nb">test</span><span class="w">         </span><span class="c1"># Test</span>
+<hr />
+<h2 id="adding-a-new-widget">Adding a New Widget<a class="headerlink" href="#adding-a-new-widget" title="Anchor link to this section">&para;</a></h2>
+<p>Follow this checklist in order. Every step is required before a PR can be merged.</p>
+<h3 id="1-choose-the-right-category">1. Choose the right category<a class="headerlink" href="#1-choose-the-right-category" title="Anchor link to this section">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>button/</code></td>
+<td>Inherits from <code>QAbstractButton</code>, <code>QToolButton</code>, or <code>QPushButton</code></td>
+</tr>
+<tr>
+<td><code>input/</code></td>
+<td>Inherits from <code>QLineEdit</code>, <code>QPlainTextEdit</code>, or a composite input wrapper</td>
+</tr>
+<tr>
+<td><code>label/</code></td>
+<td>Inherits from <code>QLabel</code> or <code>QFrame</code> used as a display element</td>
+</tr>
+<tr>
+<td><code>misc/</code></td>
+<td>Everything else — timers, selectors, icons, toggles</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-create-the-module-file">2. Create the module file<a class="headerlink" href="#2-create-the-module-file" title="Anchor link to this section">&para;</a></h3>
+<p>Create <code>src/ezqt_widgets/widgets/&lt;category&gt;/&lt;widget_name&gt;.py</code>.</p>
+<p>Minimal required content:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># ///////////////////////////////////////////////////////////////</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># &lt;WIDGET NAME&gt;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># Project: ezqt_widgets</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># ///////////////////////////////////////////////////////////////</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="sd">&lt;WidgetClass&gt; — one-sentence description.</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QWidget</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">Property</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">WidgetParent</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&lt;WidgetClass&gt;&quot;</span><span class="p">]</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="k">class</span><span class="w"> </span><span class="err">&lt;</span><span class="nc">WidgetClass</span><span class="o">&gt;</span><span class="p">(</span><span class="n">QWidget</span><span class="p">):</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;One-sentence description ending with a period&gt;.</span>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="sd">    Args:</span>
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="sd">        parent: Parent widget.</span>
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>    <span class="c1"># Signals</span>
+</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>    <span class="c1"># Properties</span>
+</span><span id="__span-7-29"><a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>    <span class="c1"># Constructor</span>
+</span><span id="__span-7-30"><a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>    <span class="c1"># Public methods</span>
+</span><span id="__span-7-31"><a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>    <span class="c1"># Private methods</span>
+</span><span id="__span-7-32"><a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>    <span class="c1"># Qt event overrides</span>
 </span></code></pre></div>
-<h3 id="4-pre-commit-hooks-run-automatically">4. Pre-commit hooks run automatically<a class="headerlink" href="#4-pre-commit-hooks-run-automatically" title="Anchor link to this section">&para;</a></h3>
+<h3 id="3-register-in-the-category-__init__py">3. Register in the category <code>__init__.py</code><a class="headerlink" href="#3-register-in-the-category-__init__py" title="Anchor link to this section">&para;</a></h3>
+<p>Add the import and <code>__all__</code> entry to <code>src/ezqt_widgets/widgets/&lt;category&gt;/__init__.py</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="o">&lt;</span><span class="n">widget_name</span><span class="o">&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="o">&lt;</span><span class="n">WidgetClass</span><span class="o">&gt;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="o">...</span><span class="p">,</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="s2">&quot;&lt;WidgetClass&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="p">]</span>
+</span></code></pre></div>
+<h3 id="4-register-in-the-top-level-__init__py">4. Register in the top-level <code>__init__.py</code><a class="headerlink" href="#4-register-in-the-top-level-__init__py" title="Anchor link to this section">&para;</a></h3>
+<p>Add the class to <code>src/ezqt_widgets/__init__.py</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">.widgets.</span><span class="o">&lt;</span><span class="n">category</span><span class="o">&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="o">&lt;</span><span class="n">WidgetClass</span><span class="o">&gt;</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="o">...</span><span class="p">,</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="s2">&quot;&lt;WidgetClass&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">]</span>
+</span></code></pre></div>
+<h3 id="5-write-unit-tests">5. Write unit tests<a class="headerlink" href="#5-write-unit-tests" title="Anchor link to this section">&para;</a></h3>
+<p>Create <code>tests/unit/test_&lt;category&gt;/test_&lt;widget_name&gt;.py</code>. Required test cases:</p>
+<ul>
+<li>Constructor with default parameters</li>
+<li>Constructor with all explicit parameters</li>
+<li>Each public method (happy path)</li>
+<li>Each signal emission</li>
+<li>Each error condition (wrong type, out-of-range value, etc.)</li>
+</ul>
+<p>Test name convention: <code>test_should_&lt;expected_behavior&gt;_when_&lt;condition&gt;</code>.</p>
+<h3 id="6-write-an-example-script">6. Write an example script<a class="headerlink" href="#6-write-an-example-script" title="Anchor link to this section">&para;</a></h3>
+<p>Add or extend <code>examples/&lt;category&gt;_example.py</code> with a self-contained, runnable demonstration of the widget. The script must not rely on implicit state.</p>
+<h3 id="7-document-the-widget">7. Document the widget<a class="headerlink" href="#7-document-the-widget" title="Anchor link to this section">&para;</a></h3>
+<p>Add the widget to <code>docs/api/&lt;category&gt;.md</code>:</p>
+<ul>
+<li>Signal table</li>
+<li>Constructor parameter table</li>
+<li>Property table</li>
+<li>Method table</li>
+<li>Self-contained code example</li>
+<li><code>:::</code> mkdocstrings directive</li>
+</ul>
+<p>Add the class name to <code>docs/api/index.md</code>.</p>
+<h3 id="8-run-the-full-quality-check">8. Run the full quality check<a class="headerlink" href="#8-run-the-full-quality-check" title="Anchor link to this section">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>make<span class="w"> </span>check
+</span></code></pre></div>
+<p>All steps must pass: format, lint, and test with coverage above the 60% threshold.</p>
+<hr />
+<h2 id="quality-workflow">Quality Workflow<a class="headerlink" href="#quality-workflow" title="Anchor link to this section">&para;</a></h2>
+<h3 id="formatting">Formatting<a class="headerlink" href="#formatting" title="Anchor link to this section">&para;</a></h3>
+<p>Ruff handles both formatting and import sorting:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Format all source and test files</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>make<span class="w"> </span>format
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Equivalent direct command</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>ruff<span class="w"> </span>format<span class="w"> </span>src/ezqt_widgets<span class="w"> </span>tests
+</span></code></pre></div>
+<h3 id="linting">Linting<a class="headerlink" href="#linting" title="Anchor link to this section">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Run the full lint suite (Ruff lint + Bandit security + import-linter)</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>make<span class="w"> </span>lint
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Auto-fix safe issues</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>make<span class="w"> </span>fix
+</span></code></pre></div>
+<p>Ruff is configured in <code>pyproject.toml</code> with the following active rule sets: <code>E</code>, <code>W</code>, <code>F</code> (pyflakes), <code>I</code> (import order), <code>B</code> (bugbear), <code>C4</code>, <code>UP</code>, <code>S</code> (bandit), <code>T20</code>, <code>ARG</code>, <code>PIE</code>, <code>SIM</code>.</p>
+<h3 id="security-scanning">Security scanning<a class="headerlink" href="#security-scanning" title="Anchor link to this section">&para;</a></h3>
+<p>Bandit is invoked by <code>python lint.py</code>. It scans <code>src/ezqt_widgets/</code> and excludes <code>tests/</code>, <code>docs/</code>, and <code>examples/</code>. Skipped rules: <code>B101</code> (assert), <code>B601</code>.</p>
+<h3 id="type-checking">Type checking<a class="headerlink" href="#type-checking" title="Anchor link to this section">&para;</a></h3>
+<p>Two type checkers are configured:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># ty (fast, minimal)</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>ty<span class="w"> </span>check<span class="w"> </span>src/
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># pyright (comprehensive)</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>pyright<span class="w"> </span>src/ezqt_widgets
+</span></code></pre></div>
+<p>Both are invoked by <code>python lint.py</code>. Target version for both is Python 3.11.</p>
+<h3 id="import-contracts">Import contracts<a class="headerlink" href="#import-contracts" title="Anchor link to this section">&para;</a></h3>
+<p><code>import-linter</code> enforces the layer dependency flow:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ezqt_widgets.cli → ezqt_widgets.widgets → ezqt_widgets.utils
+</span></code></pre></div>
+<p>Upper layers may import from lower layers, but not the reverse.</p>
+<h3 id="pre-commit-hooks">Pre-commit hooks<a class="headerlink" href="#pre-commit-hooks" title="Anchor link to this section">&para;</a></h3>
+<p>Hooks run automatically before each commit. To run them manually:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>make<span class="w"> </span>pre-commit
+</span></code></pre></div>
+<p>Hooks include: Ruff format, Ruff lint, type checking, and standard file hygiene (trailing whitespace, end-of-file newline).</p>
+<hr />
+<h2 id="testing">Testing<a class="headerlink" href="#testing" title="Anchor link to this section">&para;</a></h2>
+<h3 id="running-tests">Running Tests<a class="headerlink" href="#running-tests" title="Anchor link to this section">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Unit tests only</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>make<span class="w"> </span><span class="nb">test</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Unit tests with HTML coverage report</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>make<span class="w"> </span>test-cov
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># Fast subset (excludes slow-marked tests)</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>make<span class="w"> </span>test-fast
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="c1"># Target a single category</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>pytest<span class="w"> </span>tests/unit/test_button/<span class="w"> </span>-v
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="c1"># Run via the CLI</span>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>ezqt-widgets<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--unit
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>ezqt-widgets<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--coverage
+</span></code></pre></div>
+<h3 id="coverage-threshold">Coverage Threshold<a class="headerlink" href="#coverage-threshold" title="Anchor link to this section">&para;</a></h3>
+<p>Pytest is configured to fail if coverage drops below <strong>60%</strong>. The HTML report is written to <code>htmlcov/</code>. The following modules are excluded from coverage measurement: <code>cli/main.py</code> and <code>cli/runner.py</code> (not unit-testable without a running Qt application).</p>
+<h3 id="test-markers">Test Markers<a class="headerlink" href="#test-markers" title="Anchor link to this section">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Marker</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>unit</code></td>
+<td>Standard unit test (default)</td>
+</tr>
+<tr>
+<td><code>slow</code></td>
+<td>Long-running test; excluded by <code>--fast</code></td>
+</tr>
+<tr>
+<td><code>integration</code></td>
+<td>Requires running Qt event loop</td>
+</tr>
+<tr>
+<td><code>robustness</code></td>
+<td>Edge cases and error conditions</td>
+</tr>
+<tr>
+<td><code>cli</code></td>
+<td>Tests for CLI commands</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Anchor link to this section">&para;</a></h2>
-<h3 id="common-issues">Common Issues<a class="headerlink" href="#common-issues" title="Anchor link to this section">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -1939,40 +2342,37 @@ and contributing to the <strong>ezqt_widgets</strong> project.</p>
 </thead>
 <tbody>
 <tr>
-<td>Ruff not formatting</td>
-<td>Check: <code>ruff --version</code></td>
+<td><code>ezqt-widgets: command not found</code></td>
+<td>Run <code>pip install -e ".[dev]"</code> from the repo root</td>
 </tr>
 <tr>
-<td>Tests failing</td>
-<td>Check PySide6: <code>python -c "import PySide6"</code></td>
+<td><code>ImportError: PySide6</code></td>
+<td>Run <code>pip install "PySide6&gt;=6.7.3"</code></td>
 </tr>
 <tr>
-<td>Pre-commit hooks</td>
-<td>Reinstall: <code>pre-commit clean &amp;&amp; pre-commit install</code></td>
+<td><code>ruff: command not found</code></td>
+<td>Ruff is installed via <code>.[dev]</code>; verify with <code>ruff --version</code></td>
+</tr>
+<tr>
+<td>Pre-commit hooks not running</td>
+<td>Run <code>pre-commit install</code> or <code>make setup-hooks</code></td>
+</tr>
+<tr>
+<td>Tests fail at import</td>
+<td>Ensure the package is installed with <code>pip install -e .</code> so <code>src/</code> is on <code>sys.path</code></td>
+</tr>
+<tr>
+<td>Coverage below 60%</td>
+<td>Add missing test cases; run <code>make test-cov</code> to see the HTML report in <code>htmlcov/</code></td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="project-structure">Project Structure<a class="headerlink" href="#project-structure" title="Anchor link to this section">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ezqt_widgets/
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>├── ezqt_widgets/         # Source code
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>│   ├── button/           # Button widgets
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>│   ├── input/            # Input widgets
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>│   ├── label/            # Label widgets
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>│   ├── misc/             # Utility widgets
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>│   └── cli/              # CLI interface
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>├── examples/             # Usage examples
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>├── tests/                # Test suite
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>├── pyproject.toml        # Project configuration
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>└── Makefile              # Make commands
-</span></code></pre></div>
-<hr />
 <h2 id="resources">Resources<a class="headerlink" href="#resources" title="Anchor link to this section">&para;</a></h2>
 <ul>
-<li><a href="../../api/">API Reference</a> -- Complete widget documentation</li>
-<li><a href="../../examples/">Examples</a> -- Usage examples</li>
-<li><a href="../style-guide/">QSS Style Guide</a> -- Visual customization</li>
-<li><a href="../../cli/">CLI</a> -- Command-line interface</li>
+<li><a href="../../api/">API Reference</a> — Complete widget documentation</li>
+<li><a href="../../examples/">Examples</a> — Runnable usage examples</li>
+<li><a href="../../cli/">CLI Reference</a> — <code>ezqt-widgets</code> command reference</li>
 </ul>
 
 
