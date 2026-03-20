@@ -78,11 +78,11 @@ class TestToggleIcon:
         icon = ToggleIcon(initial_state="closed")
 
         # Toggle from closed to opened
-        icon.toggle_state()
+        icon.toggleState()
         assert icon.state == "opened"
 
         # Toggle from opened to closed
-        icon.toggle_state()
+        icon.toggleState()
         assert icon.state == "closed"
 
     def test_should_set_active_icon_when_set_state_is_called_with_true(
@@ -94,12 +94,12 @@ class TestToggleIcon:
         # Set to opened
         icon.state = "opened"
         assert icon.state == "opened"
-        assert icon.is_opened()
+        assert icon.isOpened()
 
         # Set to closed
         icon.state = "closed"
         assert icon.state == "closed"
-        assert icon.is_closed()
+        assert icon.isClosed()
 
     def test_should_report_correct_state_when_state_query_methods_are_called(
         self, qt_application
@@ -107,12 +107,12 @@ class TestToggleIcon:
         """Test state checking methods."""
         icon = ToggleIcon(initial_state="closed")
 
-        assert icon.is_closed()
-        assert not icon.is_opened()
+        assert icon.isClosed()
+        assert not icon.isOpened()
 
         icon.state = "opened"
-        assert icon.is_opened()
-        assert not icon.is_closed()
+        assert icon.isOpened()
+        assert not icon.isClosed()
 
     def test_should_emit_toggled_signal_when_state_changes(
         self, qt_application
@@ -183,9 +183,9 @@ class TestToggleIcon:
         icon = ToggleIcon(initial_state="closed")
 
         # Set to opened
-        icon.set_state_opened()
+        icon.setStateOpened()
         assert icon.state == "opened"
 
         # Set to closed
-        icon.set_state_closed()
+        icon.setStateClosed()
         assert icon.state == "closed"

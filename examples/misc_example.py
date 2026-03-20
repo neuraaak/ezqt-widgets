@@ -358,7 +358,7 @@ class MiscExampleWidget(QWidget):
         item_controls_layout.addWidget(add_button)
 
         clear_button = QPushButton("Clear")
-        clear_button.clicked.connect(self.item_list.clear_items)
+        clear_button.clicked.connect(self.item_list.clearItems)
         item_controls_layout.addWidget(clear_button)
 
         compact_toggle = QPushButton("Compact Mode")
@@ -493,7 +493,7 @@ class MiscExampleWidget(QWidget):
     def _add_item(self) -> None:
         """Add a new item to the list."""
         new_item = f"Element {self.item_counter}"
-        self.item_list.add_item(new_item, new_item)
+        self.item_list.addItem(new_item, new_item)
         self.item_counter += 1
         self._update_item_count()
         print(f"Item added: {new_item}")

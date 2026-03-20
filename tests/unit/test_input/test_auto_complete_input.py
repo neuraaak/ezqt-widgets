@@ -99,11 +99,11 @@ class TestAutoCompleteInput:
         assert input_widget.suggestions == []
 
         # Add a suggestion
-        input_widget.add_suggestion("new_item")
+        input_widget.addSuggestion("new_item")
         assert "new_item" in input_widget.suggestions
 
         # Add another suggestion
-        input_widget.add_suggestion("another_item")
+        input_widget.addSuggestion("another_item")
         assert "new_item" in input_widget.suggestions
         assert "another_item" in input_widget.suggestions
         assert len(input_widget.suggestions) == 2
@@ -111,14 +111,14 @@ class TestAutoCompleteInput:
     def test_should_remove_from_suggestions_list_when_remove_suggestion_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test remove_suggestion method."""
+        """Test removeSuggestion method."""
         input_widget = AutoCompleteInput(suggestions=["item1", "item2", "item3"])
 
         # Initial state
         assert len(input_widget.suggestions) == 3
 
         # Remove a suggestion
-        input_widget.remove_suggestion("item2")
+        input_widget.removeSuggestion("item2")
         assert "item1" in input_widget.suggestions
         assert "item2" not in input_widget.suggestions
         assert "item3" in input_widget.suggestions
@@ -127,27 +127,27 @@ class TestAutoCompleteInput:
     def test_should_empty_suggestions_list_when_clear_suggestions_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test clear_suggestions method."""
+        """Test clearSuggestions method."""
         input_widget = AutoCompleteInput(suggestions=["item1", "item2", "item3"])
 
         # Initial state
         assert len(input_widget.suggestions) == 3
 
         # Clear all suggestions
-        input_widget.clear_suggestions()
+        input_widget.clearSuggestions()
         assert input_widget.suggestions == []
 
     def test_should_not_raise_when_refresh_style_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test refresh_style method."""
+        """Test refreshStyle method."""
         input_widget = AutoCompleteInput()
 
         # Method should not raise an exception
         try:
-            input_widget.refresh_style()
+            input_widget.refreshStyle()
         except Exception as e:
-            pytest.fail(f"refresh_style() raised an exception: {e}")
+            pytest.fail(f"refreshStyle() raised an exception: {e}")
 
     def test_should_configure_completer_with_model_when_suggestions_are_given(
         self, qt_widget_cleanup
@@ -262,11 +262,11 @@ class TestAutoCompleteInput:
         assert input_widget.suggestions == []
 
         # Add suggestions
-        input_widget.add_suggestion("new_item")
+        input_widget.addSuggestion("new_item")
         assert input_widget.suggestions == ["new_item"]
 
         # Clear and verify
-        input_widget.clear_suggestions()
+        input_widget.clearSuggestions()
         assert input_widget.suggestions == []
 
     def test_should_handle_duplicate_suggestions_when_same_suggestion_is_added(
@@ -276,15 +276,15 @@ class TestAutoCompleteInput:
         input_widget = AutoCompleteInput()
 
         # Add duplicate suggestions
-        input_widget.add_suggestion("item")
-        input_widget.add_suggestion("item")
-        input_widget.add_suggestion("item")
+        input_widget.addSuggestion("item")
+        input_widget.addSuggestion("item")
+        input_widget.addSuggestion("item")
 
         # Verify that duplicates are ignored (widget behavior)
         assert input_widget.suggestions.count("item") == 1
 
         # Remove the occurrence
-        input_widget.remove_suggestion("item")
+        input_widget.removeSuggestion("item")
         assert input_widget.suggestions.count("item") == 0
 
     def test_should_handle_special_characters_when_suggestion_has_special_chars(

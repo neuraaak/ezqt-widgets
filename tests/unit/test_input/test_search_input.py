@@ -97,25 +97,25 @@ class TestSearchInput:
         search_widget = SearchInput(max_history=5)
 
         # Initial state
-        assert search_widget.get_history() == []
+        assert search_widget.getHistory() == []
 
         # Add to history
-        search_widget.add_to_history("search1")
-        search_widget.add_to_history("search2")
-        search_widget.add_to_history("search3")
+        search_widget.addToHistory("search1")
+        search_widget.addToHistory("search2")
+        search_widget.addToHistory("search3")
 
-        history = search_widget.get_history()
+        history = search_widget.getHistory()
         assert len(history) == 3
         assert "search1" in history
         assert "search2" in history
         assert "search3" in history
 
         # Test max_history limit
-        search_widget.add_to_history("search4")
-        search_widget.add_to_history("search5")
-        search_widget.add_to_history("search6")  # Should replace oldest
+        search_widget.addToHistory("search4")
+        search_widget.addToHistory("search5")
+        search_widget.addToHistory("search6")  # Should replace oldest
 
-        history = search_widget.get_history()
+        history = search_widget.getHistory()
         assert len(history) == 5  # Max history
         assert "search6" in history  # Most recent
         assert "search1" not in history  # Oldest removed
@@ -127,13 +127,13 @@ class TestSearchInput:
         search_widget = SearchInput()
 
         # Add to history
-        search_widget.add_to_history("search1")
-        search_widget.add_to_history("search2")
-        assert len(search_widget.get_history()) == 2
+        search_widget.addToHistory("search1")
+        search_widget.addToHistory("search2")
+        assert len(search_widget.getHistory()) == 2
 
         # Clear history
-        search_widget.clear_history()
-        assert search_widget.get_history() == []
+        search_widget.clearHistory()
+        assert search_widget.getHistory() == []
 
     def test_should_set_history_list_when_set_history_is_called(
         self, qt_widget_cleanup
@@ -143,10 +143,10 @@ class TestSearchInput:
 
         # Set a history
         history_list = ["item1", "item2", "item3", "item4", "item5"]
-        search_widget.set_history(history_list)
+        search_widget.setHistory(history_list)
 
         # Verify history
-        history = search_widget.get_history()
+        history = search_widget.getHistory()
         assert len(history) == 5
         for item in history_list:
             assert item in history
@@ -158,14 +158,14 @@ class TestSearchInput:
         search_widget = SearchInput(max_history=3)
 
         # Add more items than the limit
-        search_widget.add_to_history("item1")
-        search_widget.add_to_history("item2")
-        search_widget.add_to_history("item3")
-        search_widget.add_to_history("item4")
-        search_widget.add_to_history("item5")
+        search_widget.addToHistory("item1")
+        search_widget.addToHistory("item2")
+        search_widget.addToHistory("item3")
+        search_widget.addToHistory("item4")
+        search_widget.addToHistory("item5")
 
         # Verify that only the 3 most recent are preserved
-        history = search_widget.get_history()
+        history = search_widget.getHistory()
         assert len(history) == 3
         assert "item3" in history
         assert "item4" in history
@@ -180,12 +180,12 @@ class TestSearchInput:
         search_widget = SearchInput()
 
         # Add duplicate items
-        search_widget.add_to_history("item")
-        search_widget.add_to_history("item")
-        search_widget.add_to_history("item")
+        search_widget.addToHistory("item")
+        search_widget.addToHistory("item")
+        search_widget.addToHistory("item")
 
         # Verify that duplicates are removed (widget behavior)
-        history = search_widget.get_history()
+        history = search_widget.getHistory()
         assert history.count("item") == 1  # Only one occurrence
 
     def test_should_return_empty_list_when_history_is_cleared(
@@ -195,14 +195,14 @@ class TestSearchInput:
         search_widget = SearchInput()
 
         # Initial state
-        assert search_widget.get_history() == []
+        assert search_widget.getHistory() == []
 
         # Add and clear
-        search_widget.add_to_history("item")
-        assert len(search_widget.get_history()) == 1
+        search_widget.addToHistory("item")
+        assert len(search_widget.getHistory()) == 1
 
-        search_widget.clear_history()
-        assert search_widget.get_history() == []
+        search_widget.clearHistory()
+        assert search_widget.getHistory() == []
 
     def test_should_store_icon_when_search_icon_is_set(self, qt_widget_cleanup) -> None:
         """Test icon management."""
@@ -321,14 +321,14 @@ class TestSearchInput:
     def test_should_not_raise_when_refresh_style_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test refresh_style method."""
+        """Test refreshStyle method."""
         search_widget = SearchInput()
 
         # Method should not raise an exception
         try:
-            search_widget.refresh_style()
+            search_widget.refreshStyle()
         except Exception as e:
-            pytest.fail(f"refresh_style() raised an exception: {e}")
+            pytest.fail(f"refreshStyle() raised an exception: {e}")
 
     def test_should_handle_large_history_when_many_items_are_added(
         self, qt_widget_cleanup
@@ -338,15 +338,15 @@ class TestSearchInput:
 
         # Add many items
         for i in range(1000):
-            search_widget.add_to_history(f"search_{i}")
+            search_widget.addToHistory(f"search_{i}")
 
         # Verify the limit
-        history = search_widget.get_history()
+        history = search_widget.getHistory()
         assert len(history) == 1000
 
         # Add one more item
-        search_widget.add_to_history("overflow")
-        history = search_widget.get_history()
+        search_widget.addToHistory("overflow")
+        history = search_widget.getHistory()
         assert len(history) == 1000
         assert "overflow" in history  # Most recent
         assert "search_0" not in history  # Oldest removed
@@ -370,10 +370,10 @@ class TestSearchInput:
 
         # Add special searches
         for search in special_searches:
-            search_widget.add_to_history(search)
+            search_widget.addToHistory(search)
 
         # Verify that all are preserved
-        history = search_widget.get_history()
+        history = search_widget.getHistory()
         assert len(history) == len(special_searches)
         for search in special_searches:
             assert search in history

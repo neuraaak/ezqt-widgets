@@ -61,7 +61,7 @@ class _SelectableOptionLabel(FramedLabel):
         Args:
             event: The mouse event.
         """
-        self._selector.toggle_selection(self._option_id)
+        self._selector.toggleSelection(self._option_id)
         super().mousePressEvent(event)
 
 
@@ -157,11 +157,11 @@ class OptionSelector(QFrame):
 
         # Add options
         for i, option_text in enumerate(self._options_list):
-            self.add_option(option_id=i, option_text=option_text)
+            self.addOption(option_id=i, option_text=option_text)
 
         # Initialize selector
         if self._options_list:
-            self.initialize_selector(self._default_id)
+            self.initializeSelector(self._default_id)
 
     # ///////////////////////////////////////////////////////////////
     # PROPERTIES
@@ -210,7 +210,7 @@ class OptionSelector(QFrame):
         if 0 <= new_id < len(self._options_list) and new_id != self._value_id:
             self._value_id = new_id
             if new_id in self._options:
-                self.move_selector(self._options[new_id])
+                self.moveSelector(self._options[new_id])
             self.valueChanged.emit(self.value)
             self.valueIdChanged.emit(new_id)
 
@@ -335,7 +335,7 @@ class OptionSelector(QFrame):
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def initialize_selector(self, default_id: int = 0) -> None:
+    def initializeSelector(self, default_id: int = 0) -> None:
         """Initialize the selector with default position.
 
         Args:
@@ -353,7 +353,7 @@ class OptionSelector(QFrame):
                 self.selector.lower()  # Ensure selector stays below
                 self.selector.update()  # Force refresh if needed
 
-    def add_option(self, option_id: int, option_text: str) -> None:
+    def addOption(self, option_id: int, option_text: str) -> None:
         """Add a new option to the selector.
 
         Args:
@@ -385,7 +385,7 @@ class OptionSelector(QFrame):
                 self._options_list.append("")
         self._options_list[option_id] = option_text
 
-    def toggle_selection(self, option_id: int) -> None:
+    def toggleSelection(self, option_id: int) -> None:
         """Handle option selection.
 
         Args:
@@ -396,9 +396,9 @@ class OptionSelector(QFrame):
             self.clicked.emit()
             self.valueChanged.emit(self.value)
             self.valueIdChanged.emit(option_id)
-            self.move_selector(self._options[option_id])
+            self.moveSelector(self._options[option_id])
 
-    def move_selector(self, option: FramedLabel) -> None:
+    def moveSelector(self, option: FramedLabel) -> None:
         """Animate the selector to the selected option.
 
         Args:
@@ -485,7 +485,7 @@ class OptionSelector(QFrame):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget's style.
 
         Useful after dynamic stylesheet changes.

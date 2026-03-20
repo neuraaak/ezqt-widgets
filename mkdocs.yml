@@ -70,6 +70,7 @@ nav:
       - Input: api/input.md
       - Label: api/label.md
       - Misc: api/misc.md
+      - Shared Constants: api/shared.md
   - CLI Reference:
       - cli/index.md
   - Examples:

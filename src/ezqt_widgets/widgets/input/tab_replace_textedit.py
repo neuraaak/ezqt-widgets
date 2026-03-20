@@ -171,7 +171,7 @@ class TabReplaceTextEdit(QPlainTextEdit):
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def sanitize_text(self, text: str) -> str:
+    def sanitizeText(self, text: str) -> str:
         """Sanitize text by replacing tabs and optionally removing empty lines.
 
         Args:
@@ -228,7 +228,7 @@ class TabReplaceTextEdit(QPlainTextEdit):
             text = clipboard.text()
 
             # Sanitize text
-            text = self.sanitize_text(text)
+            text = self.sanitizeText(text)
 
             # Insert sanitized text
             self.insertPlainText(text)
@@ -242,7 +242,7 @@ class TabReplaceTextEdit(QPlainTextEdit):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget's style.
 
         Useful after dynamic stylesheet changes.

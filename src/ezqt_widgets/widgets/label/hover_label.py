@@ -88,7 +88,7 @@ class HoverLabel(QLabel):
         ... )
         >>> label.icon_enabled = True
         >>> label.icon_padding = 12
-        >>> label.clear_icon()
+        >>> label.clearIcon()
     """
 
     hoverIconClicked = Signal()
@@ -368,7 +368,20 @@ class HoverLabel(QLabel):
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def clear_icon(self) -> None:
+    def setTheme(self, theme: str) -> None:
+        """Update the hover icon color for the given theme.
+
+        Can be connected directly to a theme-change signal to keep
+        the icon in sync with the application's color scheme.
+
+        Args:
+            theme: The new theme (``"dark"`` or ``"light"``).
+        """
+        if isinstance(self._hover_icon, ThemeIcon):
+            self._hover_icon.setTheme(theme)
+            self.update()
+
+    def clearIcon(self) -> None:
         """Remove the hover icon."""
         self._hover_icon = None
         self._update_padding_style()
@@ -528,7 +541,7 @@ class HoverLabel(QLabel):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget's style.
 
         Useful after dynamic stylesheet changes.

@@ -242,19 +242,19 @@ class TestHoverLabel:
     def test_should_not_raise_when_refresh_style_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test refresh_style method."""
+        """Test refreshStyle method."""
         label = HoverLabel()
 
         # Method should not raise an exception
         try:
-            label.refresh_style()
+            label.refreshStyle()
         except Exception as e:
-            pytest.fail(f"refresh_style() raised an exception: {e}")
+            pytest.fail(f"refreshStyle() raised an exception: {e}")
 
     def test_should_clear_icon_when_clear_icon_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test clear_icon method."""
+        """Test clearIcon method."""
         label = HoverLabel()
 
         # Set an icon
@@ -264,7 +264,7 @@ class TestHoverLabel:
         label.hover_icon = icon
 
         # Clear icon
-        label.clear_icon()
+        label.clearIcon()
 
         # Verify that the icon is cleared
         assert label.hover_icon is None

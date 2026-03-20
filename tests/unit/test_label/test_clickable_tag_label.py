@@ -346,14 +346,14 @@ class TestClickableTagLabel:
     def test_should_not_raise_when_refresh_style_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test refresh_style method."""
+        """Test refreshStyle method."""
         tag = ClickableTagLabel()
 
         # Method should not raise an exception
         try:
-            tag.refresh_style()
+            tag.refreshStyle()
         except Exception as e:
-            pytest.fail(f"refresh_style() raised an exception: {e}")
+            pytest.fail(f"refreshStyle() raised an exception: {e}")
 
     def test_should_update_display_when_state_changes(self, qt_widget_cleanup) -> None:
         """Test display update."""

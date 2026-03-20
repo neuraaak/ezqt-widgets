@@ -290,10 +290,10 @@ class PasswordInput(QWidget):
 
         # Create password input
         self._password_input = PasswordLineEdit()
-        self._password_input.textChanged.connect(self.update_strength)
+        self._password_input.textChanged.connect(self.updateStrength)
 
         # Connect icon click signal
-        self._password_input.iconClicked.connect(self.toggle_password)
+        self._password_input.iconClicked.connect(self.togglePassword)
 
         # Create strength bar
         self._strength_bar = QProgressBar()
@@ -311,16 +311,16 @@ class PasswordInput(QWidget):
     def _update_icon(self) -> None:
         """Update the icon based on password visibility."""
         if self._password_visible and self._hide_icon:
-            self._password_input.set_right_icon(self._hide_icon, self._icon_size)
+            self._password_input.setRightIcon(self._hide_icon, self._icon_size)
         elif not self._password_visible and self._show_icon:
-            self._password_input.set_right_icon(self._show_icon, self._icon_size)
+            self._password_input.setRightIcon(self._show_icon, self._icon_size)
         # Handle case where icons are not yet loaded
         elif not self._password_visible and self._show_icon_source:
             # Try to load icon from source if not already loaded
             icon = load_icon_from_source(self._show_icon_source)
             if icon:
                 self._show_icon = icon
-                self._password_input.set_right_icon(icon, self._icon_size)
+                self._password_input.setRightIcon(icon, self._icon_size)
 
     def _update_strength_color(self, score: int) -> None:
         """Update strength bar color based on score.
@@ -345,7 +345,7 @@ class PasswordInput(QWidget):
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def toggle_password(self) -> None:
+    def togglePassword(self) -> None:
         """Toggle password visibility."""
         self._password_visible = not self._password_visible
         if self._password_visible:
@@ -354,7 +354,7 @@ class PasswordInput(QWidget):
             self._password_input.setEchoMode(QLineEdit.EchoMode.Password)
         self._update_icon()
 
-    def update_strength(self, text: str) -> None:
+    def updateStrength(self, text: str) -> None:
         """Update password strength.
 
         Args:
@@ -365,6 +365,21 @@ class PasswordInput(QWidget):
         self._strength_bar.setValue(score)
         self._update_strength_color(score)
         self.strengthChanged.emit(score)
+
+    def setTheme(self, theme: str) -> None:
+        """Update all icons' color for the given theme.
+
+        Can be connected directly to a theme-change signal to keep
+        icons in sync with the application's color scheme.
+
+        Args:
+            theme: The new theme (``"dark"`` or ``"light"``).
+        """
+        if isinstance(self._show_icon, ThemeIcon):
+            self._show_icon.setTheme(theme)
+        if isinstance(self._hide_icon, ThemeIcon):
+            self._hide_icon.setTheme(theme)
+        self._update_icon()
 
     # ///////////////////////////////////////////////////////////////
     # PROPERTIES
@@ -491,7 +506,7 @@ class PasswordInput(QWidget):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget style.
 
         Deprecated - use external QSS for styling.
@@ -526,12 +541,13 @@ class PasswordLineEdit(QLineEdit):
         self.setEchoMode(QLineEdit.EchoMode.Password)
         self._right_icon: QIcon | None = None
         self._icon_rect: QRect | None = None
+        self._icon_size: QSize = QSize(16, 16)
 
     # ///////////////////////////////////////////////////////////////
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def set_right_icon(self, icon: QIcon | None, size: QSize | None = None) -> None:
+    def setRightIcon(self, icon: QIcon | None, size: QSize | None = None) -> None:
         """Set the right-side icon.
 
         Args:
@@ -608,7 +624,7 @@ class PasswordLineEdit(QLineEdit):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget's style.
 
         Useful after dynamic stylesheet changes.

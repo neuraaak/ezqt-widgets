@@ -58,7 +58,7 @@ tests/
 - Creation with default and custom parameters
 - Properties (date, format, show_calendar_icon, min_width, min_height)
 - Signals (`dateChanged`, `dateSelected`)
-- Methods (`clear_date`, `set_today`, `open_calendar`)
+- Methods (`clearDate`, `setToday`, `openCalendar`)
 - Date handling (QDate, string, custom format)
 - Mouse events and display
 
@@ -71,7 +71,7 @@ tests/
 - Properties (icon, text, icon_size, icon_color, min_width, min_height)
 - Icon handling (QIcon, file, SVG, URL)
 - Signals (`iconChanged`, `textChanged`)
-- Methods (`clear_icon`, `clear_text`, `toggle_text_visibility`)
+- Methods (`clearIcon`, `clearText`, `toggleTextVisibility`)
 - Pixmap colorization and opacity
 
 ### LoaderButton
@@ -119,7 +119,7 @@ tests/
 
 - Creation with default and custom parameters
 - Properties (tab_replacement, sanitize_on_paste, remove_empty_lines)
-- `sanitize_text` method with different cases
+- `sanitizeText` method with different cases
 - Custom tab replacement
 - Preservation of whitespace
 - Special characters and Unicode
@@ -184,7 +184,7 @@ tests/
 - Creation with default and custom parameters
 - Properties (items, compact, min_width, icon_color)
 - Signals (itemMoved, itemRemoved, itemAdded, itemClicked, orderChanged)
-- Methods (add_item, remove_item, clear_items, move_item)
+- Methods (`addItem`, `removeItem`, `clearItems`, `moveItem`)
 
 ### OptionSelector
 

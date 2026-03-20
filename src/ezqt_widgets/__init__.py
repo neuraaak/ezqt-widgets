@@ -68,8 +68,10 @@ from .widgets.button import (
 )
 from .widgets.input import (
     AutoCompleteInput,
+    FilePickerInput,
     PasswordInput,
     SearchInput,
+    SpinBoxInput,
     TabReplaceTextEdit,
 )
 from .widgets.label import (
@@ -80,8 +82,11 @@ from .widgets.label import (
 )
 from .widgets.misc import (
     CircularTimer,
+    CollapsibleSection,
     DraggableItem,
     DraggableList,
+    NotificationBanner,
+    NotificationLevel,
     OptionSelector,
     ThemeIcon,
     ToggleIcon,
@@ -136,8 +141,10 @@ __all__ = [
     "LoaderButton",
     # Input widgets
     "AutoCompleteInput",
+    "FilePickerInput",
     "PasswordInput",
     "SearchInput",
+    "SpinBoxInput",
     "TabReplaceTextEdit",
     # Label widgets
     "ClickableTagLabel",
@@ -146,8 +153,11 @@ __all__ = [
     "IndicatorLabel",
     # Miscellaneous widgets
     "CircularTimer",
+    "CollapsibleSection",
     "DraggableItem",
     "DraggableList",
+    "NotificationBanner",
+    "NotificationLevel",
     "OptionSelector",
     "ThemeIcon",
     "ToggleIcon",

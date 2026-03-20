@@ -101,24 +101,24 @@ class TestIndicatorLabel:
         assert label.status == "neutral"
 
         # Change status
-        label.set_status("online")
+        label.setStatus("online")
         assert label.status == "online"
 
         # Change again
-        label.set_status("offline")
+        label.setStatus("offline")
         assert label.status == "offline"
 
     def test_should_not_raise_when_refresh_style_is_called(
         self, qt_widget_cleanup
     ) -> None:
-        """Test refresh_style method."""
+        """Test refreshStyle method."""
         label = IndicatorLabel()
 
         # Method should not raise an exception
         try:
-            label.refresh_style()
+            label.refreshStyle()
         except Exception as e:
-            pytest.fail(f"refresh_style() raised an exception: {e}")
+            pytest.fail(f"refreshStyle() raised an exception: {e}")
 
     def test_should_accept_neutral_online_offline_when_default_map_is_used(
         self, qt_widget_cleanup

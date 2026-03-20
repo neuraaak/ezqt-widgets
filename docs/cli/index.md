@@ -1,60 +1,73 @@
-# CLI -- Command-Line Interface
+# CLI Reference
 
-Documentation for the **ezqt** command-line interface.
+Documentation for the `ezqt-widgets` command-line interface.
+
+The CLI is registered as the `ezqt-widgets` entry point in `pyproject.toml`:
+
+```toml
+[project.scripts]
+ezqt-widgets = "ezqt_widgets.cli.main:cli"
+```
 
 ---
 
 ## Installation
 
 ```bash
-# Install in development mode
+# Standard installation
+pip install ezqt-widgets
+
+# Development installation (includes all dev extras)
 pip install -e ".[dev]"
 
-# Verify installation
-ezqt --version
+# Verify the command is available
+ezqt-widgets --version
 ```
 
 ---
 
 ## Commands
 
-### `ezqt run` -- Run Examples
+### `ezqt-widgets run` — Run examples
 
-Launch interactive examples to explore widgets.
+Launch interactive examples to explore widget functionality.
 
 ```bash
-ezqt run [OPTIONS]
+ezqt-widgets run [OPTIONS]
 ```
 
-| Option      | Short | Description                                                                            |
-| ----------- | ----- | -------------------------------------------------------------------------------------- |
-| `--all`     | `-a`  | Run all examples with the GUI launcher                                                 |
-| `--buttons` | `-b`  | Button examples (DateButton, IconButton, LoaderButton)                                 |
-| `--inputs`  | `-i`  | Input examples (AutoComplete, Search, TabReplace)                                      |
-| `--labels`  | `-l`  | Label examples (ClickableTag, Framed, Hover, Indicator)                                |
-| `--misc`    | `-m`  | Misc examples (CircularTimer, DraggableList, OptionSelector, ToggleIcon, ToggleSwitch) |
-| `--no-gui`  |       | Sequential mode without GUI launcher                                                   |
-| `--verbose` | `-v`  | Verbose output                                                                         |
+| Option      | Short | Description                                                                                |
+| ----------- | ----- | ------------------------------------------------------------------------------------------ |
+| `--all`     | `-a`  | Run all examples with the GUI launcher                                                     |
+| `--buttons` | `-b`  | Run button examples (DateButton, IconButton, LoaderButton)                                 |
+| `--inputs`  | `-i`  | Run input examples (AutoCompleteInput, PasswordInput, SearchInput, TabReplaceTextEdit)     |
+| `--labels`  | `-l`  | Run label examples (ClickableTagLabel, FramedLabel, HoverLabel, IndicatorLabel)            |
+| `--misc`    | `-m`  | Run misc examples (CircularTimer, DraggableList, OptionSelector, ToggleIcon, ToggleSwitch) |
+| `--no-gui`  | —     | Run examples sequentially without the GUI launcher                                         |
+| `--verbose` | `-v`  | Verbose output                                                                             |
+
+At least one category flag must be provided. Running `ezqt-widgets run` with no options prints usage information.
 
 **Examples:**
 
 ```bash
-ezqt run --all
-ezqt run --buttons --verbose
-ezqt run --all --no-gui
+ezqt-widgets run --all
+ezqt-widgets run --buttons --verbose
+ezqt-widgets run --all --no-gui
+ezqt-widgets run --inputs --misc
 ```
 
 ---
 
-### `ezqt list` -- List Examples
+### `ezqt-widgets list` — List available examples
 
 Displays all available example files and their status.
 
 ```bash
-ezqt list
+ezqt-widgets list
 ```
 
-**Output:**
+**Sample output:**
 
 ```text
 Available examples:
@@ -64,109 +77,124 @@ input_example
 label_example
 misc_example
 run_all_examples
+types_example
 
-Total: 5 examples found
+Total: 6 examples found
 ```
 
 ---
 
-### `ezqt test` -- Run Tests
+### `ezqt-widgets test` — Run the test suite
 
-Executes the project test suite.
+Executes the project test suite via pytest.
 
 ```bash
-ezqt test [OPTIONS]
+ezqt-widgets test [OPTIONS]
 ```
 
-| Option       | Short | Description         |
-| ------------ | ----- | ------------------- |
-| `--unit`     | `-u`  | Unit tests          |
-| `--coverage` | `-c`  | Tests with coverage |
-| `--verbose`  | `-v`  | Verbose output      |
+| Option       | Short | Description                         |
+| ------------ | ----- | ----------------------------------- |
+| `--unit`     | `-u`  | Run unit tests (`tests/unit/`)      |
+| `--coverage` | `-c`  | Run tests with HTML coverage report |
+| `--verbose`  | `-v`  | Verbose pytest output               |
+
+When no option is given, `--unit` is assumed.
 
 **Examples:**
 
 ```bash
-ezqt test --unit
-ezqt test --coverage
-ezqt test --unit --coverage --verbose
+ezqt-widgets test --unit
+ezqt-widgets test --coverage
+ezqt-widgets test --unit --verbose
 ```
 
 ---
 
-### `ezqt info` -- Package Information
+### `ezqt-widgets docs` — Documentation utilities
 
-Displays information about the ezqt_widgets installation.
+Serves the built documentation locally.
 
 ```bash
-ezqt info
+ezqt-widgets docs [OPTIONS]
 ```
 
-**Output:**
+| Option    | Short | Default | Description                           |
+| --------- | ----- | ------- | ------------------------------------- |
+| `--serve` | `-s`  | —       | Serve the `docs/` directory over HTTP |
+| `--port`  | `-p`  | `8000`  | Port for the local HTTP server        |
+
+!!! note
+`ezqt-widgets docs --serve` uses Python's built-in `http.server` to serve the
+static `docs/` directory, not the MkDocs development server. For live-reload
+during documentation development, use `mkdocs serve` directly.
+
+**Examples:**
+
+```bash
+ezqt-widgets docs --serve
+ezqt-widgets docs --serve --port 8080
+```
+
+---
+
+### `ezqt-widgets info` — Package information
+
+Displays information about the installed package.
+
+```bash
+ezqt-widgets info
+```
+
+**Sample output:**
 
 ```text
 EzQt Widgets Information
 ========================================
-Version: 2.3.2
-Location: /path/to/ezqt_widgets/__init__.py
-PySide6: 6.9.1
-Examples: 5 found
+Version: 2.6.0
+Location: /path/to/site-packages/ezqt_widgets/__init__.py
+PySide6: 6.7.3
+Examples: 6 found
 ========================================
 ```
 
 ---
 
-## Use Cases
+## Common Workflows
 
-### For Developers
-
-```bash
-# Quick test during development
-ezqt run --buttons --verbose
-
-# Tests before commit
-ezqt test --coverage
-
-# Check package status
-ezqt info
-```
-
-### For Users
+### Exploring widgets
 
 ```bash
-# Explore all widgets
-ezqt run --all
+# See what is available
+ezqt-widgets list
 
-# Focus on a widget type
-ezqt run --inputs
+# Try everything at once
+ezqt-widgets run --all
 
-# See what's available
-ezqt list
+# Focus on a specific category
+ezqt-widgets run --buttons
+ezqt-widgets run --inputs
 ```
 
----
+### Development workflow
 
-## Environment Variables
+```bash
+# Run tests before committing
+ezqt-widgets test --unit
 
-| Variable            | Description                           |
-| ------------------- | ------------------------------------- |
-| `EZQT_VERBOSE`      | Enable verbose mode by default        |
-| `EZQT_EXAMPLES_DIR` | Custom path to the examples directory |
+# Check coverage
+ezqt-widgets test --coverage
+
+# Verify the package is correctly installed
+ezqt-widgets info
+```
 
 ---
 
 ## Troubleshooting
 
-| Issue              | Solution                                                |
-| ------------------ | ------------------------------------------------------- |
-| Command not found  | Install in dev mode: `pip install -e ".[dev]"`          |
-| Examples not found | Check that the `examples/` directory exists at the root |
-| Import errors      | Check PySide6: `pip install PySide6`                    |
-
----
-
-## Resources
-
-- [API Reference](../api/index.md) -- Widget documentation
-- [Examples](../examples/index.md) -- Example code
-- [QSS Style Guide](../guides/style-guide.md) -- Visual customization
+| Issue                             | Solution                                                             |
+| --------------------------------- | -------------------------------------------------------------------- |
+| `ezqt-widgets: command not found` | Install with `pip install ezqt-widgets` or `pip install -e ".[dev]"` |
+| Examples not found                | Ensure the `examples/` directory exists at the repository root       |
+| `ImportError: PySide6`            | Install PySide6: `pip install "PySide6>=6.7.3"`                      |
+| Tests not found                   | Run from the repository root; pytest expects the `tests/` directory  |

@@ -6,7 +6,7 @@
 """
 Code quality check script.
 
-Runs Ruff format and Ruff check on the codebase.
+Runs Ruff on the codebase.
 
 Usage:
     python .scripts/dev/lint.py [options]
@@ -37,7 +37,7 @@ from rich.text import Text
 # VARIABLES
 # ///////////////////////////////////////////////////////////////
 
-project_name = "ezqt_widgets"
+project_name = "Ezqt-Widgets"
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -71,7 +71,7 @@ class CodeQualityChecker:
         self.project_root = Path(__file__).resolve().parents[2]
         # Directories to scan (relative to project root)
         self.scan_dirs = [
-            f"src/{project_name.lower()}",
+            f"src/{project_name.lower().replace('-', '_')}",
             "tests",
             ".scripts",
         ]

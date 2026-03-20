@@ -1,148 +1,98 @@
-# Welcome to EzQt Widgets Documentation
+# EzQt Widgets
 
 [![PyPI](https://img.shields.io/badge/PyPI-ezqt--widgets-orange.svg)](https://pypi.org/project/ezqt-widgets/)
 [![PyPI version](https://img.shields.io/pypi/v/ezqt-widgets)](https://pypi.org/project/ezqt-widgets/)
 [![Python versions](https://img.shields.io/pypi/pyversions/ezqt-widgets)](https://pypi.org/project/ezqt-widgets/)
 [![License](https://img.shields.io/pypi/l/ezqt-widgets)](https://github.com/neuraaak/ezqt-widgets/blob/main/LICENSE)
 
-![EzQt Widgets Logo](https://raw.githubusercontent.com/neuraaak/ezqt-widgets/refs/heads/main/docs/assets/logo-min.png)
-
-**EzQt Widgets** is a modern collection of custom and reusable Qt widgets for **PySide6** featuring advanced animated components, full type hints, and a simple API suitable for professional desktop applications.
-
-## ✨ Key Features
-
-- **✅ 16 Specialized Widgets**: Organized in 4 modules (button, input, label, misc)
-- **✅ Smooth Animations**: Built-in `QPropertyAnimation` with configurable easing curves
-- **✅ Fully Typed API**: Complete Python 3.10+ type hints for excellent IDE support
-- **✅ Native Qt Signals**: Seamless integration with Qt's signal/slot system
-- **✅ QSS Styling Support**: Full Qt stylesheet customization capabilities
-- **✅ Built-in CLI**: Interactive command-line tool to explore and test widgets
-- **✅ Comprehensive Tests**: 211+ unit tests with ~75% code coverage
-- **✅ Production Ready**: Battle-tested components for professional applications
-
-## 🚀 Quick Start
-
-### Installation
-
-```bash
-pip install ezqt-widgets
-```
-
-Or from source:
-
-```bash
-git clone https://github.com/neuraaak/ezqt-widgets.git
-cd ezqt_widgets && pip install .
-```
-
-### First Widget
+**EzQt Widgets** is a collection of custom and reusable Qt widgets for PySide6. It provides advanced, typed graphical components to facilitate the development of modern desktop interfaces.
 
 ```python
 from PySide6.QtWidgets import QApplication
 from ezqt_widgets import ToggleSwitch
 
 app = QApplication([])
-
-switch = ToggleSwitch(checked=True, width=60, height=28)
-switch.toggled.connect(lambda state: print(f"Switch: {state}"))
+switch = ToggleSwitch(checked=False, width=50, height=24)
+switch.toggled.connect(lambda state: print(f"On: {state}"))
 switch.show()
-
 app.exec()
 ```
 
-## 📚 Documentation Structure
+---
 
-| Section                               | Description                                |
-| ------------------------------------- | ------------------------------------------ |
-| [Getting Started](getting-started.md) | Installation, basic usage, and first steps |
-| [API Reference](api/index.md)         | Complete API documentation for all widgets |
-| [User Guides](guides/index.md)        | In-depth guides and tutorials              |
-| [Examples](examples/index.md)         | Practical examples and use cases           |
-| [CLI Reference](cli/index.md)         | Command-line interface documentation       |
+## Requirements
 
-## 🎯 Main Components
+| Dependency | Version           |
+| ---------- | ----------------- |
+| Python     | >= 3.11           |
+| PySide6    | >= 6.7.3, < 7.0.0 |
 
-EzQt Widgets provides **16 widgets** organized into **4 modules**:
+---
 
-### Button Module
+## Widgets
 
-- **`DateButton`** – Date picker button with integrated calendar dialog
-- **`DatePickerDialog`** – Standalone calendar dialog for date selection
-- **`IconButton`** – Button with icon support and optional text label
-- **`LoaderButton`** – Button with integrated loading animation
+EzQt Widgets exposes **23 public classes** organized in 4 modules.
 
-### Input Module
+### Button
 
-- **`AutoCompleteInput`** – Text input with intelligent auto-completion
-- **`PasswordInput`** – Secure password input with visibility toggle
-- **`SearchInput`** – Search field with history management
-- **`TabReplaceTextEdit`** – Advanced text editor with tab replacement
+| Widget             | Description                                                         |
+| ------------------ | ------------------------------------------------------------------- |
+| `DateButton`       | Button displaying a selected date; opens a calendar dialog on click |
+| `DatePickerDialog` | Modal calendar dialog for date selection                            |
+| `IconButton`       | Button with an icon from any source and optional text label         |
+| `LoaderButton`     | Button with animated loading spinner, success, and error states     |
 
-### Label Module
+### Input
 
-- **`ClickableTagLabel`** – Interactive tag label with toggle state
-- **`FramedLabel`** – Label with customizable frame styling
-- **`HoverLabel`** – Label with hover icon display
-- **`IndicatorLabel`** – Status indicator with colored LED and states
+| Widget               | Description                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------ |
+| `AutoCompleteInput`  | QLineEdit with configurable auto-completion suggestions                              |
+| `FilePickerInput`    | QLineEdit and folder button that opens a QFileDialog for file or directory selection |
+| `PasswordInput`      | Password field with strength bar and visibility toggle                               |
+| `SearchInput`        | Search field with keyboard-navigable submission history                              |
+| `SpinBoxInput`       | Custom numeric spin box with − and + buttons and mouse wheel support                 |
+| `TabReplaceTextEdit` | QPlainTextEdit that sanitizes pasted text by replacing tab characters                |
 
-### Misc Module
+### Label
 
-- **`CircularTimer`** – Animated circular countdown timer
-- **`DraggableList`** – List widget with drag-and-drop reordering
-- **`DraggableItem`** – Individual draggable list item component
-- **`OptionSelector`** – Option selector with animated indicator
-- **`ToggleIcon`** – Toggleable icon with open/closed states
-- **`ToggleSwitch`** – Modern toggle switch with smooth animation
+| Widget              | Description                                            |
+| ------------------- | ------------------------------------------------------ |
+| `ClickableTagLabel` | Toggleable tag label that emits signals on click       |
+| `FramedLabel`       | QLabel inside a QFrame for advanced styling and layout |
+| `HoverLabel`        | QLabel that displays a floating icon when hovered      |
+| `IndicatorLabel`    | Status indicator with a configurable colored LED       |
 
-For detailed documentation, see [API Reference](api/index.md).
+### Misc
 
-## 🧪 Testing
+| Widget               | Description                                                                    |
+| -------------------- | ------------------------------------------------------------------------------ |
+| `CircularTimer`      | Animated circular progress arc with loop and click support                     |
+| `CollapsibleSection` | Accordion-style section with clickable header and expand/collapse animation    |
+| `DraggableItem`      | Single draggable item used inside a DraggableList                              |
+| `DraggableList`      | Scrollable list with drag-and-drop reordering and item removal                 |
+| `NotificationBanner` | Animated slide-down notification banner with INFO/WARNING/ERROR/SUCCESS levels |
+| `OptionSelector`     | Animated option selector with single-selection radio behavior                  |
+| `ThemeIcon`          | QIcon subclass that adapts color to the active dark/light theme                |
+| `ToggleIcon`         | Label with two icons toggled between an open and closed state                  |
+| `ToggleSwitch`       | Modern animated toggle switch                                                  |
 
-Comprehensive test suite covering all widgets and edge cases:
+---
 
-| Metric      | Value             |
-| ----------- | ----------------- |
-| Total tests | 211+              |
-| Passing     | 211+ (100%)       |
-| Coverage    | ~75%              |
-| Test types  | Unit, Integration |
+## Documentation
 
-Run tests with:
+| Section                               | Description                             |
+| ------------------------------------- | --------------------------------------- |
+| [Getting Started](getting-started.md) | Installation and first working example  |
+| [API Reference](api/index.md)         | Full class-level API documentation      |
+| [User Guides](guides/index.md)        | Task-oriented guides                    |
+| [Examples](examples/index.md)         | Runnable examples organized by category |
+| [CLI Reference](cli/index.md)         | `ezqt-widgets` command documentation    |
+| [Changelog](changelog.md)             | Version history                         |
 
-```bash
-pytest tests/
-# Or using the CLI
-ezqt test --unit
-```
+---
 
-See the [Testing Guide](guides/testing.md) for complete details.
-
-## 📦 Core Dependencies
-
-- **PySide6 >= 6.7.3** – Qt for Python framework
-- **Python >= 3.10** – Modern Python with type hints support
-- **typing_extensions >= 4.0.0** – Extended typing support
-
-## 🎨 Widget Categories
-
-| Module                  | Widgets | Description                                                 |
-| ----------------------- | ------- | ----------------------------------------------------------- |
-| [Button](api/button.md) | 4       | Specialized buttons with calendar, icons, and loading       |
-| [Input](api/input.md)   | 4       | Input fields with auto-completion and advanced editing      |
-| [Label](api/label.md)   | 4       | Interactive labels with tags, hover effects, and indicators |
-| [Misc](api/misc.md)     | 5       | Utility widgets: timers, drag & drop, toggles, selectors    |
-
-## 📝 License
-
-MIT License – See [LICENSE](https://github.com/neuraaak/ezqt-widgets/blob/main/LICENSE) file for details.
-
-## 🔗 Links
+## Links
 
 - **Repository**: [https://github.com/neuraaak/ezqt-widgets](https://github.com/neuraaak/ezqt-widgets)
 - **PyPI**: [https://pypi.org/project/ezqt-widgets/](https://pypi.org/project/ezqt-widgets/)
 - **Issues**: [https://github.com/neuraaak/ezqt-widgets/issues](https://github.com/neuraaak/ezqt-widgets/issues)
-- **Documentation**: [https://neuraaak.github.io/ezqt-widgets/](https://neuraaak.github.io/ezqt-widgets/)
-
----
-
-**EzQt Widgets** – Modern, typed, and beautiful Qt widgets for Python. 🚀

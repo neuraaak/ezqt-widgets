@@ -71,7 +71,7 @@ class TestOptionSelector:
         selector = OptionSelector(items)
 
         # Add a new option
-        selector.add_option(2, "Option 3")
+        selector.addOption(2, "Option 3")
 
         assert len(selector.options) == 3
         assert "Option 3" in selector.options
@@ -165,7 +165,7 @@ class TestOptionSelector:
         selector = OptionSelector(items)
 
         # Toggle to option 2
-        selector.toggle_selection(1)
+        selector.toggleSelection(1)
         assert selector.value_id == 1
         assert selector.value == "Option 2"
 

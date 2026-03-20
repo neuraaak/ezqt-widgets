@@ -220,7 +220,7 @@ class FramedLabel(QFrame):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None:
+    def refreshStyle(self) -> None:
         """Refresh the widget's style.
 
         Useful after dynamic stylesheet changes.
