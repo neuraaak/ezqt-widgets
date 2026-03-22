@@ -1,18 +1,18 @@
-# 🎨 EzQt Widgets
+# EzQt-Widgets
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?style=for-the-badge&logo=python)](https://www.python.org/)
-[![Platform](https://img.shields.io/badge/OS-Independent-lightgray.svg?style=for-the-badge)](https://pypi.org/project/ezqt-widgets/)
-[![Version](https://img.shields.io/badge/Version-2.6.0-orange.svg?style=for-the-badge)](https://pypi.org/project/ezqt-widgets/)
-[![PyPI](https://img.shields.io/badge/PyPI-EzQt--Widgets-green.svg?style=for-the-badge&logo=pypi)](https://pypi.org/project/ezqt-widgets/)
-[![Docs](https://img.shields.io/badge/Docs-Online-blue.svg?style=for-the-badge&logo=readthedocs)](https://neuraaak.github.io/ezqt-widgets/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg?style=for-the-badge)](https://github.com/neuraaak/ezqt-widgets)
-[![Tests](https://img.shields.io/badge/Tests-304%2F305%20passing-success.svg?style=for-the-badge)](https://github.com/neuraaak/ezqt-widgets)
-[![Coverage](https://img.shields.io/badge/Coverage-75%25-success.svg?style=for-the-badge)](https://github.com/neuraaak/ezqt-widgets)
+[![PyPI version](https://img.shields.io/pypi/v/ezqt-widgets?style=flat&logo=pypi&logoColor=white)](https://pypi.org/project/ezqt-widgets/)
+[![Python versions](https://img.shields.io/pypi/pyversions/ezqt-widgets?style=flat&logo=python&logoColor=white)](https://pypi.org/project/ezqt-widgets/)
+[![PyPI status](https://img.shields.io/pypi/status/ezqt-widgets?style=flat&logo=pypi&logoColor=white)](https://pypi.org/project/ezqt-widgets/)
+[![License](https://img.shields.io/badge/license-MIT-green?style=flat&logo=github&logoColor=white)](LICENSE)
+[![CI](https://img.shields.io/github/actions/workflow/status/neuraaak/ezqt-widgets/publish-pypi.yml?style=flat&label=publish&logo=githubactions&logoColor=white)](https://github.com/neuraaak/ezqt-widgets/actions/workflows/publish-pypi.yml)
+[![Docs](https://img.shields.io/badge/docs-Github%20Pages-blue?style=flat&logo=materialformkdocs&logoColor=white)](https://neuraaak.github.io/ezqt-widgets/)
+[![uv](https://img.shields.io/badge/package%20manager-uv-DE5FE9?style=flat&logo=uv&logoColor=white)](https://github.com/astral-sh/uv)
+[![linter](https://img.shields.io/badge/linter-ruff-orange?style=flat&logo=ruff&logoColor=white)](https://github.com/astral-sh/ruff)
+[![type checker](https://img.shields.io/badge/type%20checker-ty-orange?style=flat&logo=astral&logoColor=white)](https://github.com/astral-sh/ty)
 
-![EzQt Widgets Logo](docs/assets/logo-min.png)
+![EzQt-Widgets Logo](docs/assets/logo-min.png)
 
-**EzQt Widgets** is a modern collection of custom and reusable Qt widgets for **PySide6** featuring advanced animated components, full type hints, and a simple API suitable for professional desktop applications.
+**EzQt-Widgets** is a modern collection of custom and reusable Qt widgets for **PySide6** featuring advanced animated components, full type hints, and a simple API suitable for professional desktop applications.
 
 ## 📦 Installation
 
@@ -213,4 +213,4 @@ MIT License – See [LICENSE](LICENSE) file for details.
 
 ---
 
-**EzQt Widgets** – Modern, typed, and beautiful Qt widgets for Python. 🎨
+**EzQt-Widgets** – Modern, typed, and beautiful Qt widgets for Python. 🎨

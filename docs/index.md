@@ -1,11 +1,18 @@
-# EzQt Widgets
+# EzQt-Widgets
 
-[![PyPI](https://img.shields.io/badge/PyPI-ezqt--widgets-orange.svg)](https://pypi.org/project/ezqt-widgets/)
-[![PyPI version](https://img.shields.io/pypi/v/ezqt-widgets)](https://pypi.org/project/ezqt-widgets/)
-[![Python versions](https://img.shields.io/pypi/pyversions/ezqt-widgets)](https://pypi.org/project/ezqt-widgets/)
-[![License](https://img.shields.io/pypi/l/ezqt-widgets)](https://github.com/neuraaak/ezqt-widgets/blob/main/LICENSE)
+[![PyPI version](https://img.shields.io/pypi/v/ezqt-widgets?style=flat&logo=pypi&logoColor=white)](https://pypi.org/project/ezqt-widgets/)
+[![Python versions](https://img.shields.io/pypi/pyversions/ezqt-widgets?style=flat&logo=python&logoColor=white)](https://pypi.org/project/ezqt-widgets/)
+[![PyPI status](https://img.shields.io/pypi/status/ezqt-widgets?style=flat&logo=pypi&logoColor=white)](https://pypi.org/project/ezqt-widgets/)
+[![License](https://img.shields.io/badge/license-MIT-green?style=flat&logo=github&logoColor=white)](https://github.com/neuraaak/ezqt-widgets/blob/main/LICENSE)
+[![CI](https://img.shields.io/github/actions/workflow/status/neuraaak/ezqt-widgets/publish-pypi.yml?style=flat&label=publish&logo=githubactions&logoColor=white)](https://github.com/neuraaak/ezqt-widgets/actions/workflows/publish-pypi.yml)
+[![Docs](https://img.shields.io/badge/docs-Github%20Pages-blue?style=flat&logo=materialformkdocs&logoColor=white)](https://neuraaak.github.io/ezqt-widgets/)
+[![uv](https://img.shields.io/badge/package%20manager-uv-DE5FE9?style=flat&logo=uv&logoColor=white)](https://github.com/astral-sh/uv)
+[![linter](https://img.shields.io/badge/linter-ruff-orange?style=flat&logo=ruff&logoColor=white)](https://github.com/astral-sh/ruff)
+[![type checker](https://img.shields.io/badge/type%20checker-ty-orange?style=flat&logo=astral&logoColor=white)](https://github.com/astral-sh/ty)
 
-**EzQt Widgets** is a collection of custom and reusable Qt widgets for PySide6. It provides advanced, typed graphical components to facilitate the development of modern desktop interfaces.
+![EzQt-Widgets Logo](https://raw.githubusercontent.com/neuraaak/ezqt-widgets/refs/heads/main/docs/assets/logo-min.png)
+
+**EzQt-Widgets** is a collection of custom and reusable Qt widgets for PySide6. It provides advanced, typed graphical components to facilitate the development of modern desktop interfaces.
 
 ```python
 from PySide6.QtWidgets import QApplication
@@ -31,7 +38,7 @@ app.exec()
 
 ## Widgets
 
-EzQt Widgets exposes **23 public classes** organized in 4 modules.
+EzQt-Widgets exposes **23 public classes** organized in 4 modules.
 
 ### Button
 
