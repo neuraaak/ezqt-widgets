@@ -4,8 +4,8 @@
 # ///////////////////////////////////////////////////////////////
 
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 # ///////////////////////////////////////////////////////////////
 # 📦 PROJECT METADATA
@@ -14,7 +14,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ezqt-widgets"
-version = "2.6.0"
+version = "2.6.1"
 description = "A collection of custom and reusable Qt widgets for PySide6. Provides advanced, reusable, and stylish graphical components to facilitate the development of modern and user-friendly interfaces."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -131,49 +131,35 @@ PyPI = "https://pypi.org/project/ezqt-widgets/"
 ezqt-widgets = "ezqt_widgets.cli.main:cli"
 
 # ///////////////////////////////////////////////////////////////
-# 📦 SETUPTOOLS CONFIGURATION
+# 📦 HATCHLING CONFIGURATION
 # Package discovery and inclusion/exclusion patterns
 # ///////////////////////////////////////////////////////////////
 
-[tool.setuptools]
-include-package-data = true
+[tool.hatch.build]
+packages = ["src/ezqt_widgets"]
 
-[tool.setuptools.packages.find]
-where = ["src"]
-include = ["ezqt_widgets*"]
+[tool.hatch.build.targets.sdist]
 exclude = [
-    "tests*",
-    "build*",
-    "dist*",
-    "*.egg-info*",
-    ".pytest_cache*",
-    ".mypy_cache*",
-    ".ruff_cache*",
-    ".cursor*",
-    ".benchmarks*",
-    "coverage*",
-    "htmlcov*",
-    ".venv*",
-    "venv*",
-    "__pycache__*",
-    "**/__pycache__*",
-    ".git*",
+    "tests",
+    "docs",
+    "examples",
+    "htmlcov",
+    ".hooks",
+    ".venv",
+    "venv",
+    ".git",
+    ".ruff_cache",
+    ".pytest_cache",
+    ".cursor",
+    ".tmp",
     "*.pyc",
     "*.pyo",
-    "*.pyd",
-    ".coverage",
     "*.log",
+    ".coverage",
+    "coverage.xml",
     ".DS_Store",
     "Thumbs.db",
-    "docs*",
-    "examples*",
-    "_temp*",
-    ".hooks*",
 ]
-
-[tool.setuptools.package-data]
-# Include type checking marker (PEP 561)
-ezqt_widgets = ["py.typed"]
 
 # ///////////////////////////////////////////////////////////////
 # 🎨 CODE FORMATTING & LINTING TOOLS
