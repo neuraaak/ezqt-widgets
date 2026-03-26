@@ -235,3 +235,10 @@ class AutoCompleteInput(QLineEdit):
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()
+
+
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = ["AutoCompleteInput"]

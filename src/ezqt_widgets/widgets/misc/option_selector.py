@@ -144,16 +144,16 @@ class OptionSelector(QFrame):
         self._animation_duration = animation_duration
 
         # Setup grid layout
-        self.grid = QGridLayout(self)
-        self.grid.setObjectName("grid")
-        self.grid.setSpacing(4)
-        self.grid.setContentsMargins(4, 4, 4, 4)
-        self.grid.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self._grid = QGridLayout(self)
+        self._grid.setObjectName("grid")
+        self._grid.setSpacing(4)
+        self._grid.setContentsMargins(4, 4, 4, 4)
+        self._grid.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         # Create selector
-        self.selector = QFrame(self)
-        self.selector.setObjectName("selector")
-        self.selector.setProperty("type", "OptionSelector_Selector")
+        self._selector = QFrame(self)
+        self._selector.setObjectName("selector")
+        self._selector.setProperty("type", "OptionSelector_Selector")
 
         # Add options
         for i, option_text in enumerate(self._options_list):
@@ -348,10 +348,10 @@ class OptionSelector(QFrame):
             if selected_option:
                 self._value_id = default_id
 
-                default_pos = self.grid.indexOf(selected_option)
-                self.grid.addWidget(self.selector, 0, default_pos)
-                self.selector.lower()  # Ensure selector stays below
-                self.selector.update()  # Force refresh if needed
+                default_pos = self._grid.indexOf(selected_option)
+                self._grid.addWidget(self._selector, 0, default_pos)
+                self._selector.lower()  # Ensure selector stays below
+                self._selector.update()  # Force refresh if needed
 
     def addOption(self, option_id: int, option_text: str) -> None:
         """Add a new option to the selector.
@@ -371,9 +371,9 @@ class OptionSelector(QFrame):
         # Add to grid based on orientation
         option_index = len(self._options.items())
         if self._orientation == "horizontal":
-            self.grid.addWidget(option, 0, option_index)
+            self._grid.addWidget(option, 0, option_index)
         else:  # vertical
-            self.grid.addWidget(option, option_index, 0)
+            self._grid.addWidget(option, option_index, 0)
 
         # Store option
         self._options[option_id] = option
@@ -404,18 +404,18 @@ class OptionSelector(QFrame):
         Args:
             option: The option widget to move the selector to.
         """
-        start_geometry = self.selector.geometry()
+        start_geometry = self._selector.geometry()
         end_geometry = option.geometry()
 
         # Create geometry animation
-        self._selector_animation = QPropertyAnimation(self.selector, b"geometry")
+        self._selector_animation = QPropertyAnimation(self._selector, b"geometry")
         self._selector_animation.setDuration(self._animation_duration)
         self._selector_animation.setStartValue(start_geometry)
         self._selector_animation.setEndValue(end_geometry)
         self._selector_animation.setEasingCurve(QEasingCurve.Type.OutCubic)
 
         # Ensure selector stays below
-        self.selector.lower()
+        self._selector.lower()
 
         # Start animation
         self._selector_animation.start()
@@ -463,13 +463,13 @@ class OptionSelector(QFrame):
                 text_width = font_metrics.horizontalAdvance(option_text.capitalize())
                 option_width = text_width + 16  # 8px padding on each side
                 total_width += option_width
-            total_width += (len(self._options_list) - 1) * self.grid.spacing()
+            total_width += (len(self._options_list) - 1) * self._grid.spacing()
             total_height = max_option_height
         else:
             # Vertical: options stacked
             total_width = max_option_width
             total_height = max_option_height * len(self._options_list)
-            total_height += (len(self._options_list) - 1) * self.grid.spacing()
+            total_height += (len(self._options_list) - 1) * self._grid.spacing()
 
         # Add grid margins
         total_width += 8  # Grid margins (4px on each side)
@@ -493,3 +493,10 @@ class OptionSelector(QFrame):
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()
+
+
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = ["OptionSelector"]

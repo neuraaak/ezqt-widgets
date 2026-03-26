@@ -110,23 +110,23 @@ class IconButton(QToolButton):
         self._url_fetcher: UrlFetcher | None = None
 
         # Setup UI components
-        self.icon_label = QLabel()
-        self.text_label = QLabel()
+        self._icon_label = QLabel()
+        self._text_label = QLabel()
 
         # Configure text label
-        self.text_label.setAlignment(
+        self._text_label.setAlignment(
             Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
         )
-        self.text_label.setWordWrap(True)
-        self.text_label.setStyleSheet("background-color: transparent;")
+        self._text_label.setWordWrap(True)
+        self._text_label.setStyleSheet("background-color: transparent;")
 
         # Setup layout
         layout = QHBoxLayout(self)
         layout.setContentsMargins(8, 2, 8, 2)
         layout.setSpacing(spacing)
         layout.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
-        layout.addWidget(self.icon_label)
-        layout.addWidget(self.text_label)
+        layout.addWidget(self._icon_label)
+        layout.addWidget(self._text_label)
 
         # Configure size policy
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
@@ -174,9 +174,9 @@ class IconButton(QToolButton):
                     "ThemeIcon.from_source returned None for a non-None icon source."
                 )
             self._current_icon = themed_icon
-            self.icon_label.setPixmap(themed_icon.pixmap(self._icon_size))
-            self.icon_label.setFixedSize(self._icon_size)
-            self.icon_label.setStyleSheet("background-color: transparent;")
+            self._icon_label.setPixmap(themed_icon.pixmap(self._icon_size))
+            self._icon_label.setFixedSize(self._icon_size)
+            self._icon_label.setStyleSheet("background-color: transparent;")
             self.iconChanged.emit(themed_icon)
 
     @property
@@ -189,7 +189,7 @@ class IconButton(QToolButton):
         Returns:
             The current button text.
         """
-        return self.text_label.text()
+        return self._text_label.text()
 
     @text.setter
     def text(self, value: str) -> None:
@@ -198,8 +198,8 @@ class IconButton(QToolButton):
         Args:
             value: The new button text.
         """
-        if value != self.text_label.text():
-            self.text_label.setText(str(value))
+        if value != self._text_label.text():
+            self._text_label.setText(str(value))
             self.textChanged.emit(str(value))
 
     @property
@@ -222,8 +222,8 @@ class IconButton(QToolButton):
             QSize(*value) if isinstance(value, (tuple, list)) else QSize(value)
         )
         if self._current_icon:
-            self.icon_label.setPixmap(self._current_icon.pixmap(self._icon_size))
-            self.icon_label.setFixedSize(self._icon_size)
+            self._icon_label.setPixmap(self._current_icon.pixmap(self._icon_size))
+            self._icon_label.setFixedSize(self._icon_size)
 
     @property
     def text_visible(self) -> bool:
@@ -243,9 +243,9 @@ class IconButton(QToolButton):
         """
         self._text_visible = bool(value)
         if self._text_visible:
-            self.text_label.show()
+            self._text_label.show()
         else:
-            self.text_label.hide()
+            self._text_label.hide()
 
     @property
     def spacing(self) -> int:
@@ -424,9 +424,9 @@ class IconButton(QToolButton):
                 "ThemeIcon.from_source returned None for a non-None icon source."
             )
         self._current_icon = themed_icon
-        self.icon_label.setPixmap(themed_icon.pixmap(self._icon_size))
-        self.icon_label.setFixedSize(self._icon_size)
-        self.icon_label.setStyleSheet("background-color: transparent;")
+        self._icon_label.setPixmap(themed_icon.pixmap(self._icon_size))
+        self._icon_label.setFixedSize(self._icon_size)
+        self._icon_label.setStyleSheet("background-color: transparent;")
         self.iconChanged.emit(themed_icon)
 
     @staticmethod
@@ -464,12 +464,12 @@ class IconButton(QToolButton):
         """
         if isinstance(self._current_icon, ThemeIcon):
             self._current_icon.setTheme(theme)
-            self.icon_label.setPixmap(self._current_icon.pixmap(self._icon_size))
+            self._icon_label.setPixmap(self._current_icon.pixmap(self._icon_size))
 
     def clearIcon(self) -> None:
         """Remove the current icon."""
         self._current_icon = None
-        self.icon_label.clear()
+        self._icon_label.clear()
         self.iconChanged.emit(QIcon())
 
     def clearText(self) -> None:
@@ -490,7 +490,7 @@ class IconButton(QToolButton):
         if self._current_icon:
             pixmap = self._current_icon.pixmap(self._icon_size)
             colored_pixmap = self._colorize_pixmap(pixmap, color, opacity)
-            self.icon_label.setPixmap(colored_pixmap)
+            self._icon_label.setPixmap(colored_pixmap)
 
     # ///////////////////////////////////////////////////////////////
     # OVERRIDE METHODS
@@ -516,7 +516,7 @@ class IconButton(QToolButton):
 
         text_width = 0
         if self._text_visible and self.text:
-            text_width = self.text_label.fontMetrics().horizontalAdvance(self.text)
+            text_width = self._text_label.fontMetrics().horizontalAdvance(self.text)
 
         total_width = icon_width + text_width + self._spacing + 20  # margins
 
@@ -541,3 +541,10 @@ class IconButton(QToolButton):
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()
+
+
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = ["IconButton"]

@@ -1,4 +1,4 @@
-﻿# ///////////////////////////////////////////////////////////////
+# ///////////////////////////////////////////////////////////////
 # TEST_PASSWORD_INPUT - PasswordInput Widget Tests
 # Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
@@ -26,10 +26,15 @@ from PySide6.QtGui import QIcon, QPixmap
 from ezqt_widgets.widgets.input.password_input import (
     PasswordInput,
     PasswordLineEdit,
-    colorize_pixmap,
-    get_strength_color,
-    load_icon_from_source,
-    password_strength,
+)
+from ezqt_widgets.widgets.input.password_input import (
+    _get_strength_color as get_strength_color,
+)
+from ezqt_widgets.widgets.input.password_input import (
+    _load_icon_from_source as load_icon_from_source,
+)
+from ezqt_widgets.widgets.input.password_input import (
+    _password_strength as password_strength,
 )
 
 pytestmark = pytest.mark.unit
@@ -119,51 +124,6 @@ class TestPasswordStrength:
         assert get_strength_color(80) == "#00aa00"  # Dark green
         assert get_strength_color(90) == "#00aa00"  # Dark green
         assert get_strength_color(100) == "#00aa00"  # Dark green
-
-
-class TestColorizePixmap:
-    """Tests for colorize_pixmap function."""
-
-    def test_should_colorize_pixmap_when_colorize_pixmap_is_called(
-        self, qt_widget_cleanup
-    ) -> None:
-        """Basic test for colorize_pixmap."""
-        # Create a test pixmap
-        original_pixmap = QPixmap(16, 16)
-        original_pixmap.fill(Qt.GlobalColor.white)
-
-        # Colorize the pixmap
-        colored_pixmap = colorize_pixmap(original_pixmap, "#ff0000", 0.5)
-
-        # Verify that the result is a pixmap
-        assert isinstance(colored_pixmap, QPixmap)
-        assert colored_pixmap.size() == original_pixmap.size()
-
-    def test_should_apply_different_colors_when_colorize_pixmap_is_called_with_color(
-        self, qt_widget_cleanup
-    ) -> None:
-        """Test colorize_pixmap with different colors."""
-        original_pixmap = QPixmap(16, 16)
-        original_pixmap.fill(Qt.GlobalColor.white)
-
-        # Test different colors
-        colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff"]
-        for color in colors:
-            colored_pixmap = colorize_pixmap(original_pixmap, color, 0.5)
-            assert isinstance(colored_pixmap, QPixmap)
-
-    def test_should_apply_opacity_when_colorize_pixmap_is_called_with_opacity(
-        self, qt_widget_cleanup
-    ) -> None:
-        """Test colorize_pixmap with different opacities."""
-        original_pixmap = QPixmap(16, 16)
-        original_pixmap.fill(Qt.GlobalColor.white)
-
-        # Test different opacities
-        opacities = [0.0, 0.25, 0.5, 0.75, 1.0]
-        for opacity in opacities:
-            colored_pixmap = colorize_pixmap(original_pixmap, "#ff0000", opacity)
-            assert isinstance(colored_pixmap, QPixmap)
 
 
 class TestLoadIconFromSource:

@@ -107,8 +107,8 @@ class CircularTimer(QWidget):
         self._interval: int = 16  # ~60 FPS
 
         # Setup timer
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self._on_timer)
+        self._timer = QTimer(self)
+        self._timer.timeout.connect(self._on_timer)
 
     # ///////////////////////////////////////////////////////////////
     # PROPERTIES
@@ -278,13 +278,13 @@ class CircularTimer(QWidget):
         self.stopTimer()  # Always stop before starting
         self._running = True
         self._last_update = None
-        self.timer.start(self._interval)
+        self._timer.start(self._interval)
 
     def stopTimer(self) -> None:
         """Stop the circular timer."""
         self.resetTimer()  # Always reset to zero
         self._running = False
-        self.timer.stop()
+        self._timer.stop()
 
     def resetTimer(self) -> None:
         """Reset the circular timer."""
@@ -428,3 +428,10 @@ class CircularTimer(QWidget):
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()
+
+
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = ["CircularTimer"]

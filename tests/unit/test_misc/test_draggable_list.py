@@ -29,19 +29,13 @@ from ezqt_widgets.widgets.misc.draggable_list import DraggableItem, DraggableLis
 
 
 @pytest.fixture
-def app(qt_application):
-    """Fixture to use the global Qt application."""
+def app(qt_application):  # noqa: ARG001
+    """Fixture to ensure the Qt application exists."""
     return qt_application
 
 
 @pytest.fixture
-def _app(app):
-    """Alias fixture for app when not directly used."""
-    return app
-
-
-@pytest.fixture
-def draggable_list(_app):
+def draggable_list(app):  # noqa: ARG001
     """Fixture to create a test DraggableList."""
     return DraggableList(
         items=["Item 1", "Item 2", "Item 3"],
@@ -54,7 +48,7 @@ def draggable_list(_app):
 
 
 @pytest.fixture
-def compact_draggable_list(_app):
+def compact_draggable_list(app):  # noqa: ARG001
     """Fixture to create a compact test DraggableList."""
     return DraggableList(
         items=["Option A", "Option B"],
@@ -65,7 +59,7 @@ def compact_draggable_list(_app):
 
 
 @pytest.fixture
-def draggable_item(_app):
+def draggable_item(app):  # noqa: ARG001
     """Fixture to create a test DraggableItem."""
     return DraggableItem(item_id="test_item", text="Test Item", compact=False)
 
@@ -84,7 +78,7 @@ class TestDraggableItem:
         """Test DraggableItem initialization."""
         assert draggable_item.item_id == "test_item"
         assert draggable_item.text == "Test Item"
-        assert draggable_item.is_dragging is False
+        assert draggable_item._is_dragging is False
         assert draggable_item._compact is False
         assert draggable_item._icon_color == "grey"
 
@@ -126,9 +120,7 @@ class TestDraggableItem:
         assert size.width() > 0
         assert 40 <= size.height() <= 60
 
-    def test_should_return_compact_size_when_item_is_in_compact_mode(
-        self, _app
-    ) -> None:
+    def test_should_return_compact_size_when_item_is_in_compact_mode(self, app) -> None:  # noqa: ARG002
         """Test sizeHint calculation in compact mode."""
         item = DraggableItem(item_id="compact_item", text="Compact Item", compact=True)
         size = item.sizeHint()
@@ -143,8 +135,8 @@ class TestDraggableItem:
         assert size.width() > 0
         assert size.height() == 40
 
-    def test_should_return_compact_minimum_size_when_item_is_in_compact_mode(
-        self, _app
+    def test_should_return_compact_minimum_size_when_item_is_in_compact_mode(  # noqa: ARG002
+        self, app
     ) -> None:
         """Test minimumSizeHint calculation in compact mode."""
         item = DraggableItem(item_id="compact_item", text="Compact Item", compact=True)
@@ -164,7 +156,7 @@ class TestDraggableItem:
             Qt.KeyboardModifier.NoModifier,
         )
         draggable_item.mousePressEvent(event)
-        assert draggable_item.drag_start_pos == QPoint(10, 10)
+        assert draggable_item._drag_start_pos == QPoint(10, 10)
 
     def test_should_emit_remove_signal_when_remove_button_is_clicked(
         self, draggable_item
@@ -569,7 +561,7 @@ class TestDraggableListIntegration:
 
     def test_should_emit_signal_chain_when_item_is_moved(self, draggable_list) -> None:
         """Test signal chain during operations."""
-        signals_received: list[tuple[str, ...]] = []
+        signals_received: list[tuple] = []
 
         def on_item_moved(item_id: str, old_pos: int, new_pos: int) -> None:
             signals_received.append(("moved", item_id, old_pos, new_pos))

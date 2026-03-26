@@ -37,7 +37,7 @@ class ThemeIcon(QIcon):
         - Dark theme: icon rendered in the resolved dark color.
         - Light theme: icon rendered in the resolved light color.
 
-    The icon can be updated dynamically by calling :meth:`set_theme`
+    The icon can be updated dynamically by calling :meth:`setTheme`
     when the application theme changes.
 
     Args:
@@ -317,3 +317,10 @@ class ThemeIcon(QIcon):
         # Replace the current icon content with the recolored version
         self.swap(QIcon())
         self.addPixmap(new_pixmap)
+
+
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = ["ThemeIcon"]

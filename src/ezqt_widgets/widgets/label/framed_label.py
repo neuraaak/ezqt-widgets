@@ -103,9 +103,9 @@ class FramedLabel(QFrame):
         layout.setAlignment(alignment)
 
         # Setup label
-        self.label = QLabel(text, self)
-        self.label.setAlignment(alignment)
-        layout.addWidget(self.label)
+        self._label = QLabel(text, self)
+        self._label.setAlignment(alignment)
+        layout.addWidget(self._label)
 
     # ///////////////////////////////////////////////////////////////
     # PROPERTIES
@@ -118,7 +118,7 @@ class FramedLabel(QFrame):
         Returns:
             The current label text.
         """
-        return self.label.text()
+        return self._label.text()
 
     @text.setter
     def text(self, value: str) -> None:
@@ -128,8 +128,8 @@ class FramedLabel(QFrame):
             value: The new label text.
         """
         str_value = str(value)
-        if str_value != self.label.text():
-            self.label.setText(str_value)
+        if str_value != self._label.text():
+            self._label.setText(str_value)
             self.textChanged.emit(str_value)
 
     @property
@@ -149,7 +149,7 @@ class FramedLabel(QFrame):
             value: The new alignment.
         """
         self._alignment = value
-        self.label.setAlignment(value)
+        self._label.setAlignment(value)
         layout = self.layout()
         if layout is not None:
             layout.setAlignment(value)
@@ -228,3 +228,10 @@ class FramedLabel(QFrame):
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()
+
+
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = ["FramedLabel"]

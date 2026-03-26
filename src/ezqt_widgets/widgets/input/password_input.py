@@ -21,7 +21,7 @@ from typing import Any
 
 # Third-party imports
 from PySide6.QtCore import QRect, QSize, Qt, Signal
-from PySide6.QtGui import QColor, QIcon, QMouseEvent, QPainter, QPaintEvent, QPixmap
+from PySide6.QtGui import QIcon, QMouseEvent, QPainter, QPaintEvent, QPixmap
 from PySide6.QtWidgets import QLineEdit, QProgressBar, QVBoxLayout, QWidget
 
 from ...types import IconSourceExtended
@@ -35,7 +35,7 @@ from ..misc.theme_icon import ThemeIcon
 # ///////////////////////////////////////////////////////////////
 
 
-def password_strength(password: str) -> int:
+def _password_strength(password: str) -> int:
     """Calculate password strength score.
 
     Returns a strength score from 0 (weak) to 100 (strong) based on
@@ -61,7 +61,7 @@ def password_strength(password: str) -> int:
     return min(score, 100)
 
 
-def get_strength_color(score: int) -> str:
+def _get_strength_color(score: int) -> str:
     """Get color based on password strength score.
 
     Args:
@@ -80,31 +80,7 @@ def get_strength_color(score: int) -> str:
         return "#00aa00"  # Dark green
 
 
-def colorize_pixmap(
-    pixmap: QPixmap, color: str = "#FFFFFF", opacity: float = 0.5
-) -> QPixmap:
-    """Recolor a QPixmap with the given color and opacity.
-
-    Args:
-        pixmap: The pixmap to recolor.
-        color: Hex color code (default: "#FFFFFF").
-        opacity: Opacity value from 0.0 to 1.0 (default: 0.5).
-
-    Returns:
-        The recolored pixmap.
-    """
-    result = QPixmap(pixmap.size())
-    result.fill(Qt.GlobalColor.transparent)
-    painter = QPainter(result)
-    painter.setOpacity(opacity)
-    painter.drawPixmap(0, 0, pixmap)
-    painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceIn)
-    painter.fillRect(result.rect(), QColor(color))
-    painter.end()
-    return result
-
-
-def load_icon_from_source(source: IconSourceExtended) -> QIcon | None:
+def _load_icon_from_source(source: IconSourceExtended) -> QIcon | None:
     """Load icon from various sources (ThemeIcon, QIcon, QPixmap, path, URL, etc.).
 
     Supports loading icons from:
@@ -317,7 +293,7 @@ class PasswordInput(QWidget):
         # Handle case where icons are not yet loaded
         elif not self._password_visible and self._show_icon_source:
             # Try to load icon from source if not already loaded
-            icon = load_icon_from_source(self._show_icon_source)
+            icon = _load_icon_from_source(self._show_icon_source)
             if icon:
                 self._show_icon = icon
                 self._password_input.setRightIcon(icon, self._icon_size)
@@ -328,7 +304,7 @@ class PasswordInput(QWidget):
         Args:
             score: The password strength score (0-100).
         """
-        color = get_strength_color(score)
+        color = _get_strength_color(score)
         self._strength_bar.setStyleSheet(
             f"""
             QProgressBar {{
@@ -360,7 +336,7 @@ class PasswordInput(QWidget):
         Args:
             text: The password text to evaluate.
         """
-        score = password_strength(text)
+        score = _password_strength(text)
         self._current_strength = score
         self._strength_bar.setValue(score)
         self._update_strength_color(score)
@@ -458,7 +434,7 @@ class PasswordInput(QWidget):
             value: The icon source (ThemeIcon, QIcon, QPixmap, path, URL, or None).
         """
         self._show_icon_source = value
-        self._show_icon = load_icon_from_source(value)
+        self._show_icon = _load_icon_from_source(value)
         if not self._password_visible:
             self._update_icon()
 
@@ -479,7 +455,7 @@ class PasswordInput(QWidget):
             value: The icon source (ThemeIcon, QIcon, QPixmap, path, URL, or None).
         """
         self._hide_icon_source = value
-        self._hide_icon = load_icon_from_source(value)
+        self._hide_icon = _load_icon_from_source(value)
         if self._password_visible:
             self._update_icon()
 
@@ -632,3 +608,10 @@ class PasswordLineEdit(QLineEdit):
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()
+
+
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = ["PasswordInput", "PasswordLineEdit"]

@@ -237,23 +237,23 @@ class DateButton(QToolButton):
         self._calendar_icon: ThemeIcon = self._get_calendar_icon()
 
         # Setup UI components
-        self.date_label = QLabel()
-        self.icon_label = QLabel()
+        self._date_label = QLabel()
+        self._icon_label = QLabel()
 
         # Configure labels
-        self.date_label.setAlignment(
+        self._date_label.setAlignment(
             Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
         )
-        self.date_label.setStyleSheet("background-color: transparent;")
+        self._date_label.setStyleSheet("background-color: transparent;")
 
         # Setup layout
         layout = QHBoxLayout(self)
         layout.setContentsMargins(8, 2, 8, 2)
         layout.setSpacing(8)
         layout.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
-        layout.addWidget(self.date_label)
+        layout.addWidget(self._date_label)
         layout.addStretch()  # Push icon to the right
-        layout.addWidget(self.icon_label)
+        layout.addWidget(self._icon_label)
 
         # Configure size policy
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
@@ -393,11 +393,11 @@ class DateButton(QToolButton):
         """
         self._show_calendar_icon = bool(value)
         if self._show_calendar_icon:
-            self.icon_label.show()
-            self.icon_label.setPixmap(self._calendar_icon.pixmap(self._icon_size))
-            self.icon_label.setFixedSize(self._icon_size)
+            self._icon_label.show()
+            self._icon_label.setPixmap(self._calendar_icon.pixmap(self._icon_size))
+            self._icon_label.setFixedSize(self._icon_size)
         else:
-            self.icon_label.hide()
+            self._icon_label.hide()
 
     @property
     def icon_size(self) -> QSize:
@@ -419,8 +419,8 @@ class DateButton(QToolButton):
             QSize(*value) if isinstance(value, (tuple, list)) else QSize(value)
         )
         if self._show_calendar_icon:
-            self.icon_label.setPixmap(self._calendar_icon.pixmap(self._icon_size))
-            self.icon_label.setFixedSize(self._icon_size)
+            self._icon_label.setPixmap(self._calendar_icon.pixmap(self._icon_size))
+            self._icon_label.setFixedSize(self._icon_size)
 
     @property
     def minimum_date(self) -> QDate | None:
@@ -533,7 +533,7 @@ class DateButton(QToolButton):
         """
         self._calendar_icon.setTheme(theme)
         if self._show_calendar_icon:
-            self.icon_label.setPixmap(self._calendar_icon.pixmap(self._icon_size))
+            self._icon_label.setPixmap(self._calendar_icon.pixmap(self._icon_size))
 
     # ------------------------------------------------
     # PRIVATE METHODS
@@ -602,7 +602,7 @@ class DateButton(QToolButton):
         else:
             display_text = self._placeholder
 
-        self.date_label.setText(display_text)
+        self._date_label.setText(display_text)
 
     # ///////////////////////////////////////////////////////////////
     # EVENT HANDLERS
@@ -644,7 +644,7 @@ class DateButton(QToolButton):
         """
         base_size = super().minimumSizeHint()
 
-        text_width = self.date_label.fontMetrics().horizontalAdvance(
+        text_width = self._date_label.fontMetrics().horizontalAdvance(
             self.date_string if self._current_date.isValid() else self._placeholder
         )
 
@@ -673,3 +673,10 @@ class DateButton(QToolButton):
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()
+
+
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = ["DateButton", "DatePickerDialog"]

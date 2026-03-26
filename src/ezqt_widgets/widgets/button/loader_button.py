@@ -157,14 +157,14 @@ class LoaderButton(QToolButton):
         self._animation_timer: QTimer | None = None
 
         # Setup UI components
-        self.text_label = QLabel()
-        self.icon_label = QLabel()
+        self._text_label = QLabel()
+        self._icon_label = QLabel()
 
         # Configure labels
-        self.text_label.setAlignment(
+        self._text_label.setAlignment(
             Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignVCenter
         )
-        self.text_label.setStyleSheet("background-color: transparent;")
+        self._text_label.setStyleSheet("background-color: transparent;")
 
         # Setup layout
         layout = QHBoxLayout(self)
@@ -173,8 +173,8 @@ class LoaderButton(QToolButton):
         layout.setAlignment(
             Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignVCenter
         )
-        layout.addWidget(self.icon_label)
-        layout.addWidget(self.text_label)
+        layout.addWidget(self._icon_label)
+        layout.addWidget(self._text_label)
 
         # Configure size policy
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
@@ -424,7 +424,7 @@ class LoaderButton(QToolButton):
             self._progress = clamped
             self.progressChanged.emit(self._progress)
             # Refresh the label to show the percentage
-            self.text_label.setText(f"{self._progress}%")
+            self._text_label.setText(f"{self._progress}%")
 
     @property
     def success_display_time(self) -> AnimationDuration:
@@ -759,12 +759,12 @@ class LoaderButton(QToolButton):
 
     def _show_success_state(self) -> None:
         """Show success state with success icon."""
-        self.text_label.setText(self._success_text)
+        self._text_label.setText(self._success_text)
         if self._success_icon:
-            self.icon_label.setPixmap(self._success_icon.pixmap(self._icon_size))
-            self.icon_label.show()
+            self._icon_label.setPixmap(self._success_icon.pixmap(self._icon_size))
+            self._icon_label.show()
         else:
-            self.icon_label.hide()
+            self._icon_label.hide()
 
     def _show_error_state(self, error_message: str = "") -> None:
         """Show error state with error icon.
@@ -773,15 +773,15 @@ class LoaderButton(QToolButton):
             error_message: Optional error message to display.
         """
         if error_message:
-            self.text_label.setText(f"{self._error_text}: {error_message}")
+            self._text_label.setText(f"{self._error_text}: {error_message}")
         else:
-            self.text_label.setText(self._error_text)
+            self._text_label.setText(self._error_text)
 
         if self._error_icon:
-            self.icon_label.setPixmap(self._error_icon.pixmap(self._icon_size))
-            self.icon_label.show()
+            self._icon_label.setPixmap(self._error_icon.pixmap(self._icon_size))
+            self._icon_label.show()
         else:
-            self.icon_label.hide()
+            self._icon_label.hide()
 
     def _reset_to_original(self) -> None:
         """Reset to original state after auto-reset delay."""
@@ -817,24 +817,24 @@ class LoaderButton(QToolButton):
                 painter.drawPixmap(0, 0, pixmap)
                 painter.end()
 
-                self.icon_label.setPixmap(rotated_pixmap)
+                self._icon_label.setPixmap(rotated_pixmap)
 
     def _update_display(self) -> None:
         """Update the display based on current state."""
         if self._is_loading:
-            self.text_label.setText(self._loading_text)
+            self._text_label.setText(self._loading_text)
             if self._loading_icon:
-                self.icon_label.setPixmap(self._loading_icon.pixmap(self._icon_size))
-                self.icon_label.show()
+                self._icon_label.setPixmap(self._loading_icon.pixmap(self._icon_size))
+                self._icon_label.show()
             else:
-                self.icon_label.hide()
+                self._icon_label.hide()
         else:
-            self.text_label.setText(self._original_text)
+            self._text_label.setText(self._original_text)
             if self._original_icon:
-                self.icon_label.setPixmap(self._original_icon.pixmap(self._icon_size))
-                self.icon_label.show()
+                self._icon_label.setPixmap(self._original_icon.pixmap(self._icon_size))
+                self._icon_label.show()
             else:
-                self.icon_label.hide()
+                self._icon_label.hide()
 
     # ///////////////////////////////////////////////////////////////
     # EVENT HANDLERS
@@ -869,7 +869,7 @@ class LoaderButton(QToolButton):
         """
         base_size = super().minimumSizeHint()
 
-        text_width = self.text_label.fontMetrics().horizontalAdvance(
+        text_width = self._text_label.fontMetrics().horizontalAdvance(
             self._loading_text if self._is_loading else self._original_text
         )
 
@@ -902,3 +902,10 @@ class LoaderButton(QToolButton):
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()
+
+
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = ["LoaderButton"]

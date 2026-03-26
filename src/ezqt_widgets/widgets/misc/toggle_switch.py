@@ -351,3 +351,10 @@ class ToggleSwitch(QWidget):
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()
+
+
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = ["ToggleSwitch"]
