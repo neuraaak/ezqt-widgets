@@ -135,7 +135,7 @@ ezqt-widgets = "ezqt_widgets.cli.main:cli"
 # Package discovery and inclusion/exclusion patterns
 # ///////////////////////////////////////////////////////////////
 
-[tool.hatch.build]
+[tool.hatch.build.targets.wheel]
 packages = ["src/ezqt_widgets"]
 
 [tool.hatch.build.targets.sdist]
