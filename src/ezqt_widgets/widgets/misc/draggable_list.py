@@ -95,8 +95,8 @@ class DraggableItem(QFrame):
         # Initialize attributes
         self.item_id = item_id
         self.text = text
-        self.is_dragging = False
-        self.drag_start_pos = QPoint()
+        self._is_dragging = False
+        self._drag_start_pos = QPoint()
         self._compact = compact
 
         # Configure widget
@@ -214,7 +214,7 @@ class DraggableItem(QFrame):
             event: The mouse event.
         """
         if event.button() == Qt.MouseButton.LeftButton:
-            self.drag_start_pos = event.position().toPoint()
+            self._drag_start_pos = event.position().toPoint()
         super().mousePressEvent(event)
 
     def mouseMoveEvent(self, event: QMouseEvent) -> None:
@@ -226,13 +226,13 @@ class DraggableItem(QFrame):
         if not (event.buttons() & Qt.MouseButton.LeftButton):
             return
 
-        if not self.is_dragging:
+        if not self._is_dragging:
             if (
-                event.position().toPoint() - self.drag_start_pos
+                event.position().toPoint() - self._drag_start_pos
             ).manhattanLength() < 10:
                 return
 
-            self.is_dragging = True
+            self._is_dragging = True
             self.setProperty("dragging", True)
             self.style().unpolish(self)
             self.style().polish(self)
@@ -247,7 +247,7 @@ class DraggableItem(QFrame):
             drag.exec(Qt.DropAction.MoveAction)
 
             # Cleanup after drag
-            self.is_dragging = False
+            self._is_dragging = False
             self.setProperty("dragging", False)
             self.style().unpolish(self)
             self.style().polish(self)
@@ -258,7 +258,7 @@ class DraggableItem(QFrame):
         Args:
             event: The mouse event.
         """
-        self.is_dragging = False
+        self._is_dragging = False
         self.setProperty("dragging", False)
         self.style().unpolish(self)
         self.style().polish(self)
@@ -449,25 +449,25 @@ class DraggableList(QWidget):
         layout.setSpacing(4)
 
         # Scroll area
-        self.scroll_area = QScrollArea()
-        self.scroll_area.setWidgetResizable(True)
-        self.scroll_area.setHorizontalScrollBarPolicy(
+        self._scroll_area = QScrollArea()
+        self._scroll_area.setWidgetResizable(True)
+        self._scroll_area.setHorizontalScrollBarPolicy(
             Qt.ScrollBarPolicy.ScrollBarAlwaysOff
         )
-        self.scroll_area.setVerticalScrollBarPolicy(
+        self._scroll_area.setVerticalScrollBarPolicy(
             Qt.ScrollBarPolicy.ScrollBarAsNeeded
         )
-        self.scroll_area.setFrameShape(QFrame.Shape.NoFrame)
+        self._scroll_area.setFrameShape(QFrame.Shape.NoFrame)
 
         # Container widget for items
-        self.container_widget = QWidget()
-        self.container_layout = QVBoxLayout(self.container_widget)
-        self.container_layout.setContentsMargins(0, 0, 0, 0)
-        self.container_layout.setSpacing(4)
-        self.container_layout.addStretch()  # Flexible space at the end
+        self._container_widget = QWidget()
+        self._container_layout = QVBoxLayout(self._container_widget)
+        self._container_layout.setContentsMargins(0, 0, 0, 0)
+        self._container_layout.setSpacing(4)
+        self._container_layout.addStretch()  # Flexible space at the end
 
-        self.scroll_area.setWidget(self.container_widget)
-        layout.addWidget(self.scroll_area)
+        self._scroll_area.setWidget(self._container_widget)
+        layout.addWidget(self._scroll_area)
 
         # Initialize items
         self._create_items()
@@ -631,7 +631,7 @@ class DraggableList(QWidget):
             item_widget.content_widget.icon_enabled = False
 
         # Add to layout (before stretch)
-        self.container_layout.insertWidget(len(self._items) - 1, item_widget)
+        self._container_layout.insertWidget(len(self._items) - 1, item_widget)
         self._item_widgets[item_id] = item_widget
 
         # Emit signal
@@ -657,7 +657,7 @@ class DraggableList(QWidget):
         # Remove widget
         if item_id in self._item_widgets:
             widget = self._item_widgets[item_id]
-            self.container_layout.removeWidget(widget)
+            self._container_layout.removeWidget(widget)
             widget.deleteLater()
             del self._item_widgets[item_id]
 
@@ -671,7 +671,7 @@ class DraggableList(QWidget):
         """Remove all items from the list."""
         # Clean up widgets
         for widget in self._item_widgets.values():
-            self.container_layout.removeWidget(widget)
+            self._container_layout.removeWidget(widget)
             widget.deleteLater()
         self._item_widgets.clear()
 
@@ -705,8 +705,8 @@ class DraggableList(QWidget):
         # Move widget
         if item_id in self._item_widgets:
             widget = self._item_widgets[item_id]
-            self.container_layout.removeWidget(widget)
-            self.container_layout.insertWidget(new_position, widget)
+            self._container_layout.removeWidget(widget)
+            self._container_layout.insertWidget(new_position, widget)
 
         # Emit signals
         self.itemMoved.emit(item_id, old_position, new_position)
@@ -736,7 +736,7 @@ class DraggableList(QWidget):
         """Create widgets for all items."""
         # Clean up existing widgets
         for widget in self._item_widgets.values():
-            self.container_layout.removeWidget(widget)
+            self._container_layout.removeWidget(widget)
             widget.deleteLater()
         self._item_widgets.clear()
 
@@ -754,7 +754,7 @@ class DraggableList(QWidget):
                 item_widget.content_widget.icon_enabled = False
 
             # Add to layout
-            self.container_layout.insertWidget(i, item_widget)
+            self._container_layout.insertWidget(i, item_widget)
             self._item_widgets[item_id] = item_widget
 
     def _on_item_removed(self, item_id: str) -> None:
@@ -771,11 +771,11 @@ class DraggableList(QWidget):
             The calculated drop position index.
         """
         # Convert global coordinates to container local coordinates
-        local_pos = self.container_widget.mapFrom(self, drop_pos)
+        local_pos = self._container_widget.mapFrom(self, drop_pos)
 
         # Find position in layout
-        for i in range(self.container_layout.count() - 1):  # -1 to exclude stretch
-            item = self.container_layout.itemAt(i)
+        for i in range(self._container_layout.count() - 1):  # -1 to exclude stretch
+            item = self._container_layout.itemAt(i)
             widget = item.widget() if item else None
             if widget is not None:
                 widget_rect = widget.geometry()
@@ -912,3 +912,10 @@ class DraggableList(QWidget):
         self.style().unpolish(self)
         self.style().polish(self)
         self.update()
+
+
+# ///////////////////////////////////////////////////////////////
+# PUBLIC API
+# ///////////////////////////////////////////////////////////////
+
+__all__ = ["DraggableItem", "DraggableList"]

@@ -368,7 +368,7 @@ class TestDateButton:
 
         # Verify that the label displays the placeholder
         # The internal label should display the placeholder
-        assert button.date_label.text() == button.placeholder
+        assert button._date_label.text() == button.placeholder
 
     def test_should_display_custom_format_when_format_is_set(
         self, qt_widget_cleanup

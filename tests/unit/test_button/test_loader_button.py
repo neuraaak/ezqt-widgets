@@ -486,7 +486,7 @@ class TestLoaderButton:
         button.startLoading()
         button.stopLoading(success=True)
 
-        assert button.text_label.text() == "Done!"
+        assert button._text_label.text() == "Done!"
 
     def test_should_use_custom_error_text_when_provided(
         self, qt_widget_cleanup
@@ -499,7 +499,7 @@ class TestLoaderButton:
         button.startLoading()
         button.stopLoading(success=False)
 
-        assert button.text_label.text() == "Oops"
+        assert button._text_label.text() == "Oops"
 
     def test_should_append_error_message_to_error_text_when_message_provided(
         self, qt_widget_cleanup
@@ -510,7 +510,7 @@ class TestLoaderButton:
         button.startLoading()
         button.stopLoading(success=False, error_message="timeout")
 
-        assert button.text_label.text() == "Fail: timeout"
+        assert button._text_label.text() == "Fail: timeout"
 
     def test_should_update_success_text_property_when_setter_is_called(
         self, qt_widget_cleanup
@@ -598,7 +598,7 @@ class TestLoaderButton:
         button.startLoading()
 
         button.progress = 75
-        assert button.text_label.text() == "75%"
+        assert button._text_label.text() == "75%"
 
     def test_should_reset_to_original_state_when_reset_loading_is_called(
         self, qt_widget_cleanup
@@ -614,7 +614,7 @@ class TestLoaderButton:
         button.resetLoading()
 
         assert not button.is_loading
-        assert button.text_label.text() == "Go"
+        assert button._text_label.text() == "Go"
 
     def test_should_not_raise_when_cleanup_timer_called_without_timer(
         self, qt_widget_cleanup
