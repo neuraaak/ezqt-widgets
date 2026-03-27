@@ -258,7 +258,7 @@ class WidgetName(QWidget):
     # STYLE METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def refresh_style(self) -> None: ...
+    def refreshStyle(self) -> None: ...
 ```
 
 Ordre des sections dans une classe :
@@ -284,18 +284,20 @@ def clear_date(self) -> None:
 
 ### Nommage
 
-| Element          | Convention         | Exemple                          |
-| ---------------- | ------------------ | -------------------------------- |
-| Module           | snake_case         | `toggle_switch.py`               |
-| Classe           | PascalCase         | `ToggleSwitch`                   |
-| Methode publique | snake_case         | `refresh_style()`                |
-| Methode privee   | `_snake_case`      | `_setup_widget()`                |
-| Attribut prive   | `_snake_case`      | `self._checked`                  |
-| Signal Qt        | camelCase          | `toggled`, `dateChanged`         |
-| Constante        | UPPER_SNAKE_CASE   | `DEFAULT_WIDTH`                  |
-| Fichier de test  | `test_<module>.py` | `test_toggle_switch.py`          |
-| Classe de test   | `Test<Widget>`     | `TestToggleSwitch`               |
-| Methode de test  | `test_<behavior>`  | `test_toggle_switch_set_checked` |
+| Element                      | Convention         | Exemple                          |
+| ---------------------------- | ------------------ | -------------------------------- |
+| Module                       | snake_case         | `toggle_switch.py`               |
+| Classe                       | PascalCase         | `ToggleSwitch`                   |
+| Methode publique             | camelCase          | `refreshStyle()`, `setTheme()`   |
+| Methode privee               | `_snake_case`      | `_setup_widget()`                |
+| Attribut prive               | `_snake_case`      | `self._checked`                  |
+| Signal Qt                    | camelCase          | `toggled`, `dateChanged`         |
+| Constante                    | UPPER_SNAKE_CASE   | `DEFAULT_WIDTH`                  |
+| Factory classmethod          | `from_snake_case`  | `ThemeIcon.from_source()`        |
+| Propriete Python (@property) | snake_case         | `icon_size`, `min_width`         |
+| Fichier de test              | `test_<module>.py` | `test_toggle_switch.py`          |
+| Classe de test               | `Test<Widget>`     | `TestToggleSwitch`               |
+| Methode de test              | `test_<behavior>`  | `test_toggle_switch_set_checked` |
 
 ### Type hints
 
@@ -350,7 +352,7 @@ def paintEvent(self, _event: QPaintEvent) -> None:
 class MyWidget(QWidget):
     valueChanged = Signal(int)
 
-    def set_value(self, value: int) -> None:
+    def setValue(self, value: int) -> None:
         if self._value != value:
             self._value = value
             self.valueChanged.emit(value)

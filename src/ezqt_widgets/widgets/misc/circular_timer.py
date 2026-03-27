@@ -28,6 +28,42 @@ from PySide6.QtWidgets import QWidget
 from ...types import ColorType, WidgetParent
 
 # ///////////////////////////////////////////////////////////////
+# FUNCTIONS
+# ///////////////////////////////////////////////////////////////
+
+
+def _parse_css_color(color_str: QColor | str) -> QColor:
+    """Parse CSS color strings to QColor.
+
+    Supports rgb, rgba, hex, and named colors.
+
+    Args:
+        color_str: CSS color string or QColor object.
+
+    Returns:
+        QColor object.
+    """
+    if isinstance(color_str, QColor):
+        return color_str
+
+    color_str = str(color_str).strip()
+
+    rgb_match = re.match(r"rgb\((\d+),\s*(\d+),\s*(\d+)\)", color_str)
+    if rgb_match:
+        r, g, b = map(int, rgb_match.groups())
+        return QColor(r, g, b)
+
+    rgba_match = re.match(r"rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)", color_str)
+    if rgba_match:
+        r_str, g_str, b_str, a_str = rgba_match.groups()
+        r, g, b = int(r_str), int(g_str), int(b_str)
+        a = float(a_str) * 255
+        return QColor(r, g, b, int(a))
+
+    return QColor(color_str)
+
+
+# ///////////////////////////////////////////////////////////////
 # CLASSES
 # ///////////////////////////////////////////////////////////////
 
@@ -98,8 +134,8 @@ class CircularTimer(QWidget):
         self._duration: int = duration
         self._elapsed: int = 0
         self._running: bool = False
-        self._ring_color: QColor = self._parse_css_color(ring_color)
-        self._node_color: QColor = self._parse_css_color(node_color)
+        self._ring_color: QColor = _parse_css_color(ring_color)
+        self._node_color: QColor = _parse_css_color(node_color)
         self._ring_width_mode: str = ring_width_mode
         self._pen_width: float | None = pen_width
         self._loop: bool = bool(loop)
@@ -177,7 +213,7 @@ class CircularTimer(QWidget):
         Args:
             value: The new ring color (QColor or CSS string).
         """
-        self._ring_color = self._parse_css_color(value)
+        self._ring_color = _parse_css_color(value)
         self.update()
 
     @property
@@ -196,7 +232,7 @@ class CircularTimer(QWidget):
         Args:
             value: The new node color (QColor or CSS string).
         """
-        self._node_color = self._parse_css_color(value)
+        self._node_color = _parse_css_color(value)
         self.update()
 
     @property
@@ -297,37 +333,6 @@ class CircularTimer(QWidget):
     # PRIVATE METHODS
     # ------------------------------------------------
 
-    @staticmethod
-    def _parse_css_color(color_str: QColor | str) -> QColor:
-        """Parse CSS color strings to QColor.
-
-        Supports rgb, rgba, hex, and named colors.
-
-        Args:
-            color_str: CSS color string or QColor object.
-
-        Returns:
-            QColor object.
-        """
-        if isinstance(color_str, QColor):
-            return color_str
-
-        color_str = str(color_str).strip()
-
-        rgb_match = re.match(r"rgb\((\d+),\s*(\d+),\s*(\d+)\)", color_str)
-        if rgb_match:
-            r, g, b = map(int, rgb_match.groups())
-            return QColor(r, g, b)
-
-        rgba_match = re.match(r"rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)", color_str)
-        if rgba_match:
-            r_str, g_str, b_str, a_str = rgba_match.groups()
-            r, g, b = int(r_str), int(g_str), int(b_str)
-            a = float(a_str) * 255
-            return QColor(r, g, b, int(a))
-
-        return QColor(color_str)
-
     def _on_timer(self) -> None:
         """Internal callback for smooth animation."""
         import time
@@ -375,18 +380,18 @@ class CircularTimer(QWidget):
 
         # Pen width (dynamic mode or fixed value)
         if self._pen_width is not None:
-            penWidth = int(self._pen_width)
+            pen_width = int(self._pen_width)
         else:
             if self._ring_width_mode == "small":
-                penWidth = int(max(size * 0.12, 3))
+                pen_width = int(max(size * 0.12, 3))
             elif self._ring_width_mode == "large":
-                penWidth = int(max(size * 0.28, 3))
+                pen_width = int(max(size * 0.28, 3))
             else:  # medium
-                penWidth = int(max(size * 0.18, 3))
+                pen_width = int(max(size * 0.18, 3))
 
         # Node circle (precise centering)
         center = size / 2
-        node_radius = (size - 2 * penWidth) / 2 - penWidth / 2
+        node_radius = (size - 2 * pen_width) / 2 - pen_width / 2
         if node_radius > 0:
             painter.setPen(Qt.PenStyle.NoPen)
             painter.setBrush(self._node_color)
@@ -401,17 +406,17 @@ class CircularTimer(QWidget):
         painter.setPen(
             QPen(
                 self._ring_color,
-                penWidth,
+                pen_width,
                 Qt.PenStyle.SolidLine,
                 Qt.PenCapStyle.RoundCap,
             )
         )
         angle = int((self._elapsed / self._duration) * 360 * 16)
         painter.drawArc(
-            penWidth,
-            penWidth,
-            int(size - 2 * penWidth),
-            int(size - 2 * penWidth),
+            pen_width,
+            pen_width,
+            int(size - 2 * pen_width),
+            int(size - 2 * pen_width),
             90 * 16,
             -angle,  # clockwise
         )

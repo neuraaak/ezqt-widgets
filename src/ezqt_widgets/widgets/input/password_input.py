@@ -265,7 +265,7 @@ class PasswordInput(QWidget):
         self._layout.setSpacing(0)
 
         # Create password input
-        self._password_input = PasswordLineEdit()
+        self._password_input = _PasswordLineEdit()
         self._password_input.textChanged.connect(self.updateStrength)
 
         # Connect icon click signal
@@ -490,7 +490,7 @@ class PasswordInput(QWidget):
         self.update()
 
 
-class PasswordLineEdit(QLineEdit):
+class _PasswordLineEdit(QLineEdit):
     """QLineEdit subclass with right-side icon support.
 
     Features:
@@ -614,4 +614,4 @@ class PasswordLineEdit(QLineEdit):
 # PUBLIC API
 # ///////////////////////////////////////////////////////////////
 
-__all__ = ["PasswordInput", "PasswordLineEdit"]
+__all__ = ["PasswordInput"]

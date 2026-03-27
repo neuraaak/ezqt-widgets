@@ -126,7 +126,7 @@ class TestClickableTagLabel:
         # Verify that the signal was emitted
         assert clicked_signal_received
 
-        # Test toggle_keyword signal
+        # Test toggleKeyword signal
         toggle_signal_received = False
         received_keyword = ""
 
@@ -135,7 +135,7 @@ class TestClickableTagLabel:
             toggle_signal_received = True
             received_keyword = keyword
 
-        tag.toggle_keyword.connect(on_toggle_keyword)
+        tag.toggleKeyword.connect(on_toggle_keyword)
 
         # Simulate a click for toggle
         tag.mousePressEvent(event)

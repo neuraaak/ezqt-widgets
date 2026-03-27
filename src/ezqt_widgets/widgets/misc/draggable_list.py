@@ -93,8 +93,8 @@ class DraggableItem(QFrame):
         self.setProperty("type", "DraggableItem")
 
         # Initialize attributes
-        self.item_id = item_id
-        self.text = text
+        self._item_id = item_id
+        self._text = text
         self._is_dragging = False
         self._drag_start_pos = QPoint()
         self._compact = compact
@@ -129,22 +129,22 @@ class DraggableItem(QFrame):
         icon_size = QSize(16, 16) if self._compact else QSize(20, 20)
         icon_padding = 2 if self._compact else 4
 
-        self.content_widget = HoverLabel(
+        self._content_widget = HoverLabel(
             text=text,
             icon=icon,  # Trash icon for removal
             icon_size=icon_size,
             icon_padding=icon_padding,
             **kwargs,
         )
-        self.content_widget.hoverIconClicked.connect(self._on_remove_clicked)
+        self._content_widget.hoverIconClicked.connect(self._on_remove_clicked)
 
         # Icon color property
         self._icon_color = "grey"
         # Apply initial color
-        self.content_widget.icon_color = self._icon_color
+        self._content_widget.icon_color = self._icon_color
 
         # Add widget to layout (takes full width)
-        layout.addWidget(self.content_widget)
+        layout.addWidget(self._content_widget)
 
     # ------------------------------------------------
     # PRIVATE METHODS
@@ -152,11 +152,38 @@ class DraggableItem(QFrame):
 
     def _on_remove_clicked(self) -> None:
         """Handle click on removal icon."""
-        self.itemRemoved.emit(self.item_id)
+        self.itemRemoved.emit(self._item_id)
 
     # ///////////////////////////////////////////////////////////////
     # PROPERTIES
     # ///////////////////////////////////////////////////////////////
+
+    @property
+    def item_id(self) -> str:
+        """Get the item identifier.
+
+        Returns:
+            The unique identifier of the item.
+        """
+        return self._item_id
+
+    @property
+    def text(self) -> str:
+        """Get the item text.
+
+        Returns:
+            The display text of the item.
+        """
+        return self._text
+
+    @property
+    def content_widget(self) -> HoverLabel:
+        """Get the inner HoverLabel widget.
+
+        Returns:
+            The HoverLabel used for display and interaction.
+        """
+        return self._content_widget
 
     @property
     def icon_color(self) -> str:
@@ -175,8 +202,8 @@ class DraggableItem(QFrame):
             value: The new icon color.
         """
         self._icon_color = value
-        if self.content_widget:
-            self.content_widget.icon_color = value
+        if self._content_widget:
+            self._content_widget.icon_color = value
 
     @property
     def compact(self) -> bool:
@@ -240,7 +267,7 @@ class DraggableItem(QFrame):
             # Create drag
             drag = QDrag(self)
             mime_data = QMimeData()
-            mime_data.setText(self.item_id)
+            mime_data.setText(self._item_id)
             drag.setMimeData(mime_data)
 
             # Execute drag
@@ -275,7 +302,7 @@ class DraggableItem(QFrame):
             The recommended size.
         """
         # Get suggested size from HoverLabel
-        content_size = self.content_widget.sizeHint()
+        content_size = self._content_widget.sizeHint()
 
         # Add layout margins and padding
         layout = self.layout()
@@ -311,7 +338,7 @@ class DraggableItem(QFrame):
             The minimum size hint.
         """
         # Get minimum size from HoverLabel
-        content_min_size = self.content_widget.minimumSizeHint()
+        content_min_size = self._content_widget.minimumSizeHint()
 
         # Add layout margins
         layout = self.layout()

@@ -55,19 +55,19 @@ class ClickableTagLabel(QFrame):
 
     Signals:
         clicked(): Emitted when the tag is clicked.
-        toggle_keyword(str): Emitted with the tag name when toggled.
+        toggleKeyword(str): Emitted with the tag name when toggled.
         stateChanged(bool): Emitted when the enabled state changes.
 
     Example:
         >>> from ezqt_widgets import ClickableTagLabel
         >>> tag = ClickableTagLabel(name="Python", enabled=False, status_color="#0078d4")
         >>> tag.stateChanged.connect(lambda state: print(f"Active: {state}"))
-        >>> tag.toggle_keyword.connect(lambda kw: print(f"Toggled: {kw}"))
+        >>> tag.toggleKeyword.connect(lambda kw: print(f"Toggled: {kw}"))
         >>> tag.show()
     """
 
     clicked = Signal()
-    toggle_keyword = Signal(str)
+    toggleKeyword = Signal(str)
     stateChanged = Signal(bool)
 
     # ///////////////////////////////////////////////////////////////
@@ -279,7 +279,7 @@ class ClickableTagLabel(QFrame):
         if event.button() == Qt.MouseButton.LeftButton:
             self.enabled = not self.enabled
             self.clicked.emit()
-            self.toggle_keyword.emit(self._name)
+            self.toggleKeyword.emit(self._name)
         super().mousePressEvent(event)
 
     def keyPressEvent(self, event: QKeyEvent) -> None:
@@ -291,7 +291,7 @@ class ClickableTagLabel(QFrame):
         if event.key() in [Qt.Key.Key_Space, Qt.Key.Key_Return, Qt.Key.Key_Enter]:
             self.enabled = not self.enabled
             self.clicked.emit()
-            self.toggle_keyword.emit(self._name)
+            self.toggleKeyword.emit(self._name)
         else:
             super().keyPressEvent(event)
 
