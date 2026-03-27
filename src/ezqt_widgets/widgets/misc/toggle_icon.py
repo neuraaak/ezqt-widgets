@@ -38,6 +38,98 @@ from ...utils.network_utils import fetch_url_bytes
 from ..misc.theme_icon import ThemeIcon
 
 # ///////////////////////////////////////////////////////////////
+# FUNCTIONS
+# ///////////////////////////////////////////////////////////////
+
+
+def _colorize_pixmap(pixmap: QPixmap, color: QColor) -> QPixmap:
+    """Apply a color to a QPixmap with opacity.
+
+    Args:
+        pixmap: The pixmap to colorize.
+        color: The color to apply.
+
+    Returns:
+        The colorized pixmap.
+    """
+    if pixmap.isNull():
+        return pixmap
+
+    colored_pixmap = QPixmap(pixmap.size())
+    colored_pixmap.fill(Qt.GlobalColor.transparent)
+
+    painter = QPainter(colored_pixmap)
+    painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceOver)
+    painter.setOpacity(color.alphaF())
+    painter.fillRect(colored_pixmap.rect(), color)
+    painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_DestinationIn)
+    painter.drawPixmap(0, 0, pixmap)
+    painter.end()
+
+    return colored_pixmap
+
+
+def _load_icon_from_source(
+    source: IconSourceExtended, size: QSize | None = None
+) -> QPixmap:
+    """Load an icon from various sources (path, URL, QIcon, QPixmap).
+
+    Args:
+        source: Icon source (ThemeIcon, QIcon, QPixmap, file path, or URL).
+        size: Desired size for the icon (default: None).
+
+    Returns:
+        The loaded icon pixmap.
+    """
+    if source is None:
+        pixmap = QPixmap(16, 16)
+        pixmap.fill(Qt.GlobalColor.transparent)
+    elif isinstance(source, QPixmap):
+        pixmap = source
+    elif isinstance(source, QIcon):
+        themed_icon = ThemeIcon.from_source(source)
+        if themed_icon is None:
+            raise ValueError(
+                "ThemeIcon.from_source returned None for a non-None QIcon source."
+            )
+        pixmap = themed_icon.pixmap(size or QSize(16, 16))
+    elif isinstance(source, str):
+        if source.startswith(("http://", "https://")):
+            image_data = fetch_url_bytes(source)
+            if image_data:
+                pixmap = QPixmap()
+                pixmap.loadFromData(image_data)
+            else:
+                pixmap = QPixmap(16, 16)
+                pixmap.fill(Qt.GlobalColor.transparent)
+        elif source.lower().endswith(".svg"):
+            renderer = QSvgRenderer(source)
+            if renderer.isValid():
+                pixmap = QPixmap(size or QSize(16, 16))
+                pixmap.fill(Qt.GlobalColor.transparent)
+                painter = QPainter(pixmap)
+                renderer.render(painter)
+                painter.end()
+            else:
+                pixmap = QPixmap(16, 16)
+                pixmap.fill(Qt.GlobalColor.transparent)
+        else:
+            pixmap = QPixmap(source)
+    else:
+        pixmap = QPixmap(16, 16)
+        pixmap.fill(Qt.GlobalColor.transparent)
+
+    if not pixmap.isNull() and size:
+        pixmap = pixmap.scaled(
+            size,
+            Qt.AspectRatioMode.KeepAspectRatio,
+            Qt.TransformationMode.SmoothTransformation,
+        )
+
+    return pixmap
+
+
+# ///////////////////////////////////////////////////////////////
 # CLASSES
 # ///////////////////////////////////////////////////////////////
 
@@ -120,14 +212,14 @@ class ToggleIcon(QLabel):
         if self._use_custom_icons:
             # Use provided icons
             self._opened_icon = (
-                self._load_icon_from_source(
+                _load_icon_from_source(
                     opened_icon, QSize(self._icon_size, self._icon_size)
                 )
                 if opened_icon is not None
                 else None
             )
             self._closed_icon = (
-                self._load_icon_from_source(
+                _load_icon_from_source(
                     closed_icon, QSize(self._icon_size, self._icon_size)
                 )
                 if closed_icon is not None
@@ -186,7 +278,7 @@ class ToggleIcon(QLabel):
         Args:
             value: The icon source (str, QIcon, or QPixmap).
         """
-        self._opened_icon = self._load_icon_from_source(
+        self._opened_icon = _load_icon_from_source(
             value, QSize(self._icon_size, self._icon_size)
         )
         if self._state == "opened":
@@ -208,7 +300,7 @@ class ToggleIcon(QLabel):
         Args:
             value: The icon source (str, QIcon, or QPixmap).
         """
-        self._closed_icon = self._load_icon_from_source(
+        self._closed_icon = _load_icon_from_source(
             value, QSize(self._icon_size, self._icon_size)
         )
         if self._state == "closed":
@@ -233,11 +325,11 @@ class ToggleIcon(QLabel):
         self._icon_size = int(value)
         # Reload icons with new size
         if hasattr(self, "_opened_icon") and self._opened_icon is not None:
-            self._opened_icon = self._load_icon_from_source(
+            self._opened_icon = _load_icon_from_source(
                 self._opened_icon, QSize(self._icon_size, self._icon_size)
             )
         if hasattr(self, "_closed_icon") and self._closed_icon is not None:
-            self._closed_icon = self._load_icon_from_source(
+            self._closed_icon = _load_icon_from_source(
                 self._closed_icon, QSize(self._icon_size, self._icon_size)
             )
         self._update_icon()
@@ -437,95 +529,6 @@ class ToggleIcon(QLabel):
     # PRIVATE METHODS
     # ------------------------------------------------
 
-    @staticmethod
-    def _colorize_pixmap(pixmap: QPixmap, color: QColor) -> QPixmap:
-        """Apply a color to a QPixmap with opacity.
-
-        Args:
-            pixmap: The pixmap to colorize.
-            color: The color to apply.
-
-        Returns:
-            The colorized pixmap.
-        """
-        if pixmap.isNull():
-            return pixmap
-
-        colored_pixmap = QPixmap(pixmap.size())
-        colored_pixmap.fill(Qt.GlobalColor.transparent)
-
-        painter = QPainter(colored_pixmap)
-        painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceOver)
-        painter.setOpacity(color.alphaF())
-        painter.fillRect(colored_pixmap.rect(), color)
-        painter.setCompositionMode(
-            QPainter.CompositionMode.CompositionMode_DestinationIn
-        )
-        painter.drawPixmap(0, 0, pixmap)
-        painter.end()
-
-        return colored_pixmap
-
-    @staticmethod
-    def _load_icon_from_source(
-        source: IconSourceExtended, size: QSize | None = None
-    ) -> QPixmap:
-        """Load an icon from various sources (path, URL, QIcon, QPixmap).
-
-        Args:
-            source: Icon source (ThemeIcon, QIcon, QPixmap, file path, or URL).
-            size: Desired size for the icon (default: None).
-
-        Returns:
-            The loaded icon pixmap.
-        """
-        if source is None:
-            pixmap = QPixmap(16, 16)
-            pixmap.fill(Qt.GlobalColor.transparent)
-        elif isinstance(source, QPixmap):
-            pixmap = source
-        elif isinstance(source, QIcon):
-            themed_icon = ThemeIcon.from_source(source)
-            if themed_icon is None:
-                raise ValueError(
-                    "ThemeIcon.from_source returned None for a non-None QIcon source."
-                )
-            pixmap = themed_icon.pixmap(size or QSize(16, 16))
-        elif isinstance(source, str):
-            if source.startswith(("http://", "https://")):
-                image_data = fetch_url_bytes(source)
-                if image_data:
-                    pixmap = QPixmap()
-                    pixmap.loadFromData(image_data)
-                else:
-                    pixmap = QPixmap(16, 16)
-                    pixmap.fill(Qt.GlobalColor.transparent)
-            elif source.lower().endswith(".svg"):
-                renderer = QSvgRenderer(source)
-                if renderer.isValid():
-                    pixmap = QPixmap(size or QSize(16, 16))
-                    pixmap.fill(Qt.GlobalColor.transparent)
-                    painter = QPainter(pixmap)
-                    renderer.render(painter)
-                    painter.end()
-                else:
-                    pixmap = QPixmap(16, 16)
-                    pixmap.fill(Qt.GlobalColor.transparent)
-            else:
-                pixmap = QPixmap(source)
-        else:
-            pixmap = QPixmap(16, 16)
-            pixmap.fill(Qt.GlobalColor.transparent)
-
-        if not pixmap.isNull() and size:
-            pixmap = pixmap.scaled(
-                size,
-                Qt.AspectRatioMode.KeepAspectRatio,
-                Qt.TransformationMode.SmoothTransformation,
-            )
-
-        return pixmap
-
     def _update_icon(self) -> None:
         """Update the displayed icon based on current state and center the QPixmap."""
         if self._state == "opened":
@@ -535,7 +538,7 @@ class ToggleIcon(QLabel):
         if self._use_custom_icons:
             icon = self._opened_icon if self._state == "opened" else self._closed_icon
             if icon is not None:
-                colored_icon = self._colorize_pixmap(icon, self._icon_color)
+                colored_icon = _colorize_pixmap(icon, self._icon_color)
                 self.setPixmap(colored_icon)
             self.setAlignment(Qt.AlignmentFlag.AlignCenter)
         else:

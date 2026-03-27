@@ -148,18 +148,12 @@ Used by: Signal handlers, value change callbacks, etc.
 # ///////////////////////////////////////////////////////////////
 
 __all__ = [
-    # Icon types
+    "AnimationDuration",
+    "ColorType",
+    "EventCallback",
     "IconSource",
     "IconSourceExtended",
-    # Size types
     "SizeType",
-    # Color types
-    "ColorType",
-    # Widget types
-    "WidgetParent",
-    # Animation types
-    "AnimationDuration",
-    # Callback types
-    "EventCallback",
     "ValueCallback",
+    "WidgetParent",
 ]

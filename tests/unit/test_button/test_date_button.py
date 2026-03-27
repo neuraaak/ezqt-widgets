@@ -27,6 +27,9 @@ from PySide6.QtWidgets import QDialog
 from ezqt_widgets.widgets.button.date_button import (
     DateButton,
     DatePickerDialog,
+    _format_date,
+    _get_calendar_icon,
+    _parse_date,
 )
 
 pytestmark = pytest.mark.unit
@@ -44,7 +47,7 @@ class TestUtilityFunctions:
     ) -> None:
         """Test format_date with a valid date."""
         date = QDate(2024, 1, 15)
-        result = DateButton._format_date(date, "dd/MM/yyyy")
+        result = _format_date(date, "dd/MM/yyyy")
         assert result == "15/01/2024"
 
     def test_should_return_empty_string_when_date_is_invalid(
@@ -52,7 +55,7 @@ class TestUtilityFunctions:
     ) -> None:
         """Test format_date with an invalid date."""
         date = QDate()
-        result = DateButton._format_date(date, "dd/MM/yyyy")
+        result = _format_date(date, "dd/MM/yyyy")
         assert result == ""
 
     def test_should_use_custom_format_when_format_is_given(
@@ -60,14 +63,14 @@ class TestUtilityFunctions:
     ) -> None:
         """Test format_date with a custom format."""
         date = QDate(2024, 1, 15)
-        result = DateButton._format_date(date, "yyyy-MM-dd")
+        result = _format_date(date, "yyyy-MM-dd")
         assert result == "2024-01-15"
 
     def test_should_return_date_object_when_date_string_is_valid(
         self, qt_widget_cleanup
     ) -> None:
         """Test parse_date with a valid string."""
-        result = DateButton._parse_date("15/01/2024", "dd/MM/yyyy")
+        result = _parse_date("15/01/2024", "dd/MM/yyyy")
         assert result.isValid()
         assert result.year() == 2024
         assert result.month() == 1
@@ -77,14 +80,14 @@ class TestUtilityFunctions:
         self, qt_widget_cleanup
     ) -> None:
         """Test parse_date with an invalid string."""
-        result = DateButton._parse_date("invalid", "dd/MM/yyyy")
+        result = _parse_date("invalid", "dd/MM/yyyy")
         assert not result.isValid()
 
     def test_should_return_icon_when_get_calendar_icon_is_called(
         self, qt_widget_cleanup
     ) -> None:
         """Test get_calendar_icon."""
-        icon = DateButton._get_calendar_icon()
+        icon = _get_calendar_icon()
         assert icon is not None
         assert isinstance(icon, QIcon)
         assert not icon.isNull()

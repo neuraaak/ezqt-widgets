@@ -41,6 +41,67 @@ from ..misc.theme_icon import ThemeIcon
 from ..shared.defaults import SVG_CALENDAR
 
 # ///////////////////////////////////////////////////////////////
+# FUNCTIONS
+# ///////////////////////////////////////////////////////////////
+
+
+def _format_date(date: QDate, format_str: str = "dd/MM/yyyy") -> str:
+    """Format a QDate object to string.
+
+    Args:
+        date: The date to format.
+        format_str: Format string (default: "dd/MM/yyyy").
+
+    Returns:
+        Formatted date string, or empty string if date is invalid.
+    """
+    if not date.isValid():
+        return ""
+    return date.toString(format_str)
+
+
+def _parse_date(date_str: str, format_str: str = "dd/MM/yyyy") -> QDate:
+    """Parse a date string to QDate object.
+
+    Args:
+        date_str: The date string to parse.
+        format_str: Format string (default: "dd/MM/yyyy").
+
+    Returns:
+        Parsed QDate object or invalid QDate if parsing fails.
+    """
+    return QDate.fromString(date_str, format_str)
+
+
+def _get_calendar_icon() -> ThemeIcon:
+    """Get a default calendar icon built from the shared SVG.
+
+    Returns:
+        Calendar ThemeIcon built from SVG_CALENDAR.
+
+    Raises:
+        ValueError: If SVG rendering fails or ThemeIcon cannot be created.
+    """
+    svg_bytes = base64.b64decode(base64.b64encode(SVG_CALENDAR))
+    renderer = QSvgRenderer(QByteArray(svg_bytes))
+    if not renderer.isValid():
+        raise ValueError("SVG_CALENDAR could not be rendered.")
+
+    pixmap = QPixmap(QSize(16, 16))
+    pixmap.fill(Qt.GlobalColor.transparent)
+    painter = QPainter(pixmap)
+    renderer.render(painter)
+    painter.end()
+
+    themed_icon = ThemeIcon.from_source(QIcon(pixmap))
+    if themed_icon is None:
+        raise ValueError(
+            "ThemeIcon.from_source returned None for a non-None QIcon source."
+        )
+    return themed_icon
+
+
+# ///////////////////////////////////////////////////////////////
 # CLASSES
 # ///////////////////////////////////////////////////////////////
 
@@ -234,7 +295,7 @@ class DateButton(QToolButton):
         self._min_width: int | None = min_width
         self._min_height: int | None = min_height
         self._current_date: QDate = QDate()
-        self._calendar_icon: ThemeIcon = self._get_calendar_icon()
+        self._calendar_icon: ThemeIcon = _get_calendar_icon()
 
         # Setup UI components
         self._date_label = QLabel()
@@ -291,7 +352,7 @@ class DateButton(QToolButton):
             value: The date to set (QDate, string, or None).
         """
         if isinstance(value, str):
-            new_date = self._parse_date(value, self._date_format)
+            new_date = _parse_date(value, self._date_format)
         elif isinstance(value, QDate):
             new_date = value
         elif value is None:
@@ -326,7 +387,7 @@ class DateButton(QToolButton):
         Returns:
             The formatted date string.
         """
-        return self._format_date(self._current_date, self._date_format)
+        return _format_date(self._current_date, self._date_format)
 
     @date_string.setter
     def date_string(self, value: str) -> None:
@@ -539,66 +600,10 @@ class DateButton(QToolButton):
     # PRIVATE METHODS
     # ------------------------------------------------
 
-    @staticmethod
-    def _format_date(date: QDate, format_str: str = "dd/MM/yyyy") -> str:
-        """Format a QDate object to string.
-
-        Args:
-            date: The date to format.
-            format_str: Format string (default: "dd/MM/yyyy").
-
-        Returns:
-            Formatted date string, or empty string if date is invalid.
-        """
-        if not date.isValid():
-            return ""
-        return date.toString(format_str)
-
-    @staticmethod
-    def _parse_date(date_str: str, format_str: str = "dd/MM/yyyy") -> QDate:
-        """Parse a date string to QDate object.
-
-        Args:
-            date_str: The date string to parse.
-            format_str: Format string (default: "dd/MM/yyyy").
-
-        Returns:
-            Parsed QDate object or invalid QDate if parsing fails.
-        """
-        return QDate.fromString(date_str, format_str)
-
-    @staticmethod
-    def _get_calendar_icon() -> ThemeIcon:
-        """Get a default calendar icon built from the shared SVG.
-
-        Returns:
-            Calendar ThemeIcon built from SVG_CALENDAR.
-
-        Raises:
-            ValueError: If SVG rendering fails or ThemeIcon cannot be created.
-        """
-        svg_bytes = base64.b64decode(base64.b64encode(SVG_CALENDAR))
-        renderer = QSvgRenderer(QByteArray(svg_bytes))
-        if not renderer.isValid():
-            raise ValueError("SVG_CALENDAR could not be rendered.")
-
-        pixmap = QPixmap(QSize(16, 16))
-        pixmap.fill(Qt.GlobalColor.transparent)
-        painter = QPainter(pixmap)
-        renderer.render(painter)
-        painter.end()
-
-        themed_icon = ThemeIcon.from_source(QIcon(pixmap))
-        if themed_icon is None:
-            raise ValueError(
-                "ThemeIcon.from_source returned None for a non-None QIcon source."
-            )
-        return themed_icon
-
     def _update_display(self) -> None:
         """Update the display text."""
         if self._current_date.isValid():
-            display_text = self._format_date(self._current_date, self._date_format)
+            display_text = _format_date(self._current_date, self._date_format)
         else:
             display_text = self._placeholder
 

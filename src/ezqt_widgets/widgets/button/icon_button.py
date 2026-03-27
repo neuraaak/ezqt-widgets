@@ -30,6 +30,131 @@ from ...utils.network_utils import UrlFetcher, fetch_url_bytes
 from ..misc.theme_icon import ThemeIcon
 
 # ///////////////////////////////////////////////////////////////
+# FUNCTIONS
+# ///////////////////////////////////////////////////////////////
+
+
+def _colorize_pixmap(
+    pixmap: QPixmap, color: str = "#FFFFFF", opacity: float = 0.5
+) -> QPixmap:
+    """Recolor a QPixmap with the given color and opacity.
+
+    Args:
+        pixmap: The pixmap to recolor.
+        color: The color to apply (default: "#FFFFFF").
+        opacity: The opacity level (default: 0.5).
+
+    Returns:
+        The recolored pixmap.
+    """
+    result = QPixmap(pixmap.size())
+    result.fill(Qt.GlobalColor.transparent)
+    painter = QPainter(result)
+    painter.setOpacity(opacity)
+    painter.drawPixmap(0, 0, pixmap)
+    painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceIn)
+    painter.fillRect(result.rect(), QColor(color))
+    painter.end()
+    return result
+
+
+def _load_icon_from_source(source: IconSourceExtended) -> QIcon | None:
+    """Load icon from various sources (ThemeIcon, QIcon, QPixmap, path, URL, etc.).
+
+    Args:
+        source: Icon source (ThemeIcon, QIcon, QPixmap, path, resource, URL, or SVG).
+
+    Returns:
+        Loaded icon or None if loading failed.
+    """
+    if source is None:
+        return None
+    elif isinstance(source, QPixmap):
+        return QIcon(source)
+    elif isinstance(source, QIcon):
+        return source
+    elif isinstance(source, str):
+        if source.startswith(("http://", "https://")):
+            image_data = fetch_url_bytes(source)
+            if not image_data:
+                return None
+
+            if source.lower().endswith(".svg"):
+                from PySide6.QtCore import QByteArray
+                from PySide6.QtSvg import QSvgRenderer
+
+                renderer = QSvgRenderer(QByteArray(image_data))
+                pixmap = QPixmap(QSize(16, 16))
+                pixmap.fill(Qt.GlobalColor.transparent)
+                painter = QPainter(pixmap)
+                renderer.render(painter)
+                painter.end()
+                return QIcon(pixmap)
+            else:
+                pixmap = QPixmap()
+                if not pixmap.loadFromData(image_data):
+                    return None
+                pixmap = _colorize_pixmap(pixmap, "#FFFFFF", 0.5)
+                return QIcon(pixmap)
+
+        elif source.lower().endswith(".svg"):
+            try:
+                from PySide6.QtCore import QFile
+                from PySide6.QtSvg import QSvgRenderer
+
+                file = QFile(source)
+                if not file.open(QFile.OpenModeFlag.ReadOnly):
+                    raise ValueError(f"Cannot open SVG file: {source}")
+                svg_data = file.readAll()
+                file.close()
+                renderer = QSvgRenderer(svg_data)
+                pixmap = QPixmap(QSize(16, 16))
+                pixmap.fill(Qt.GlobalColor.transparent)
+                painter = QPainter(pixmap)
+                renderer.render(painter)
+                painter.end()
+                return QIcon(pixmap)
+            except Exception:
+                return None
+
+        else:
+            icon = QIcon(source)
+            if icon.isNull():
+                return None
+            return icon
+    return None
+
+
+def _icon_from_url_data(url: str, data: bytes) -> QIcon | None:
+    """Build a QIcon from raw URL fetch data.
+
+    Args:
+        url: The source URL (used to detect SVG by extension).
+        data: Raw bytes fetched from the URL.
+
+    Returns:
+        The built QIcon, or None if loading failed.
+    """
+    if url.lower().endswith(".svg"):
+        from PySide6.QtCore import QByteArray
+        from PySide6.QtSvg import QSvgRenderer
+
+        renderer = QSvgRenderer(QByteArray(data))
+        pixmap = QPixmap(QSize(16, 16))
+        pixmap.fill(Qt.GlobalColor.transparent)
+        painter = QPainter(pixmap)
+        renderer.render(painter)
+        painter.end()
+        return QIcon(pixmap)
+
+    pixmap = QPixmap()
+    if not pixmap.loadFromData(data):
+        return None
+    pixmap = _colorize_pixmap(pixmap, "#FFFFFF", 0.5)
+    return QIcon(pixmap)
+
+
+# ///////////////////////////////////////////////////////////////
 # CLASSES
 # ///////////////////////////////////////////////////////////////
 
@@ -166,7 +291,7 @@ class IconButton(QToolButton):
             self._start_icon_url_fetch(value)
             return
 
-        icon = self._load_icon_from_source(value)
+        icon = _load_icon_from_source(value)
         if icon:
             themed_icon = ThemeIcon.from_source(icon)
             if themed_icon is None:
@@ -310,97 +435,6 @@ class IconButton(QToolButton):
     # PRIVATE METHODS
     # ------------------------------------------------
 
-    @staticmethod
-    def _colorize_pixmap(
-        pixmap: QPixmap, color: str = "#FFFFFF", opacity: float = 0.5
-    ) -> QPixmap:
-        """Recolor a QPixmap with the given color and opacity.
-
-        Args:
-            pixmap: The pixmap to recolor.
-            color: The color to apply (default: "#FFFFFF").
-            opacity: The opacity level (default: 0.5).
-
-        Returns:
-            The recolored pixmap.
-        """
-        result = QPixmap(pixmap.size())
-        result.fill(Qt.GlobalColor.transparent)
-        painter = QPainter(result)
-        painter.setOpacity(opacity)
-        painter.drawPixmap(0, 0, pixmap)
-        painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceIn)
-        painter.fillRect(result.rect(), QColor(color))
-        painter.end()
-        return result
-
-    @staticmethod
-    def _load_icon_from_source(source: IconSourceExtended) -> QIcon | None:
-        """Load icon from various sources (ThemeIcon, QIcon, QPixmap, path, URL, etc.).
-
-        Args:
-            source: Icon source (ThemeIcon, QIcon, QPixmap, path, resource, URL, or SVG).
-
-        Returns:
-            Loaded icon or None if loading failed.
-        """
-        if source is None:
-            return None
-        elif isinstance(source, QPixmap):
-            return QIcon(source)
-        elif isinstance(source, QIcon):
-            return source
-        elif isinstance(source, str):
-            if source.startswith(("http://", "https://")):
-                image_data = fetch_url_bytes(source)
-                if not image_data:
-                    return None
-
-                if source.lower().endswith(".svg"):
-                    from PySide6.QtCore import QByteArray
-                    from PySide6.QtSvg import QSvgRenderer
-
-                    renderer = QSvgRenderer(QByteArray(image_data))
-                    pixmap = QPixmap(QSize(16, 16))
-                    pixmap.fill(Qt.GlobalColor.transparent)
-                    painter = QPainter(pixmap)
-                    renderer.render(painter)
-                    painter.end()
-                    return QIcon(pixmap)
-                else:
-                    pixmap = QPixmap()
-                    if not pixmap.loadFromData(image_data):
-                        return None
-                    pixmap = IconButton._colorize_pixmap(pixmap, "#FFFFFF", 0.5)
-                    return QIcon(pixmap)
-
-            elif source.lower().endswith(".svg"):
-                try:
-                    from PySide6.QtCore import QFile
-                    from PySide6.QtSvg import QSvgRenderer
-
-                    file = QFile(source)
-                    if not file.open(QFile.OpenModeFlag.ReadOnly):
-                        raise ValueError(f"Cannot open SVG file: {source}")
-                    svg_data = file.readAll()
-                    file.close()
-                    renderer = QSvgRenderer(svg_data)
-                    pixmap = QPixmap(QSize(16, 16))
-                    pixmap.fill(Qt.GlobalColor.transparent)
-                    painter = QPainter(pixmap)
-                    renderer.render(painter)
-                    painter.end()
-                    return QIcon(pixmap)
-                except Exception:
-                    return None
-
-            else:
-                icon = QIcon(source)
-                if icon.isNull():
-                    return None
-                return icon
-        return None
-
     def _start_icon_url_fetch(self, url: str) -> None:
         if self._url_fetcher is None:
             self._url_fetcher = UrlFetcher(self)
@@ -414,7 +448,7 @@ class IconButton(QToolButton):
             self.iconLoadFailed.emit(url)
             return
 
-        icon = self._icon_from_url_data(url, data)
+        icon = _icon_from_url_data(url, data)
         if icon is None:
             return
 
@@ -428,26 +462,6 @@ class IconButton(QToolButton):
         self._icon_label.setFixedSize(self._icon_size)
         self._icon_label.setStyleSheet("background-color: transparent;")
         self.iconChanged.emit(themed_icon)
-
-    @staticmethod
-    def _icon_from_url_data(url: str, data: bytes) -> QIcon | None:
-        if url.lower().endswith(".svg"):
-            from PySide6.QtCore import QByteArray
-            from PySide6.QtSvg import QSvgRenderer
-
-            renderer = QSvgRenderer(QByteArray(data))
-            pixmap = QPixmap(QSize(16, 16))
-            pixmap.fill(Qt.GlobalColor.transparent)
-            painter = QPainter(pixmap)
-            renderer.render(painter)
-            painter.end()
-            return QIcon(pixmap)
-
-        pixmap = QPixmap()
-        if not pixmap.loadFromData(data):
-            return None
-        pixmap = IconButton._colorize_pixmap(pixmap, "#FFFFFF", 0.5)
-        return QIcon(pixmap)
 
     # ///////////////////////////////////////////////////////////////
     # PUBLIC METHODS
@@ -489,7 +503,7 @@ class IconButton(QToolButton):
         """
         if self._current_icon:
             pixmap = self._current_icon.pixmap(self._icon_size)
-            colored_pixmap = self._colorize_pixmap(pixmap, color, opacity)
+            colored_pixmap = _colorize_pixmap(pixmap, color, opacity)
             self._icon_label.setPixmap(colored_pixmap)
 
     # ///////////////////////////////////////////////////////////////

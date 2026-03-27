@@ -25,7 +25,7 @@ from PySide6.QtGui import QIcon, QPixmap
 # Local imports
 from ezqt_widgets.widgets.input.password_input import (
     PasswordInput,
-    PasswordLineEdit,
+    _PasswordLineEdit,
 )
 from ezqt_widgets.widgets.input.password_input import (
     _get_strength_color as get_strength_color,
@@ -176,24 +176,24 @@ class TestLoadIconFromSource:
         assert icon is None
 
 
-class TestPasswordLineEdit:
-    """Tests for PasswordLineEdit class."""
+class Test_PasswordLineEdit:
+    """Tests for _PasswordLineEdit class."""
 
     def test_should_create_line_edit_when_password_line_edit_is_instantiated(
         self, qt_widget_cleanup
     ) -> None:
-        """Test PasswordLineEdit creation."""
-        line_edit = PasswordLineEdit()
+        """Test _PasswordLineEdit creation."""
+        line_edit = _PasswordLineEdit()
 
         assert line_edit is not None
-        assert isinstance(line_edit, PasswordLineEdit)
+        assert isinstance(line_edit, _PasswordLineEdit)
         assert line_edit.echoMode() == line_edit.EchoMode.Password
 
     def test_should_set_right_icon_when_set_right_icon_is_called(
         self, qt_widget_cleanup
     ) -> None:
         """Test set_right_icon."""
-        line_edit = PasswordLineEdit()
+        line_edit = _PasswordLineEdit()
 
         # Create an icon
         pixmap = QPixmap(16, 16)
@@ -212,7 +212,7 @@ class TestPasswordLineEdit:
         self, qt_widget_cleanup
     ) -> None:
         """Test refreshStyle."""
-        line_edit = PasswordLineEdit()
+        line_edit = _PasswordLineEdit()
 
         # Method should not raise an exception
         try:
