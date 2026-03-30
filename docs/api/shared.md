@@ -6,7 +6,7 @@ Centralized constants for animation durations, icon sizes, and SVG icon data use
 
 ## Overview
 
-`ezqt_widgets.widgets.shared.defaults` defines the canonical values shared across all widgets in the library. Using these constants instead of inline literals ensures that animation timings and icon sizes are consistent throughout an application.
+`ezqt_widgets.widgets.shared` defines the canonical values shared across all widgets in the library. Using these constants instead of inline literals ensures that animation timings and icon sizes are consistent throughout an application.
 
 The module contains three groups of constants:
 
@@ -19,7 +19,7 @@ The module contains three groups of constants:
 ## Import
 
 ```python
-from ezqt_widgets.widgets.shared.defaults import (
+from ezqt_widgets.widgets.shared import (
     ANIMATION_DURATION_FAST,
     ANIMATION_DURATION_NORMAL,
     ANIMATION_DURATION_SLOW,
@@ -47,7 +47,7 @@ Integer constants in milliseconds for use as `QPropertyAnimation.setDuration()` 
 
 ```python
 from PySide6.QtCore import QPropertyAnimation
-from ezqt_widgets.widgets.shared.defaults import ANIMATION_DURATION_NORMAL
+from ezqt_widgets.widgets.shared import ANIMATION_DURATION_NORMAL
 
 anim = QPropertyAnimation(widget, b"geometry")
 anim.setDuration(ANIMATION_DURATION_NORMAL)
@@ -67,7 +67,7 @@ anim.setDuration(ANIMATION_DURATION_NORMAL)
 | `ICON_SIZE_XLARGE` | `24 x 24` | Toolbar icons, large touch targets |
 
 ```python
-from ezqt_widgets.widgets.shared.defaults import ICON_SIZE_NORMAL
+from ezqt_widgets.widgets.shared import ICON_SIZE_NORMAL
 
 button.setIconSize(ICON_SIZE_NORMAL)
 ```
@@ -116,7 +116,7 @@ from PySide6.QtCore import QByteArray, QSize
 from PySide6.QtGui import QPainter, QPixmap
 from PySide6.QtSvg import QSvgRenderer
 from PySide6.QtCore import Qt
-from ezqt_widgets.widgets.shared.defaults import SVG_CHECK
+from ezqt_widgets.widgets.shared import SVG_CHECK
 
 renderer = QSvgRenderer(QByteArray(SVG_CHECK))
 pixmap = QPixmap(QSize(16, 16))
@@ -128,7 +128,7 @@ painter.end()
 
 ---
 
-::: ezqt_widgets.widgets.shared.defaults
+::: ezqt_widgets.widgets.shared._defaults
 options:
 show_source: false
 members: - ANIMATION_DURATION_FAST - ANIMATION_DURATION_NORMAL - ANIMATION_DURATION_SLOW - ICON_SIZE_SMALL - ICON_SIZE_NORMAL - ICON_SIZE_LARGE - ICON_SIZE_XLARGE - SVG_FOLDER - SVG_SEARCH - SVG_EYE_OPEN - SVG_EYE_CLOSED - SVG_CALENDAR - SVG_CHEVRON_RIGHT - SVG_CHEVRON_DOWN - SVG_CLOSE - SVG_INFO - SVG_WARNING - SVG_ERROR - SVG_SUCCESS - SVG_SPINNER - SVG_CHECK - SVG_CROSS
