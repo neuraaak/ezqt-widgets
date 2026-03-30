@@ -38,7 +38,7 @@ from ...types import SizeType, WidgetParent
 
 # Local imports
 from ..misc.theme_icon import ThemeIcon
-from ..shared.defaults import SVG_CALENDAR
+from ..shared._defaults import SVG_CALENDAR
 
 # ///////////////////////////////////////////////////////////////
 # FUNCTIONS

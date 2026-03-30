@@ -49,6 +49,7 @@ from __future__ import annotations
 import sys
 
 # Local imports
+from ._version import __version__
 from .types import (
     AnimationDuration,
     ColorType,
@@ -59,7 +60,6 @@ from .types import (
     ValueCallback,
     WidgetParent,
 )
-from .version import __version__
 from .widgets.button import (
     DateButton,
     DatePickerDialog,

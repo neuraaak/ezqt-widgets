@@ -27,7 +27,7 @@ from PySide6.QtWidgets import QLineEdit, QProgressBar, QVBoxLayout, QWidget
 from ...types import IconSourceExtended
 
 # Local imports
-from ...utils.network_utils import fetch_url_bytes
+from ...utils._network_utils import fetch_url_bytes
 from ..misc.theme_icon import ThemeIcon
 
 # ///////////////////////////////////////////////////////////////

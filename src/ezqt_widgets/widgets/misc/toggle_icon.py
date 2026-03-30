@@ -34,7 +34,7 @@ from PySide6.QtWidgets import QLabel
 
 # Local imports
 from ...types import ColorType, IconSourceExtended, WidgetParent
-from ...utils.network_utils import fetch_url_bytes
+from ...utils._network_utils import fetch_url_bytes
 from ..misc.theme_icon import ThemeIcon
 
 # ///////////////////////////////////////////////////////////////
