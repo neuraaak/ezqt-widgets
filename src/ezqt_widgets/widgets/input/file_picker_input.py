@@ -35,7 +35,7 @@ from PySide6.QtWidgets import (
 # Local imports
 from ...types import WidgetParent
 from ..misc.theme_icon import ThemeIcon
-from ..shared.defaults import SVG_FOLDER
+from ..shared._defaults import SVG_FOLDER
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES

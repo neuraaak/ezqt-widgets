@@ -22,8 +22,8 @@ import sys
 import click
 
 # Local imports
-from ..version import __version__
-from .runner import (
+from .._version import __version__
+from ._runner import (
     list_available_examples,
     run_all_examples,
     run_example_by_category,
@@ -258,7 +258,7 @@ def info() -> None:
             click.echo("PySide6: Not installed")
 
         # Check examples
-        from .runner import ExampleRunner
+        from ._runner import ExampleRunner
 
         try:
             runner = ExampleRunner()

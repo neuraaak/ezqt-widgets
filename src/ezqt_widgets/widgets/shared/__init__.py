@@ -16,7 +16,7 @@ from __future__ import annotations
 # IMPORTS
 # ///////////////////////////////////////////////////////////////
 # Local imports
-from .defaults import (
+from ._defaults import (
     ANIMATION_DURATION_FAST,
     ANIMATION_DURATION_NORMAL,
     ANIMATION_DURATION_SLOW,

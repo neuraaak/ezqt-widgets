@@ -44,7 +44,7 @@ from PySide6.QtWidgets import (
 )
 
 # Local imports
-from ..shared.defaults import SVG_ERROR, SVG_INFO, SVG_SUCCESS, SVG_WARNING
+from ..shared._defaults import SVG_ERROR, SVG_INFO, SVG_SUCCESS, SVG_WARNING
 from .theme_icon import ThemeIcon
 
 # ///////////////////////////////////////////////////////////////
