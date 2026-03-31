@@ -14,7 +14,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ezqt-widgets"
-version = "2.6.4"
+version = "2.6.5"
 description = "A collection of custom and reusable Qt widgets for PySide6. Provides advanced, reusable, and stylish graphical components to facilitate the development of modern and user-friendly interfaces."
 readme = "README.md"
 requires-python = ">=3.11"
