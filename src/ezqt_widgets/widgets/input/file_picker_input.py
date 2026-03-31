@@ -21,7 +21,7 @@ from typing import Literal
 
 # Third-party imports
 from PySide6.QtCore import QByteArray, QSize, Qt, Signal
-from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtGui import QIcon, QPainter, QPixmap
 from PySide6.QtSvg import QSvgRenderer
 from PySide6.QtWidgets import (
     QFileDialog,
@@ -35,7 +35,7 @@ from PySide6.QtWidgets import (
 # Local imports
 from ...types import WidgetParent
 from ..misc.theme_icon import ThemeIcon
-from ..shared._defaults import SVG_FOLDER
+from ..shared import SVG_FOLDER
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -165,8 +165,6 @@ class FilePickerInput(QWidget):
 
         pixmap = QPixmap(QSize(16, 16))
         pixmap.fill(Qt.GlobalColor.transparent)
-        from PySide6.QtGui import QPainter
-
         painter = QPainter(pixmap)
         renderer.render(painter)
         painter.end()

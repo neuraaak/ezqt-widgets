@@ -209,10 +209,11 @@ def docs(serve: bool, port: int) -> None:
             import http.server
             import os
             import socketserver
+            from pathlib import Path
 
             # Change to docs directory
-            docs_dir = os.path.join(os.path.dirname(__file__), "..", "..", "docs")
-            if os.path.exists(docs_dir):
+            docs_dir = Path(__file__).parents[2] / "docs"
+            if docs_dir.exists():
                 os.chdir(docs_dir)
                 click.echo(f"📖 Serving documentation at http://localhost:{port}")
                 click.echo("Press Ctrl+C to stop the server")

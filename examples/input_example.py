@@ -44,7 +44,7 @@ from PySide6.QtWidgets import (
 )
 
 # Local imports
-from ezqt_widgets.input import (
+from ezqt_widgets import (
     AutoCompleteInput,
     SearchInput,
     TabReplaceTextEdit,

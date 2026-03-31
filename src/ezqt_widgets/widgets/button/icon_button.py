@@ -263,6 +263,38 @@ class IconButton(QToolButton):
             self.text = text
         self.text_visible = text_visible
 
+    # ------------------------------------------------
+    # PRIVATE METHODS
+    # ------------------------------------------------
+
+    def _start_icon_url_fetch(self, url: str) -> None:
+        if self._url_fetcher is None:
+            self._url_fetcher = UrlFetcher(self)
+            self._url_fetcher.fetched.connect(self._on_icon_url_fetched)
+        self._url_fetcher.fetch(url)
+
+    def _on_icon_url_fetched(self, url: str, data: bytes | None) -> None:
+        if url != self._pending_icon_url:
+            return
+        if data is None:
+            self.iconLoadFailed.emit(url)
+            return
+
+        icon = _icon_from_url_data(url, data)
+        if icon is None:
+            return
+
+        themed_icon = ThemeIcon.from_source(icon)
+        if themed_icon is None:
+            raise ValueError(
+                "ThemeIcon.from_source returned None for a non-None icon source."
+            )
+        self._current_icon = themed_icon
+        self._icon_label.setPixmap(themed_icon.pixmap(self._icon_size))
+        self._icon_label.setFixedSize(self._icon_size)
+        self._icon_label.setStyleSheet("background-color: transparent;")
+        self.iconChanged.emit(themed_icon)
+
     # ///////////////////////////////////////////////////////////////
     # PROPERTIES
     # ///////////////////////////////////////////////////////////////
@@ -430,38 +462,6 @@ class IconButton(QToolButton):
         """
         self._min_height = value
         self.updateGeometry()
-
-    # ------------------------------------------------
-    # PRIVATE METHODS
-    # ------------------------------------------------
-
-    def _start_icon_url_fetch(self, url: str) -> None:
-        if self._url_fetcher is None:
-            self._url_fetcher = UrlFetcher(self)
-            self._url_fetcher.fetched.connect(self._on_icon_url_fetched)
-        self._url_fetcher.fetch(url)
-
-    def _on_icon_url_fetched(self, url: str, data: bytes | None) -> None:
-        if url != self._pending_icon_url:
-            return
-        if data is None:
-            self.iconLoadFailed.emit(url)
-            return
-
-        icon = _icon_from_url_data(url, data)
-        if icon is None:
-            return
-
-        themed_icon = ThemeIcon.from_source(icon)
-        if themed_icon is None:
-            raise ValueError(
-                "ThemeIcon.from_source returned None for a non-None icon source."
-            )
-        self._current_icon = themed_icon
-        self._icon_label.setPixmap(themed_icon.pixmap(self._icon_size))
-        self._icon_label.setFixedSize(self._icon_size)
-        self._icon_label.setStyleSheet("background-color: transparent;")
-        self.iconChanged.emit(themed_icon)
 
     # ///////////////////////////////////////////////////////////////
     # PUBLIC METHODS

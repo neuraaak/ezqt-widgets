@@ -46,7 +46,7 @@ from PySide6.QtWidgets import (
 )
 
 # Local imports
-from ezqt_widgets.misc import (
+from ezqt_widgets import (
     CircularTimer,
     DraggableList,
     OptionSelector,

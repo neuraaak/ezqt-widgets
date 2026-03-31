@@ -59,15 +59,16 @@ Used by: IconButton, DateButton, LoaderButton, etc.
 """
 
 if TYPE_CHECKING:
-    IconSourceExtended: TypeAlias = QIcon | QPixmap | str | ThemeIcon | None
+    IconSourceExtended: TypeAlias = QIcon | QPixmap | str | bytes | ThemeIcon | None
 else:
-    IconSourceExtended: TypeAlias = QIcon | QPixmap | str | None
-"""Type alias for extended icon sources (includes QPixmap and ThemeIcon).
+    IconSourceExtended: TypeAlias = QIcon | QPixmap | str | bytes | None
+"""Type alias for extended icon sources (includes QPixmap, ThemeIcon, and bytes).
 
 Accepts:
     - QIcon: A Qt icon object (ThemeIcon recommended)
     - QPixmap: A Qt pixmap object
     - str: Path to an icon file (local path, resource path, or URL)
+    - bytes: Raw SVG or image data (e.g. embedded SVG constants from shared)
     - ThemeIcon: A theme-aware icon (subclass of QIcon)
     - None: No icon
 

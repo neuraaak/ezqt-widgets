@@ -38,7 +38,7 @@ from ...types import SizeType, WidgetParent
 
 # Local imports
 from ..misc.theme_icon import ThemeIcon
-from ..shared._defaults import SVG_CALENDAR
+from ..shared import SVG_CALENDAR
 
 # ///////////////////////////////////////////////////////////////
 # FUNCTIONS
@@ -357,8 +357,6 @@ class DateButton(QToolButton):
             new_date = value
         elif value is None:
             new_date = QDate()
-        else:
-            raise TypeError(f"Invalid date value: {value}")
 
         # Silently reject dates outside the configured range
         if new_date.isValid():
@@ -557,6 +555,19 @@ class DateButton(QToolButton):
         self._min_height = value
         self.updateGeometry()
 
+    # ------------------------------------------------
+    # PRIVATE METHODS
+    # ------------------------------------------------
+
+    def _update_display(self) -> None:
+        """Update the display text."""
+        if self._current_date.isValid():
+            display_text = _format_date(self._current_date, self._date_format)
+        else:
+            display_text = self._placeholder
+
+        self._date_label.setText(display_text)
+
     # ///////////////////////////////////////////////////////////////
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
@@ -595,19 +606,6 @@ class DateButton(QToolButton):
         self._calendar_icon.setTheme(theme)
         if self._show_calendar_icon:
             self._icon_label.setPixmap(self._calendar_icon.pixmap(self._icon_size))
-
-    # ------------------------------------------------
-    # PRIVATE METHODS
-    # ------------------------------------------------
-
-    def _update_display(self) -> None:
-        """Update the display text."""
-        if self._current_date.isValid():
-            display_text = _format_date(self._current_date, self._date_format)
-        else:
-            display_text = self._placeholder
-
-        self._date_label.setText(display_text)
 
     # ///////////////////////////////////////////////////////////////
     # EVENT HANDLERS

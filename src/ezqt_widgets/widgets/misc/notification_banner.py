@@ -44,7 +44,7 @@ from PySide6.QtWidgets import (
 )
 
 # Local imports
-from ..shared._defaults import SVG_ERROR, SVG_INFO, SVG_SUCCESS, SVG_WARNING
+from ..shared import SVG_ERROR, SVG_INFO, SVG_SUCCESS, SVG_WARNING
 from .theme_icon import ThemeIcon
 
 # ///////////////////////////////////////////////////////////////
@@ -333,7 +333,7 @@ class NotificationBanner(QWidget):
     # EVENT HANDLERS
     # ///////////////////////////////////////////////////////////////
 
-    def eventFilter(self, obj: object, event: QEvent) -> bool:  # type: ignore[override]
+    def eventFilter(self, obj: object, event: QEvent) -> bool:
         """Track parent resize events to reposition the banner.
 
         Args:

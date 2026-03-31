@@ -9,7 +9,6 @@
 ## Project Identity
 
 - **Name:** `ezqt-widgets`
-- **Version:** `2.6.4` (production/stable, published on PyPI)
 - **License:** MIT
 - **Core Stack:** Python 3.11+, PySide6 >= 6.7.3, uv, Ruff, Hatchling (PEP 517), pytest
 - **Environment:** Production-first, Windows 11 dev, corporate network (proxy-aware)

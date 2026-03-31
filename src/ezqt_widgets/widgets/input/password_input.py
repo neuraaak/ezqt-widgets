@@ -29,6 +29,7 @@ from ...types import IconSourceExtended
 # Local imports
 from ...utils._network_utils import fetch_url_bytes
 from ..misc.theme_icon import ThemeIcon
+from ..shared import SVG_EYE_CLOSED, SVG_EYE_OPEN
 
 # ///////////////////////////////////////////////////////////////
 # UTILITY FUNCTIONS
@@ -103,6 +104,22 @@ def _load_icon_from_source(source: IconSourceExtended) -> QIcon | None:
         return ThemeIcon.from_source(QIcon(source))
     elif isinstance(source, QIcon):
         return ThemeIcon.from_source(source)
+    elif isinstance(source, bytes):
+        from PySide6.QtCore import QByteArray
+        from PySide6.QtSvg import QSvgRenderer
+
+        renderer = QSvgRenderer(QByteArray(source))
+        if renderer.isValid():
+            pixmap = QPixmap(QSize(16, 16))
+            pixmap.fill(Qt.GlobalColor.transparent)
+            painter = QPainter(pixmap)
+            renderer.render(painter)
+            painter.end()
+            return ThemeIcon.from_source(QIcon(pixmap))
+        pixmap = QPixmap()
+        if not pixmap.loadFromData(source):
+            return None
+        return ThemeIcon.from_source(QIcon(pixmap))
     elif isinstance(source, str):
         # Handle URL
         if source.startswith(("http://", "https://")):
@@ -209,12 +226,8 @@ class PasswordInput(QWidget):
         parent: QWidget | None = None,
         show_strength: bool = True,
         strength_bar_height: int = 3,
-        show_icon: IconSourceExtended = (
-            "https://img.icons8.com/?size=100&id=85130&format=png&color=000000"
-        ),
-        hide_icon: IconSourceExtended = (
-            "https://img.icons8.com/?size=100&id=85137&format=png&color=000000"
-        ),
+        show_icon: IconSourceExtended = SVG_EYE_OPEN,
+        hide_icon: IconSourceExtended = SVG_EYE_CLOSED,
         icon_size: QSize | tuple[int, int] = QSize(16, 16),
         *args: Any,
         **kwargs: Any,
@@ -316,46 +329,6 @@ class PasswordInput(QWidget):
             }}
             """
         )
-
-    # ///////////////////////////////////////////////////////////////
-    # PUBLIC METHODS
-    # ///////////////////////////////////////////////////////////////
-
-    def togglePassword(self) -> None:
-        """Toggle password visibility."""
-        self._password_visible = not self._password_visible
-        if self._password_visible:
-            self._password_input.setEchoMode(QLineEdit.EchoMode.Normal)
-        else:
-            self._password_input.setEchoMode(QLineEdit.EchoMode.Password)
-        self._update_icon()
-
-    def updateStrength(self, text: str) -> None:
-        """Update password strength.
-
-        Args:
-            text: The password text to evaluate.
-        """
-        score = _password_strength(text)
-        self._current_strength = score
-        self._strength_bar.setValue(score)
-        self._update_strength_color(score)
-        self.strengthChanged.emit(score)
-
-    def setTheme(self, theme: str) -> None:
-        """Update all icons' color for the given theme.
-
-        Can be connected directly to a theme-change signal to keep
-        icons in sync with the application's color scheme.
-
-        Args:
-            theme: The new theme (``"dark"`` or ``"light"``).
-        """
-        if isinstance(self._show_icon, ThemeIcon):
-            self._show_icon.setTheme(theme)
-        if isinstance(self._hide_icon, ThemeIcon):
-            self._hide_icon.setTheme(theme)
-        self._update_icon()
 
     # ///////////////////////////////////////////////////////////////
     # PROPERTIES
@@ -476,6 +449,46 @@ class PasswordInput(QWidget):
             value: The new icon size (QSize or tuple).
         """
         self._icon_size = QSize(*value) if isinstance(value, (tuple, list)) else value
+        self._update_icon()
+
+    # ///////////////////////////////////////////////////////////////
+    # PUBLIC METHODS
+    # ///////////////////////////////////////////////////////////////
+
+    def togglePassword(self) -> None:
+        """Toggle password visibility."""
+        self._password_visible = not self._password_visible
+        if self._password_visible:
+            self._password_input.setEchoMode(QLineEdit.EchoMode.Normal)
+        else:
+            self._password_input.setEchoMode(QLineEdit.EchoMode.Password)
+        self._update_icon()
+
+    def updateStrength(self, text: str) -> None:
+        """Update password strength.
+
+        Args:
+            text: The password text to evaluate.
+        """
+        score = _password_strength(text)
+        self._current_strength = score
+        self._strength_bar.setValue(score)
+        self._update_strength_color(score)
+        self.strengthChanged.emit(score)
+
+    def setTheme(self, theme: str) -> None:
+        """Update all icons' color for the given theme.
+
+        Can be connected directly to a theme-change signal to keep
+        icons in sync with the application's color scheme.
+
+        Args:
+            theme: The new theme (``"dark"`` or ``"light"``).
+        """
+        if isinstance(self._show_icon, ThemeIcon):
+            self._show_icon.setTheme(theme)
+        if isinstance(self._hide_icon, ThemeIcon):
+            self._hide_icon.setTheme(theme)
         self._update_icon()
 
     # ///////////////////////////////////////////////////////////////

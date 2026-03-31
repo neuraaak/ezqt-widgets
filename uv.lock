@@ -401,15 +401,13 @@ wheels = [
 
 [[package]]
 name = "ezqt-widgets"
-version = "2.6.5"
+version = "2.6.6"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
     { name = "pyside6" },
     { name = "pyyaml" },
     { name = "rich" },
-    { name = "types-pyyaml" },
-    { name = "types-requests" },
     { name = "typing-extensions" },
 ]
 
@@ -431,6 +429,8 @@ dev = [
     { name = "ruff" },
     { name = "twine" },
     { name = "ty" },
+    { name = "types-pyyaml" },
+    { name = "types-requests" },
 ]
 docs = [
     { name = "git-cliff" },
@@ -481,8 +481,8 @@ requires-dist = [
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.1.0" },
     { name = "twine", marker = "extra == 'dev'", specifier = ">=4.0.0" },
     { name = "ty", marker = "extra == 'dev'", specifier = ">=0.0.13" },
-    { name = "types-pyyaml" },
-    { name = "types-requests" },
+    { name = "types-pyyaml", marker = "extra == 'dev'" },
+    { name = "types-requests", marker = "extra == 'dev'" },
     { name = "typing-extensions", specifier = ">=4.0.0" },
 ]
 provides-extras = ["dev", "test", "docs"]

@@ -37,13 +37,14 @@ from PySide6.QtWidgets import (
 
 # Local imports
 from ...types import WidgetParent
+from ..shared import ANIMATION_DURATION_FAST
 from .toggle_icon import ToggleIcon
 
 # ///////////////////////////////////////////////////////////////
 # CONSTANTS
 # ///////////////////////////////////////////////////////////////
 
-_ANIMATION_DURATION: int = 200
+_ANIMATION_DURATION: int = ANIMATION_DURATION_FAST
 
 # ///////////////////////////////////////////////////////////////
 # CLASSES
@@ -299,7 +300,7 @@ class CollapsibleSection(QWidget):
         # Remove previous content
         if self._content_widget is not None:
             self._content_layout.removeWidget(self._content_widget)
-            self._content_widget.setParent(None)  # type: ignore[call-overload]
+            self._content_widget.setParent(None)
 
         self._content_widget = widget
         self._content_layout.addWidget(widget)

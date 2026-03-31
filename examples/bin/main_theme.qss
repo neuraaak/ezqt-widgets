@@ -46,7 +46,7 @@ QToolTip {
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 QTableWidget */
-QTableWidget {	
+QTableWidget {
 	background-color: transparent;
 	padding: 10px;
 	border-radius: 5px;
@@ -70,7 +70,7 @@ QHeaderView::section{
     border-bottom: 1px solid rgb(44, 49, 60);
     border-right: 1px solid rgb(44, 49, 60);
 }
-QTableWidget::horizontalHeader {	
+QTableWidget::horizontalHeader {
 	background-color: $_main_surface;
 }
 QHeaderView::section:horizontal
@@ -171,7 +171,7 @@ QScrollBar:vertical {
 	margin: 21px 0 21px 0;
 	border-radius: 0px;
 }
-QScrollBar::handle:vertical {	
+QScrollBar::handle:vertical {
 	background: $_main_accent_color;
     min-height: 25px;
 	border-radius: 6px
@@ -205,14 +205,14 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
 PushButton */
 QPushButton {
 	border: 2px solid $_accent_color1;
-	border-radius: 5px;	
+	border-radius: 5px;
 	background-color: $_accent_color1;
 }
 QPushButton:hover {
 	background-color: $_main_border;
 	border: 2px solid rgb(61, 70, 86);
 }
-QPushButton:pressed {	
+QPushButton:pressed {
 	background-color: $_accent_color3;
 	border: 2px solid rgb(43, 50, 61);
 }
@@ -231,7 +231,7 @@ QCheckBox::indicator:hover {
 }
 QCheckBox::indicator:checked {
     background: 3px solid $_accent_color1;
-	border: 3px solid $_accent_color1;	
+	border: 3px solid $_accent_color1;
 	background-image: url(:/icons/icons/cil-check-alt.png);
 }
 
@@ -249,7 +249,7 @@ QRadioButton::indicator:hover {
 }
 QRadioButton::indicator:checked {
     background: 3px solid $_accent_color4;
-	border: 3px solid $_accent_color1;	
+	border: 3px solid $_accent_color1;
 }
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -267,18 +267,18 @@ QComboBox:hover{
 QComboBox::drop-down {
 	subcontrol-origin: padding;
 	subcontrol-position: top right;
-	width: 25px; 
+	width: 25px;
 	border-left-width: 3px;
 	border-left-color: rgba(39, 44, 54, 150);
 	border-left-style: solid;
 	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;	
+	border-bottom-right-radius: 3px;
 	background-image: url(:/icons/icons/cil-arrow-bottom.png);
 	background-position: center;
 	background-repeat: no-reperat;
 }
 QComboBox QAbstractItemView {
-	color: $_main_accent_color;	
+	color: $_main_accent_color;
 	background-color: $_main_surface;
 	padding: 10px;
 	selection-background-color: $_accent_color1;
@@ -336,16 +336,16 @@ QSlider::handle:vertical:pressed {
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 CommandLinkButton */
-QCommandLinkButton {	
+QCommandLinkButton {
 	color: $_main_accent_color;
 	border-radius: 5px;
 	padding: 5px;
 }
-QCommandLinkButton:hover {	
+QCommandLinkButton:hover {
 	color: rgb(255, 170, 255);
 	background-color: rgb(44, 49, 60);
 }
-QCommandLinkButton:pressed {	
+QCommandLinkButton:pressed {
 	color: $_main_accent_color;
 	background-color: rgb(52, 58, 71);
 }
@@ -495,14 +495,14 @@ TabReplaceTextEdit:focus {
 IconButton */
 IconButton {
 	background-color: $_accent_color1;
-	border-radius: 5px;	
+	border-radius: 5px;
 	border: 2px solid $_accent_color1;
 }
 IconButton:hover {
 	background-color: $_main_border;
 	border: 2px solid rgb(61, 70, 86);
 }
-IconButton:pressed {	
+IconButton:pressed {
 	background-color: $_accent_color3;
 	border: 2px solid rgb(43, 50, 61);
 }
@@ -511,14 +511,14 @@ IconButton:pressed {
 LoaderButton */
 LoaderButton {
 	background-color: $_accent_color1;
-	border-radius: 5px;	
+	border-radius: 5px;
 	border: 2px solid $_accent_color1;
 }
 LoaderButton:hover {
 	background-color: $_main_border;
 	border: 2px solid rgb(61, 70, 86);
 }
-LoaderButton:pressed {	
+LoaderButton:pressed {
 	background-color: $_accent_color3;
 	border: 2px solid rgb(43, 50, 61);
 }
@@ -527,14 +527,14 @@ LoaderButton:pressed {
 DateButton */
 DateButton {
 	background-color: $_accent_color1;
-	border-radius: 5px;	
+	border-radius: 5px;
 	border: 2px solid $_accent_color1;
 }
 DateButton:hover {
 	background-color: $_main_border;
 	border: 2px solid rgb(61, 70, 86);
 }
-DateButton:pressed {	
+DateButton:pressed {
 	background-color: $_accent_color3;
 	border: 2px solid rgb(43, 50, 61);
 }
@@ -548,7 +548,7 @@ OptionSelector {
 OptionSelector [type="OptionSelector_Selector"] {
 	background-color: $_main_border;
 	border: 2px solid $_main_accent_color;
-	border-radius: 4px;	
+	border-radius: 4px;
 }
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -649,7 +649,7 @@ SettingSelect QComboBox::down-arrow {
 }
 
 SettingSelect QComboBox QAbstractItemView {
-	color: $_main_accent_color;	
+	color: $_main_accent_color;
 	background-color: $_main_surface;
 	padding: 8px;
 	selection-background-color: $_accent_color1;
@@ -758,14 +758,14 @@ QFrame[objectName^="settingContainer_"] {
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 Bg App */
-#bgApp {	
+#bgApp {
 	background-color: $_page_color;
 	border: 1px solid $_main_border;
 }
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 HEADER */
-#headerContainer{	
+#headerContainer{
 	background-color: $_main_surface;
 }
 #headerAppLogo {
@@ -807,7 +807,7 @@ HEADER */
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
 LEFT MENU */
-#menuContainer {	
+#menuContainer {
 	background-color: $_main_surface;
 }
 #mainMenuFrame{
@@ -818,7 +818,7 @@ LEFT MENU */
 #toggleButton {
 	background-color: $_accent_color3;
 	border: none;
-	border-radius: 0;	
+	border-radius: 0;
 	text-align: left;
 }
 #toggleButton .QLabel{
@@ -834,22 +834,22 @@ LEFT MENU */
 	background-color: $_main_accent_color;
 }
 /* ==> Menu Items */
-#topMenu QToolButton {	
+#topMenu QToolButton {
 	border: none;
-	border-radius: 0;	
+	border-radius: 0;
 	background-color: transparent;
 }
-#topMenu QToolButton[class="inactive"] {	
+#topMenu QToolButton[class="inactive"] {
 	background-color: transparent;
 }
-#topMenu QToolButton[class="active"] {	
+#topMenu QToolButton[class="active"] {
 	background-color: transparent;
 	border-left: 3px solid $_main_accent_color;
 }
 #topMenu QToolButton:hover {
 	background-color: $_main_border;
 }
-#topMenu QToolButton:pressed {	
+#topMenu QToolButton:pressed {
 	background-color: $_main_accent_color;
 	color: $_select_text_color;
 }
@@ -874,7 +874,7 @@ CONTENT */
 	background-color: $_main_accent_color;
 }
 
-#contentSettings .QPushButton {	
+#contentSettings .QPushButton {
 	background-position: left center;
     background-repeat: no-repeat;
 	border: none;
@@ -886,7 +886,7 @@ CONTENT */
 #contentSettings .QPushButton:hover {
 	background-color: $_page_color;
 }
-#contentSettings .QPushButton:pressed {	
+#contentSettings .QPushButton:pressed {
 	background-color: $_main_accent_color;
 	color: $_select_text_color;
 }
@@ -898,7 +898,7 @@ CONTENT */
 #themeToggleButton #selector {
 	background-color: $_main_border;
 	border: 2px solid $_main_accent_color;
-	border-radius: 4px;	
+	border-radius: 4px;
 }
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -912,14 +912,14 @@ Theme Label */
 /* ==> pagesContainer */
 #pagesContainer QPushButton {
 	border: 2px solid $_accent_color1;
-	border-radius: 5px;	
+	border-radius: 5px;
 	background-color: $_accent_color1;
 }
 #pagesContainer QPushButton:hover {
 	background-color: $_main_border;
 	border: 2px solid rgb(61, 70, 86);
 }
-#pagesContainer QPushButton:pressed {	
+#pagesContainer QPushButton:pressed {
 	background-color: $_accent_color3;
 	border: 2px solid rgb(43, 50, 61);
 }

@@ -14,7 +14,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ezqt-widgets"
-version = "2.6.5"
+version = "2.6.6"
 description = "A collection of custom and reusable Qt widgets for PySide6. Provides advanced, reusable, and stylish graphical components to facilitate the development of modern and user-friendly interfaces."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -57,9 +57,6 @@ dependencies = [
     "rich>=13.0.0",
     "PyYAML>=6.0",
     "typing_extensions>=4.0.0",
-    #mypy-types
-    "types-requests",
-    "types-PyYAML",
 ]
 
 # ///////////////////////////////////////////////////////////////
@@ -75,6 +72,8 @@ dev = [
     "pyright>=1.1.0",
     "pre-commit>=3.0.0",
     "import-linter>=2.0.0",
+    "types-requests",
+    "types-PyYAML",
 
     # Security
     "bandit>=1.7.0",
@@ -290,8 +289,7 @@ reportInconsistentConstructor = true
 [tool.importlinter]
 root_packages = ["ezqt_widgets"]
 # Note: import-linter 2.x ne supporte pas source_paths (feature pending PR #323).
-# Le package doit être installé en mode editable (pip install -e .)
-# ou lancer avec PYTHONPATH=src lint-imports
+# Le package doit être installé en mode editable (uv sync) ou lancer avec PYTHONPATH=src lint-imports
 
 [[tool.importlinter.contracts]]
 name = "layer dependency flow"

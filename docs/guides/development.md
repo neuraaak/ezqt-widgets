@@ -21,11 +21,11 @@ Everything you need to set up the development environment, maintain code quality
 git clone https://github.com/neuraaak/ezqt-widgets.git
 cd ezqt-widgets
 
-# Install in editable mode with all development extras
-pip install -e ".[dev]"
+# Install all development extras
+uv sync --all-extras
 
 # Install pre-commit hooks
-pre-commit install
+uv run pre-commit install
 ```
 
 Or with Make:
@@ -393,14 +393,14 @@ Pytest is configured to fail if coverage drops below **60%**. The HTML report is
 
 ## Troubleshooting
 
-| Issue                             | Solution                                                                           |
-| --------------------------------- | ---------------------------------------------------------------------------------- |
-| `ezqt-widgets: command not found` | Run `pip install -e ".[dev]"` from the repo root                                   |
-| `ImportError: PySide6`            | Run `pip install "PySide6>=6.7.3"`                                                 |
-| `ruff: command not found`         | Ruff is installed via `.[dev]`; verify with `ruff --version`                       |
-| Pre-commit hooks not running      | Run `pre-commit install` or `make setup-hooks`                                     |
-| Tests fail at import              | Ensure the package is installed with `pip install -e .` so `src/` is on `sys.path` |
-| Coverage below 60%                | Add missing test cases; run `make test-cov` to see the HTML report in `htmlcov/`   |
+| Issue                             | Solution                                                                          |
+| --------------------------------- | --------------------------------------------------------------------------------- |
+| `ezqt-widgets: command not found` | Run `uv sync --all-extras` from the repo root                                     |
+| `ImportError: PySide6`            | Run `uv add "PySide6>=6.7.3"`                                                     |
+| `ruff: command not found`         | Ruff is installed via `uv sync --all-extras`; verify with `uv run ruff --version` |
+| Pre-commit hooks not running      | Run `uv run pre-commit install` or `make setup-hooks`                             |
+| Tests fail at import              | Ensure the package is installed with `uv sync` so `src/` is on `sys.path`         |
+| Coverage below 60%                | Add missing test cases; run `make test-cov` to see the HTML report in `htmlcov/`  |
 
 ---
 
