@@ -4,8 +4,7 @@
 .PHONY: help install install-dev format lint test test-cov clean pre-commit setup-hooks docs docs-build docs-deploy
 
 # Configuration
-PYTHON := python
-PIP := pip
+PYTHON := uv run python
 PACKAGE := ezqt_widgets
 
 # Couleurs pour l'affichage
@@ -48,12 +47,11 @@ help:
 # Installation
 install:
 	@echo "$(BLUE)Installation du package...$(RESET)"
-	$(PIP) install -e .
+	uv sync
 
 install-dev:
 	@echo "$(BLUE)Installation des dépendances de développement...$(RESET)"
-	$(PIP) install -e ".[dev]"
-	$(PIP) install pre-commit
+	uv sync --all-extras
 
 # Formatage automatique
 format:
@@ -67,7 +65,7 @@ fix: format
 # Linting
 lint:
 	@echo "$(BLUE)Vérification de la qualité du code...$(RESET)"
-	$(PYTHON) lint.py
+	$(PYTHON) .scripts/dev/lint.py
 
 # Tests
 test:
@@ -85,25 +83,25 @@ test-fast:
 # Hooks pre-commit
 setup-hooks:
 	@echo "$(BLUE)Installation des hooks pre-commit...$(RESET)"
-	pre-commit install
+	uv run pre-commit install
 	@echo "$(GREEN)Hooks pre-commit installés !$(RESET)"
 
 pre-commit:
 	@echo "$(BLUE)Lancement des vérifications pre-commit...$(RESET)"
-	pre-commit run --all-files
+	uv run pre-commit run --all-files
 
 # Documentation
 docs:
 	@echo "$(BLUE)Lancement du serveur de documentation...$(RESET)"
-	mkdocs serve
+	uv run mkdocs serve
 
 docs-build:
 	@echo "$(BLUE)Build de la documentation...$(RESET)"
-	mkdocs build --strict
+	uv run mkdocs build --strict
 
 docs-deploy:
 	@echo "$(BLUE)Deploiement sur GitHub Pages...$(RESET)"
-	mkdocs gh-deploy --force
+	uv run mkdocs gh-deploy --force
 
 # Nettoyage
 clean:

@@ -108,21 +108,22 @@ def wait_for_signal(qt_application: QApplication):
         Returns:
             bool: True if the signal was emitted before timeout, False otherwise.
         """
+        received = [False]
+
+        def on_signal() -> None:
+            received[0] = True
+            timer.stop()
+
         timer = QTimer()
         timer.setSingleShot(True)
         timer.start(timeout)
+        signal.connect(on_signal)
 
-        # Connect signal to a slot that stops the timer
-        def stop_timer() -> None:
-            timer.stop()
-
-        signal.connect(stop_timer)
-
-        # Wait for timer to stop
         while timer.isActive():
             qt_application.processEvents()
 
-        return not timer.isActive()
+        signal.disconnect(on_signal)
+        return received[0]
 
     return _wait_for_signal
 

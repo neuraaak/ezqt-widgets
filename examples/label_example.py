@@ -45,7 +45,7 @@ from PySide6.QtWidgets import (
 )
 
 # Local imports
-from ezqt_widgets.label import (
+from ezqt_widgets import (
     ClickableTagLabel,
     FramedLabel,
     HoverLabel,
@@ -287,11 +287,11 @@ class LabelExampleWidget(QWidget):
         # Horizontal layout for HoverLabels
         hover_buttons_layout = QHBoxLayout()
 
-        self.hover_label1 = HoverLabel("Hover over me to see the effect!")
+        self.hover_label1 = HoverLabel(text="Hover over me to see the effect!")
         self.hover_label1.hoverIconClicked.connect(self._on_hover_label_clicked)
         hover_buttons_layout.addWidget(self.hover_label1)
 
-        self.hover_label2 = HoverLabel("Another interactive label")
+        self.hover_label2 = HoverLabel(text="Another interactive label")
         self.hover_label2.hoverIconClicked.connect(self._on_hover_label_clicked)
         hover_buttons_layout.addWidget(self.hover_label2)
 
@@ -374,7 +374,7 @@ class LabelExampleWidget(QWidget):
     def _on_framed_label_clicked(self) -> None:
         """Handle FramedLabel click event."""
         sender = self.sender()
-        if sender and hasattr(sender, "text"):
+        if isinstance(sender, FramedLabel):
             text = sender.text
             self.framed_output.setText(f"Label clicked: {text}")
             print(f"FramedLabel clicked: {text}")
@@ -382,16 +382,16 @@ class LabelExampleWidget(QWidget):
     def _on_hover_label_clicked(self) -> None:
         """Handle HoverLabel click event."""
         sender = self.sender()
-        if sender and hasattr(sender, "text"):
-            text = sender.text
+        if isinstance(sender, HoverLabel):
+            text = sender.text()
             self.hover_output.setText(f"Hovered label: {text}")
             print(f"HoverLabel clicked: {text}")
 
     def _on_tag_label_clicked(self) -> None:
         """Handle ClickableTagLabel click event."""
         sender = self.sender()
-        if sender and hasattr(sender, "text"):
-            text = sender.text
+        if isinstance(sender, ClickableTagLabel):
+            text = sender.name
             self.tag_output.setText(f"Tag clicked: {text}")
             print(f"ClickableTagLabel clicked: {text}")
 

@@ -17,6 +17,12 @@
 ## 📦 Installation
 
 ```bash
+uv add ezqt-widgets
+```
+
+Or with pip:
+
+```bash
 pip install ezqt-widgets
 ```
 
@@ -24,7 +30,7 @@ Or from source:
 
 ```bash
 git clone https://github.com/neuraaak/ezqt-widgets.git
-cd ezqt_widgets && pip install .
+cd ezqt-widgets && uv sync --all-extras
 ```
 
 ## 🚀 Quick Start
@@ -74,13 +80,13 @@ app.exec()
 
 Full documentation is available online: **[neuraaak.github.io/ezqt-widgets](https://neuraaak.github.io/ezqt-widgets/)**
 
-- **[📖 Getting Started](https://neuraaak.github.io/ezqt_widgets/getting-started/)** – Installation and first steps
-- **[🎯 API Reference](https://neuraaak.github.io/ezqt_widgets/api/)** – Complete widget reference (auto-generated)
-- **[🎨 QSS Style Guide](https://neuraaak.github.io/ezqt_widgets/guides/style-guide/)** – QSS customization and best practices
-- **[💡 Examples](https://neuraaak.github.io/ezqt_widgets/examples/)** – Usage examples and demonstrations
-- **[🖥️ CLI](https://neuraaak.github.io/ezqt_widgets/cli/)** – Command-line interface guide
-- **[🧪 Testing](https://neuraaak.github.io/ezqt_widgets/guides/testing/)** – Test suite documentation
-- **[🔧 Development](https://neuraaak.github.io/ezqt_widgets/guides/development/)** – Environment setup and contribution
+- **[📖 Getting Started](https://neuraaak.github.io/ezqt-widgets/getting-started/)** – Installation and first steps
+- **[🎯 API Reference](https://neuraaak.github.io/ezqt-widgets/api/)** – Complete widget reference (auto-generated)
+- **[🎨 QSS Style Guide](https://neuraaak.github.io/ezqt-widgets/guides/style-guide/)** – QSS customization and best practices
+- **[💡 Examples](https://neuraaak.github.io/ezqt-widgets/examples/)** – Usage examples and demonstrations
+- **[🖥️ CLI](https://neuraaak.github.io/ezqt-widgets/cli/)** – Command-line interface guide
+- **[🧪 Testing](https://neuraaak.github.io/ezqt-widgets/guides/testing/)** – Test suite documentation
+- **[🔧 Development](https://neuraaak.github.io/ezqt-widgets/guides/development/)** – Environment setup and contribution
 
 ## 🧪 Testing
 
@@ -88,23 +94,23 @@ Comprehensive test suite with 211+ test cases covering all widgets.
 
 ```bash
 # Install dev dependencies
-pip install -e ".[dev]"
+uv sync --all-extras
 
 # Run all tests
-pytest tests/
+uv run pytest tests/
 
 # Run specific test types
-python tests/run_tests.py --type unit
+uv run python tests/run_tests.py --type unit
 
 # With coverage
-python tests/run_tests.py --coverage
+uv run python tests/run_tests.py --coverage
 
 # Using CLI
 ezqt test --unit
 ezqt test --coverage
 ```
 
-See the **[Testing Guide](https://neuraaak.github.io/ezqt_widgets/guides/testing/)** for complete details.
+See the **[Testing Guide](https://neuraaak.github.io/ezqt-widgets/guides/testing/)** for complete details.
 
 ## 🛠️ Development Setup
 
@@ -113,37 +119,40 @@ For contributors and developers:
 ```bash
 # Clone and install in development mode
 git clone https://github.com/neuraaak/ezqt-widgets.git
-cd ezqt_widgets
-pip install -e ".[dev]"
+cd ezqt-widgets
+uv sync --all-extras
 
 # Install pre-commit hooks
-pip install pre-commit
-pre-commit install
+uv run pre-commit install
 
 # Verify CLI installation
 ezqt --version
 ezqt info
 ```
 
-See the **[Development Guide](https://neuraaak.github.io/ezqt_widgets/guides/development/)** for detailed setup instructions.
+See the **[Development Guide](https://neuraaak.github.io/ezqt-widgets/guides/development/)** for detailed setup instructions.
 
 ## 🎨 Available Widgets
 
-### 🎛️ Button Widgets (3)
+### 🎛️ Button Widgets (4)
 
-| Widget           | Description                                 |
-| ---------------- | ------------------------------------------- |
-| **DateButton**   | Date picker button with integrated calendar |
-| **IconButton**   | Button with icon support and optional text  |
-| **LoaderButton** | Button with integrated loading animation    |
+| Widget               | Description                                 |
+| -------------------- | ------------------------------------------- |
+| **DateButton**       | Date picker button with integrated calendar |
+| **DatePickerDialog** | Modal calendar dialog for date selection    |
+| **IconButton**       | Button with icon support and optional text  |
+| **LoaderButton**     | Button with integrated loading animation    |
 
-### ⌨️ Input Widgets (3)
+### ⌨️ Input Widgets (6)
 
-| Widget                 | Description                          |
-| ---------------------- | ------------------------------------ |
-| **AutoCompleteInput**  | Text field with autocompletion       |
-| **SearchInput**        | Search field with history management |
-| **TabReplaceTextEdit** | Text editor with tab replacement     |
+| Widget                 | Description                                              |
+| ---------------------- | -------------------------------------------------------- |
+| **AutoCompleteInput**  | Text field with autocompletion                           |
+| **FilePickerInput**    | Field with folder button opening a file/directory dialog |
+| **PasswordInput**      | Password field with strength bar and visibility toggle   |
+| **SearchInput**        | Search field with history management                     |
+| **SpinBoxInput**       | Numeric spin box with − and + buttons                    |
+| **TabReplaceTextEdit** | Text editor with tab replacement                         |
 
 ### 🏷️ Label Widgets (4)
 
@@ -154,20 +163,26 @@ See the **[Development Guide](https://neuraaak.github.io/ezqt_widgets/guides/dev
 | **HoverLabel**        | Label with hover icon display     |
 | **IndicatorLabel**    | Status indicator with colored LED |
 
-### 🔧 Miscellaneous Widgets (6)
+### 🔧 Miscellaneous Widgets (9)
 
-| Widget             | Description                               |
-| ------------------ | ----------------------------------------- |
-| **CircularTimer**  | Animated circular timer                   |
-| **DraggableItem**  | Draggable list item component             |
-| **DraggableList**  | List with draggable and reorderable items |
-| **OptionSelector** | Option selector with animated selector    |
-| **ToggleIcon**     | Toggleable icon (open/closed states)      |
-| **ToggleSwitch**   | Modern toggle switch with animation       |
+| Widget                 | Description                                                       |
+| ---------------------- | ----------------------------------------------------------------- |
+| **CircularTimer**      | Animated circular timer                                           |
+| **CollapsibleSection** | Accordion-style section with expand/collapse animation            |
+| **DraggableItem**      | Draggable list item component                                     |
+| **DraggableList**      | List with draggable and reorderable items                         |
+| **NotificationBanner** | Animated slide-down banner with INFO/WARNING/ERROR/SUCCESS levels |
+| **OptionSelector**     | Option selector with animated selector                            |
+| **ThemeIcon**          | QIcon that adapts color to the active dark/light theme            |
+| **ToggleIcon**         | Toggleable icon (open/closed states)                              |
+| **ToggleSwitch**       | Modern toggle switch with animation                               |
 
 ## 📦 Dependencies
 
-- **PySide6>=6.0.0** – Qt for Python framework
+- **PySide6>=6.7.3,<7.0.0** – Qt for Python framework
+- **click>=8.2.1** – Command-line interface toolkit
+- **rich>=13.0.0** – Terminal formatting and output
+- **PyYAML>=6.0** – YAML configuration support
 - **typing_extensions>=4.0.0** – Extended typing support
 
 ## 🔧 Quick API Reference
@@ -175,13 +190,15 @@ See the **[Development Guide](https://neuraaak.github.io/ezqt_widgets/guides/dev
 ```python
 from ezqt_widgets import (
     # Button widgets
-    DateButton, IconButton, LoaderButton,
+    DateButton, DatePickerDialog, IconButton, LoaderButton,
     # Input widgets
-    AutoCompleteInput, SearchInput, TabReplaceTextEdit,
+    AutoCompleteInput, FilePickerInput, PasswordInput,
+    SearchInput, SpinBoxInput, TabReplaceTextEdit,
     # Label widgets
     ClickableTagLabel, FramedLabel, HoverLabel, IndicatorLabel,
     # Misc widgets
-    CircularTimer, DraggableList, OptionSelector, ToggleIcon, ToggleSwitch,
+    CircularTimer, CollapsibleSection, DraggableItem, DraggableList,
+    NotificationBanner, OptionSelector, ThemeIcon, ToggleIcon, ToggleSwitch,
 )
 
 # Button examples
@@ -192,6 +209,7 @@ loader_btn = LoaderButton(loading_text="Loading...")
 # Input examples
 auto_input = AutoCompleteInput(completions=["A", "B", "C"])
 search_input = SearchInput(max_history=20)
+spin_box = SpinBoxInput(minimum=0, maximum=100, value=50)
 
 # Misc examples
 timer = CircularTimer(duration=5000, loop=True)
@@ -207,9 +225,9 @@ MIT License – See [LICENSE](LICENSE) file for details.
 
 - **Repository**: [https://github.com/neuraaak/ezqt-widgets](https://github.com/neuraaak/ezqt-widgets)
 - **Issues**: [GitHub Issues](https://github.com/neuraaak/ezqt-widgets/issues)
-- **Documentation**: [neuraaak.github.io/ezqt_widgets](https://neuraaak.github.io/ezqt-widgets/)
+- **Documentation**: [neuraaak.github.io/ezqt-widgets](https://neuraaak.github.io/ezqt-widgets/)
 - **PyPI**: [pypi.org/project/ezqt-widgets](https://pypi.org/project/ezqt-widgets/)
-- **Changelog**: [CHANGELOG.md](CHANGELOG.md)
+- **Changelog**: [CHANGELOG.md](https://neuraaak.github.io/ezqt-widgets/changelog/)
 
 ---
 

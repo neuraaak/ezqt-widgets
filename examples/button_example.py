@@ -45,7 +45,7 @@ from PySide6.QtWidgets import (
 )
 
 # Local imports
-from ezqt_widgets.button import DateButton, IconButton, LoaderButton
+from ezqt_widgets import DateButton, IconButton, LoaderButton
 
 # ///////////////////////////////////////////////////////////////
 # UTILITY FUNCTIONS

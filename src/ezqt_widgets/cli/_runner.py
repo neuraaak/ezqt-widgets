@@ -93,7 +93,7 @@ class ExampleRunner:
 
         try:
             # Change to the examples directory to ensure relative imports work
-            original_cwd = os.getcwd()
+            original_cwd = Path.cwd()
             os.chdir(example_path.parent)
 
             result = subprocess.run(  # noqa: S603
@@ -193,8 +193,6 @@ class ExampleRunner:
                 f"\n✅ Successfully ran {success_count}/{len(examples)} examples"
             )
             return success_count == len(examples)
-
-        return False
 
     def list_examples(self) -> None:
         """List all available examples."""

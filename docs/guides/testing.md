@@ -218,48 +218,48 @@ tests/
 
 ```bash
 # All tests
-pytest tests/
+uv run pytest tests/
 
 # Specific directory
-pytest tests/unit/test_button/
-pytest tests/unit/test_input/
-pytest tests/unit/test_label/
-pytest tests/unit/test_misc/
+uv run pytest tests/unit/test_button/
+uv run pytest tests/unit/test_input/
+uv run pytest tests/unit/test_label/
+uv run pytest tests/unit/test_misc/
 
 # Specific file
-pytest tests/unit/test_button/test_icon_button.py
+uv run pytest tests/unit/test_button/test_icon_button.py
 
 # With coverage
-pytest --cov=ezqt_widgets --cov-report=html tests/
+uv run pytest --cov=ezqt_widgets --cov-report=html tests/
 
 # Verbose mode
-pytest tests/ -v
+uv run pytest tests/ -v
 ```
 
 ### Using run_tests.py
 
 ```bash
 # Unit tests
-python tests/run_tests.py --type unit
+uv run python tests/run_tests.py --type unit
 
 # With coverage
-python tests/run_tests.py --coverage
+uv run python tests/run_tests.py --coverage
 
 # Verbose mode
-python tests/run_tests.py --verbose
+uv run python tests/run_tests.py --verbose
 
 # Fast mode (exclude slow tests)
-python tests/run_tests.py --fast
+uv run python tests/run_tests.py --fast
 ```
 
 ### Coverage Reports
 
 ```bash
 # Terminal report
-pytest --cov=ezqt_widgets --cov-report=term-missing tests/
+uv run pytest --cov=ezqt_widgets --cov-report=term-missing tests/
 
 # HTML report
-pytest --cov=ezqt_widgets --cov-report=html:htmlcov tests/
+uv run pytest --cov=ezqt_widgets --cov-report=html:htmlcov tests/
 # Open htmlcov/index.html in browser
 ```
 
@@ -292,10 +292,10 @@ Custom pytest markers for test categorization:
 
 ```bash
 # Run only unit tests
-pytest -m unit
+uv run pytest -m unit
 
 # Run all except slow tests
-pytest -m "not slow"
+uv run pytest -m "not slow"
 ```
 
 ---

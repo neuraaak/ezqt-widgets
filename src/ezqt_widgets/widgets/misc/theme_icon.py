@@ -283,6 +283,17 @@ class ThemeIcon(QIcon):
             return QIcon(source)
         if isinstance(source, QPixmap):
             return QIcon(source)
+        if isinstance(source, bytes):
+            from PySide6.QtCore import QByteArray
+            from PySide6.QtSvg import QSvgRenderer
+
+            renderer = QSvgRenderer(QByteArray(source))
+            pixmap = QPixmap(16, 16)
+            pixmap.fill(Qt.GlobalColor.transparent)
+            painter = QPainter(pixmap)
+            renderer.render(painter)
+            painter.end()
+            return QIcon(pixmap)
         return source  # QIcon or ThemeIcon (subclass of QIcon)
 
     def _update_icon(self) -> None:

@@ -660,94 +660,6 @@ class LoaderButton(QToolButton):
         self._min_height = value
         self.updateGeometry()
 
-    # ///////////////////////////////////////////////////////////////
-    # PUBLIC METHODS
-    # ///////////////////////////////////////////////////////////////
-
-    def startLoading(self) -> None:
-        """Start the loading animation."""
-        if self._is_loading:
-            return
-
-        self._is_loading = True
-        self._progress = 0
-        self.setEnabled(False)
-        self._update_display()
-
-        # Start spinner animation using timer
-        self._rotation_angle = 0
-        self._animation_timer = QTimer()
-        self._animation_timer.timeout.connect(self._rotate_spinner)
-        self._animation_timer.start(self._animation_speed // 10)
-
-        self.loadingStarted.emit()
-
-    def stopLoading(self, success: bool = True, error_message: str = "") -> None:
-        """Stop the loading animation.
-
-        Args:
-            success: Whether the operation succeeded (default: True).
-            error_message: Error message if operation failed (default: "").
-        """
-        if not self._is_loading:
-            return
-
-        self._is_loading = False
-
-        # Stop spinner animation
-        if self._animation_timer is not None:
-            self._animation_timer.stop()
-            self._animation_timer.deleteLater()
-            self._animation_timer = None
-
-        # Show result state
-        if success:
-            self._show_success_state()
-        else:
-            self._show_error_state(error_message)
-
-        # Enable button
-        self.setEnabled(True)
-
-        if success:
-            self.loadingFinished.emit()
-        else:
-            self.loadingFailed.emit(error_message)
-
-        # Auto-reset if enabled
-        if self._auto_reset:
-            display_time = (
-                self._success_display_time if success else self._error_display_time
-            )
-            QTimer.singleShot(display_time, self._reset_to_original)
-
-    def resetLoading(self) -> None:
-        """Reset the button to its original state.
-
-        Can be called manually when auto_reset is False.
-        """
-        self._is_loading = False
-        self._reset_to_original()
-
-    def setTheme(self, theme: str) -> None:
-        """Update all icons' color for the given theme.
-
-        Can be connected directly to a theme-change signal to keep
-        icons in sync with the application's color scheme.
-
-        Args:
-            theme: The new theme (``"dark"`` or ``"light"``).
-        """
-        for icon in (
-            self._original_icon,
-            self._loading_icon,
-            self._success_icon,
-            self._error_icon,
-        ):
-            if isinstance(icon, ThemeIcon):
-                icon.setTheme(theme)
-        self._update_display()
-
     # ------------------------------------------------
     # PRIVATE METHODS
     # ------------------------------------------------
@@ -840,6 +752,94 @@ class LoaderButton(QToolButton):
                 self._icon_label.show()
             else:
                 self._icon_label.hide()
+
+    # ///////////////////////////////////////////////////////////////
+    # PUBLIC METHODS
+    # ///////////////////////////////////////////////////////////////
+
+    def startLoading(self) -> None:
+        """Start the loading animation."""
+        if self._is_loading:
+            return
+
+        self._is_loading = True
+        self._progress = 0
+        self.setEnabled(False)
+        self._update_display()
+
+        # Start spinner animation using timer
+        self._rotation_angle = 0
+        self._animation_timer = QTimer()
+        self._animation_timer.timeout.connect(self._rotate_spinner)
+        self._animation_timer.start(self._animation_speed // 10)
+
+        self.loadingStarted.emit()
+
+    def stopLoading(self, success: bool = True, error_message: str = "") -> None:
+        """Stop the loading animation.
+
+        Args:
+            success: Whether the operation succeeded (default: True).
+            error_message: Error message if operation failed (default: "").
+        """
+        if not self._is_loading:
+            return
+
+        self._is_loading = False
+
+        # Stop spinner animation
+        if self._animation_timer is not None:
+            self._animation_timer.stop()
+            self._animation_timer.deleteLater()
+            self._animation_timer = None
+
+        # Show result state
+        if success:
+            self._show_success_state()
+        else:
+            self._show_error_state(error_message)
+
+        # Enable button
+        self.setEnabled(True)
+
+        if success:
+            self.loadingFinished.emit()
+        else:
+            self.loadingFailed.emit(error_message)
+
+        # Auto-reset if enabled
+        if self._auto_reset:
+            display_time = (
+                self._success_display_time if success else self._error_display_time
+            )
+            QTimer.singleShot(display_time, self._reset_to_original)
+
+    def resetLoading(self) -> None:
+        """Reset the button to its original state.
+
+        Can be called manually when auto_reset is False.
+        """
+        self._is_loading = False
+        self._reset_to_original()
+
+    def setTheme(self, theme: str) -> None:
+        """Update all icons' color for the given theme.
+
+        Can be connected directly to a theme-change signal to keep
+        icons in sync with the application's color scheme.
+
+        Args:
+            theme: The new theme (``"dark"`` or ``"light"``).
+        """
+        for icon in (
+            self._original_icon,
+            self._loading_icon,
+            self._success_icon,
+            self._error_icon,
+        ):
+            if isinstance(icon, ThemeIcon):
+                icon.setTheme(theme)
+        self._update_display()
 
     # ///////////////////////////////////////////////////////////////
     # EVENT HANDLERS
