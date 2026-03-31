@@ -1296,34 +1296,38 @@
 <p>This page covers installation and your first working widget in under five minutes.</p>
 <hr />
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Anchor link to this section">&para;</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">pip</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">uv</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
 </div>
 </div>
-<p><code>bash
-    pip install ezqt-widgets</code></p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Development mode</label></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>uv<span class="w"> </span>add<span class="w"> </span>ezqt-widgets
+</span></code></pre></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">pip</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
 </div>
 </div>
-<p><code>bash
-    git clone https://github.com/neuraaak/ezqt-widgets.git
-    cd ezqt-widgets
-    pip install -e ".[dev]"</code></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ezqt-widgets
+</span></code></pre></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Development mode</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/neuraaak/ezqt-widgets.git
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>ezqt-widgets
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>uv<span class="w"> </span>sync<span class="w"> </span>--all-extras
+</span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Corporate / offline environments</p>
 </div>
 <p>If direct PyPI access is unavailable, download the wheel file from
 <a href="https://pypi.org/project/ezqt-widgets/#files">PyPI</a> and install it locally:</p>
-<div class="language-text highlight"><pre><span></span><code>```bash
-pip install ezqt_widgets-2.6.0-py3-none-any.whl
-```
-
-PySide6 must also be available as a wheel. Place both wheels in the same directory
-and run `pip install` with `--no-index --find-links ./wheels/`.
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>ezqt_widgets-2.6.5-py3-none-any.whl
+</span></code></pre></div>
+<p>PySide6 must also be available as a wheel. Place both wheels in the same directory
+and run <code>pip install</code> with <code>--no-index --find-links ./wheels/</code>.</p>
 <hr />
 <h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Anchor link to this section">&para;</a></h2>
 <table>
@@ -1348,146 +1352,134 @@ and run `pip install` with `--no-index --find-links ./wheels/`.
 <hr />
 <h2 id="first-example">First Example<a class="headerlink" href="#first-example" title="Anchor link to this section">&para;</a></h2>
 <p>The example below creates a toggle switch, connects its signal, and starts the Qt event loop.</p>
-<div class="language-text highlight"><pre><span></span><code>```python
-from PySide6.QtWidgets import QApplication
-from ezqt_widgets import ToggleSwitch
-
-app = QApplication([])
-
-switch = ToggleSwitch(checked=False, width=50, height=24)
-switch.toggled.connect(lambda state: print(f&quot;On: {state}&quot;))
-switch.show()
-
-app.exec()
-```
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QApplication</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToggleSwitch</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">switch</span> <span class="o">=</span> <span class="n">ToggleSwitch</span><span class="p">(</span><span class="n">checked</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">switch</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">state</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;On: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">switch</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</span></code></pre></div>
 <p>Run it and click the switch. The console prints <code>On: True</code> or <code>On: False</code> on each toggle.</p>
 <hr />
 <h2 id="imports">Imports<a class="headerlink" href="#imports" title="Anchor link to this section">&para;</a></h2>
 <p>All public widgets are available directly from the top-level package:</p>
-<div class="language-text highlight"><pre><span></span><code>```python
-from ezqt_widgets import (
-    # Button
-    DateButton,
-    DatePickerDialog,
-    IconButton,
-    LoaderButton,
-    # Input
-    AutoCompleteInput,
-    FilePickerInput,
-    PasswordInput,
-    SearchInput,
-    SpinBoxInput,
-    TabReplaceTextEdit,
-    # Label
-    ClickableTagLabel,
-    FramedLabel,
-    HoverLabel,
-    IndicatorLabel,
-    # Misc
-    CircularTimer,
-    CollapsibleSection,
-    DraggableItem,
-    DraggableList,
-    NotificationBanner,
-    NotificationLevel,
-    OptionSelector,
-    ThemeIcon,
-    ToggleIcon,
-    ToggleSwitch,
-)
-```
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="c1"># Button</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="n">DateButton</span><span class="p">,</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="n">DatePickerDialog</span><span class="p">,</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="n">IconButton</span><span class="p">,</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="n">LoaderButton</span><span class="p">,</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="c1"># Input</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="n">AutoCompleteInput</span><span class="p">,</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="n">FilePickerInput</span><span class="p">,</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="n">PasswordInput</span><span class="p">,</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="n">SearchInput</span><span class="p">,</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="n">SpinBoxInput</span><span class="p">,</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="n">TabReplaceTextEdit</span><span class="p">,</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="c1"># Label</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>    <span class="n">ClickableTagLabel</span><span class="p">,</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="n">FramedLabel</span><span class="p">,</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    <span class="n">HoverLabel</span><span class="p">,</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>    <span class="n">IndicatorLabel</span><span class="p">,</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>    <span class="c1"># Misc</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>    <span class="n">CircularTimer</span><span class="p">,</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    <span class="n">CollapsibleSection</span><span class="p">,</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>    <span class="n">DraggableItem</span><span class="p">,</span>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>    <span class="n">DraggableList</span><span class="p">,</span>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>    <span class="n">NotificationBanner</span><span class="p">,</span>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>    <span class="n">NotificationLevel</span><span class="p">,</span>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>    <span class="n">OptionSelector</span><span class="p">,</span>
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>    <span class="n">ThemeIcon</span><span class="p">,</span>
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>    <span class="n">ToggleIcon</span><span class="p">,</span>
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>    <span class="n">ToggleSwitch</span><span class="p">,</span>
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="p">)</span>
+</span></code></pre></div>
 <p>Submodule imports are also valid:</p>
-<div class="language-text highlight"><pre><span></span><code>```python
-from ezqt_widgets.widgets.button import DateButton
-from ezqt_widgets.widgets.input import SearchInput
-from ezqt_widgets.widgets.label import IndicatorLabel
-from ezqt_widgets.widgets.misc import ToggleSwitch
-```
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets.widgets.button</span><span class="w"> </span><span class="kn">import</span> <span class="n">DateButton</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets.widgets.input</span><span class="w"> </span><span class="kn">import</span> <span class="n">SearchInput</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets.widgets.label</span><span class="w"> </span><span class="kn">import</span> <span class="n">IndicatorLabel</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets.widgets.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToggleSwitch</span>
+</span></code></pre></div>
 <hr />
 <h2 id="a-more-complete-example">A More Complete Example<a class="headerlink" href="#a-more-complete-example" title="Anchor link to this section">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code>```python
-from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
-from ezqt_widgets import DateButton, ToggleSwitch, AutoCompleteInput
-
-app = QApplication([])
-window = QWidget()
-layout = QVBoxLayout(window)
-
-# Date picker button — displays today&#39;s date by default
-date_btn = DateButton(placeholder=&quot;Pick a date&quot;)
-date_btn.dateChanged.connect(lambda d: print(f&quot;Date: {d.toString(&#39;dd/MM/yyyy&#39;)}&quot;))
-
-# Toggle switch — starts unchecked
-switch = ToggleSwitch(checked=False, width=60, height=28)
-switch.toggled.connect(lambda on: print(f&quot;Switch: {&#39;on&#39; if on else &#39;off&#39;}&quot;))
-
-# Auto-complete input with preset suggestions
-language_input = AutoCompleteInput(suggestions=[&quot;Python&quot;, &quot;Rust&quot;, &quot;Go&quot;, &quot;TypeScript&quot;])
-
-layout.addWidget(date_btn)
-layout.addWidget(switch)
-layout.addWidget(language_input)
-
-window.setWindowTitle(&quot;EzQt Widgets — Quick Start&quot;)
-window.show()
-app.exec()
-```
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QApplication</span><span class="p">,</span> <span class="n">QWidget</span><span class="p">,</span> <span class="n">QVBoxLayout</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">DateButton</span><span class="p">,</span> <span class="n">ToggleSwitch</span><span class="p">,</span> <span class="n">AutoCompleteInput</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">window</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1"># Date picker button — displays today&#39;s date by default</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="n">date_btn</span> <span class="o">=</span> <span class="n">DateButton</span><span class="p">(</span><span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Pick a date&quot;</span><span class="p">)</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">date_btn</span><span class="o">.</span><span class="n">dateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Date: </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span><span class="s1">&#39;dd/MM/yyyy&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="c1"># Toggle switch — starts unchecked</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="n">switch</span> <span class="o">=</span> <span class="n">ToggleSwitch</span><span class="p">(</span><span class="n">checked</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">28</span><span class="p">)</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="n">switch</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">on</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Switch: </span><span class="si">{</span><span class="s1">&#39;on&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;off&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="c1"># Auto-complete input with preset suggestions</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="n">language_input</span> <span class="o">=</span> <span class="n">AutoCompleteInput</span><span class="p">(</span><span class="n">suggestions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="s2">&quot;Rust&quot;</span><span class="p">,</span> <span class="s2">&quot;Go&quot;</span><span class="p">,</span> <span class="s2">&quot;TypeScript&quot;</span><span class="p">])</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">date_btn</span><span class="p">)</span>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">switch</span><span class="p">)</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">language_input</span><span class="p">)</span>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="n">window</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;EzQt Widgets — Quick Start&quot;</span><span class="p">)</span>
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="n">window</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</span></code></pre></div>
 <hr />
 <h2 id="notification-banner-example">Notification Banner Example<a class="headerlink" href="#notification-banner-example" title="Anchor link to this section">&para;</a></h2>
 <p>The example below shows how to overlay a <code>NotificationBanner</code> on a parent window and trigger it from a button click.</p>
-<div class="language-text highlight"><pre><span></span><code>```python
-from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton
-from ezqt_widgets import NotificationBanner, NotificationLevel
-
-app = QApplication([])
-
-window = QWidget()
-window.resize(600, 300)
-layout = QVBoxLayout(window)
-
-banner = NotificationBanner(parent=window)
-banner.dismissed.connect(lambda: print(&quot;Banner dismissed&quot;))
-
-btn = QPushButton(&quot;Save configuration&quot;)
-btn.clicked.connect(
-    lambda: banner.showNotification(
-        &quot;Configuration saved.&quot;,
-        NotificationLevel.SUCCESS,
-        duration=3000,
-    )
-)
-
-layout.addWidget(btn)
-window.setWindowTitle(&quot;EzQt Widgets — Notification Banner&quot;)
-window.show()
-app.exec()
-```
-</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">PySide6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QApplication</span><span class="p">,</span> <span class="n">QWidget</span><span class="p">,</span> <span class="n">QVBoxLayout</span><span class="p">,</span> <span class="n">QPushButton</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ezqt_widgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">NotificationBanner</span><span class="p">,</span> <span class="n">NotificationLevel</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">window</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">window</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="n">banner</span> <span class="o">=</span> <span class="n">NotificationBanner</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">window</span><span class="p">)</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">banner</span><span class="o">.</span><span class="n">dismissed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Banner dismissed&quot;</span><span class="p">))</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="n">btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Save configuration&quot;</span><span class="p">)</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="n">btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>    <span class="k">lambda</span><span class="p">:</span> <span class="n">banner</span><span class="o">.</span><span class="n">showNotification</span><span class="p">(</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>        <span class="s2">&quot;Configuration saved.&quot;</span><span class="p">,</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>        <span class="n">NotificationLevel</span><span class="o">.</span><span class="n">SUCCESS</span><span class="p">,</span>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>        <span class="n">duration</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>    <span class="p">)</span>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="p">)</span>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="n">window</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;EzQt Widgets — Notification Banner&quot;</span><span class="p">)</span>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="n">window</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span>
+</span></code></pre></div>
 <p>Click the button to show a green success banner that auto-dismisses after 3 seconds. Pass <code>duration=0</code> to require manual dismissal.</p>
 <hr />
 <h2 id="explore-with-the-cli">Explore with the CLI<a class="headerlink" href="#explore-with-the-cli" title="Anchor link to this section">&para;</a></h2>
 <p>After installation the <code>ezqt-widgets</code> command is available:</p>
-<div class="language-text highlight"><pre><span></span><code>```bash
-# Show installed version
-ezqt-widgets --version
-
-# List available example files
-ezqt-widgets list
-
-# Run all examples with the GUI launcher
-ezqt-widgets run --all
-
-# Run examples by category
-ezqt-widgets run --buttons
-ezqt-widgets run --inputs
-ezqt-widgets run --labels
-ezqt-widgets run --misc
-```
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Show installed version</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>ezqt-widgets<span class="w"> </span>--version
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># List available example files</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>ezqt-widgets<span class="w"> </span>list
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1"># Run all examples with the GUI launcher</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>ezqt-widgets<span class="w"> </span>run<span class="w"> </span>--all
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="c1"># Run examples by category</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>ezqt-widgets<span class="w"> </span>run<span class="w"> </span>--buttons
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>ezqt-widgets<span class="w"> </span>run<span class="w"> </span>--inputs
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>ezqt-widgets<span class="w"> </span>run<span class="w"> </span>--labels
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>ezqt-widgets<span class="w"> </span>run<span class="w"> </span>--misc
+</span></code></pre></div>
 <p>See <a href="../cli/">CLI Reference</a> for the full command reference.</p>
 <hr />
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Anchor link to this section">&para;</a></h2>

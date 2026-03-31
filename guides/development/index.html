@@ -1923,11 +1923,11 @@
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/neuraaak/ezqt-widgets.git
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>ezqt-widgets
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Install in editable mode with all development extras</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Install all development extras</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>uv<span class="w"> </span>sync<span class="w"> </span>--all-extras
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Install pre-commit hooks</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>pre-commit<span class="w"> </span>install
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>uv<span class="w"> </span>run<span class="w"> </span>pre-commit<span class="w"> </span>install
 </span></code></pre></div>
 <p>Or with Make:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>make<span class="w"> </span>install-dev
@@ -2343,23 +2343,23 @@
 <tbody>
 <tr>
 <td><code>ezqt-widgets: command not found</code></td>
-<td>Run <code>pip install -e ".[dev]"</code> from the repo root</td>
+<td>Run <code>uv sync --all-extras</code> from the repo root</td>
 </tr>
 <tr>
 <td><code>ImportError: PySide6</code></td>
-<td>Run <code>pip install "PySide6&gt;=6.7.3"</code></td>
+<td>Run <code>uv add "PySide6&gt;=6.7.3"</code></td>
 </tr>
 <tr>
 <td><code>ruff: command not found</code></td>
-<td>Ruff is installed via <code>.[dev]</code>; verify with <code>ruff --version</code></td>
+<td>Ruff is installed via <code>uv sync --all-extras</code>; verify with <code>uv run ruff --version</code></td>
 </tr>
 <tr>
 <td>Pre-commit hooks not running</td>
-<td>Run <code>pre-commit install</code> or <code>make setup-hooks</code></td>
+<td>Run <code>uv run pre-commit install</code> or <code>make setup-hooks</code></td>
 </tr>
 <tr>
 <td>Tests fail at import</td>
-<td>Ensure the package is installed with <code>pip install -e .</code> so <code>src/</code> is on <code>sys.path</code></td>
+<td>Ensure the package is installed with <code>uv sync</code> so <code>src/</code> is on <code>sys.path</code></td>
 </tr>
 <tr>
 <td>Coverage below 60%</td>
