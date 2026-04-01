@@ -1,6 +1,6 @@
-# CLI Reference
+# CLI reference
 
-Documentation for the `ezqt-widgets` command-line interface.
+One-line description of the top-level `ezqt-widgets` command.
 
 The CLI is registered as the `ezqt-widgets` entry point in `pyproject.toml`:
 
@@ -9,135 +9,89 @@ The CLI is registered as the `ezqt-widgets` entry point in `pyproject.toml`:
 ezqt-widgets = "ezqt_widgets.cli.main:cli"
 ```
 
----
-
-## Installation
+## 💻 Usage
 
 ```bash
-# Standard installation
-pip install ezqt-widgets
-
-# Development installation (includes all dev extras)
-pip install -e ".[dev]"
-
-# Verify the command is available
-ezqt-widgets --version
+ezqt-widgets [OPTIONS] COMMAND [ARGS]...
 ```
 
----
+## ⚙️ Global options
 
-## Commands
+| Option      | Short | Description               |
+| ----------- | ----- | ------------------------- |
+| `--version` | `-v`  | Show the version and exit |
+| `--help`    | `-h`  | Show help and exit        |
 
-### `ezqt-widgets run` — Run examples
+## 📋 Commands
 
-Launch interactive examples to explore widget functionality.
-
-```bash
-ezqt-widgets run [OPTIONS]
-```
-
-| Option      | Short | Description                                                                                |
-| ----------- | ----- | ------------------------------------------------------------------------------------------ |
-| `--all`     | `-a`  | Run all examples with the GUI launcher                                                     |
-| `--buttons` | `-b`  | Run button examples (DateButton, IconButton, LoaderButton)                                 |
-| `--inputs`  | `-i`  | Run input examples (AutoCompleteInput, PasswordInput, SearchInput, TabReplaceTextEdit)     |
-| `--labels`  | `-l`  | Run label examples (ClickableTagLabel, FramedLabel, HoverLabel, IndicatorLabel)            |
-| `--misc`    | `-m`  | Run misc examples (CircularTimer, DraggableList, OptionSelector, ToggleIcon, ToggleSwitch) |
-| `--no-gui`  | —     | Run examples sequentially without the GUI launcher                                         |
-| `--verbose` | `-v`  | Verbose output                                                                             |
-
-At least one category flag must be provided. Running `ezqt-widgets run` with no options prints usage information.
-
-**Examples:**
-
-```bash
-ezqt-widgets run --all
-ezqt-widgets run --buttons --verbose
-ezqt-widgets run --all --no-gui
-ezqt-widgets run --inputs --misc
-```
+| Command   | Description                                          |
+| --------- | ---------------------------------------------------- |
+| `demo`    | Run and list interactive widget demos                |
+| `docs`    | Open the online documentation in the default browser |
+| `info`    | Display package information                          |
+| `version` | Display version information                          |
 
 ---
 
-### `ezqt-widgets list` — List available examples
+## 🖥️ `ezqt-widgets demo` — Widget demos
 
-Displays all available example files and their status.
+The `demo` command group exposes two subcommands: `run` and `list`.
+
+### `demo run` — Run widget examples
 
 ```bash
-ezqt-widgets list
+ezqt-widgets demo run [OPTIONS]
 ```
+
+| Option      | Short | Description                                                                                    |
+| ----------- | ----- | ---------------------------------------------------------------------------------------------- |
+| `--all`     | `-a`  | Run all examples with the GUI launcher                                                         |
+| `--buttons` | `-b`  | Run button examples (`DateButton`, `IconButton`, `LoaderButton`)                               |
+| `--inputs`  | `-i`  | Run input examples (`AutoCompleteInput`, `PasswordInput`, `SearchInput`, `TabReplaceTextEdit`) |
+| `--labels`  | `-l`  | Run label examples (`ClickableTagLabel`, `FramedLabel`, `HoverLabel`, `IndicatorLabel`)        |
+| `--misc`    | `-m`  | Run misc examples (`CircularTimer`, `DraggableList`, `OptionSelector`, `ToggleSwitch`)         |
+| `--no-gui`  | —     | Run examples sequentially without the GUI launcher                                             |
+| `--verbose` | `-v`  | Verbose output                                                                                 |
+
+At least one category flag must be provided. Running `ezqt-widgets demo run` with no options prints usage information.
+
+### `demo list` — List available examples
+
+```bash
+ezqt-widgets demo list
+```
+
+Displays all available example scripts and their status.
 
 **Sample output:**
 
 ```text
-Available examples:
+📋 Available examples:
 ========================================
-button_example
-input_example
-label_example
-misc_example
-run_all_examples
-types_example
+✅ _button
+✅ _input
+✅ _label
+✅ _misc
+✅ run_all_examples
 
-Total: 6 examples found
+Total: 5 examples found
 ```
 
 ---
 
-### `ezqt-widgets test` — Run the test suite
+## 📖 `ezqt-widgets docs` — Open documentation
 
-Executes the project test suite via pytest.
-
-```bash
-ezqt-widgets test [OPTIONS]
-```
-
-| Option       | Short | Description                         |
-| ------------ | ----- | ----------------------------------- |
-| `--unit`     | `-u`  | Run unit tests (`tests/unit/`)      |
-| `--coverage` | `-c`  | Run tests with HTML coverage report |
-| `--verbose`  | `-v`  | Verbose pytest output               |
-
-When no option is given, `--unit` is assumed.
-
-**Examples:**
+Opens the online documentation website in the default browser.
 
 ```bash
-ezqt-widgets test --unit
-ezqt-widgets test --coverage
-ezqt-widgets test --unit --verbose
+ezqt-widgets docs
 ```
+
+If a browser cannot be opened (e.g. in a headless environment), the documentation URL is printed to stdout instead.
 
 ---
 
-### `ezqt-widgets docs` — Documentation utilities
-
-Serves the built documentation locally.
-
-```bash
-ezqt-widgets docs [OPTIONS]
-```
-
-| Option    | Short | Default | Description                           |
-| --------- | ----- | ------- | ------------------------------------- |
-| `--serve` | `-s`  | —       | Serve the `docs/` directory over HTTP |
-| `--port`  | `-p`  | `8000`  | Port for the local HTTP server        |
-
-!!! note
-`ezqt-widgets docs --serve` uses Python's built-in `http.server` to serve the
-static `docs/` directory, not the MkDocs development server. For live-reload
-during documentation development, use `mkdocs serve` directly.
-
-**Examples:**
-
-```bash
-ezqt-widgets docs --serve
-ezqt-widgets docs --serve --port 8080
-```
-
----
-
-### `ezqt-widgets info` — Package information
+## ℹ️ `ezqt-widgets info` — Package information
 
 Displays information about the installed package.
 
@@ -148,44 +102,56 @@ ezqt-widgets info
 **Sample output:**
 
 ```text
-EzQt Widgets Information
-========================================
-Version: 2.6.0
-Location: /path/to/site-packages/ezqt_widgets/__init__.py
-PySide6: 6.7.3
-Examples: 6 found
-========================================
+Package Information
+==================================================
+
+Version: 2.7.0
+Author:  Neuraaak
+URL:     https://github.com/neuraaak/ezqt-widgets
+Path:    /path/to/site-packages/ezqt_widgets
+Examples: 5 found
 ```
 
 ---
 
-## Common Workflows
-
-### Exploring widgets
+## 🔢 `ezqt-widgets version` — Version information
 
 ```bash
-# See what is available
-ezqt-widgets list
-
-# Try everything at once
-ezqt-widgets run --all
-
-# Focus on a specific category
-ezqt-widgets run --buttons
-ezqt-widgets run --inputs
+ezqt-widgets version [OPTIONS]
 ```
 
-### Development workflow
+| Option   | Short | Description                      |
+| -------- | ----- | -------------------------------- |
+| `--full` | `-f`  | Display full version information |
+
+---
+
+## 🧪 Examples
 
 ```bash
-# Run tests before committing
-ezqt-widgets test --unit
+# Show installed version
+ezqt-widgets --version
 
-# Check coverage
-ezqt-widgets test --coverage
+# Run all demos at once
+ezqt-widgets demo run --all
 
-# Verify the package is correctly installed
+# Run only button demos with verbose output
+ezqt-widgets demo run --buttons --verbose
+
+# Run multiple categories
+ezqt-widgets demo run --inputs --misc
+
+# List available demos
+ezqt-widgets demo list
+
+# Open online docs
+ezqt-widgets docs
+
+# Show package info
 ezqt-widgets info
+
+# Show full version details
+ezqt-widgets version --full
 ```
 
 ---
@@ -197,4 +163,3 @@ ezqt-widgets info
 | `ezqt-widgets: command not found` | Install with `pip install ezqt-widgets` or `pip install -e ".[dev]"` |
 | Examples not found                | Ensure the `examples/` directory exists at the repository root       |
 | `ImportError: PySide6`            | Install PySide6: `pip install "PySide6>=6.7.3"`                      |
-| Tests not found                   | Run from the repository root; pytest expects the `tests/` directory  |

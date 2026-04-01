@@ -19,8 +19,8 @@ from __future__ import annotations
 from typing import Any
 
 # Third-party imports
-from PySide6.QtCore import QEasingCurve, QPropertyAnimation, QSize, Qt, Signal
-from PySide6.QtGui import QMouseEvent
+from PySide6.QtCore import QEasingCurve, QPropertyAnimation, QRect, QSize, Qt, Signal
+from PySide6.QtGui import QMouseEvent, QResizeEvent
 from PySide6.QtWidgets import QFrame, QGridLayout, QSizePolicy
 
 from ...types import WidgetParent
@@ -347,9 +347,7 @@ class OptionSelector(QFrame):
 
             if selected_option:
                 self._value_id = default_id
-
-                default_pos = self._grid.indexOf(selected_option)
-                self._grid.addWidget(self._selector, 0, default_pos)
+                self._set_selector_geometry(selected_option)
                 self._selector.lower()  # Ensure selector stays below
                 self._selector.update()  # Force refresh if needed
 
@@ -405,7 +403,7 @@ class OptionSelector(QFrame):
             option: The option widget to move the selector to.
         """
         start_geometry = self._selector.geometry()
-        end_geometry = option.geometry()
+        end_geometry = self._selector_geometry_for_option(option)
 
         # Create geometry animation
         self._selector_animation = QPropertyAnimation(self._selector, b"geometry")
@@ -420,9 +418,25 @@ class OptionSelector(QFrame):
         # Start animation
         self._selector_animation.start()
 
+    def _selector_geometry_for_option(self, option: FramedLabel) -> QRect:
+        padding = 2
+        geometry = option.geometry()
+        geometry.adjust(-padding, -padding, padding, padding)
+        return geometry
+
+    def _set_selector_geometry(self, option: FramedLabel) -> None:
+        geometry = self._selector_geometry_for_option(option)
+        self._selector.setGeometry(geometry)
+
     # ///////////////////////////////////////////////////////////////
     # OVERRIDE METHODS
     # ///////////////////////////////////////////////////////////////
+
+    def resizeEvent(self, event: QResizeEvent) -> None:
+        """Handle resize events to keep selector aligned."""
+        if self._value_id in self._options:
+            self._set_selector_geometry(self._options[self._value_id])
+        super().resizeEvent(event)
 
     def sizeHint(self) -> QSize:
         """Get the recommended size for the widget.

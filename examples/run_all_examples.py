@@ -29,12 +29,10 @@ from __future__ import annotations
 # ///////////////////////////////////////////////////////////////
 # Standard library imports
 import os
-import re
 import sys
 from importlib import import_module
 
 # Third-party imports
-import yaml
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QCloseEvent, QFont
 from PySide6.QtWidgets import (
@@ -49,6 +47,7 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
+from utils.theme import apply_theme
 
 # ///////////////////////////////////////////////////////////////
 # PATH SETUP
@@ -58,51 +57,6 @@ from PySide6.QtWidgets import (
 current_dir = os.path.dirname(os.path.abspath(__file__))
 if current_dir not in sys.path:
     sys.path.insert(0, current_dir)
-
-# ///////////////////////////////////////////////////////////////
-# UTILITY FUNCTIONS
-# ///////////////////////////////////////////////////////////////
-
-
-def load_and_apply_qss(
-    app: QApplication | QMainWindow,
-    qss_path: str,
-    yaml_path: str,
-    theme_name: str = "dark",
-) -> None:
-    """
-    Load and apply QSS stylesheet with theme variables.
-
-    Args:
-        app: The QApplication or QMainWindow instance.
-        qss_path: Path to the QSS stylesheet file.
-        yaml_path: Path to the YAML theme configuration file.
-        theme_name: Name of the theme to apply. Defaults to "dark".
-    """
-    try:
-        # Load theme variables from YAML
-        with open(yaml_path, encoding="utf-8") as f:
-            config = yaml.safe_load(f)
-        theme_vars = config["theme_palette"][theme_name]
-
-        # Load QSS stylesheet
-        with open(qss_path, encoding="utf-8") as f:
-            qss = f.read()
-
-        # Replace $ variables with their values
-        def repl(match: re.Match[str]) -> str:
-            var = match.group(0)
-            return str(theme_vars.get(var, var))
-
-        qss = re.sub(r"\$_[a-zA-Z0-9_]+", repl, qss)
-        app.setStyleSheet(qss)
-        print(f"Theme '{theme_name}' loaded successfully")
-
-    except Exception as e:
-        print(f"Error loading theme: {e}")
-        # Apply default style on error
-        app.setStyleSheet("")
-
 
 # ///////////////////////////////////////////////////////////////
 # EXAMPLES LAUNCHER
@@ -223,10 +177,10 @@ class EzQtExamplesLauncher(QMainWindow):
     def _load_example_widgets(self) -> None:
         """Load all example widgets with error handling."""
         widget_modules = [
-            ("buttons", "button_example", "ButtonExampleWidget"),
-            ("inputs", "input_example", "InputExampleWidget"),
-            ("labels", "label_example", "LabelExampleWidget"),
-            ("misc", "misc_example", "MiscExampleWidget"),
+            ("buttons", "_button", "ButtonExampleWidget"),
+            ("inputs", "_input", "InputExampleWidget"),
+            ("labels", "_label", "LabelExampleWidget"),
+            ("misc", "_misc", "MiscExampleWidget"),
         ]
 
         for key, module_name, class_name in widget_modules:
@@ -300,49 +254,7 @@ class EzQtExamplesLauncher(QMainWindow):
 
     def _setup_theme(self) -> None:
         """Configure the global application theme."""
-        # Path to theme files
-        bin_dir = os.path.join(os.path.dirname(__file__), "bin")
-        qss_path = os.path.join(bin_dir, "main_theme.qss")
-        yaml_path = os.path.join(bin_dir, "app.yaml")
-
-        # Load theme from files
-        if os.path.exists(qss_path) and os.path.exists(yaml_path):
-            load_and_apply_qss(self, qss_path, yaml_path, theme_name="dark")
-        else:
-            # Default style if theme files not found
-            self.setStyleSheet(
-                """
-                QMainWindow {
-                    background-color: #f8f9fa;
-                }
-                QGroupBox {
-                    font-weight: bold;
-                    border: 2px solid #e9ecef;
-                    border-radius: 8px;
-                    margin-top: 1ex;
-                    padding-top: 15px;
-                    background-color: #f8f9fa;
-                }
-                QPushButton {
-                    background-color: #3498db;
-                    border: none;
-                    color: white;
-                    padding: 10px 20px;
-                    text-align: center;
-                    font-size: 14px;
-                    font-weight: bold;
-                    border-radius: 6px;
-                    min-width: 100px;
-                }
-                QPushButton:hover {
-                    background-color: #2980b9;
-                }
-                QLabel {
-                    color: #2c3e50;
-                    font-size: 13px;
-                }
-            """
-            )
+        apply_theme(self)
 
     # -----------------------------------------------------------
     # Navigation

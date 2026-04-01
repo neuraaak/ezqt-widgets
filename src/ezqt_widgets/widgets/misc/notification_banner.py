@@ -261,7 +261,8 @@ class NotificationBanner(QWidget):
 
     def _slide_out(self) -> None:
         """Animate the banner sliding up and then emit dismissed."""
-        if self._animation is None:
+        animation = self._animation
+        if animation is None:
             self._finish_dismiss()
             return
         parent = self.parentWidget()
@@ -272,16 +273,21 @@ class NotificationBanner(QWidget):
         current = self.geometry()
         end_rect = QRect(0, 0, parent.width(), 0)
 
-        self._animation.setStartValue(current)
-        self._animation.setEndValue(end_rect)
-        self._animation.finished.connect(self._finish_dismiss)
-        self._animation.start()
+        animation.setStartValue(current)
+        animation.setEndValue(end_rect)
+        animation.finished.connect(self._finish_dismiss)
+        animation.start()
 
     def _finish_dismiss(self) -> None:
         """Hide the widget and emit the dismissed signal."""
         # Disconnect to avoid cumulative connections on next show
+        animation = self._animation
+        if animation is None:
+            self.hide()
+            self.dismissed.emit()
+            return
         with contextlib.suppress(RuntimeError):
-            self._animation.finished.disconnect(self._finish_dismiss)  # type: ignore[union-attr]
+            animation.finished.disconnect(self._finish_dismiss)
         self.hide()
         self.dismissed.emit()
 

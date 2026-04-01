@@ -10,16 +10,17 @@ This manifest defines the modular structure of Python development standards. All
 
 ## Modules
 
-| Module                                           | Description                  | Key Focus                                        |
-| :----------------------------------------------- | :--------------------------- | :----------------------------------------------- |
-| `python-core.instructions.md`                    | Core environment and syntax  | Venv, 3.11+ syntax, resource management.         |
-| `python-typing.instructions.md`                  | Advanced Type System         | Native generics, Protocols, TypedDict, Literal.  |
-| `python-style-layout.instructions.md`            | Visual & Documentation Style | Section markers, imports, Google docstrings.     |
-| `python-project-config.instructions.md`          | Project Configuration        | `pyproject.toml`, Ruff, dependencies, tool sync. |
-| `python-concurrency-performance.instructions.md` | Performance & Scale          | Asyncio, Free-Threaded Python, large datasets.   |
-| `python-testing-quality.instructions.md`         | Testing & Validation         | Pytest, coverage, property-based testing.        |
-| `python-security-ops.instructions.md`            | Security & Production        | Secrets, Docker, Observability, Tachyon.         |
-| `python-architecture-design.instructions.md`     | Architecture & Visibility    | `__all__`, design patterns, symbol visibility.   |
+| Module                                           | Description                  | Key Focus                                                       |
+| :----------------------------------------------- | :--------------------------- | :-------------------------------------------------------------- |
+| `python-core.instructions.md`                    | Core environment and syntax  | Venv, 3.11+ syntax, resource management.                        |
+| `python-typing.instructions.md`                  | Advanced Type System         | Native generics, Protocols, TypedDict, Literal.                 |
+| `python-style-layout.instructions.md`            | Visual & Documentation Style | Section markers, imports, Google docstrings.                    |
+| `python-project-config.instructions.md`          | Project Configuration        | `pyproject.toml`, Ruff, dependencies, tool sync.                |
+| `python-concurrency-performance.instructions.md` | Performance & Scale          | Asyncio, Free-Threaded Python, large datasets.                  |
+| `python-testing-quality.instructions.md`         | Testing & Validation         | Pytest, coverage, property-based testing.                       |
+| `python-security-ops.instructions.md`            | Security & Production        | Secrets, Docker, Observability, Tachyon.                        |
+| `python-architecture-design.instructions.md`     | Architecture & Visibility    | `__all__`, design patterns, symbol visibility.                  |
+| `python-docs.instructions.md`                    | Documentation Standards      | Diátaxis quadrants, MkDocs Material, mkdocstrings, admonitions. |
 
 <success_criteria>
 

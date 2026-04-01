@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # ///////////////////////////////////////////////////////////////
 # GENERATE_ARCHITECTURE_GRAPH - Import dependency graph for docs
-# Project: ezqt_widgets
 # ///////////////////////////////////////////////////////////////
 
 """Generate architecture dependency graph for documentation.
@@ -12,8 +11,8 @@ docs/architecture.md (replacing any existing content).
 
 The package name is read from pyproject.toml. Layers are auto-discovered
 from the top-level subdirectories of src/<package>/. To control layer
-order or add custom labels and role descriptions, edit the LAYER_ORDER,
-LAYER_LABELS, and LAYER_ROLES constants below.
+order or add custom labels and role descriptions, edit the LAYER_ORDER
+and LAYER_ROLES constants below.
 
 Usage:
     PYTHONPATH=src python .scripts/dev/generate_architecture_graph.py
@@ -42,35 +41,15 @@ from rich.text import Text
 # CONFIGURATION
 # ///////////////////////////////////////////////////////////////
 
-# Explicit layer order — defines graph node order and which layers to include.
+# Optional: set an explicit layer order to control graph node ordering.
 # Set to None to auto-discover layers alphabetically from src/<package>/.
-LAYER_ORDER: list[str] | None = ["cli", "widgets", "utils"]
-
-# Optional: human-readable labels for Mermaid nodes (supports HTML like <br/>).
-# Missing layers fall back to "{layer}/".
-LAYER_LABELS: dict[str, str] = {
-    "cli": "cli/<br/>(CLI Entry Point)",
-    "widgets": "widgets/<br/>(Qt Widget Library)",
-    "utils": "utils/<br/>(Utilities)",
-}
-
-# Optional: explicit Mermaid style per layer.
-# Missing layers fall back to _STYLE_PALETTE cycling.
-LAYER_STYLES: dict[str, str] = {
-    "cli": "fill:#4A90D9,color:#fff,stroke:#2C5F8A",
-    "widgets": "fill:#E8922A,color:#fff,stroke:#A3621B",
-    "utils": "fill:#7F8C8D,color:#fff,stroke:#566573",
-}
+LAYER_ORDER: list[str] | None = None
 
 # Optional: human-readable role descriptions shown in the responsibilities table.
 # Keys are layer names; missing layers get an empty description.
-LAYER_ROLES: dict[str, str] = {
-    "cli": "Public entry point — Click CLI (`ezqt-widgets` command)",
-    "widgets": "Reusable Qt widget components (buttons, inputs, labels, misc)",
-    "utils": "Pure utility functions and style helpers",
-}
+LAYER_ROLES: dict[str, str] = {}
 
-# Color palette for layer nodes — cycles automatically for layers not in LAYER_STYLES.
+# Color palette for layer nodes — cycles automatically if there are more layers than colors.
 _STYLE_PALETTE = [
     "fill:#4A90D9,color:#fff,stroke:#2C5F8A",
     "fill:#5BA85A,color:#fff,stroke:#3A6B39",
@@ -103,7 +82,7 @@ def read_package_name() -> str:
     """Read the package name from pyproject.toml [project].name.
 
     Returns:
-        The package name with hyphens replaced by underscores.
+        str: The package name with hyphens replaced by underscores.
     """
     pyproject_path = PROJECT_ROOT / "pyproject.toml"
     with pyproject_path.open("rb") as f:
@@ -116,14 +95,14 @@ def read_package_name() -> str:
 def discover_layers(package: str) -> list[str]:
     """Discover top-level layers from src/<package>/ subdirectories.
 
-    Uses LAYER_ORDER if set, otherwise returns discovered layers sorted
-    alphabetically.
+    Falls back to LAYER_ORDER if set, otherwise returns discovered layers
+    sorted alphabetically.
 
     Args:
         package: The package name (used to locate src/<package>/).
 
     Returns:
-        Ordered list of layer names.
+        list[str]: Ordered list of layer names.
     """
     if LAYER_ORDER is not None:
         return LAYER_ORDER
@@ -143,10 +122,7 @@ def discover_layers(package: str) -> list[str]:
 
 
 def build_style_map(layers: list[str]) -> dict[str, str]:
-    """Assign a color style to each layer.
-
-    Uses LAYER_STYLES for explicit overrides, falling back to _STYLE_PALETTE
-    cycling for any layer not explicitly defined.
+    """Assign a color style to each layer, cycling through the palette.
 
     Args:
         layers: Ordered list of layer names.
@@ -155,8 +131,7 @@ def build_style_map(layers: list[str]) -> dict[str, str]:
         dict mapping layer name to a Mermaid style string.
     """
     return {
-        layer: LAYER_STYLES.get(layer, _STYLE_PALETTE[i % len(_STYLE_PALETTE)])
-        for i, layer in enumerate(layers)
+        layer: _STYLE_PALETTE[i % len(_STYLE_PALETTE)] for i, layer in enumerate(layers)
     }
 
 
@@ -169,11 +144,11 @@ def _layer_of(module: str, layers: list[str]) -> str | None:
     """Return the layer name for a module path, or None if not in a known layer.
 
     Args:
-        module: Fully qualified module name (e.g. ``ezqt_widgets.widgets.toggle_switch``).
+        module: Fully qualified module name (e.g. ``mypackage.services.compiler``).
         layers: Known layer names to match against.
 
     Returns:
-        The layer name, or None if not recognized.
+        str | None: The layer name, or None if not recognized.
     """
     parts = module.split(".")
     if len(parts) >= 2:
@@ -196,7 +171,7 @@ def build_layer_edges(package: str, layers: list[str]) -> dict[str, set[str]]:
         import grimp  # noqa: PLC0415
     except ImportError:
         console.print(
-            "[red]❌[/red] grimp is required. Install with: [cyan]pip install grimp[/cyan]"
+            "[red]❌[/red] grimp is required. Install with: [cyan]uv add --dev grimp[/cyan]"
         )
         sys.exit(1)
 
@@ -250,13 +225,12 @@ def _mermaid_diagram(
         styles: Mermaid style string per layer.
 
     Returns:
-        Complete Mermaid diagram definition.
+        str: Complete Mermaid diagram definition.
     """
     lines = ["graph TD"]
 
     for layer in layers:
-        label = LAYER_LABELS.get(layer, f"{layer}/")
-        lines.append(f'    {layer}["{label}"]')
+        lines.append(f'    {layer}["{layer}/"]')
 
     lines.append("")
 
@@ -286,7 +260,7 @@ def _dependency_table(edges: dict[str, set[str]], layers: list[str]) -> str:
         layers: Ordered list of layer names.
 
     Returns:
-        Markdown table source.
+        str: Markdown table source.
     """
     rows = [
         "| Layer | Imports from |",
@@ -309,7 +283,7 @@ def _role_table(layers: list[str]) -> str:
         layers: Ordered list of layer names.
 
     Returns:
-        Markdown table source, or empty string if LAYER_ROLES is empty.
+        str: Markdown table source, or empty string if LAYER_ROLES is empty.
     """
     if not LAYER_ROLES:
         return ""
@@ -341,7 +315,7 @@ def generate_page(
         styles: Mermaid style string per layer.
 
     Returns:
-        Complete Markdown page content.
+        str: Complete Markdown page content.
     """
     mermaid = _mermaid_diagram(edges, layers, styles)
     dep_table = _dependency_table(edges, layers)

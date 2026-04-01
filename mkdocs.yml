@@ -10,6 +10,13 @@ repo_url: https://github.com/neuraaak/ezqt-widgets
 repo_name: neuraaak/ezqt-widgets
 edit_uri: edit/main/docs/
 
+strict: true
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+
 # ///////////////////////////////////////////////////////////////
 # THEME
 # ///////////////////////////////////////////////////////////////
@@ -44,6 +51,7 @@ theme:
     - content.code.copy
     - content.code.annotate
     - content.tabs.link
+    - content.tooltips
     - toc.follow
   icon:
     repo: fontawesome/brands/github
@@ -59,18 +67,24 @@ theme:
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
+  - Concepts:
+      - concepts/index.md
+      - About the architecture: concepts/about-architecture.md
   - User Guides:
       - guides/index.md
+      - How to style widgets with QSS: guides/configuration.md
       - QSS Style Guide: guides/style-guide.md
       - Development: guides/development.md
       - Testing: guides/testing.md
   - API Reference:
       - api/index.md
-      - Button: api/button.md
-      - Input: api/input.md
-      - Label: api/label.md
-      - Misc: api/misc.md
-      - Shared Constants: api/shared.md
+      - Reference:
+          - Button: api/reference/button.md
+          - Input: api/reference/input.md
+          - Label: api/reference/label.md
+          - Misc: api/reference/misc.md
+          - Shared constants: api/reference/shared.md
+          - Full reference: api/reference/index.md
   - CLI Reference:
       - cli/index.md
   - Examples:
@@ -96,8 +110,8 @@ plugins:
           paths: [src]
           options:
             docstring_style: google
-            docstring_section_style: spacy
-            show_source: true
+            docstring_section_style: table
+            show_source: false
             show_root_heading: true
             show_root_full_path: false
             show_symbol_type_heading: true
@@ -154,6 +168,8 @@ markdown_extensions:
 # ///////////////////////////////////////////////////////////////
 
 extra:
+  version:
+    provider: mike
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/neuraaak/ezqt-widgets
@@ -161,6 +177,7 @@ extra:
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/ezqt-widgets/
       name: PyPI Package
+
 extra_css:
   - stylesheets/extra.css
 

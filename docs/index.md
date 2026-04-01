@@ -1,4 +1,4 @@
-# EzQt-Widgets
+# EzQt Widgets
 
 [![PyPI version](https://img.shields.io/pypi/v/ezqt-widgets?style=flat&logo=pypi&logoColor=white)](https://pypi.org/project/ezqt-widgets/)
 [![Python versions](https://img.shields.io/pypi/pyversions/ezqt-widgets?style=flat&logo=python&logoColor=white)](https://pypi.org/project/ezqt-widgets/)
@@ -10,96 +10,56 @@
 [![linter](https://img.shields.io/badge/linter-ruff-orange?style=flat&logo=ruff&logoColor=white)](https://github.com/astral-sh/ruff)
 [![type checker](https://img.shields.io/badge/type%20checker-ty-orange?style=flat&logo=astral&logoColor=white)](https://github.com/astral-sh/ty)
 
-![EzQt-Widgets Logo](https://raw.githubusercontent.com/neuraaak/ezqt-widgets/refs/heads/main/docs/assets/logo-min.png)
+**EzQt Widgets** — A collection of custom and reusable Qt widgets for PySide6. Provides advanced, styled graphical components to accelerate the development of modern desktop interfaces.
 
-**EzQt-Widgets** is a collection of custom and reusable Qt widgets for PySide6. It provides advanced, typed graphical components to facilitate the development of modern desktop interfaces.
+## 🚀 Quick start
+
+Install from PyPI and run your first widget in under five minutes.
+
+```bash
+pip install ezqt-widgets
+```
 
 ```python
 from PySide6.QtWidgets import QApplication
-from ezqt_widgets import ToggleSwitch
+from ezqt_widgets import IconButton, ToggleSwitch
 
 app = QApplication([])
-switch = ToggleSwitch(checked=False, width=50, height=24)
-switch.toggled.connect(lambda state: print(f"On: {state}"))
-switch.show()
+
+btn = IconButton(text="Hello EzQt")
+btn.show()
+
 app.exec()
 ```
 
----
+## ✨ Key features
 
-## Requirements
+- **Button widgets** — date picker, icon buttons with URL/local/SVG support, loading state buttons
+- **Input widgets** — auto-complete, password field with strength bar, search with history, tab-sanitized text editor, file picker, spin box
+- **Label widgets** — clickable tag labels, framed labels, hover-icon labels, LED status indicators
+- **Misc widgets** — animated circular timer, drag-and-drop list, option selector, theme-aware icon, toggle icon, modern toggle switch, notification banner, collapsible section
+- Fully typed public API (`py.typed` compliant)
+- PySide6 ≥ 6.7.3 compatible
 
-| Dependency | Version           |
-| ---------- | ----------------- |
-| Python     | >= 3.11           |
-| PySide6    | >= 6.7.3, < 7.0.0 |
+## 📚 Documentation
 
----
+| Section                               | Description                                                      |
+| ------------------------------------- | ---------------------------------------------------------------- |
+| [Getting Started](getting-started.md) | Install, first steps, and quickstart in under 5 minutes          |
+| [User Guides](guides/index.md)        | Task-oriented guides for configuration, development, and testing |
+| [Concepts](concepts/index.md)         | Design rationale and architectural background                    |
+| [API Reference](api/index.md)         | Complete class and method reference generated from source        |
+| [CLI Reference](cli/index.md)         | Command-line interface usage and options                         |
+| [Examples](examples/index.md)         | Runnable end-to-end examples by widget category                  |
+| [Architecture](architecture.md)       | Layer dependency graph generated from the source tree            |
+| [Coverage](coverage.md)               | Test coverage report                                             |
+| [Changelog](changelog.md)             | Version history and release notes                                |
 
-## Widgets
+## 📋 Requirements
 
-EzQt-Widgets exposes **23 public classes** organized in 4 modules.
+- Python >= 3.11
+- PySide6 >= 6.7.3
 
-### Button
+## ⚖️ License
 
-| Widget             | Description                                                         |
-| ------------------ | ------------------------------------------------------------------- |
-| `DateButton`       | Button displaying a selected date; opens a calendar dialog on click |
-| `DatePickerDialog` | Modal calendar dialog for date selection                            |
-| `IconButton`       | Button with an icon from any source and optional text label         |
-| `LoaderButton`     | Button with animated loading spinner, success, and error states     |
-
-### Input
-
-| Widget               | Description                                                                          |
-| -------------------- | ------------------------------------------------------------------------------------ |
-| `AutoCompleteInput`  | QLineEdit with configurable auto-completion suggestions                              |
-| `FilePickerInput`    | QLineEdit and folder button that opens a QFileDialog for file or directory selection |
-| `PasswordInput`      | Password field with strength bar and visibility toggle                               |
-| `SearchInput`        | Search field with keyboard-navigable submission history                              |
-| `SpinBoxInput`       | Custom numeric spin box with − and + buttons and mouse wheel support                 |
-| `TabReplaceTextEdit` | QPlainTextEdit that sanitizes pasted text by replacing tab characters                |
-
-### Label
-
-| Widget              | Description                                            |
-| ------------------- | ------------------------------------------------------ |
-| `ClickableTagLabel` | Toggleable tag label that emits signals on click       |
-| `FramedLabel`       | QLabel inside a QFrame for advanced styling and layout |
-| `HoverLabel`        | QLabel that displays a floating icon when hovered      |
-| `IndicatorLabel`    | Status indicator with a configurable colored LED       |
-
-### Misc
-
-| Widget               | Description                                                                    |
-| -------------------- | ------------------------------------------------------------------------------ |
-| `CircularTimer`      | Animated circular progress arc with loop and click support                     |
-| `CollapsibleSection` | Accordion-style section with clickable header and expand/collapse animation    |
-| `DraggableItem`      | Single draggable item used inside a DraggableList                              |
-| `DraggableList`      | Scrollable list with drag-and-drop reordering and item removal                 |
-| `NotificationBanner` | Animated slide-down notification banner with INFO/WARNING/ERROR/SUCCESS levels |
-| `OptionSelector`     | Animated option selector with single-selection radio behavior                  |
-| `ThemeIcon`          | QIcon subclass that adapts color to the active dark/light theme                |
-| `ToggleIcon`         | Label with two icons toggled between an open and closed state                  |
-| `ToggleSwitch`       | Modern animated toggle switch                                                  |
-
----
-
-## Documentation
-
-| Section                               | Description                             |
-| ------------------------------------- | --------------------------------------- |
-| [Getting Started](getting-started.md) | Installation and first working example  |
-| [API Reference](api/index.md)         | Full class-level API documentation      |
-| [User Guides](guides/index.md)        | Task-oriented guides                    |
-| [Examples](examples/index.md)         | Runnable examples organized by category |
-| [CLI Reference](cli/index.md)         | `ezqt-widgets` command documentation    |
-| [Changelog](changelog.md)             | Version history                         |
-
----
-
-## Links
-
-- **Repository**: [https://github.com/neuraaak/ezqt-widgets](https://github.com/neuraaak/ezqt-widgets)
-- **PyPI**: [https://pypi.org/project/ezqt-widgets/](https://pypi.org/project/ezqt-widgets/)
-- **Issues**: [https://github.com/neuraaak/ezqt-widgets/issues](https://github.com/neuraaak/ezqt-widgets/issues)
+[MIT](https://github.com/neuraaak/ezqt-widgets/blob/main/LICENSE)
