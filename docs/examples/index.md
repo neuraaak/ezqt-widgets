@@ -4,49 +4,48 @@ Runnable examples organized by widget category. Each script can be launched dire
 
 ---
 
-## Running Examples
+## 🚀 Running examples
 
 ```bash
 # Run all examples with the GUI launcher
-ezqt-widgets run --all
+ezqt-widgets demo run --all
 
 # Run by category
-ezqt-widgets run --buttons
-ezqt-widgets run --inputs
-ezqt-widgets run --labels
-ezqt-widgets run --misc
+ezqt-widgets demo run --buttons
+ezqt-widgets demo run --inputs
+ezqt-widgets demo run --labels
+ezqt-widgets demo run --misc
 
 # List available scripts
-ezqt-widgets list
+ezqt-widgets demo list
 ```
 
 Or run a script directly:
 
 ```bash
-python examples/button_example.py
-python examples/input_example.py
-python examples/label_example.py
-python examples/misc_example.py
+python examples/_button.py
+python examples/_input.py
+python examples/_label.py
+python examples/_misc.py
 ```
 
 ---
 
-## Available Scripts
+## 📂 Available scripts
 
 | Script                | Widgets demonstrated                                                             |
 | --------------------- | -------------------------------------------------------------------------------- |
-| `button_example.py`   | `DateButton`, `IconButton`, `LoaderButton`                                       |
-| `input_example.py`    | `AutoCompleteInput`, `PasswordInput`, `SearchInput`, `TabReplaceTextEdit`        |
-| `label_example.py`    | `ClickableTagLabel`, `FramedLabel`, `HoverLabel`, `IndicatorLabel`               |
-| `misc_example.py`     | `CircularTimer`, `DraggableList`, `OptionSelector`, `ToggleIcon`, `ToggleSwitch` |
-| `types_example.py`    | `IconSource`, `SizeType`, `ColorType` and other type aliases                     |
+| `_button.py`          | `DateButton`, `IconButton`, `LoaderButton`                                       |
+| `_input.py`           | `AutoCompleteInput`, `PasswordInput`, `SearchInput`, `TabReplaceTextEdit`        |
+| `_label.py`           | `ClickableTagLabel`, `FramedLabel`, `HoverLabel`, `IndicatorLabel`               |
+| `_misc.py`            | `CircularTimer`, `DraggableList`, `OptionSelector`, `ToggleIcon`, `ToggleSwitch` |
 | `run_all_examples.py` | Launcher that starts all categories in sequence                                  |
 
 ---
 
-## Button Examples
+## 🔘 Button examples
 
-The `button_example.py` script demonstrates all three button widget types in a scrollable window:
+The `_button.py` script demonstrates all three button widget types in a scrollable window:
 
 - `DateButton` with date-change signal connected to a label
 - `IconButton` with a QIcon, text, and click counter
@@ -87,9 +86,9 @@ app.exec()
 
 ---
 
-## Input Examples
+## ✏️ Input examples
 
-The `input_example.py` script demonstrates text input widgets:
+The `_input.py` script demonstrates text input widgets:
 
 - `AutoCompleteInput` with a fixed list of suggestions
 - `PasswordInput` with a visible strength bar
@@ -125,9 +124,9 @@ app.exec()
 
 ---
 
-## Label Examples
+## 🏷️ Label examples
 
-The `label_example.py` script demonstrates label widget types:
+The `_label.py` script demonstrates label widget types:
 
 - `ClickableTagLabel` toggling state on click
 - `FramedLabel` with centered text and custom styling
@@ -172,9 +171,9 @@ app.exec()
 
 ---
 
-## Misc Examples
+## 🔧 Misc examples
 
-The `misc_example.py` script demonstrates utility widgets:
+The `_misc.py` script demonstrates utility widgets:
 
 - `CircularTimer` with a 10-second looping animation
 - `DraggableList` with drag-and-drop reordering

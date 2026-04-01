@@ -491,17 +491,6 @@ class PasswordInput(QWidget):
             self._hide_icon.setTheme(theme)
         self._update_icon()
 
-    # ///////////////////////////////////////////////////////////////
-    # STYLE METHODS
-    # ///////////////////////////////////////////////////////////////
-
-    def refreshStyle(self) -> None:
-        """Refresh the widget style.
-
-        Deprecated - use external QSS for styling.
-        """
-        self.update()
-
 
 class _PasswordLineEdit(QLineEdit):
     """QLineEdit subclass with right-side icon support.

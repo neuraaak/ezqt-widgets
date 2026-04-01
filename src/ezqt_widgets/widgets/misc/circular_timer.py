@@ -309,20 +309,20 @@ class CircularTimer(QWidget):
     # PUBLIC METHODS
     # ///////////////////////////////////////////////////////////////
 
-    def startTimer(self) -> None:  # type: ignore[override]
+    def start(self) -> None:
         """Start the circular timer."""
-        self.stopTimer()  # Always stop before starting
+        self.stop()  # Always stop before starting
         self._running = True
         self._last_update = None
         self._timer.start(self._interval)
 
-    def stopTimer(self) -> None:
+    def stop(self) -> None:
         """Stop the circular timer."""
-        self.resetTimer()  # Always reset to zero
+        self.reset()  # Always reset to zero
         self._running = False
         self._timer.stop()
 
-    def resetTimer(self) -> None:
+    def reset(self) -> None:
         """Reset the circular timer."""
         self._elapsed = 0
         self._last_update = None
@@ -347,13 +347,13 @@ class CircularTimer(QWidget):
         if self._elapsed > self._duration:
             self.cycleCompleted.emit()
             if self._loop:
-                self.resetTimer()
+                self.reset()
                 self._running = True
                 self._last_update = now
                 # Timer continues (no stop)
             else:
-                self.resetTimer()
-                self.stopTimer()
+                self.reset()
+                self.stop()
         self.update()
 
     # ///////////////////////////////////////////////////////////////

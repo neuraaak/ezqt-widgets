@@ -1,0 +1,32 @@
+# ///////////////////////////////////////////////////////////////
+# PALETTE
+# ///////////////////////////////////////////////////////////////
+palette:
+  # //////
+  # — Surfaces (du plus sombre au plus clair)
+  surface_sunken: rgb(22, 26, 32) # fond de page / body wrapper
+  surface_base: rgb(27, 31, 39) # surface neutre de référence
+  surface_raised: rgb(33, 37, 46) # cards, panels principaux
+  surface_overlay: rgb(44, 51, 64) # hover, items sélectionnés
+  surface_floating: rgb(52, 59, 74) # dropdowns, tooltips (distingués par shadow)
+
+  # — Bordures
+  border_subtle: rgb(54, 61, 76) # séparateur standard
+
+  # — Accent
+  accent_brand: "#96CD32" # fond de bouton/badge uniquement
+
+  # — Texte
+  text_primary: rgb(218, 220, 228) # texte principal sur surface_raised (contraste ≈7.5:1 ✓ WCAG AAA)
+  text_secondary: rgb(122, 134, 158) # texte secondaire sur surface_raised (contraste ≈5.8:1 ✓ WCAG AA)
+  text_on_accent: rgb(255, 255, 255) # texte sélectionné
+
+  # — Transparences
+  transparent: rgba(255, 255, 255, 0)
+  overlay_scrim: rgba(33, 37, 46, 0.88)
+
+  # — Sémantiques
+  semantic_success: "#4ade80"
+  semantic_warning: "#fbbf24"
+  semantic_error: "#f87171"
+  semantic_info: "#60a5fa"

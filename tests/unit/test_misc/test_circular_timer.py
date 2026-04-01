@@ -89,11 +89,11 @@ class TestCircularTimer:
         timer = CircularTimer(duration=1000)
 
         # Start timer
-        timer.startTimer()
+        timer.start()
         assert timer.running
 
         # Stop timer
-        timer.stopTimer()
+        timer.stop()
         assert not timer.running
 
     def test_should_reset_timer_when_reset_is_called(self, qt_application) -> None:
@@ -101,7 +101,7 @@ class TestCircularTimer:
         timer = CircularTimer()
         timer.elapsed = 3000
 
-        timer.resetTimer()
+        timer.reset()
         assert timer.elapsed == 0
         assert not timer.running
 
@@ -135,7 +135,7 @@ class TestCircularTimer:
         assert clicked_called
 
         # Reset timer
-        timer.resetTimer()
+        timer.reset()
         assert reset_called
 
     def test_should_update_color_when_color_properties_are_set(

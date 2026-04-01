@@ -13,7 +13,7 @@ Core environment management, versioning, and foundational syntax for modern Pyth
 ## Environment Management
 
 - **ACTIVATE** `.venv\Scripts\activate` (Windows) or `source .venv/bin/activate` (Unix).
-- **USE** `python -m pip` to ensure the correct interpreter is used.
+- **USE** `uv run` to execute tools and scripts inside the managed venv.
 - **TEST** compatibility against multiple versions in CI/CD.
 
 ## Foundational Syntax (3.11+)

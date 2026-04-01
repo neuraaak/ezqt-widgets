@@ -224,7 +224,8 @@ class CollapsibleSection(QWidget):
         Args:
             expanding: True to expand, False to collapse.
         """
-        if self._animation is None:
+        animation = self._animation
+        if animation is None:
             return
 
         current = self._content_area.maximumHeight()
@@ -239,18 +240,21 @@ class CollapsibleSection(QWidget):
         else:
             end = 0
 
-        self._animation.setStartValue(current)
-        self._animation.setEndValue(end)
-        self._animation.start()
+        animation.setStartValue(current)
+        animation.setEndValue(end)
+        animation.start()
 
         # After expanding, release the maximum height cap
         if expanding:
-            self._animation.finished.connect(self._on_expand_finished)
+            animation.finished.connect(self._on_expand_finished)
 
     def _on_expand_finished(self) -> None:
         """Release the maximumHeight cap after expand animation completes."""
+        animation = self._animation
+        if animation is None:
+            return
         with contextlib.suppress(RuntimeError):
-            self._animation.finished.disconnect(self._on_expand_finished)  # type: ignore[union-attr]
+            animation.finished.disconnect(self._on_expand_finished)
         self._content_area.setMaximumHeight(16777215)
 
     # ///////////////////////////////////////////////////////////////

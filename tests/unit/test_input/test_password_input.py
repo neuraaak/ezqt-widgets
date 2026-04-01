@@ -364,18 +364,6 @@ class TestPasswordInput:
         # Verify that the signal is connected
         assert password_widget.iconClicked is not None
 
-    def test_should_not_raise_when_password_input_refresh_style_is_called(
-        self, qt_widget_cleanup
-    ) -> None:
-        """Test refreshStyle."""
-        password_widget = PasswordInput()
-
-        # Method should not raise an exception
-        try:
-            password_widget.refreshStyle()
-        except Exception as e:
-            pytest.fail(f"refreshStyle() raised an exception: {e}")
-
     def test_should_validate_password_properties_when_password_is_set(
         self, qt_widget_cleanup
     ) -> None:

@@ -105,7 +105,6 @@ __description__ = (
     "to facilitate the development of modern and ergonomic interfaces."
 )
 __python_requires__ = ">=3.11"
-__license__ = "MIT"
 __keywords__ = [
     "qt",
     "pyside6",
@@ -172,7 +171,6 @@ __all__ = [
     "__author__",
     "__description__",
     "__keywords__",
-    "__license__",
     "__maintainer__",
     "__python_requires__",
     "__repository__",

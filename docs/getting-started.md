@@ -1,219 +1,77 @@
-# Getting Started
+# Getting started with EzQt Widgets
 
-This page covers installation and your first working widget in under five minutes.
+By the end of this tutorial you will have `ezqt-widgets` installed and have run your first interactive widget.
 
----
+## 🔧 Prerequisites
 
-## Installation
+- Python >= 3.11 ([python.org](https://www.python.org/downloads/))
+- Internet access to install from PyPI
 
-=== "uv"
-
-```bash
-uv add ezqt-widgets
-```
-
-=== "pip"
+## Step 1 — Install EzQt Widgets
 
 ```bash
 pip install ezqt-widgets
 ```
 
-=== "Development mode"
+You should see a line confirming the package was installed successfully. Verify:
 
 ```bash
-git clone https://github.com/neuraaak/ezqt-widgets.git
-cd ezqt-widgets
-uv sync --all-extras
+python -c "import ezqt_widgets; print(ezqt_widgets.__version__)"
 ```
 
-!!! note "Corporate / offline environments"
-If direct PyPI access is unavailable, download the wheel file from
-[PyPI](https://pypi.org/project/ezqt-widgets/#files) and install it locally:
+## Step 2 — Create your first widget
 
-```bash
-pip install ezqt_widgets-2.6.5-py3-none-any.whl
-```
-
-PySide6 must also be available as a wheel. Place both wheels in the same directory
-and run `pip install` with `--no-index --find-links ./wheels/`.
-
----
-
-## Requirements
-
-| Dependency | Minimum version |
-| ---------- | --------------- |
-| Python     | 3.11            |
-| PySide6    | 6.7.3           |
-
-The library raises `RuntimeError` at import time if the Python version is below 3.11.
-
----
-
-## First Example
-
-The example below creates a toggle switch, connects its signal, and starts the Qt event loop.
+Create a file `hello.py` and run it:
 
 ```python
-from PySide6.QtWidgets import QApplication
-from ezqt_widgets import ToggleSwitch
-
-app = QApplication([])
-
-switch = ToggleSwitch(checked=False, width=50, height=24)
-switch.toggled.connect(lambda state: print(f"On: {state}"))
-switch.show()
-
-app.exec()
-```
-
-Run it and click the switch. The console prints `On: True` or `On: False` on each toggle.
-
----
-
-## Imports
-
-All public widgets are available directly from the top-level package:
-
-```python
-from ezqt_widgets import (
-    # Button
-    DateButton,
-    DatePickerDialog,
-    IconButton,
-    LoaderButton,
-    # Input
-    AutoCompleteInput,
-    FilePickerInput,
-    PasswordInput,
-    SearchInput,
-    SpinBoxInput,
-    TabReplaceTextEdit,
-    # Label
-    ClickableTagLabel,
-    FramedLabel,
-    HoverLabel,
-    IndicatorLabel,
-    # Misc
-    CircularTimer,
-    CollapsibleSection,
-    DraggableItem,
-    DraggableList,
-    NotificationBanner,
-    NotificationLevel,
-    OptionSelector,
-    ThemeIcon,
-    ToggleIcon,
-    ToggleSwitch,
-)
-```
-
-Submodule imports are also valid:
-
-```python
-from ezqt_widgets.widgets.button import DateButton
-from ezqt_widgets.widgets.input import SearchInput
-from ezqt_widgets.widgets.label import IndicatorLabel
-from ezqt_widgets.widgets.misc import ToggleSwitch
-```
-
----
-
-## A More Complete Example
-
-```python
-from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
-from ezqt_widgets import DateButton, ToggleSwitch, AutoCompleteInput
-
-app = QApplication([])
-window = QWidget()
-layout = QVBoxLayout(window)
-
-# Date picker button — displays today's date by default
-date_btn = DateButton(placeholder="Pick a date")
-date_btn.dateChanged.connect(lambda d: print(f"Date: {d.toString('dd/MM/yyyy')}"))
-
-# Toggle switch — starts unchecked
-switch = ToggleSwitch(checked=False, width=60, height=28)
-switch.toggled.connect(lambda on: print(f"Switch: {'on' if on else 'off'}"))
-
-# Auto-complete input with preset suggestions
-language_input = AutoCompleteInput(suggestions=["Python", "Rust", "Go", "TypeScript"])
-
-layout.addWidget(date_btn)
-layout.addWidget(switch)
-layout.addWidget(language_input)
-
-window.setWindowTitle("EzQt Widgets — Quick Start")
-window.show()
-app.exec()
-```
-
----
-
-## Notification Banner Example
-
-The example below shows how to overlay a `NotificationBanner` on a parent window and trigger it from a button click.
-
-```python
-from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton
-from ezqt_widgets import NotificationBanner, NotificationLevel
+from PySide6.QtWidgets import QApplication, QVBoxLayout, QWidget
+from ezqt_widgets import IconButton, ToggleSwitch
 
 app = QApplication([])
 
 window = QWidget()
-window.resize(600, 300)
 layout = QVBoxLayout(window)
 
-banner = NotificationBanner(parent=window)
-banner.dismissed.connect(lambda: print("Banner dismissed"))
+btn = IconButton(text="Click me")
+btn.clicked.connect(lambda: print("Button clicked!"))
 
-btn = QPushButton("Save configuration")
-btn.clicked.connect(
-    lambda: banner.showNotification(
-        "Configuration saved.",
-        NotificationLevel.SUCCESS,
-        duration=3000,
-    )
-)
+switch = ToggleSwitch(checked=False)
+switch.toggled.connect(lambda state: print(f"Toggle: {state}"))
 
 layout.addWidget(btn)
-window.setWindowTitle("EzQt Widgets — Notification Banner")
+layout.addWidget(switch)
+
+window.setWindowTitle("EzQt Widgets — Hello World")
 window.show()
+
 app.exec()
 ```
 
-Click the button to show a green success banner that auto-dismisses after 3 seconds. Pass `duration=0` to require manual dismissal.
+You should see a window with an `IconButton` and a `ToggleSwitch`.
 
----
+## Step 3 — Run the interactive demos
 
-## Explore with the CLI
-
-After installation the `ezqt-widgets` command is available:
+The CLI ships interactive demos for all widget categories.
 
 ```bash
-# Show installed version
-ezqt-widgets --version
+# Run all demos with the GUI launcher
+ezqt-widgets demo run --all
 
-# List available example files
-ezqt-widgets list
-
-# Run all examples with the GUI launcher
-ezqt-widgets run --all
-
-# Run examples by category
-ezqt-widgets run --buttons
-ezqt-widgets run --inputs
-ezqt-widgets run --labels
-ezqt-widgets run --misc
+# Or run a single category
+ezqt-widgets demo run --buttons
+ezqt-widgets demo run --inputs
+ezqt-widgets demo run --labels
+ezqt-widgets demo run --misc
 ```
 
-See [CLI Reference](cli/index.md) for the full command reference.
+You should see a demo window showcasing each widget category.
 
----
+## ✅ What you built
 
-## Next Steps
+You installed `ezqt-widgets` from PyPI, created a minimal window combining an `IconButton` and a `ToggleSwitch`, and launched the built-in interactive demos.
 
-- [API Reference](api/index.md) — parameter-level documentation for every widget
-- [Examples](examples/index.md) — runnable code organized by category
-- [Development Guide](guides/development.md) — set up a contributor environment
+## ➡️ Next steps
+
+- [How to style widgets with QSS](guides/configuration.md)
+- [API Reference](api/index.md)
+- [Contributing — set up a dev environment](guides/development.md)
