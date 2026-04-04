@@ -1,0 +1,2946 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A collection of custom and reusable Qt widgets for PySide6">
+      
+      
+        <meta name="author" content="Neuraaak">
+      
+      
+        <link rel="canonical" href="https://neuraaak.github.io/ezqt-widgets/2.7.2/changelog/">
+      
+      
+        <link rel="prev" href="../coverage/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Changelog - EzQt Widgets Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#changelog" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="EzQt Widgets Documentation" class="md-header__button md-logo" aria-label="EzQt Widgets Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            EzQt Widgets Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Changelog
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/neuraaak/ezqt-widgets" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    neuraaak/ezqt-widgets
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../getting-started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../guides/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  User Guides
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../concepts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../api/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../cli/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CLI Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../examples/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Examples
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../architecture/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Architecture
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../coverage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Coverage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Changelog
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="EzQt Widgets Documentation" class="md-nav__button md-logo" aria-label="EzQt Widgets Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    EzQt Widgets Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/neuraaak/ezqt-widgets" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    neuraaak/ezqt-widgets
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../guides/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/style-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../concepts/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/about-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../api/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../api/reference/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/reference/button/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Button
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/reference/input/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/reference/label/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Label
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/reference/misc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Misc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/reference/shared/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shared constants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coverage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coverage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#272-2026-04-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7.2 — 2026-04-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.7.2 — 2026-04-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#271-2026-04-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7.1 — 2026-04-01
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.7.1 — 2026-04-01">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#270-2026-04-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7.0 — 2026-04-01
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.7.0 — 2026-04-01">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refactoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refactoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#266-2026-03-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.6 — 2026-03-31
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.6 — 2026-03-31">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#264-2026-03-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.4 — 2026-03-30
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.4 — 2026-03-30">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refactoring_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refactoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#263-2026-03-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.3 — 2026-03-27
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.3 — 2026-03-27">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refactoring_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refactoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#262-2026-03-26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.2 — 2026-03-26
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.2 — 2026-03-26">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refactoring_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refactoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#261-2026-03-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.1 — 2026-03-23
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.1 — 2026-03-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refactoring_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refactoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#260-2026-03-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.0 — 2026-03-20
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.0 — 2026-03-20">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#255-2026-03-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.5 — 2026-03-18
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.5 — 2026-03-18">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#254-2026-03-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.4 — 2026-03-13
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.4 — 2026-03-13">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#253-2026-03-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.3 — 2026-03-11
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.3 — 2026-03-11">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#refactoring_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refactoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#252-2026-03-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.2 — 2026-03-08
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.2 — 2026-03-08">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#251-2026-03-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.1 — 2026-03-08
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.1 — 2026-03-08">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#250-2026-02-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.0 — 2026-02-24
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.0 — 2026-02-24">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#240-2026-02-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.0 — 2026-02-11
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4.0 — 2026-02-11">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#234-2026-02-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.4 — 2026-02-10
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.4 — 2026-02-10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#233-2026-02-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.3 — 2026-02-09
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.3 — 2026-02-09">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#232-2026-02-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.2 — 2026-02-08
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.2 — 2026-02-08">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#230-2026-01-25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.0 — 2026-01-25
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.0 — 2026-01-25">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ﻿﻿chore
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-squash-changes-since-36d45a7-ac47bf8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        - Squash changes since 36d45a7 (ac47bf8)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#272-2026-04-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7.2 — 2026-04-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.7.2 — 2026-04-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#271-2026-04-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7.1 — 2026-04-01
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.7.1 — 2026-04-01">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#270-2026-04-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7.0 — 2026-04-01
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.7.0 — 2026-04-01">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refactoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refactoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#266-2026-03-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.6 — 2026-03-31
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.6 — 2026-03-31">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#264-2026-03-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.4 — 2026-03-30
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.4 — 2026-03-30">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refactoring_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refactoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#263-2026-03-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.3 — 2026-03-27
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.3 — 2026-03-27">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refactoring_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refactoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#262-2026-03-26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.2 — 2026-03-26
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.2 — 2026-03-26">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refactoring_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refactoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#261-2026-03-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.1 — 2026-03-23
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.1 — 2026-03-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#refactoring_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refactoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#260-2026-03-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.0 — 2026-03-20
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.0 — 2026-03-20">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#255-2026-03-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.5 — 2026-03-18
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.5 — 2026-03-18">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#254-2026-03-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.4 — 2026-03-13
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.4 — 2026-03-13">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#253-2026-03-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.3 — 2026-03-11
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.3 — 2026-03-11">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#refactoring_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refactoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#252-2026-03-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.2 — 2026-03-08
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.2 — 2026-03-08">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#251-2026-03-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.1 — 2026-03-08
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.1 — 2026-03-08">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#250-2026-02-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.0 — 2026-02-24
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.0 — 2026-02-24">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#240-2026-02-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.0 — 2026-02-11
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4.0 — 2026-02-11">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#234-2026-02-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.4 — 2026-02-10
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.4 — 2026-02-10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bug Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#233-2026-02-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.3 — 2026-02-09
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.3 — 2026-02-09">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#232-2026-02-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.2 — 2026-02-08
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.2 — 2026-02-08">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maintenance_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#230-2026-01-25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.0 — 2026-01-25
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.0 — 2026-01-25">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ﻿﻿chore
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-squash-changes-since-36d45a7-ac47bf8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        - Squash changes since 36d45a7 (ac47bf8)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Anchor link to this section">&para;</a></h1>
+<p>All notable changes to this project are documented here.</p>
+<p>This changelog is automatically generated from <a href="https://www.conventionalcommits.org/">Conventional Commits</a>.</p>
+<h2 id="272-2026-04-04"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.7.2">2.7.2</a> — 2026-04-04<a class="headerlink" href="#272-2026-04-04" title="Anchor link to this section">&para;</a></h2>
+<h3 id="bug-fixes">Bug Fixes<a class="headerlink" href="#bug-fixes" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li><strong>coverage</strong>: Update source paths in coverage configuration (<a href="https://github.com/neuraaak/ezqt-widgets/commit/f225df836d62c6071edcdc10df9a786be291d485">f225df8</a>)</li>
+</ul>
+<h3 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Overhaul documentation, add markdownlint config, and update project config (<a href="https://github.com/neuraaak/ezqt-widgets/commit/67210dbf9778f897b7ea38903ddede87b25be7b4">67210db</a>)</li>
+</ul>
+<h2 id="271-2026-04-01"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.7.1">2.7.1</a> — 2026-04-01<a class="headerlink" href="#271-2026-04-01" title="Anchor link to this section">&para;</a></h2>
+<h3 id="maintenance">Maintenance<a class="headerlink" href="#maintenance" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Bump version to 2.7.1 and update package metadata (<a href="https://github.com/neuraaak/ezqt-widgets/commit/5e2a2e16db5212a44cddbde4701275992b71783d">5e2a2e1</a>)</li>
+</ul>
+<h2 id="270-2026-04-01"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.7.0">2.7.0</a> — 2026-04-01<a class="headerlink" href="#270-2026-04-01" title="Anchor link to this section">&para;</a></h2>
+<h3 id="refactoring">Refactoring<a class="headerlink" href="#refactoring" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li><strong>cli,docs,examples</strong>: Restructure CLI and rewrite documentation (<a href="https://github.com/neuraaak/ezqt-widgets/commit/ef70bd3a072c0ee7e92bc2ccd6aa7c5df28ba0df">ef70bd3</a>)</li>
+</ul>
+<h2 id="266-2026-03-31"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.6.6">2.6.6</a> — 2026-03-31<a class="headerlink" href="#266-2026-03-31" title="Anchor link to this section">&para;</a></h2>
+<h3 id="features">Features<a class="headerlink" href="#features" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Refresh widgets and docs (<a href="https://github.com/neuraaak/ezqt-widgets/commit/2b7b1b04101fe64a0cb4c2adc264d2f01f450063">2b7b1b0</a>)</li>
+</ul>
+<h3 id="maintenance_1">Maintenance<a class="headerlink" href="#maintenance_1" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Update Python project configuration and standards (<a href="https://github.com/neuraaak/ezqt-widgets/commit/e2a7ad2d66475eaee9263f791fa74668f20b6281">e2a7ad2</a>)</li>
+</ul>
+<h2 id="264-2026-03-30"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.6.4">2.6.4</a> — 2026-03-30<a class="headerlink" href="#264-2026-03-30" title="Anchor link to this section">&para;</a></h2>
+<h3 id="refactoring_1">Refactoring<a class="headerlink" href="#refactoring_1" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Update import paths to use shared module directly instead of defaults (<a href="https://github.com/neuraaak/ezqt-widgets/commit/bceeb0a7661a559312881c39c551ba3b746f34ac">bceeb0a</a>)</li>
+<li>Prefix internal modules with underscore to enforce API visibility (<a href="https://github.com/neuraaak/ezqt-widgets/commit/b8203b1eeb61f1fd3331df1afe96124aee3a8934">b8203b1</a>)</li>
+</ul>
+<h2 id="263-2026-03-27"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.6.3">2.6.3</a> — 2026-03-27<a class="headerlink" href="#263-2026-03-27" title="Anchor link to this section">&para;</a></h2>
+<h3 id="refactoring_2">Refactoring<a class="headerlink" href="#refactoring_2" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Enforce naming conventions — camelCase public methods, promote <a class="magiclink magiclink-github magiclink-mention" href="https://github.com/staticmethod" title="GitHub User: staticmethod">@staticmethod</a> to module-level (<a href="https://github.com/neuraaak/ezqt-widgets/commit/a5e8df31b0b921cf855e8e71871c3b8ea35c48c3">a5e8df3</a>)</li>
+</ul>
+<h2 id="262-2026-03-26"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.6.2">2.6.2</a> — 2026-03-26<a class="headerlink" href="#262-2026-03-26" title="Anchor link to this section">&para;</a></h2>
+<h3 id="refactoring_3">Refactoring<a class="headerlink" href="#refactoring_3" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Update build configuration to specify wheel target for package inclusion (<a href="https://github.com/neuraaak/ezqt-widgets/commit/867743a30165eda02d5a58fb58b1ccb25b98d9e7">867743a</a>)</li>
+<li>Enforce API visibility, add <strong>all</strong> to all widget modules, and fix test fixtures (<a href="https://github.com/neuraaak/ezqt-widgets/commit/ca7459add6967fe1d7a7d125eb1a45e51076bac3">ca7459a</a>)</li>
+</ul>
+<h2 id="261-2026-03-23"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.6.1">2.6.1</a> — 2026-03-23<a class="headerlink" href="#261-2026-03-23" title="Anchor link to this section">&para;</a></h2>
+<h3 id="refactoring_4">Refactoring<a class="headerlink" href="#refactoring_4" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Enhance pre-commit hook for improved linting and version syncing (<a href="https://github.com/neuraaak/ezqt-widgets/commit/489fc7f642cb281396ba7a85842aaba107816c8c">489fc7f</a>)</li>
+</ul>
+<h3 id="maintenance_2">Maintenance<a class="headerlink" href="#maintenance_2" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Update version to 2.6.1, refine documentation, and switch to hatchling for build system (<a href="https://github.com/neuraaak/ezqt-widgets/commit/10595eb800af24005f2124a83106fca0dbbe200f">10595eb</a>)</li>
+</ul>
+<h2 id="260-2026-03-20"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.6.0">2.6.0</a> — 2026-03-20<a class="headerlink" href="#260-2026-03-20" title="Anchor link to this section">&para;</a></h2>
+<h3 id="features_1">Features<a class="headerlink" href="#features_1" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Add 4 new widgets, shared defaults module, and enforce Qt naming conventions (<a href="https://github.com/neuraaak/ezqt-widgets/commit/69234668f9ec4691020cd757b7ed3340595ea4c7">6923466</a>)</li>
+</ul>
+<h2 id="255-2026-03-18"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.5.5">2.5.5</a> — 2026-03-18<a class="headerlink" href="#255-2026-03-18" title="Anchor link to this section">&para;</a></h2>
+<h3 id="bug-fixes_1">Bug Fixes<a class="headerlink" href="#bug-fixes_1" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Update Python version requirement to 3.11 and set license to MIT; bump version to 2.5.5 (<a href="https://github.com/neuraaak/ezqt-widgets/commit/5cfc0ec6660f9a9e4390d6bd08e53bdf90387666">5cfc0ec</a>)</li>
+</ul>
+<h2 id="254-2026-03-13"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.5.4">2.5.4</a> — 2026-03-13<a class="headerlink" href="#254-2026-03-13" title="Anchor link to this section">&para;</a></h2>
+<h3 id="maintenance_3">Maintenance<a class="headerlink" href="#maintenance_3" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Minor improvements. (<a href="https://github.com/neuraaak/ezqt-widgets/commit/ca79867f1e18b0c512265e5290b4a274db15ad47">ca79867</a>)</li>
+</ul>
+<h2 id="253-2026-03-11"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.5.3">2.5.3</a> — 2026-03-11<a class="headerlink" href="#253-2026-03-11" title="Anchor link to this section">&para;</a></h2>
+<h3 id="bug-fixes_2">Bug Fixes<a class="headerlink" href="#bug-fixes_2" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Update widget paths to include 'widgets' in documentation (<a href="https://github.com/neuraaak/ezqt-widgets/commit/3e764ca4d7616f02c2ef9236a600be6afed09897">3e764ca</a>)</li>
+</ul>
+<h3 id="refactoring_5">Refactoring<a class="headerlink" href="#refactoring_5" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Reorganize widgets and improve icon handling (<a href="https://github.com/neuraaak/ezqt-widgets/commit/bc53ba8442c8c09b57c2dc90f20d6da3b655e750">bc53ba8</a>)</li>
+</ul>
+<h3 id="maintenance_4">Maintenance<a class="headerlink" href="#maintenance_4" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Update project name placeholders in documentation for consistency (<a href="https://github.com/neuraaak/ezqt-widgets/commit/3740d357ad726b59ec82613dde00f23c7ec1b74c">3740d35</a>)</li>
+</ul>
+<h2 id="252-2026-03-08"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.5.2">2.5.2</a> — 2026-03-08<a class="headerlink" href="#252-2026-03-08" title="Anchor link to this section">&para;</a></h2>
+<h3 id="maintenance_5">Maintenance<a class="headerlink" href="#maintenance_5" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Switched to src layout for improved readability and maintainability (<a href="https://github.com/neuraaak/ezqt-widgets/commit/91100da941730a53e5eed1a96a8f003143e04c76">91100da</a>)</li>
+</ul>
+<h2 id="251-2026-03-08"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.5.1">2.5.1</a> — 2026-03-08<a class="headerlink" href="#251-2026-03-08" title="Anchor link to this section">&para;</a></h2>
+<h3 id="features_2">Features<a class="headerlink" href="#features_2" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Add Hexagonal Architecture Standards documentation and update pre-commit hook for Ruff integration (<a href="https://github.com/neuraaak/ezqt-widgets/commit/2b7290210355ed2f6ec1941108165810f041c792">2b72902</a>)</li>
+</ul>
+<h2 id="250-2026-02-24"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.5.0">2.5.0</a> — 2026-02-24<a class="headerlink" href="#250-2026-02-24" title="Anchor link to this section">&para;</a></h2>
+<h3 id="features_3">Features<a class="headerlink" href="#features_3" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Enhance widget functionality with theme-aware icons and improved examples (<a href="https://github.com/neuraaak/ezqt-widgets/commit/5310c45f33837026a41e21188cab640d2910e895">5310c45</a>)</li>
+<li>Enhance widget functionality with theme-aware icons and improved examples - Added ThemeIcon class for automatic color adaptation based on application theme. - Updated SearchInput to accept ThemeIcon, QPixmap, and QIcon for search icons. - Enhanced TabReplaceTextEdit, ClickableTagLabel, FramedLabel, HoverLabel, IndicatorLabel, DraggableItem, OptionSelector, ToggleIcon, and ToggleSwitch with usage examples in docstrings. - Refactored color handling in CircularTimer and ToggleIcon for better color management. - Improved type hints for icon sources to include ThemeIcon where applicable. (<a href="https://github.com/neuraaak/ezqt-widgets/commit/ad970b25d6a3f9945613820d056a7f08e96779ee">ad970b2</a>)</li>
+</ul>
+<h3 id="bug-fixes_3">Bug Fixes<a class="headerlink" href="#bug-fixes_3" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Corriger l'importation du nom de package dans le script de vérification d'installation (<a href="https://github.com/neuraaak/ezqt-widgets/commit/8ea5a522642bd3c6d7ac06d8a05461c2271a5d63">8ea5a52</a>)</li>
+<li>Corriger les références de module dans les workflows de documentation et de publication (<a href="https://github.com/neuraaak/ezqt-widgets/commit/355efb44e577708cde33fa911481a8fe82492b37">355efb4</a>)</li>
+<li>Add installation of system dependencies for PySide6 in workflows (<a href="https://github.com/neuraaak/ezqt-widgets/commit/05b89b3952677e666378ad9415c9a167ad17ed05">05b89b3</a>)</li>
+<li>Update utility function calls in widget tests to use class methods (<a href="https://github.com/neuraaak/ezqt-widgets/commit/d08ab732b26a34c8a75a65877a43229c324b4f45">d08ab73</a>)</li>
+</ul>
+<h2 id="240-2026-02-11"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.4.0">2.4.0</a> — 2026-02-11<a class="headerlink" href="#240-2026-02-11" title="Anchor link to this section">&para;</a></h2>
+<h3 id="bug-fixes_4">Bug Fixes<a class="headerlink" href="#bug-fixes_4" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Update tag pattern in publish workflow and improve post-commit hook for tag creation (<a href="https://github.com/neuraaak/ezqt-widgets/commit/816847881c7594572f1d5ca322323a09e06a9617">8168478</a>)</li>
+<li>Update tag pattern in workflows to use "v*-latest" for versioning (<a href="https://github.com/neuraaak/ezqt-widgets/commit/b9c1e27da2d7b304e25bd6d665bc5cd591e6983d">b9c1e27</a>)</li>
+</ul>
+<h3 id="documentation_1">Documentation<a class="headerlink" href="#documentation_1" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Update project documentation and pre-commit config; bump version to 2.3.4 (<a href="https://github.com/neuraaak/ezqt-widgets/commit/ea5a2fc51104e3bc53d8e0aa17d58bf43eb2d83b">ea5a2fc</a>)</li>
+<li>Update README_DOC.md to use ezqt_widgets instead of ezpl (<a href="https://github.com/neuraaak/ezqt-widgets/commit/77d8c2490ebca2dfc2ce885b09bb6c1448d87c00">77d8c24</a>)</li>
+</ul>
+<h2 id="234-2026-02-10"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.3.4">2.3.4</a> — 2026-02-10<a class="headerlink" href="#234-2026-02-10" title="Anchor link to this section">&para;</a></h2>
+<h3 id="features_4">Features<a class="headerlink" href="#features_4" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Ajouter la documentation et les workflows GitHub Actions pour le déploiement (<a href="https://github.com/neuraaak/ezqt-widgets/commit/80a5a1043d7b01e0495f9039b0274cb60ef5ea61">80a5a10</a>)</li>
+</ul>
+<h3 id="bug-fixes_5">Bug Fixes<a class="headerlink" href="#bug-fixes_5" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Update tag pattern in publish workflow and improve post-commit hook for tag creation (<a href="https://github.com/neuraaak/ezqt-widgets/commit/6bae2d6b3de0cdf4b893d9517583813416bcf72e">6bae2d6</a>)</li>
+<li>Add missing type annotations to widget constructors (<a href="https://github.com/neuraaak/ezqt-widgets/commit/62fa293c7d6448423fa7005d35fb63d54d07ece5">62fa293</a>)</li>
+</ul>
+<h3 id="maintenance_6">Maintenance<a class="headerlink" href="#maintenance_6" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Updating workflows, hooks and doc (<a href="https://github.com/neuraaak/ezqt-widgets/commit/77d17585d8c049063e34db0890923625e0d68c3d">77d1758</a>)</li>
+</ul>
+<h2 id="233-2026-02-09"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.3.3">2.3.3</a> — 2026-02-09<a class="headerlink" href="#233-2026-02-09" title="Anchor link to this section">&para;</a></h2>
+<h3 id="maintenance_7">Maintenance<a class="headerlink" href="#maintenance_7" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Update README for MkDocs, fix test config, add commit standards (<a href="https://github.com/neuraaak/ezqt-widgets/commit/38cf51f466231165f439e39adead56651e6f7c90">38cf51f</a>)</li>
+</ul>
+<h2 id="232-2026-02-08"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.3.2">2.3.2</a> — 2026-02-08<a class="headerlink" href="#232-2026-02-08" title="Anchor link to this section">&para;</a></h2>
+<h3 id="maintenance_8">Maintenance<a class="headerlink" href="#maintenance_8" title="Anchor link to this section">&para;</a></h3>
+<ul>
+<li>Update pre-commit configuration, enhance project metadata, and improve code quality (<a href="https://github.com/neuraaak/ezqt-widgets/commit/166e5ca5bfe43558b8654f2dbf5d369c40c1d055">166e5ca</a>)</li>
+</ul>
+<h2 id="230-2026-01-25"><a href="https://github.com/neuraaak/ezqt-widgets/releases/tag/v2.3.0">2.3.0</a> — 2026-01-25<a class="headerlink" href="#230-2026-01-25" title="Anchor link to this section">&para;</a></h2>
+<h3 id="chore">﻿﻿chore<a class="headerlink" href="#chore" title="Anchor link to this section">&para;</a></h3>
+<h2 id="-squash-changes-since-36d45a7-ac47bf8">- Squash changes since 36d45a7 (<a href="https://github.com/neuraaak/ezqt-widgets/commit/ac47bf852378e287de3a2021098568997c49dfd6">ac47bf8</a>)<a class="headerlink" href="#-squash-changes-since-36d45a7-ac47bf8" title="Anchor link to this section">&para;</a></h2>
+<p><em>Automatically generated by <a href="https://git-cliff.org/">git-cliff</a></em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../coverage/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Coverage">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Coverage
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Neuraaak - <a href="https://github.com/neuraaak/ezqt-widgets/blob/main/LICENSE">MIT License</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/neuraaak/ezqt-widgets" target="_blank" rel="noopener" title="GitHub Repository" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://pypi.org/project/ezqt-widgets/" target="_blank" rel="noopener" title="PyPI Package" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.path", "navigation.top", "navigation.footer", "navigation.indexes", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
