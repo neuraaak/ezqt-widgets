@@ -19,9 +19,17 @@ Set up a local environment to contribute to `ezqt-widgets`.
 
 2. Create a virtual environment and install all dependencies.
 
-   ```bash
-   uv sync --extra dev
-   ```
+    === "uv"
+
+        ```bash
+        uv sync --extra dev
+        ```
+
+    === "pip"
+
+        ```bash
+        pip install -e ".[dev]"
+        ```
 
    You should see all packages resolved and installed from the lockfile.
 

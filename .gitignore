@@ -253,9 +253,6 @@ site/
 credentials/
 keys/
 
-# Allow password widget module
-!src/ezqt_widgets/widgets/input/password_input.py
-
 # =============================================================================
 # PATTERNS ADDITIONNELS
 # =============================================================================

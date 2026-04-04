@@ -16,9 +16,17 @@
 
 Install from PyPI and run your first widget in under five minutes.
 
-```bash
-pip install ezqt-widgets
-```
+=== "uv"
+
+    ```bash
+    uv add ezqt-widgets
+    ```
+
+=== "pip"
+
+    ```bash
+    pip install ezqt-widgets
+    ```
 
 ```python
 from PySide6.QtWidgets import QApplication
