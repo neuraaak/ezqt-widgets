@@ -8,66 +8,6 @@ Text input widgets with auto-completion, password management, search history, ta
 
 A `QLineEdit` subclass with a built-in `QCompleter` powered by a configurable list of string suggestions.
 
-::: ezqt_widgets.widgets.input.auto_complete_input.AutoCompleteInput
-options:
-members_order: source
-
----
-
-## FilePickerInput
-
-A composite `QWidget` combining a `QLineEdit` and a folder icon button that opens a `QFileDialog` for file or directory selection.
-
-::: ezqt_widgets.widgets.input.file_picker_input.FilePickerInput
-options:
-members_order: source
-
----
-
-## PasswordInput
-
-A `QWidget` containing a `QLineEdit` in password mode with an optional strength bar and a visibility-toggle icon.
-
-::: ezqt_widgets.widgets.input.password_input.PasswordInput
-options:
-members_order: source
-
----
-
-## SearchInput
-
-A `QLineEdit` subclass that maintains a submission history navigable with the Up/Down arrow keys.
-
-::: ezqt_widgets.widgets.input.search_input.SearchInput
-options:
-members_order: source
-
----
-
-## SpinBoxInput
-
-A custom numeric spin box `QWidget` with decrement and increment buttons flanking a central `QLineEdit`.
-
-::: ezqt_widgets.widgets.input.spin_box_input.SpinBoxInput
-options:
-members_order: source
-
----
-
-## TabReplaceTextEdit
-
-A `QPlainTextEdit` subclass that replaces tab characters with a configurable string on paste.
-
-::: ezqt_widgets.widgets.input.tab_replace_textedit.TabReplaceTextEdit
-options:
-members_order: source
-
----
-
-## AutoCompleteInput
-
-A `QLineEdit` subclass with a built-in `QCompleter` powered by a configurable list of string suggestions.
-
 **Constructor parameters:**
 
 | Parameter         | Type                        | Default                                     | Description                                   |

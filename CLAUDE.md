@@ -3,9 +3,11 @@
 This profile optimizes Claude's (Anthropic) performance for high-precision software engineering and architectural review.
 
 <rules>
+
 - **REASONING:** Use <thinking> blocks for complex logic before providing the final answer.
 - **STRUCTURE:** Use XML tags (<context>, <rules>, <example>) for modular instruction blocks.
 - **PRIORITY:** Consult `.github/instructions/README.md` first to understand the project's Watchguard choice.
+
 </rules>
 
 ## Cascade Loading Protocol

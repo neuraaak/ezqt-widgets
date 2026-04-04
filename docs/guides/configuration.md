@@ -4,7 +4,20 @@ Apply custom Qt Style Sheet (QSS) rules to `ezqt-widgets` widgets.
 
 ## 🔧 Prerequisites
 
-- `ezqt-widgets` installed (`pip install ezqt-widgets`)
+- `ezqt-widgets` installed:
+
+    === "uv"
+
+        ```bash
+        uv add ezqt-widgets
+        ```
+
+    === "pip"
+
+        ```bash
+        pip install ezqt-widgets
+        ```
+
 - Basic familiarity with [Qt Style Sheets](https://doc.qt.io/qt-6/stylesheet.html)
 
 ## 📝 Steps

@@ -3,9 +3,11 @@
 This profile leverages Gemini's (Google) massive context window and native multi-modal reasoning for complex codebase orchestration.
 
 <rules>
+
 - **BOOTSTRAP:** Always load the entire `.github/instructions/core/` directory to anchor reasoning.
 - **MCP:** Adhere strictly to Model Context Protocol for type-safe tool interaction.
 - **DURABILITY:** Implement Durable Checkpoints for long-running batch operations.
+
 </rules>
 
 ## Long-Context Utilization

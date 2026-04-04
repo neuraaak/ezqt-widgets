@@ -9,9 +9,17 @@ By the end of this tutorial you will have `ezqt-widgets` installed and have run 
 
 ## Step 1 — Install EzQt Widgets
 
-```bash
-pip install ezqt-widgets
-```
+=== "uv"
+
+    ```bash
+    uv add ezqt-widgets
+    ```
+
+=== "pip"
+
+    ```bash
+    pip install ezqt-widgets
+    ```
 
 You should see a line confirming the package was installed successfully. Verify:
 

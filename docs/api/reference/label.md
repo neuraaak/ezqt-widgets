@@ -6,46 +6,6 @@ Interactive and styled label widgets: clickable tags, framed labels, hover icons
 
 ## ClickableTagLabel
 
-A `QFrame` that behaves as a toggleable tag with a selected and an unselected state.
-
-::: ezqt_widgets.widgets.label.clickable_tag_label.ClickableTagLabel
-options:
-members_order: source
-
----
-
-## FramedLabel
-
-A `QFrame` containing a `QLabel`, providing the layout and styling flexibility of a frame with the simplicity of a label interface.
-
-::: ezqt_widgets.widgets.label.framed_label.FramedLabel
-options:
-members_order: source
-
----
-
-## HoverLabel
-
-A `QLabel` that shows a floating icon in its right margin when the mouse hovers over it.
-
-::: ezqt_widgets.widgets.label.hover_label.HoverLabel
-options:
-members_order: source
-
----
-
-## IndicatorLabel
-
-A `QFrame` combining a text label and a circular colored LED to represent a named status.
-
-::: ezqt_widgets.widgets.label.indicator_label.IndicatorLabel
-options:
-members_order: source
-
----
-
-## ClickableTagLabel
-
 A `QFrame` that behaves as a toggleable tag. Clicking it switches between a selected and an unselected state and emits the corresponding signals.
 
 **Signals:**
